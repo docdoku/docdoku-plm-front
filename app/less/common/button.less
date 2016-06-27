@@ -1,0 +1,108 @@
+// Override bootsrap switch colors
+
+.has-switch.custom-switch span.switch-custom-off {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background: #6785aa;
+    border-color: #7a99c1 #7a99c1 #4c72a3;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.has-switch.custom-switch span.switch-custom-off:hover,
+.has-switch.custom-switch span.switch-custom-off:active,
+.has-switch.custom-switch span.switch-custom-off.active,
+.has-switch.custom-switch span.switch-custom-off.disabled,
+.has-switch.custom-switch span.switch-custom-off[disabled] {
+    color: #ffffff;
+    background-color: #7a99c1;
+    *background-color: #698cb9;
+}
+
+.has-switch.custom-switch span.switch-custom-off:active,
+.has-switch.custom-switch span.switch-custom-off.active {
+    background-color: #577eb1 \9;
+}
+
+.has-switch.custom-switch span.switch-custom-on {
+    color: #ffffff;
+    text-shadow: none;
+    background: @plm-secondary-color;
+}
+
+.has-switch.custom-switch span.switch-custom-on:hover,
+.has-switch.custom-switch span.switch-custom-on:active,
+.has-switch.custom-switch span.switch-custom-on.active,
+.has-switch.custom-switch span.switch-custom-on.disabled,
+.has-switch.custom-switch span.switch-custom-on[disabled] {
+    color: #ffffff;
+    background-color: #2c4361;
+    *background-color: #24374f;
+}
+
+.has-switch.custom-switch span.switch-custom-on:active,
+.has-switch.custom-switch span.switch-custom-on.active {
+    background-color: #1c2b3e \9;
+}
+
+.btn{
+
+    padding: 4px 12px;
+    font-size: 13px;
+
+    &.btn-primary{
+        background: @plm-primary-color;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: @plm-primary-hover-color;
+        }
+    }
+
+    &.btn-custom {
+        color: white;
+        background: #3a87ad;
+        text-shadow: none;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #336b8f;
+        }
+    }
+
+    &.btn-default{
+        background: #F5F5F5;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #ededed;
+        }
+    }
+
+    &.btn-danger{
+        background: #bd362f;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #ab352e;
+        }
+    }
+
+    &.btn-success{
+        background: #51a351;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #478d47;
+        }
+    }
+    &.btn-warning{
+        background: #f89406;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #e28206;
+        }
+    }
+    &.btn-info{
+        background: #49afcd;
+        &:hover, &:active, &.active, &.disabled, &[disabled] {
+            background: #48a8c5;
+        }
+    }
+}
+.actions {
+
+    .btn-group > .btn {
+        font-size: 18px;
+        height: 32px;
+        padding: 2px 12px;
+    }
+}
