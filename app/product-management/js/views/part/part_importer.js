@@ -215,6 +215,11 @@ define([
                     var previewUrl = previewBaseUrl + '?' + $.param(params);
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', previewUrl, true);
+
+                    if(localStorage.jwt){
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+                    }
+
                     var formData = new window.FormData();
                     var _this = this;
                     xhr.onreadystatechange = function() {
@@ -259,6 +264,11 @@ define([
                 var xhr = new XMLHttpRequest();
                 xhr.onload = this.fetchImports.bind(this);
                 xhr.open('POST', importUrl, true);
+
+                if(localStorage.jwt){
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+                }
+
                 var formData = new window.FormData();
                 formData.append('upload', this.file);
                 xhr.send(formData);

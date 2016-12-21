@@ -107,6 +107,11 @@ THREE.ColladaLoader = function () {
             }
 
             request.open( "GET", url, true );
+
+            if(localStorage.jwt){
+                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+            }
+
             request.send( null );
 
         } else {

@@ -62,6 +62,11 @@ THREE.BinaryLoader.prototype.loadAjaxJSON = function ( context, url, callback, t
     };
 
     xhr.open( 'GET', url, true );
+
+    if(localStorage.jwt){
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+    }
+
     xhr.send();
 
 };
@@ -125,9 +130,15 @@ THREE.BinaryLoader.prototype.loadAjaxBuffers = function ( json, callback, binary
 
     xhr.open( 'GET', url, true );
     xhr.responseType = 'arraybuffer';
+
     if ( xhr.overrideMimeType ){
         xhr.overrideMimeType( 'text/plain; charset=x-user-defined' );
     }
+
+    if(localStorage.jwt){
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+    }
+
     xhr.send();
 
 };

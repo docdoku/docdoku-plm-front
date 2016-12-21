@@ -618,6 +618,11 @@ define([
                 };
                 xhr.open('POST', url);
                 xhr.setRequestHeader('Content-Type', 'application/json');
+
+                if(localStorage.jwt){
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+                }
+
                 xhr.responseType = 'blob';
                 xhr.send(JSON.stringify(queryData));
             }

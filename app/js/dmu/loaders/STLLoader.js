@@ -77,6 +77,11 @@ THREE.STLLoader.prototype.load = function ( url, callback ) {
     }
     xhr.open( 'GET', url, true );
     xhr.responseType = 'arraybuffer';
+
+    if(localStorage.jwt){
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+    }
+
     xhr.send();
 
 };
