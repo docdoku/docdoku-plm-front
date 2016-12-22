@@ -39,15 +39,15 @@
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
                                 <li>
                                     <a href="{{contextPath}}/document-management/#{{id}}/folders"
-                                       title="{{i18n.DOCUMENTS_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
+                                       title="{{i18n.DOCUMENT_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
                                 </li>
                                 <li>
                                     <a href="{{contextPath}}/product-management/#{{id}}/products"
-                                       title="{{i18n.PRODUCTS_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
+                                       title="{{i18n.PRODUCT_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
                                 </li>
                                 <li>
                                     <a href="{{contextPath}}/change-management/#{{id}}/workflows"
-                                       title="{{i18n.CHANGES_MANAGEMENT}}">{{i18n.CHANGES}}</a>
+                                       title="{{i18n.CHANGE_MANAGEMENT}}">{{i18n.CHANGES}}</a>
                                 </li>
                                 <li>
                                     <a href="{{contextPath}}/workspace-management/#/workspace/{{id}}/edit"
@@ -61,9 +61,9 @@
                                 <span><i class="fa fa-graduation-cap"></i> {{id}}</span>
                             </div>
                             <ul class="BreadcrumbSubMenuList">
-                                <li><a href="{{contextPath}}/document-management/#{{id}}/folders" title="{{i18n.DOCUMENTS_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
-                                <li><a href="{{contextPath}}/product-management/#{{id}}/products" title="{{i18n.PRODUCTS_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
-                                <li><a href="{{contextPath}}/change-management/#{{id}}/workflows" title="{{i18n.CHANGES_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
+                                <li><a href="{{contextPath}}/document-management/#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
+                                <li><a href="{{contextPath}}/product-management/#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
+                                <li><a href="{{contextPath}}/change-management/#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
                                 <li><a href="{{contextPath}}/workspace-management/#/workspace/{{id}}" title="{{i18n.WORKSPACE_MANAGEMENT}}"><i class="fa fa-cog"></i></a></li>
                             </ul>
                         </li>
@@ -84,13 +84,13 @@
                             </a>
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
                                 <li><a href="{{contextPath}}/document-management/#{{id}}/folders"
-                                       title="{{i18n.DOCUMENTS_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
+                                       title="{{i18n.DOCUMENT_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
                                 </li>
                                 <li><a href="{{contextPath}}/product-management/#{{id}}/products"
-                                       title="{{i18n.PRODUCTS_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
+                                       title="{{i18n.PRODUCT_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
                                 </li>
                                 <li><a href="{{contextPath}}/change-management/#{{id}}/workflows"
-                                       title="{{i18n.CHANGES_MANAGEMENT}}">{{i18n.CHANGES}}</a>
+                                       title="{{i18n.CHANGE_MANAGEMENT}}">{{i18n.CHANGES}}</a>
                                 </li>
                             </ul>
                         </li>
@@ -100,9 +100,9 @@
                                 <span>{{id}}</span>
                             </div>
                             <ul class="BreadcrumbSubMenuList">
-                                <li><a href="{{contextPath}}/document-management/#{{id}}/folders" title="{{i18n.DOCUMENTS_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
-                                <li><a href="{{contextPath}}/product-management/#{{id}}/products" title="{{i18n.PRODUCTS_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
-                                <li><a href="{{contextPath}}/change-management/#{{id}}/workflows" title="{{i18n.CHANGES_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
+                                <li><a href="{{contextPath}}/document-management/#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
+                                <li><a href="{{contextPath}}/product-management/#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
+                                <li><a href="{{contextPath}}/change-management/#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
                             </ul>
                         </li>
                         {{/nonAdministratedWorkspaces}}
@@ -113,19 +113,19 @@
                 <li class="BreadcrumbMenuItem BreadcrumbMenu-item dropdown pull-left visible-desktop">
 
                     {{#isDocumentManagement}}<a class="BreadcrumbMenuItem-link dropdown-toggle" data-toggle="dropdown"
-                                                title="{{i18n.DOCUMENTS_MANAGEMENT}}"><i class="fa fa-folder-open"></i>
+                                                title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder-open"></i>
                     {{i18n.DOCUMENTS}}</a>
                     {{/isDocumentManagement}}
                     {{#isProductManagement}}<a class="BreadcrumbMenuItem-link dropdown-toggle" data-toggle="dropdown"
-                                               title="{{i18n.PRODUCTS_MANAGEMENT}}"><i class="fa fa-briefcase"></i> {{i18n.PRODUCTS}}
+                                               title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i> {{i18n.PRODUCTS}}
                 </a>
                     {{/isProductManagement}}
                     {{#isProductStructure}}<a class="BreadcrumbMenuItem-link dropdown-toggle" data-toggle="dropdown"
-                                              title="{{i18n.PRODUCTS_MANAGEMENT}}"><i class="fa fa-briefcase"></i> {{i18n.PRODUCTS}}
+                                              title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i> {{i18n.PRODUCTS}}
                 </a>
                     {{/isProductStructure}}
                     {{#isChangeManagement}}<a class="BreadcrumbMenuItem-link dropdown-toggle" data-toggle="dropdown"
-                                              title="{{i18n.CHANGES_MANAGEMENT}}"><i class="fa fa-history"></i>
+                                              title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-history"></i>
                     {{i18n.CHANGES}}</a>
                     {{/isChangeManagement}}
                     {{#isWorkspaceManagement}}<a class="BreadcrumbMenuItem-link dropdown-toggle" data-toggle="dropdown"

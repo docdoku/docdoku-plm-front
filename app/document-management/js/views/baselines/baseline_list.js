@@ -139,7 +139,7 @@ define([
 
         deleteSelectedBaselines: function () {
             var _this = this;
-            bootbox.confirm(App.config.i18n.CONFIRM_DELETE_DOCUMENTS_COLLECTIONS,
+            bootbox.confirm(App.config.i18n.CONFIRM_DELETE_DOCUMENT_COLLECTIONS,
                 App.config.i18n.CANCEL,
                 App.config.i18n.DELETE,
                 function (result) {
