@@ -1,6 +1,6 @@
 /*global define,App*/
 define(['backbone', 'common-objects/models/document_baseline'],
-    function (Backbone, ProductBaseline, DocumentBaseline) {
+    function (Backbone, DocumentBaseline) {
         'use strict';
         var Baselines = Backbone.Collection.extend({
 
