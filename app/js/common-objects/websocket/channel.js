@@ -20,6 +20,12 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
 
             this.ws.onopen = function (event) {
                 Logger.log('%c Websocket created','WS');
+
+                self.send(JSON.stringify({
+                    type:'AUTH',
+                    jwt:localStorage.jwt
+                }));
+
                 self.onopen(event);
             };
 
