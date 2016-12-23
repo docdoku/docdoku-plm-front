@@ -92,7 +92,8 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
         'use strict';
 
         App.config.i18n = _.extend(commonStrings,workspaceManagementStrings);
-        App.config.needAuthentication = true;
+
+        ContextResolver.redirectOnUnauthorized();
 
         ContextResolver.resolveServerProperties()
             .then(ContextResolver.resolveAccount)

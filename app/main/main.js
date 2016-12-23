@@ -61,7 +61,6 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
     function (ContextResolver, commonStrings, indexStrings, ErrorView) {
         'use strict';
 
-        App.config.needAuthentication = false;
         App.config.i18n = _.extend(commonStrings, indexStrings);
 
         App.SceneOptions =  {

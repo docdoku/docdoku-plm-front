@@ -32,16 +32,24 @@ define([
             if (localStorage.jwt) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
             }
-        },
-        statusCode: {
-            401: function () {
-                delete localStorage.jwt;
-                if (App.config.needAuthentication) {
-                    window.location.href = App.config.contextPath + '/?denied=true&originURL=' + encodeURIComponent(window.location.pathname + window.location.hash);
-                }
-            }
         }
     });
+
+    ContextResolver.prototype.redirectOnUnauthorized = function(){
+        $.ajaxSetup({
+            statusCode: {
+                401: function () {
+                    delete localStorage.jwt;
+                    // Prevent redirection loop
+                    if(App.config.contextPath + '/' !== window.location.pathname){
+                        window.location.href = App.config.contextPath + '/?denied=true&originURL=' +
+                            encodeURIComponent(window.location.pathname + window.location.hash);
+                    }
+                }
+            }
+        });
+    };
+
 
     function onError(res) {
         return res;
@@ -96,7 +104,7 @@ define([
 
     ContextResolver.prototype.resolveOrganization = function () {
         return Organization.getOrganization().then(function (organization) {
-            App.config.organization = organization || {};
+            App.config.organization = organization || {};
         }, onError);
     };
 

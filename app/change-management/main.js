@@ -88,7 +88,6 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
 function (ContextResolver,  commonStrings, changeManagementStrings, ErrorView) {
     'use strict';
 
-    App.config.needAuthentication = true;
     App.config.i18n = _.extend(commonStrings,changeManagementStrings);
 
     var match = /^#([^\/]+)/.exec(window.location.hash) || ['',''];
@@ -98,6 +97,8 @@ function (ContextResolver,  commonStrings, changeManagementStrings, ErrorView) {
         new ErrorView({el:'#content'}).render404();
         return;
     }
+
+    ContextResolver.redirectOnUnauthorized();
 
     ContextResolver.resolveServerProperties()
         .then(ContextResolver.resolveAccount)

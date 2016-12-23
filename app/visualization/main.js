@@ -87,7 +87,6 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
 
     App.config.workspaceId = decodeURIComponent(/^#(product|assembly)\/([^\/]+)/.exec(window.location.hash)[2]).trim() || null;
     App.config.productId = decodeURIComponent(window.location.hash.split('/')[2]).trim() || null;
-    App.config.needAuthentication = true;
 
     if(!App.config.workspaceId){
         new ErrorView({el:'#content'}).render404();
@@ -118,6 +117,8 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
         cameraLight2Color:0xffffff,
         transformControls:false
     };
+
+    ContextResolver.redirectOnUnauthorized();
 
     ContextResolver.resolveServerProperties()
         .then(ContextResolver.resolveAccount)

@@ -127,7 +127,6 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
 	    'use strict';
 
         App.config.i18n = _.extend(commonStrings,productStructureStrings);
-        App.config.needAuthentication = true;
 
         var match = /^#([^\/]+)/.exec(window.location.hash) || ['',''];
         App.config.workspaceId = decodeURIComponent(match[1] || '').trim();
@@ -163,6 +162,8 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
             cameraLight2Color:0xffffff,
             transformControls:true
         };
+
+        ContextResolver.redirectOnUnauthorized();
 
         ContextResolver.resolveServerProperties()
             .then(ContextResolver.resolveAccount)
