@@ -30,6 +30,7 @@
     "grunt-requirejs-i18n": "^0.1.0",
     "grunt-rev": "~0.1.0",
     "grunt-usemin": "~0.1.13",
+    "jit-grunt": "^0.10.0",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0",
     "time-grunt": "~0.2.10",
