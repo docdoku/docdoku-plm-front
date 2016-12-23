@@ -5,7 +5,7 @@ define([
     'require',
     'common-objects/models/document/document_revision',
     'models/folder',
-    'collections/folder',
+    'collections/folders',
     'common-objects/views/components/list_item',
     'views/folder_list',
     'views/folder_document_list',

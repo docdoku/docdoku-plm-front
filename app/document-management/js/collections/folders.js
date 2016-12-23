@@ -5,7 +5,6 @@ define([
 ], function (Backbone,Folder) {
 	'use strict';
 
-    //TODO : rename the file to FolderList
     var FolderList = Backbone.Collection.extend({
 
         model: Folder,
