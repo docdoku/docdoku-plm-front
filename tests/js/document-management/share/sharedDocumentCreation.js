@@ -57,8 +57,9 @@ casper.test.begin('Shared document creation tests suite', 7, function sharedDocu
      * Set the document as public
      */
     casper.then(function setDocumentAsPublicShared() {
-
-        this.click('#share-modal .public-shared-switch .switch-off input');
+        this.evaluate(function(){
+            $('#share-modal .public-shared-switch .switch-off input').click();
+        });
         return this.waitForSelector('#share-modal .public-shared-switch .switch-on', function publicSharedCreated() {
             this.test.assert(true, 'Document is now public shared');
         }, function fail() {

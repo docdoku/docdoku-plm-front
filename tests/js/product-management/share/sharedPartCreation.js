@@ -56,7 +56,9 @@ casper.test.begin('Shared part creation tests suite', 7, function sharedPartCrea
      * Set the part as public
      */
     casper.then(function setPartAsPublicShared() {
-        this.click('#share-modal .public-shared-switch .switch-off input');
+        this.evaluate(function(){
+            $('#share-modal .public-shared-switch .switch-off input').click();
+        });
         return this.waitForSelector('#share-modal .public-shared-switch .switch-on', function publicSharedCreated() {
             this.test.assert(true, 'Part is now public shared');
         }, function fail() {

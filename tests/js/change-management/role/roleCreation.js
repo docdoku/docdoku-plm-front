@@ -55,9 +55,8 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
      * Try to create a role without a name
      */
     casper.then(function tryToCreateRoleWithoutName() {
-        this.click('#roles-modal #form-new-role #new-role');
+        this.click('#new-role');
         this.test.assertExists('#roles-modal #form-new-role .role-name:invalid', 'Should not create a role without a name');
-
     });
 
     /**
@@ -67,7 +66,7 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
         this.sendKeys('#roles-modal #form-new-role .role-name', roles.role1.name, {reset: true});
         this.click('#new-role');
 
-        return  this.waitForSelector('#form-roles > div.roles-item > p > b', function roleAdded() {
+        return this.waitForSelector('#form-roles > div.roles-item > p > b', function roleAdded() {
             this.test.assert(true, 'Role added');
         }, function fail() {
             this.capture('screenshot/roleCreation/tryToAddRole-error.png');
@@ -86,7 +85,7 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
             return true;
         });
 
-        return this.waitForSelector('#form-roles > div > .role-default-assigned-users > div.selectize-input > div', function(){
+        return this.waitForSelector('#form-roles > div > .role-default-assigned-users > div.selectize-input > div', function () {
             this.test.assert(true, 'Default user added');
         }, function fail() {
             this.capture('screenshot/roleCreation/tryToCreateRole-error.png');

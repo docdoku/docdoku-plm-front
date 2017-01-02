@@ -36,6 +36,7 @@
     "load-grunt-tasks": "~0.3.0",
     "time-grunt": "~0.2.10",
     "underscore": "^1.7.0",
+    "uuid": "^3.0.1",
     "xml2js": "^0.4.9",
     "yargs": "^4.7.1"
   },

@@ -20,7 +20,8 @@ var casperJsBinary = __dirname + '/../node_modules/.bin/casperjs';
 del.sync(['screenshot/**']);
 
 var conf = _.extend(config, argv);
-
+var uuidV4 = require('uuid/v4');
+var workspace = uuidV4();
 
 var casperCommand = casperJsBinary + ' test' +
                     ' --ssl-protocol=any --ignore-ssl-errors=true '+
@@ -29,7 +30,7 @@ var casperCommand = casperJsBinary + ' test' +
                     ' --port=' + conf.port +
                     ' --login=' + conf.login +
                     ' --pass=' + conf.pass +
-                    ' --workspace=' + conf.workspace +
+                    ' --workspace=' + workspace +
                     ' --contextPath=' + conf.contextPath +
                     ' --requestTimeOut=' + conf.requestTimeOut +
                     ' --globalTimeout=' + conf.globalTimeout +

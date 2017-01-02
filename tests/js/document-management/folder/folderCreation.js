@@ -1,4 +1,4 @@
-/*global casper,urls,workspace,documents*/
+/*global casper,urls,workspace,documents,$*/
 
 casper.test.begin('Folder creation tests suite', 1, function folderCreationTestsSuite() {
 
@@ -19,7 +19,9 @@ casper.test.begin('Folder creation tests suite', 1, function folderCreationTests
      */
     casper.then(function waitForFolderNavLink() {
         return this.waitForSelector('#folder-nav > .nav-list-entry > a', function clickFolderNavLink() {
-            this.click('#folder-nav > .nav-list-entry > a');
+            this.evaluate(function(){
+                $('#folder-nav > div.nav-list-entry > div.btn-group > ul.dropdown-menu > li.new-folder > a').click();
+            });
         });
     });
 
@@ -27,7 +29,7 @@ casper.test.begin('Folder creation tests suite', 1, function folderCreationTests
      * Open folder creation modal
      */
     casper.then(function clickOnFolderCreationLink() {
-        this.click('#folder-nav > div.nav-list-entry > div.btn-group > ul.dropdown-menu > li.new-folder > a');
+
         return this.waitForSelector('#new-folder-form', function openFolderCreationModal() {
             this.sendKeys('#new-folder-form input', documents.folder1, {reset: true});
             this.click('button[form=new-folder-form]');

@@ -71,7 +71,7 @@ casper.test.begin('Document add link tests suite', 3, function documentAddLinkTe
     casper.then(function waitForDocumentsSelectList() {
         this.sendKeys('.document-modal .linked-items-reference-typehead', documents.document1.documentLink, {reset: true});
 
-        return this.waitForSelector('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a', function documentsSelectListDisplayed() {
+        return this.waitUntilVisible('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a', function documentsSelectListDisplayed() {
             this.click('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a');
         }, function fail() {
             this.capture('screenshot/documentAddLink/waitForDocumentsSelectList-error.png');

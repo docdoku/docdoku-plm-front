@@ -1,5 +1,6 @@
 'use strict';
 
+
 var baseDir = __dirname + '/';
 
 var config = {
@@ -10,8 +11,7 @@ var config = {
     port: '8080',
     contextPath: '/',
 
-    // Workspace authentication
-    workspace: 'front-test',
+    // User authentication
     login: 'test',
     pass: 'test',
 
@@ -41,9 +41,8 @@ var config = {
     ],
     paths: [
 
-        // Login, erase potential data
+        // Login and workspace initialization
         baseDir + 'js/auth/login.js',
-        baseDir + 'js/pre/clean.js',
 
         // Content Type check
         baseDir + 'js/content-type/contentTypeCheck.js',

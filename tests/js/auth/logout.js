@@ -1,4 +1,4 @@
-/*global casper,urls*/
+/*global casper,urls,$*/
 casper.test.begin('Logout tests suite', 1, function logoutTestsSuite() {
 
     'use strict';
@@ -18,7 +18,9 @@ casper.test.begin('Logout tests suite', 1, function logoutTestsSuite() {
      */
     casper.then(function () {
         return  this.waitForSelector('#logout_link a', function onLogoutLinkReady() {
-            this.click('#logout_link a');
+            this.evaluate(function(){
+                $('#logout_link a').click();
+            });
         });
     });
 

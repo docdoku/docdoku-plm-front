@@ -113,7 +113,8 @@ casper.test.begin('Document tag creation tests suite', 8, function documentTagCr
      * Assert the input has been reset
      * */
     casper.then(function checkInputReset() {
-        this.test.assertField('.modal.tag-management .newTag', null, 'Input has been reset');
+        var tagInputSelector = {type: 'css', path: '.modal.tag-management .newTag'};
+        this.test.assertField(tagInputSelector, '', 'Input has been reset');
     });
 
     /**
