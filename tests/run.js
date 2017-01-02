@@ -1,4 +1,3 @@
-/*global require,__dirname*/
 /*
  * Node script wrapper to execute casper executable
  * execution : node run.js
@@ -16,12 +15,14 @@ var config = require('./config');
 var xml2js = require('xml2js');
 var del = require('del');
 var argv = require('yargs').argv;
+var casperJsBinary = __dirname + '/../node_modules/.bin/casperjs';
 
 del.sync(['screenshot/**']);
 
 var conf = _.extend(config, argv);
 
-var casperCommand = 'casperjs test' +
+
+var casperCommand = casperJsBinary + ' test' +
                     ' --ssl-protocol=any --ignore-ssl-errors=true '+
                     ' --protocol=' + conf.protocol +
                     ' --domain=' + conf.domain +
