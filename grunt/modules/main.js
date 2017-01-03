@@ -10,7 +10,7 @@ module.exports = {
             options: {
                 strictImports: false,
                 paths: [
-                  'app/less/c/'
+                  'app/less/main/'
                 ]
             },
             files: {
