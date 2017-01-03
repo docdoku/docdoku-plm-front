@@ -4,8 +4,6 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
 
     'use strict';
 
-    casper.open('');
-
     /**
      * Open change management URL
      * */
@@ -55,17 +53,26 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
      * Try to create a role without a name
      */
     casper.then(function tryToCreateRoleWithoutName() {
-        this.click('#new-role');
-        this.test.assertExists('#roles-modal #form-new-role .role-name:invalid', 'Should not create a role without a name');
+        return this.waitUntilVisible('#new-role', function () {
+            this.click('#new-role');
+            this.test.assertExists('#form-new-role .role-name:invalid', 'Should not create a role without a name');
+        });
+    });
+
+    /**
+     * Fill the form and submit
+     */
+    casper.then(function tryToCreateRoleWithName() {
+        return this.waitUntilVisible('#form-new-role input.role-name', function () {
+            this.sendKeys('#form-new-role input.role-name', roles.role1.name, {reset: true});
+            this.click('#new-role');
+        });
     });
 
     /**
      * Try to add a role
      */
     casper.then(function tryToAddRole() {
-        this.sendKeys('#roles-modal #form-new-role .role-name', roles.role1.name, {reset: true});
-        this.click('#new-role');
-
         return this.waitForSelector('#form-roles > div.roles-item > p > b', function roleAdded() {
             this.test.assert(true, 'Role added');
         }, function fail() {
@@ -78,18 +85,23 @@ casper.test.begin('Role creation tests suite', 7, function roleCreationTestsSuit
      * Add user to default assigned users
      */
     casper.then(function tryToAddDefaultAssignedUsers() {
-        this.evaluate(function () {
+        return this.evaluate(function () {
             var selectize = $('select.role-default-assigned-users')[0].selectize;
             var _login = Object.keys(selectize.options)[0];
             selectize.addItem(_login);
             return true;
         });
+    });
 
+    /**
+     * Assert user has been added
+     */
+    casper.then(function assertDefaultUSerIsAdded() {
         return this.waitForSelector('#form-roles > div > .role-default-assigned-users > div.selectize-input > div', function () {
             this.test.assert(true, 'Default user added');
         }, function fail() {
             this.capture('screenshot/roleCreation/tryToCreateRole-error.png');
-            this.test.assert(false, 'Modal not closed');
+            this.test.assert(false, 'Default user not added');
         });
     });
 
