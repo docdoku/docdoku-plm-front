@@ -3,14 +3,12 @@
 casper.test.begin('Part obsolete tests suite', 3, function partObsoleteTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav

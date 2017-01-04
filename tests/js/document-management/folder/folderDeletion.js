@@ -4,15 +4,12 @@ casper.test.begin('Folder deletion tests suite', 1, function folderDeletionTests
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Click on delete folder link
@@ -20,7 +17,7 @@ casper.test.begin('Folder deletion tests suite', 1, function folderDeletionTests
 
     casper.then(function waitForDeleteFolderLink() {
         return this.waitForSelector('#folder-nav .items a[title="' + documents.folder1 + '"] + .btn-group .delete a', function clickFolderDeleteLink() {
-            this.evaluate(function(){
+            this.evaluate(function () {
                 $('#folder-nav .items a[title="CasperJsTestFolder"] + .btn-group .delete a').click();
             });
         }, function fail() {

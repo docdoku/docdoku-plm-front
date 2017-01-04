@@ -24,42 +24,42 @@ var uuidV4 = require('uuid/v4');
 var workspace = uuidV4();
 
 var casperCommand = casperJsBinary + ' test' +
-                    ' --ssl-protocol=any --ignore-ssl-errors=true '+
-                    ' --protocol=' + conf.protocol +
-                    ' --domain=' + conf.domain +
-                    ' --port=' + conf.port +
-                    ' --login=' + conf.login +
-                    ' --pass=' + conf.pass +
-                    ' --workspace=' + workspace +
-                    ' --contextPath=' + conf.contextPath +
-                    ' --requestTimeOut=' + conf.requestTimeOut +
-                    ' --globalTimeout=' + conf.globalTimeout +
-                    (conf.debug ? ' --debug=true' : '') +
-                    (conf.debugRequests ? ' --debugRequests=true' : '') +
-                    (conf.waitOnRequest ? ' --waitOnRequest=true' : '') +
-                    (conf.debugResponses ? ' --debugResponses=true' : '') +
-                    ' --pre=' + conf.pre.join(',') +
-                    ' --post=' + conf.post.join(',') +
-                    ' --includes=' + conf.includes.join(',') +
-                    ' --xunit=' + conf.xunit +
-                    (conf.failFast ? ' --fail-fast' : '') +
-                    (conf.verbose ? ' --verbose' : '') +
-                    ' --log-level='+conf.logLevel +
-                    ' ' + conf.paths.join(' ');
+    ' --ssl-protocol=any --ignore-ssl-errors=true ' +
+    ' --protocol=' + conf.protocol +
+    ' --domain=' + conf.domain +
+    ' --port=' + conf.port +
+    ' --login=' + conf.login +
+    ' --pass=' + conf.pass +
+    ' --workspace=' + workspace +
+    ' --contextPath=' + conf.contextPath +
+    ' --requestTimeOut=' + conf.requestTimeOut +
+    ' --globalTimeout=' + conf.globalTimeout +
+    (conf.debug ? ' --debug=true' : '') +
+    (conf.debugRequests ? ' --debugRequests=true' : '') +
+    (conf.waitOnRequest ? ' --waitOnRequest=true' : '') +
+    (conf.debugResponses ? ' --debugResponses=true' : '') +
+    ' --pre=' + conf.pre.join(',') +
+    ' --post=' + conf.post.join(',') +
+    ' --includes=' + conf.includes.join(',') +
+    ' --xunit=' + conf.xunit +
+    (conf.failFast ? ' --fail-fast' : '') +
+    (conf.verbose ? ' --verbose' : '') +
+    ' --log-level=' + conf.logLevel +
+    ' ' + conf.paths.join(' ');
 
 util.print('Running DocdokuPLM tests. Command : \n ' + casperCommand + '\n\n');
 
 var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
-    util.print(error||'');
-    if(conf.soundOnTestsEnd){
+    util.print(error || '');
+    if (conf.soundOnTestsEnd) {
         var parser = new xml2js.Parser();
-        fs.readFile(__dirname + '/results.xml', function(err, data) {
+        fs.readFile(__dirname + '/results.xml', function (err, data) {
             parser.parseString(data, function (err, result) {
                 var suites = result.testsuites.testsuite;
-                var lastSuite = suites[suites.length-1];
-                if(lastSuite.$.failures !== '0'){
+                var lastSuite = suites[suites.length - 1];
+                if (lastSuite.$.failures !== '0') {
                     exec('cvlc --play-and-exit fail.wav');
-                }else {
+                } else {
                     exec('cvlc --play-and-exit success.wav');
                 }
             });

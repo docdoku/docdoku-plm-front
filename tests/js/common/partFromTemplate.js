@@ -2,15 +2,15 @@
 casper.test.begin('Part from template creation tests suite', 19, function partCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    //TODO : move to appropriate folder
+
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav

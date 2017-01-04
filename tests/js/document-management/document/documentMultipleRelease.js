@@ -3,14 +3,12 @@
 casper.test.begin('Documents multiple release tests suite', 3, function documentMultipleReleaseTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav

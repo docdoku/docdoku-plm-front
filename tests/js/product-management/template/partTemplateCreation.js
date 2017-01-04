@@ -3,15 +3,13 @@
 casper.test.begin('Part template creation tests suite', 5, function partTemplateCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part template nav

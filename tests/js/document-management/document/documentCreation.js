@@ -4,15 +4,12 @@ casper.test.begin('Document creation tests suite', 2, function documentCreationT
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -68,8 +65,8 @@ casper.test.begin('Document creation tests suite', 2, function documentCreationT
      */
 
     casper.then(function checkForDocumentCreation() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference', function documentHasBeenCreated() {
-            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference a', documents.document1.number);
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference', function documentHasBeenCreated() {
+            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference a', documents.document1.number);
         }, function fail() {
             this.capture('screenshot/documentCreation/checkForDocumentCreation-error.png');
             this.test.assert(false, 'New document created can not be found');

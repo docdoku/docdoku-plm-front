@@ -1,17 +1,15 @@
-/*global casper,urls,baselines*/
+/*global casper,urls,baselines,$*/
 
 casper.test.begin('Baseline creation tests suite', 2, function baselineCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to product nav
@@ -25,12 +23,14 @@ casper.test.begin('Baseline creation tests suite', 2, function baselineCreationT
         });
     });
 
+    var productToggle = '#product_table > tbody > tr > td > .product-toggle';
     /**
      * Select the first product with checkbox
      */
     casper.then(function waitForProductTable() {
-        return this.waitForSelector('#product_table tbody tr:first-child  td:first-child input', function clickOnProductCheckbox() {
-            this.click('#product_table tbody tr:first-child  td:first-child input');
+
+        return this.waitForSelector(productToggle, function clickOnProductCheckbox() {
+            this.click(productToggle);
         }, function fail() {
             this.capture('screenshot/baselineCreation/waitForProductTable-error.png');
             this.test.assert(false, 'Product can not be found');
@@ -41,7 +41,7 @@ casper.test.begin('Baseline creation tests suite', 2, function baselineCreationT
      * Click on baseline creation button
      */
     casper.then(function waitForBaselineCreationButton() {
-        return this.waitForSelector('.actions .new-baseline', function openBaselineCreationModal() {
+        return this.waitUntilVisible('.actions .new-baseline', function openBaselineCreationModal() {
             this.click('.actions .new-baseline');
         }, function fail() {
             this.capture('screenshot/baselineCreation/waitForBaselineCreationButton-error.png');

@@ -3,15 +3,13 @@
 casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -37,11 +35,16 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
         });
     });
 
+    casper.then(function(){
+        this.waitUntilVisible('.nav-checkedOut-number-item.badge-success',function(){
+            this.test.assertSelectorHasText('.nav-checkedOut-number-item.badge-success', 1, 'checkout number at 1 in nav');
+        });
+    });
+
     /**
      * Click on checkin button
      */
     casper.then(function waitForCheckinButton() {
-        this.test.assertSelectorHasText('.nav-checkedOut-number-item', 1, 'checkout number at 1 in nav');
         return this.waitForSelector('.actions .checkin:not([disabled])', function clickOnCheckinButton() {
             this.click('.actions .checkin');
         }, function fail() {

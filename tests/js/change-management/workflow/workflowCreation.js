@@ -4,15 +4,13 @@ casper.test.begin('Workflow creation tests suite', 8, function workflowCreationT
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change workflow nav
@@ -115,7 +113,7 @@ casper.test.begin('Workflow creation tests suite', 8, function workflowCreationT
      * Check if workflow is now in the list
      */
     casper.then(function checkForWorkflowToBeCreated() {
-        return this.waitForSelector('.workflow-table', function workflowTableDisplayed() {
+        return this.waitForSelector('.workflow-table tbody tr:first-child td.reference', function workflowTableDisplayed() {
             this.test.assertSelectorHasText('.workflow-table tbody tr:first-child td.reference', workflows.workflow1.name);
         }, function fail() {
             this.capture('screenshot/workflowCreation/checkForWorkflowToBeCreated-error.png');

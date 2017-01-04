@@ -3,14 +3,12 @@
 casper.test.begin('Document checkout tests suite', 2, function documentCheckoutTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav

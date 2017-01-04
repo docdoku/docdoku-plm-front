@@ -28,7 +28,7 @@ var documents = {
         number: 'CasperJsTestDocumentTemplate',
         type: 'CasperJsTestDocumentTemplateType',
         mask: 'MASK-###',
-        maskGenerated:'MASK-000'
+        maskGenerated: 'MASK-000'
     },
     folder1: 'CasperJsTestFolder',
     document1: {
@@ -232,7 +232,7 @@ var urls = {
     productStructureForDeliverable: homeUrl + 'product-structure/#' + workspace + '/' + products.product1.number + '/config-spec/pi-' + productInstances.productInstance1.serialNumber + '/bom',
     documentManagement: homeUrl + 'document-management/#' + workspace,
     changeManagement: homeUrl + 'change-management/#' + workspace,
-    workspaceAdministration:homeUrl+'workspace-management/',
+    workspaceAdministration: homeUrl + 'workspace-management/',
 
     documentPermalink: homeUrl + 'documents/#' + workspace + '/' + documents.document1.number + '/A',
     partPermalink: homeUrl + 'parts/#' + workspace + '/' + products.part1.number + '/A',

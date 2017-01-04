@@ -4,15 +4,13 @@ casper.test.begin('Document tag list tests suite', 1, function documentTagListTe
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open tag nav

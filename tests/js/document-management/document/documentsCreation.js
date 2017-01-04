@@ -4,15 +4,12 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -68,8 +65,8 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
      */
 
     casper.then(function checkForDocumentCreation() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document2.number+'"] td.reference a', function documentHasBeenCreated() {
-            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="'+documents.document2.number+'"] td.reference a', documents.document2.number);
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document2.number + '"] td.reference a', function documentHasBeenCreated() {
+            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="' + documents.document2.number + '"] td.reference a', documents.document2.number);
         }, function fail() {
             this.capture('screenshot/documentsCreation/checkForDocumentCreation-error.png');
             this.test.assert(false, 'New document created can not be found');
@@ -130,8 +127,8 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
      */
 
     casper.then(function checkForDocumentCreation() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document3.number+'"] td.reference a', function documentHasBeenCreated() {
-            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="'+documents.document3.number+'"] td.reference a', documents.document3.number);
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document3.number + '"] td.reference a', function documentHasBeenCreated() {
+            this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="' + documents.document3.number + '"] td.reference a', documents.document3.number);
         }, function fail() {
             this.capture('screenshot/documentsCreation/checkForDocumentCreation-error.png');
             this.test.assert(false, 'New document created can not be found');

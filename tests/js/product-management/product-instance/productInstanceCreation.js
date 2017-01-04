@@ -3,15 +3,13 @@
 casper.test.begin('Product instance creation tests suite', 5, function productInstanceCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to product instances nav
@@ -49,7 +47,7 @@ casper.test.begin('Product instance creation tests suite', 5, function productIn
         });
     });
 
-     /**
+    /**
      * Wait for the selects to be loaded
      */
     casper.then(function waitForData() {

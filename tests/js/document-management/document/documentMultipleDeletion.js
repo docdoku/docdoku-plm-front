@@ -3,15 +3,13 @@
 casper.test.begin('Document multiple deletion tests suite', 1, function documentMultipleDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
+
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav

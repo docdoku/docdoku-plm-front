@@ -4,15 +4,13 @@ casper.test.begin('Used by tab tests suite', 2, function usedByTabTestsSuite() {
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -48,8 +46,8 @@ casper.test.begin('Used by tab tests suite', 2, function usedByTabTestsSuite() {
      */
     casper.then(function waitForUsedByDisplay() {
         return this.waitForSelector('#used-by-group-list-view > div > div > div > div.group-title', function checkValues() {
-            this.test.assertSelectorHasText('#used-by-group-list-view > div > div > div > div.group-title', '< '+products.product1.number+' >', 'Part must be present in product "< '+products.product1.number+' >"');
-            this.test.assertSelectorHasText('#used-by-product-instances > li.used-by-item > div.reference', productInstances.productInstance1.serialNumber, 'Part must be present in product instance "'+productInstances.productInstance1.serialNumber+'"');
+            this.test.assertSelectorHasText('#used-by-group-list-view > div > div > div > div.group-title', '< ' + products.product1.number + ' >', 'Part must be present in product "< ' + products.product1.number + ' >"');
+            this.test.assertSelectorHasText('#used-by-product-instances > li.used-by-item > div.reference', productInstances.productInstance1.serialNumber, 'Part must be present in product instance "' + productInstances.productInstance1.serialNumber + '"');
         });
     });
 

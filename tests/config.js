@@ -37,7 +37,6 @@ var config = {
     ],
     includes: [
         baseDir + 'js/includes/vars.js',
-        baseDir + 'js/includes/helpers.js'
     ],
     paths: [
 

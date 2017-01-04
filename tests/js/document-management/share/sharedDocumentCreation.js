@@ -4,15 +4,13 @@ casper.test.begin('Shared document creation tests suite', 7, function sharedDocu
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -57,7 +55,7 @@ casper.test.begin('Shared document creation tests suite', 7, function sharedDocu
      * Set the document as public
      */
     casper.then(function setDocumentAsPublicShared() {
-        this.evaluate(function(){
+        this.evaluate(function () {
             $('#share-modal .public-shared-switch .switch-off input').click();
         });
         return this.waitForSelector('#share-modal .public-shared-switch .switch-on', function publicSharedCreated() {

@@ -3,14 +3,12 @@
 casper.test.begin('LOV creation and use in template', 5, function LOVTemplateCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     function cantFindElement(selector) {
         this.test.assertNotExists(selector, selector + ' should be displayed');
@@ -80,7 +78,7 @@ casper.test.begin('LOV creation and use in template', 5, function LOVTemplateCre
 
     });
     /*
-    * * TODO : Split this 'wait selectors' into unit functions
+     * * TODO : Split this 'wait selectors' into unit functions
      */
     casper.then(function () {
         var templateTabSelector = '.modal.new-template .tabs > ul > li:nth-child(3) > a';

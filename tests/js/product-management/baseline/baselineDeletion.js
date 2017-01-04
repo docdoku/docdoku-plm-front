@@ -3,15 +3,13 @@
 casper.test.begin('Baseline deletion tests suite', 2, function baselineDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to baselines nav

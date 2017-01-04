@@ -4,15 +4,13 @@ casper.test.begin('Workflow duplication tests suite', 6, function workflowDuplic
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change workflow nav

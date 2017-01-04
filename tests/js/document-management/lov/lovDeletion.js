@@ -8,15 +8,12 @@ casper.test.begin('LOV deletion tests suite', 3, function documentLOVDeletionTes
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open template nav
@@ -45,7 +42,7 @@ casper.test.begin('LOV deletion tests suite', 3, function documentLOVDeletionTes
     casper.then(function waitForLOVCreationModal() {
         return this.waitForSelector('.modal.list_lov .lovItem', function checkLOVPersistence() {
             this.test.assertElementCount('.lovItem', 1, 'One element should be in the list of LOV');
-        }, function(){
+        }, function () {
             this.capture('screenshot/lovDeletion/waitForLOVCreationModal-error.png');
         });
     });

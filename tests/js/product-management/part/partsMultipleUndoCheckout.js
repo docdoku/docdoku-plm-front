@@ -3,15 +3,13 @@
 casper.test.begin('Parts multiple undo checkout tests suite', 1, function partsMultipleUndoCheckoutTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav

@@ -1,18 +1,16 @@
 /*global casper,urls,workspace,documents,workflows,$*/
 
-casper.test.begin('Document creation with workflow tests suite', 9, function documentCreationWithWorkflowTestsSuite() {
+casper.test.begin('Document creation with workflow tests suite', 11, function documentCreationWithWorkflowTestsSuite() {
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -32,7 +30,9 @@ casper.test.begin('Document creation with workflow tests suite', 9, function doc
      */
 
     casper.then(function clickOnDocumentCreationLink() {
-        this.click('.actions .new-document');
+        return this.waitForSelector('.actions .new-document', function () {
+            this.click('.actions .new-document');
+        });
     });
 
     /**
@@ -91,10 +91,12 @@ casper.test.begin('Document creation with workflow tests suite', 9, function doc
     });
 
     /**
-     * Submit document
+     * Submit document creation form
      */
     casper.then(function submit() {
-        this.click('.modal.document-modal.new-document .btn.btn-primary');
+        return this.waitUntilVisible('.modal.document-modal.new-document .btn.btn-primary', function () {
+            this.click('.modal.document-modal.new-document .btn.btn-primary');
+        });
     });
 
     /**
@@ -218,7 +220,7 @@ casper.test.begin('Document creation with workflow tests suite', 9, function doc
     casper.then(function downloadDocumentFile() {
         var modalTab = '.document-modal .tabs li a[href="#tab-iteration-files"]';
         return this.waitForSelector(modalTab, function modalOpened() {
-            var fileLink = '#iteration-files > div > ul > li > a[href="/api/files/'+workspace+'/documents/'+documents.documentWithWorkflow.number +'/A/1/document-upload.txt"]';
+            var fileLink = '#iteration-files > div > ul > li > a[href="/api/files/' + workspace + '/documents/' + documents.documentWithWorkflow.number + '/A/1/document-upload.txt"]';
             this.test.assertSelectorExist(fileLink, 'A link should be present to download the document');
             this.click(fileLink);
         }, function fail() {
@@ -247,8 +249,8 @@ casper.test.begin('Document creation with workflow tests suite', 9, function doc
         var activityElement = '#lifecycle-activities-wrapper #lifecycle-activities .activity.in_progress';
         return this.waitForSelector(activityElement, function modalOpened() {
             this.test.assertSelectorExist(activityElement, 'An activity should be present and marked in_progress');
-            this.click(activityElement+' .approve-task');
-            this.click(activityElement+' .closure-comment-form > div.task-buttons > input');
+            this.click(activityElement + ' .approve-task');
+            this.click(activityElement + ' .closure-comment-form > div.task-buttons > input');
         }, function fail() {
             this.capture('screenshot/documentCreationWithWorkflow/approveTask-error.png');
             this.test.assert(false, 'Activity can not be found');
@@ -275,10 +277,24 @@ casper.test.begin('Document creation with workflow tests suite', 9, function doc
         this.click('.document-modal .tabs li a[href="#tab-iteration-iteration"]');
         var checkoutButton = '#tab-iteration-iteration .action-checkout';
         return this.waitForSelector(checkoutButton, function buttonFound() {
+            this.test.assert(true, 'Check out button displayed')
             this.click(checkoutButton);
         }, function fail() {
             this.capture('screenshot/documentCreationWithWorkflow/checkoutDocument-error.png');
             this.test.assert(false, 'Checkout button can not be found');
+        });
+    });
+
+    /**
+     * Assert document is checked out
+     */
+    casper.then(function assertDocumentCheckedOut() {
+        var checkinButton = '#tab-iteration-iteration .action-checkin';
+        return this.waitForSelector(checkinButton, function buttonFound() {
+            this.test.assert(true, 'Check in button displayed')
+        }, function fail() {
+            this.capture('screenshot/documentCreationWithWorkflow/assertDocumentCheckedOut-error.png');
+            this.test.assert(false, 'Check in button can not be found');
         });
     });
 

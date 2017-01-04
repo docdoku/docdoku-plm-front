@@ -3,15 +3,13 @@
 casper.test.begin('Query builder search tests suite', 5, function queryBuilderSearchTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement + '/parts');
-    });
+    casper.open(urls.productManagement + '/parts');
 
     /**
      * Wait for query builder button
@@ -46,7 +44,7 @@ casper.test.begin('Query builder search tests suite', 5, function queryBuilderSe
             setTimeout(function () {
                 $('div.query-select-block  div.selectize-dropdown div[data-value="pm.number"]').click();
                 $('div.query-select-block  div.selectize-dropdown div[data-value="pm.name"]').click();
-            }, 0);
+            }, 50);
             return true;
         });
     });
@@ -56,8 +54,10 @@ casper.test.begin('Query builder search tests suite', 5, function queryBuilderSe
      * */
     casper.then(function addCondition() {
         this.evaluate(function () {
-            $('#where_rule_0 > div.rule-filter-container > select').val('attr-TEXT.CasperJsTestAttr-lock');
-            $('#where_rule_0 > div.rule-filter-container > select').change();
+            setTimeout(function () {
+                $('#where_rule_0 > div.rule-filter-container > select').val('attr-TEXT.CasperJsTestAttr-lock');
+                $('#where_rule_0 > div.rule-filter-container > select').change();
+            },100);
             return true;
         });
     });
@@ -104,7 +104,7 @@ casper.test.begin('Query builder search tests suite', 5, function queryBuilderSe
     casper.then(function saveQuery() {
         this.click('#query-builder-view > div.query-actions-block > .save-button');
         return this.waitForSelector('#prompt_modal.in', function promptDisplayed() {
-            this.sendKeys('#prompt_modal #prompt_input','myQuery');
+            this.sendKeys('#prompt_modal #prompt_input', 'myQuery');
             this.click('#prompt_modal #submitPrompt');
         }, function fail() {
             this.capture('screenshot/queryBuilderSearch/saveQuery-error.png');
@@ -113,12 +113,12 @@ casper.test.begin('Query builder search tests suite', 5, function queryBuilderSe
     });
 
     /**
-    * Wait for modal to close
-    * */
+     * Wait for modal to close
+     * */
 
     casper.then(function saveQuery() {
         return this.waitWhileSelector('#prompt_modal', function promptModalClosed() {
-            this.test.assert(true,'Prompt modal has been closed');
+            this.test.assert(true, 'Prompt modal has been closed');
         }, function fail() {
             this.capture('screenshot/queryBuilderSearch/saveQuery-error.png');
             this.test.assert(false, 'Query builder prompt for save not closed');
@@ -126,12 +126,12 @@ casper.test.begin('Query builder search tests suite', 5, function queryBuilderSe
     });
 
     /**
-    * Check in the list if query has been saved
-    * */
+     * Check in the list if query has been saved
+     * */
 
     casper.then(function onModalClosed() {
         return this.waitForSelector('#query-builder-view > div.query-builder-body > div:nth-child(2) > select > option:nth-child(2)', function querySaved() {
-            this.test.assertSelectorHasText('#query-builder-view > div.query-builder-body > div:nth-child(2) > select > option:nth-child(2)','myQuery', 'Query has been saved');
+            this.test.assertSelectorHasText('#query-builder-view > div.query-builder-body > div:nth-child(2) > select > option:nth-child(2)', 'myQuery', 'Query has been saved');
         }, function fail() {
             this.capture('screenshot/queryBuilderSearch/onModalClosed-error.png');
             this.test.assert(false, 'Query builder query not saved');

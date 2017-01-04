@@ -2,15 +2,12 @@
 casper.test.begin('Document Files Remove tests suite', 14, function documentUploadCadTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -30,8 +27,8 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
 
     casper.then(function waitForDocumentDisplayed() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference', function documentIsDisplayed() {
-            this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference', function documentIsDisplayed() {
+            this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         }, function fail() {
             this.capture('screenshot/documentFilesRemove/waitForDocumentDisplayed-error.png');
             this.test.assert(false, 'Document can not be found');
@@ -86,11 +83,11 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
     casper.then(function removeFile() {
         this.click('ul.file-list li.file input.file-check');
         return this.waitForSelector('input.file-check:checked', function then() {
-                this.test.assert(true,'File is set to be removed');
-            }, function fail() {
-                this.capture('screenshot/documentFilesRemove/setFileToRemove-error.png');
-                this.test.assert(false,'File can not be set to be removed');
-            });
+            this.test.assert(true, 'File is set to be removed');
+        }, function fail() {
+            this.capture('screenshot/documentFilesRemove/setFileToRemove-error.png');
+            this.test.assert(false, 'File can not be set to be removed');
+        });
     });
 
     /**
@@ -98,11 +95,11 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
     casper.then(function saveChanged() {
         this.click('#save-iteration');
-        return this.waitWhileSelector('div.document-modal', function then () {
-            this.test.assert(true,'Modal closed');
+        return this.waitWhileSelector('div.document-modal', function then() {
+            this.test.assert(true, 'Modal closed');
         }, function fail() {
             this.capture('screenshot/documentFilesRemove/closeModal-error.png');
-            this.test.assert(false,'Could not close modal');
+            this.test.assert(false, 'Could not close modal');
         });
     });
 
@@ -111,7 +108,7 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
 
     casper.then(function waitForDocumentModal() {
-        this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         var modalTab = '.document-modal .tabs li a[href="#tab-iteration-files"]';
         return this.waitForSelector(modalTab, function modalOpened() {
             this.click(modalTab);
@@ -186,11 +183,11 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      * Wait for the modal to close
      */
     casper.then(function waitForClosingModal() {
-        return this.waitWhileSelector('div.document-modal', function then () {
-            this.test.assert(true,'Modal closed');
+        return this.waitWhileSelector('div.document-modal', function then() {
+            this.test.assert(true, 'Modal closed');
         }, function fail() {
             this.capture('screenshot/documentFilesRemove/closeModal-error.png');
-            this.test.assert(false,'Could not close modal');
+            this.test.assert(false, 'Could not close modal');
         });
     });
 
@@ -199,7 +196,7 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
 
     casper.then(function waitForDocumentModal() {
-        this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         var modalTab = '.document-modal .tabs li a[href="#tab-iteration-files"]';
         return this.waitForSelector(modalTab, function modalOpened() {
             this.click(modalTab);
@@ -243,7 +240,7 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
     casper.then(function checkAll() {
         this.click('a.toggle-checkAll');
         return this.waitFor(function checkAll() {
-            return this.evaluate(function() {
+            return this.evaluate(function () {
                 return document.querySelectorAll('input.file-check:checked').length === 2;
             });
         }, function then() {
@@ -259,8 +256,8 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
     casper.then(function saveChanged() {
         this.click('#save-iteration');
-        return this.waitWhileSelector('div.document-modal', function then () {
-            this.test.assert(true,'Modal closed');
+        return this.waitWhileSelector('div.document-modal', function then() {
+            this.test.assert(true, 'Modal closed');
         }, function fail() {
             this.capture('screenshot/documentFilesRemove/closeModal-error.png');
         });
@@ -271,7 +268,7 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
      */
 
     casper.then(function waitForDocumentModal() {
-        this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         var modalTab = '.document-modal .tabs li a[href="#tab-iteration-files"]';
         return this.waitForSelector(modalTab, function modalOpened() {
             this.click(modalTab);

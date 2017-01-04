@@ -2,15 +2,12 @@
 casper.test.begin('Document upload  file tests suite', 2, function documentUploadCadTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -30,8 +27,8 @@ casper.test.begin('Document upload  file tests suite', 2, function documentUploa
      */
 
     casper.then(function waitForDocumentDisplayed() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference', function documentIsDisplayed() {
-            this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference', function documentIsDisplayed() {
+            this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         }, function fail() {
             this.capture('screenshot/documentUpload/waitForDocumentDisplayed-error.png');
             this.test.assert(false, 'Document can not be found');
@@ -71,7 +68,7 @@ casper.test.begin('Document upload  file tests suite', 2, function documentUploa
             'upload': 'res/document-upload.txt'
         }, false);
 
-        return this.waitFor(function checkFileHasBeenUploaded () {
+        return this.waitFor(function checkFileHasBeenUploaded() {
             return this.evaluate(function () {
                 return document.querySelectorAll('.document-modal .attachedFiles ul.file-list li').length === 1;
             });

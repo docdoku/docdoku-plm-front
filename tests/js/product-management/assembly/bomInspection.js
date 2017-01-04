@@ -4,15 +4,13 @@ casper.test.begin('Bom inspection tests suite', 13, function bomInspectionTestsS
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product structure URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productStructure);
-    });
+    casper.open(urls.productStructure);
 
     /**
      * Assert the tree is collapsed (1 node)
@@ -131,8 +129,8 @@ casper.test.begin('Bom inspection tests suite', 13, function bomInspectionTestsS
 
     casper.then(function checkRootNode() {
         this.test.assertExists(treeSelector + ' > .load-3D:not(:checked)', 'Checkbox is unchecked');
-        this.evaluate(function(){
-            $( '#product_nav_list_container > ul > li > .treeview > ul > li > .load-3D').click();
+        this.evaluate(function () {
+            $('#product_nav_list_container > ul > li > .treeview > ul > li > .load-3D').click();
         });
         this.test.assertExists(treeSelector + ' > .load-3D:checked', 'Checkbox is now checked');
     });
@@ -149,8 +147,8 @@ casper.test.begin('Bom inspection tests suite', 13, function bomInspectionTestsS
      */
 
     casper.then(function unCheckRootNode() {
-        this.evaluate(function(){
-            $( '#product_nav_list_container > ul > li > .treeview > ul > li > .load-3D').click();
+        this.evaluate(function () {
+            $('#product_nav_list_container > ul > li > .treeview > ul > li > .load-3D').click();
         });
         this.test.assertExists(treeSelector + ' > .load-3D:not(:checked)', 'Checkbox is now unchecked');
     });

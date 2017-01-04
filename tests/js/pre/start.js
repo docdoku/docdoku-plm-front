@@ -1,20 +1,20 @@
 /*global casper,homeUrl*/
 
 'use strict';
-
-var extend = function (destination, source) {
-    for (var property in source) {
-        if (destination[property] && (typeof(destination[property]) === 'object') &&
-            (destination[property].toString() === '[object Object]') && source[property]) {
-            extend(destination[property], source[property]);
-        }
-        else {
-            destination[property] = source[property];
-        }
-    }
-    return destination;
-};
-
+/*
+ var extend = function (destination, source) {
+ for (var property in source) {
+ if (destination[property] && (typeof(destination[property]) === 'object') &&
+ (destination[property].toString() === '[object Object]') && source[property]) {
+ extend(destination[property], source[property]);
+ }
+ else {
+ destination[property] = source[property];
+ }
+ }
+ return destination;
+ };
+ */
 var conf = casper.cli.options;
 
 // This is the first file in the tests suite : use casper.start()
@@ -59,7 +59,7 @@ casper.options.waitTimeout = 10 * 1000; // 10 sec
 // Global test duration
 casper.options.timeout = conf.globalTimeout * 60 * 1000;
 
-casper.start();
+//casper.start();
 
 casper.setFilter('page.confirm', function (msg) {
     this.log('Confirm box: ' + msg, 'warning');
@@ -79,14 +79,29 @@ casper.on('remote.message', function remoteMessage(message) {
     this.log('[WebConsole] ' + message, 'info');
 });
 
+casper.on('page.error', function pageError(message) {
+    this.log('[WebConsole] ' + message, 'error');
+});
+
+casper.start();
+
 casper.test.begin('DocdokuPLM Tests suite', 1, function docdokuPLMTestsSuite() {
+
     casper.thenOpen(homeUrl, function homePageLoaded() {
-        this.evaluate(function(){
-            localStorage.setItem('jwt','');
+
+        this.evaluate(function () {
+            localStorage.setItem('jwt', '');
         });
+
         this.test.assert(true, 'Tests begins');
+
     });
+
     casper.run(function () {
         this.test.done();
     });
+});
+
+casper.test.on('fail', function () {
+    casper.capture('screenshot/fail-' + Date.now() + '.png');
 });

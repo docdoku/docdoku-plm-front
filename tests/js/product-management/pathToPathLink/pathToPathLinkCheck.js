@@ -4,15 +4,13 @@ casper.test.begin('Path to path link check tests suite', 26, function pathToPath
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product structure URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productStructure);
-    });
+    casper.open(urls.productStructure);
 
     /**
      * Assert the tree is displayed

@@ -3,7 +3,6 @@
 casper.test.begin('Part deletion tests suite', 3, function partDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
 
     /**
      * Open product management URL

@@ -4,15 +4,13 @@ casper.test.begin('Change issue creation tests suite', 3, function changeIssueCr
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change issues nav

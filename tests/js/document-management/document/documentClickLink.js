@@ -2,15 +2,12 @@
 casper.test.begin('Document click link tests suite', 3, function documentClickLinkTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -30,8 +27,8 @@ casper.test.begin('Document click link tests suite', 3, function documentClickLi
      */
 
     casper.then(function waitForDocumentDisplayed() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference', function documentIsDisplayed() {
-            this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference', function documentIsDisplayed() {
+            this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         }, function fail() {
             this.capture('screenshot/documentClickLink/waitForDocumentDisplayed-error.png');
             this.test.assert(false, 'Document can not be found');
@@ -81,7 +78,7 @@ casper.test.begin('Document click link tests suite', 3, function documentClickLi
      * Wait for document modal closed
      */
     casper.then(function waitForDocumentModalClosed() {
-        var modalTitle = '.document-modal > .modal-header > h3 > a[href="' + contextPath + '/documents/#' + workspace + '/' + documents.document1.number +'/A"]';
+        var modalTitle = '.document-modal > .modal-header > h3 > a[href="' + contextPath + '/documents/#' + workspace + '/' + documents.document1.number + '/A"]';
 
         return this.waitWhileVisible(modalTitle, function documentModalClosed() {
             this.test.assert(true, 'Document modal closed');

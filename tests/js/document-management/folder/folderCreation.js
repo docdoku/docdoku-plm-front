@@ -4,22 +4,19 @@ casper.test.begin('Folder creation tests suite', 1, function folderCreationTests
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
      */
     casper.then(function waitForFolderNavLink() {
         return this.waitForSelector('#folder-nav > .nav-list-entry > a', function clickFolderNavLink() {
-            this.evaluate(function(){
+            this.evaluate(function () {
                 $('#folder-nav > div.nav-list-entry > div.btn-group > ul.dropdown-menu > li.new-folder > a').click();
             });
         });

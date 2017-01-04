@@ -3,14 +3,12 @@ casper.test.begin('Login tests suite', 4, function loginTestsSuite() {
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open app home page
      */
-    casper.then(function () {
-        return this.open(homeUrl);
-    });
+    casper.open(homeUrl);
 
     /**
      * Test to find the login form
@@ -61,20 +59,20 @@ casper.test.begin('Login tests suite', 4, function loginTestsSuite() {
             this.click('#workspace-management-menu a.new-workspace');
         }, function () {
             this.capture('screenshot/auth/createNewWorkspace-error.png');
-            this.test.assert(true, 'Logout link should be displayed');
+            this.test.assert(true, 'Workspace creation form should be displayed');
         });
     });
 
     /**
      * Fill the form
      */
-    casper.then(function createNewWorkspace() {
+    casper.then(function submitWorkspaceCreationForm() {
         return this.waitForSelector('#workspace-id', function () {
             this.sendKeys('#workspace-id', workspace);
             this.click('#workspace_creation_form > div.actions-btn > div > input.btn-primary');
         }, function () {
-            this.capture('screenshot/auth/createNewWorkspace-error.png');
-            this.test.assert(true, 'Logout link should be displayed');
+            this.capture('screenshot/auth/submitWorkspaceCreationForm-error.png');
+            this.test.assert(true, 'Workspace creation form should be displayed');
         });
     });
 
@@ -82,7 +80,7 @@ casper.test.begin('Login tests suite', 4, function loginTestsSuite() {
      * Wait for workspaces list redirect
      */
     casper.then(function waitForRedirect() {
-        return this.waitForSelector('.home-workspace-list-container', function () {
+        return this.waitUntilVisible('.home-workspace-list-container', function () {
             this.test.assert(true, 'Redirected on workspaces list');
         });
     });

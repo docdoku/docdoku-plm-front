@@ -6,15 +6,13 @@ casper.test.begin('Public shared part tests suite', 2, function publicSharedPart
 
     var titleSelector = '#content > .part-revision > div >  h3';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open part management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.partPermalink);
-    });
+    casper.open(urls.partPermalink);
 
     /**
      * Check for part title

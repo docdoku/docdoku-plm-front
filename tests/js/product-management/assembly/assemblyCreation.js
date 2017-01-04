@@ -4,15 +4,13 @@ casper.test.begin('Assembly creation tests suite', 14, function assemblyCreation
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -153,14 +151,14 @@ casper.test.begin('Assembly creation tests suite', 14, function assemblyCreation
      * Checkin all parts
      */
 
-    partNumbers.forEach(function(partNumber) {
+    partNumbers.forEach(function (partNumber) {
         casper.then(function checkinPart() {
             // Run xhrs, more convenient here.
             return this.open(apiUrls.getParts + '/' + partNumber + '-A/checkin', {method: 'PUT'}).then(function (response) {
                 this.test.assertEquals(response.status, 200, 'Part ' + partNumber + ' is checked in');
             }, function () {
                 this.test.assert(false, 'Part ' + partNumber + ' has not been checked in');
-                this.capture('screenshot/assemblyCreation/checkinPart-'+partNumber+'-error.png');
+                this.capture('screenshot/assemblyCreation/checkinPart-' + partNumber + '-error.png');
             });
         });
     });

@@ -4,15 +4,13 @@ casper.test.begin('Shared part creation tests suite', 7, function sharedPartCrea
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -56,7 +54,7 @@ casper.test.begin('Shared part creation tests suite', 7, function sharedPartCrea
      * Set the part as public
      */
     casper.then(function setPartAsPublicShared() {
-        this.evaluate(function(){
+        this.evaluate(function () {
             $('#share-modal .public-shared-switch .switch-off input').click();
         });
         return this.waitForSelector('#share-modal .public-shared-switch .switch-on', function publicSharedCreated() {
@@ -123,7 +121,7 @@ casper.test.begin('Shared part creation tests suite', 7, function sharedPartCrea
      * Wait for modal
      */
     casper.then(function waitForSharedPartCreationModal() {
-        return  this.waitForSelector('#share-modal', function modalOpened() {
+        return this.waitForSelector('#share-modal', function modalOpened() {
 
             this.test.assert(true, 'Shared part modal is opened');
 

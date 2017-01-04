@@ -41,10 +41,14 @@ define([
 
             this.rolesInUse = new RoleInUseList();
 
+            // TODO : fetch this data before call render, hard to test, see comment below
             this.groupList.fetch({reset: true, success: function () {
                 _this.userList.fetch({reset: true, success: function () {
                     _this.createRoleViews();
-                    _this.rolesInUse.fetch({reset: true});
+                    _this.rolesInUse.fetch({reset: true, success : function(){
+                        // simple class add to facilitate casperjs tests
+                        _this.$('.modal').addClass('ready');
+                    }});
                 }});
             }});
 
