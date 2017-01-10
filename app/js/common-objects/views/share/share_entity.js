@@ -106,7 +106,7 @@ define([
                 this.$badPasswordLabel.show();
             } else {
                 data.password = this.$password.val() ? this.$password.val() : null;
-                data.expireDate = this.$expireDate.val() ? date.toUTCWithTimeZoneOffset(this.$expireDate.val()) : null;
+                data.expireDate = this.$expireDate.val() ? date.getDateFromDateInput(this.$expireDate.val()) : null;
                 this.model.createShare({data: data, success: function (pData) {
                     that.$privateShare.empty();
                     that.$privateShare.html(Mustache.render(templateShared,{i18n: App.config.i18n, generatedUrl: that.generateUrlFromUUID(pData.uuid)}));

@@ -12,7 +12,7 @@ define([
         'common-objects/views/linked/linked_parts',
         'common-objects/collections/linked/linked_part_collection'
     ],
-    function (Backbone, Mustache, template, UserList, Date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection) {
+    function (Backbone, Mustache, template, UserList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection) {
         'use strict';
         var ChangeIssueEditionView = Backbone.View.extend({
             events: {
@@ -38,7 +38,7 @@ define([
                 this.$el.html(Mustache.render(template, {i18n: App.config.i18n, model: this.model}));
                 this.bindDomElements();
                 this.bindUserPopover();
-                Date.dateHelper(this.$('.date-popover'));
+                date.dateHelper(this.$('.date-popover'));
                 new UserList().fetch({success: this.fillUserList});
                 this.fillPriorityList();
                 this.fillCategoryList();

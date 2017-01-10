@@ -99,7 +99,7 @@ define([
             var data = {
                 title: this.$inputMilestoneTitle.val(),
                 description: this.$inputMilestoneDescription.val(),
-                dueDate: date.toUTCWithTimeZoneOffset(this.$inputMilestoneDueDate.val())
+                dueDate: date.getDateFromDateInput(this.$inputMilestoneDueDate.val())
             };
 
             this.model.save(data, {

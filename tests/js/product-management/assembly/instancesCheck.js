@@ -10,7 +10,7 @@ casper.test.begin('Instances tests suite', 1, function instancesCheckTestsSuite(
      * Test instances REST resource, make sure provider is working
      */
 
-    casper.open(urls.productStructureInstances, function onResponse(response) {
+    casper.thenOpen(urls.productStructureInstances, function onResponse(response) {
         this.test.assertEqual(response.status, 200, 'Should have a 200 http code for ' + urls.productStructureInstances);
     }, function fail() {
         this.test.assert(false, 'Should have a response for ' + urls.productStructureInstances);

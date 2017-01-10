@@ -30,7 +30,7 @@ define([
                 : App.config.i18n._DATE_SHORT_FORMAT;
             var data = this.model.toJSON();
             if (!_.isEmpty(data.value)) {
-                data.value = date.formatLocalTime(
+                data.value = date.formatTimestamp(
                     format,
                     new Date(data.value)
                 );
@@ -42,7 +42,7 @@ define([
          * format date from html5 input to timestamp string
          */
         getValue: function (el) {
-            return date.formatLocalTime('YYYY-MM-DDTHH:mm:ss',el.val());
+            return date.getDateFromDateInput(el.val());
         },
 
         /**

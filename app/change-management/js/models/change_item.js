@@ -3,7 +3,7 @@ define([
     'backbone',
     'common-objects/utils/date',
     'common-objects/utils/acl-checker'
-], function (Backbone, Date, ACLChecker) {
+], function (Backbone, date, ACLChecker) {
 	'use strict';
     var ChangeItemModel = Backbone.Model.extend({
         priorities: {
@@ -54,7 +54,7 @@ define([
         },
 
         getFormattedCreationDate: function () {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getCreationDate()
             );

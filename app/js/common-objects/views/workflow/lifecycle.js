@@ -7,7 +7,7 @@ define([
     'common-objects/views/alert',
     'text!common-objects/templates/workflow/lifecycle.html'
 
-], function (Backbone, Mustache, LifecycleActivityView, Date, AlertView, template) {
+], function (Backbone, Mustache, LifecycleActivityView, date, AlertView, template) {
 	'use strict';
     var LifecycleView = Backbone.View.extend({
 
@@ -41,7 +41,7 @@ define([
                 success: function (abortedWorkflows) {
                     _.each(abortedWorkflows, function (workflow) {
 
-                        workflow.abortedFormattedDate = Date.formatTimestamp(
+                        workflow.abortedFormattedDate = date.formatTimestamp(
                             App.config.i18n._DATE_FORMAT,
                             workflow.abortedDate
                         );

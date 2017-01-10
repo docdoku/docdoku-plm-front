@@ -5,7 +5,7 @@ define(function () {
         log: function (message, colorType) {
             if (App.debug) {
                 if (colorType) {
-                    switch (colorType) {
+                    switch (colorType) {        //TODO : pass tag in params
                         case 'WS' :
                             window.console.log('%c [WS] ' + message, 'background: #222; color: #bada55', 'background: none; color:inherit');
                             break;

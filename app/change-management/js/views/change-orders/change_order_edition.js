@@ -16,7 +16,7 @@ define([
         'common-objects/views/linked/linked_requests',
         'common-objects/collections/linked/linked_change_item_collection'
     ],
-    function (Backbone, Mustache, template, ChangeOrderModel, UserList, MilestoneList, Date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedRequestsView, LinkedChangeItemCollection) {
+    function (Backbone, Mustache, template, ChangeOrderModel, UserList, MilestoneList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedRequestsView, LinkedChangeItemCollection) {
         'use strict';
         var ChangeOrderEditionView = Backbone.View.extend({
             events: {
@@ -43,7 +43,7 @@ define([
                 this.$el.html(Mustache.render(template, {i18n: App.config.i18n, model: this.model}));
                 this.bindDomElements();
                 this.bindUserPopover();
-                Date.dateHelper(this.$('.date-popover'));
+                date.dateHelper(this.$('.date-popover'));
                 new UserList().fetch({success: this.fillUserList});
                 new MilestoneList().fetch({success: this.fillMilestoneList});
                 this.fillPriorityList();

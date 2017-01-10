@@ -176,16 +176,16 @@ define([
                 queryString += '&content=' + content;
             }
             if (createdFrom) {
-                queryString += '&createdFrom=' + date.toUTCWithTimeZoneOffset(createdFrom);
+                queryString += '&createdFrom=' + date.getDateFromDateInput(createdFrom);
             }
             if (createdTo) {
-                queryString += '&createdTo=' + date.toUTCWithTimeZoneOffset(createdTo);
+                queryString += '&createdTo=' + date.getDateFromDateInput(createdTo);
             }
             if (modifiedFrom) {
-                queryString += '&modifiedFrom=' + date.toUTCWithTimeZoneOffset(modifiedFrom);
+                queryString += '&modifiedFrom=' + date.getDateFromDateInput(modifiedFrom);
             }
             if (modifiedTo) {
-                queryString += '&modifiedTo=' + date.toUTCWithTimeZoneOffset(modifiedTo);
+                queryString += '&modifiedTo=' + date.getDateFromDateInput(modifiedTo);
             }
 
             if (this.attributes.length) {

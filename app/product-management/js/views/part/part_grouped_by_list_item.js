@@ -6,7 +6,7 @@ define([
     'common-objects/utils/date',
     'common-objects/models/part',
     'common-objects/views/part/part_modal_view'
-], function (Backbone, Mustache, template, Date, Part, PartModalView){
+], function (Backbone, Mustache, template, date, Part, PartModalView){
     'use strict';
     var PartGroupedByListItemView = Backbone.View.extend({
 
@@ -43,14 +43,14 @@ define([
                     if(_.isArray(value)) {
                         value = _.map(value,function(dateValue) {
 
-                            return Date.formatTimestamp(
+                            return date.formatTimestamp(
                                 App.config.i18n._DATE_FORMAT,
                                 dateValue
                             );
                         });
                     }
                     else {
-                        value = Date.formatTimestamp(
+                        value = date.formatTimestamp(
                             App.config.i18n._DATE_FORMAT,
                             value
                         );
@@ -108,7 +108,7 @@ define([
 
             this.$el.on('click', this.openModal.bind(this));
 
-            Date.dateHelper(this.$('.date-popover'));
+            date.dateHelper(this.$('.date-popover'));
             return this;
         },
 
