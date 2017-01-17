@@ -35,7 +35,7 @@ define([
             this.$('.form_button_container').hide();
             $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/auth/recovery',
+                url: App.config.apiEndPoint + '/auth/recovery',
                 data: JSON.stringify({
                     login:login
                 }),

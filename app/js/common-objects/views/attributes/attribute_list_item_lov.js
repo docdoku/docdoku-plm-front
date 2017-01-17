@@ -46,7 +46,7 @@ define([
                 if (typeCopy === 'LOV') {
                     $.ajax({
                         type: 'GET',
-                        url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/lov/' + type,
+                        url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/lov/' + type,
                         contentType: 'application/json; charset=utf-8',
                         success: function (data) {
                             var possibleValues = data.values;

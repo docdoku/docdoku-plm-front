@@ -91,7 +91,7 @@ define([
             this.queries = [];
             var queries = this.queries;
 
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries';
 
             var $select = this.$selectQuery;
             var $existingQueriesArea = this.$existingQueriesArea;
@@ -217,7 +217,7 @@ define([
                     function (result) {
                         if (result) {
 
-                            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries/' + id;
+                            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries/' + id;
                             $.ajax({
                                 type: 'DELETE',
                                 url: url,
@@ -240,7 +240,7 @@ define([
 
         fetchPartIterationsAttributes: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/attributes/part-iterations';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/part-iterations';
 
             return $.ajax({
                 type: 'GET',
@@ -264,7 +264,7 @@ define([
 
         fetchPathDataAttributes: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/attributes/path-data';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/path-data';
 
             return $.ajax({
                 type: 'GET',
@@ -330,7 +330,7 @@ define([
 
         fetchTags: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/tags';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tags';
 
             return $.ajax({
                 type: 'GET',
@@ -531,7 +531,7 @@ define([
         doExportExistingQuery: function () {
             var queryId = this.$selectQuery.val();
             var query = _.findWhere(this.queries, {id: parseInt(queryId, 10)});
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries/' + query.id + '/format/XLS';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries/' + query.id + '/format/XLS';
             var link = document.createElement('a');
             link.href = url;
 
@@ -602,7 +602,7 @@ define([
             var queryData = this.getQueryData(false);
 
             if (queryData) {
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/query-export?export=XLS';
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/query-export?export=XLS';
 
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
@@ -641,7 +641,7 @@ define([
             if (queryData) {
 
                 this.$searchButton.button('loading');
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries';
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries';
 
                 if (save) {
                     url += '?save=true';

@@ -68,7 +68,7 @@ define([
 
             $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/accounts/create',
+                url: App.config.apiEndPoint + '/accounts/create',
                 data: JSON.stringify({
                     login:this.$('#account_creation_form-login').val(),
                     name:this.$('#account_creation_form-name').val(),
@@ -85,7 +85,7 @@ define([
 
         onAccountCreated : function(account){
             if(account.enabled){
-                window.location.href = App.config.contextPath + '/workspace-management/?accountCreated=true';
+                window.location.href = App.config.contextPath + 'workspace-management/?accountCreated=true';
             } else {
                 this.$notifications.append(new AlertView({
                     type: 'success',

@@ -25,6 +25,7 @@ var workspace = uuidV4();
 
 var casperCommand = casperJsBinary + ' test' +
     ' --ssl-protocol=any --ignore-ssl-errors=true ' +
+    ' --web-security=no ' +
     ' --protocol=' + conf.protocol +
     ' --domain=' + conf.domain +
     ' --port=' + conf.port +

@@ -15,7 +15,7 @@ define(['backbone',
 
         url: function () {
             if (this.get('identifier')) {
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     this.getConfigurationItemId() + '/instances/' +
                     this.getSerialNumber();
@@ -25,11 +25,11 @@ define(['backbone',
 
         urlRoot: function () {
             if (this.getConfigurationItemId()) {
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     this.getConfigurationItemId() + '/instances';
             } else {
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances';
             }
         },
@@ -103,7 +103,7 @@ define(['backbone',
         createInstance: function (args, callbacks) {
             return $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-instances',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-instances',
                 data: JSON.stringify(args),
                 contentType: 'application/json; charset=utf-8',
                 success: callbacks.success,
@@ -112,19 +112,19 @@ define(['backbone',
         },
 
         getBomUrl: function () {
-            return App.config.contextPath + '/product-structure/#' + App.config.workspaceId +
+            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
                 '/' + encodeURIComponent(this.getConfigurationItemId()) +
                 '/config-spec/pi-' + encodeURIComponent(this.getSerialNumber()) + '/bom';
         },
 
         getSceneUrl: function () {
-            return App.config.contextPath + '/product-structure/#' + App.config.workspaceId +
+            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
                 '/' + encodeURIComponent(this.getConfigurationItemId()) +
                 '/config-spec/pi-' + encodeURIComponent(this.getSerialNumber()) + '/scene';
         },
 
         getZipUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId +
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId +
                 '/products/' + encodeURIComponent(this.getConfigurationItemId()) +
                 '/export-files?configSpecType=pi-' + encodeURIComponent(this.getSerialNumber());
         },

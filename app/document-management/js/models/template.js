@@ -45,7 +45,7 @@ define([
             return this.get('attachedFiles');
         },
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.get('workspaceId') + '/document-templates/' + this.get('id') + '/';
+            return App.config.apiEndPoint + '/files/' + this.get('workspaceId') + '/document-templates/' + this.get('id') + '/';
         },
 
         isAttributesLocked: function () {

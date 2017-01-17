@@ -26,7 +26,7 @@ define([
         },
 
         showDocumentRevision: function (workspace, documentId, documentVersion) {
-            $.getJSON(App.config.contextPath + '/api/shared/' + workspace + '/documents/' + documentId + '-' + documentVersion)
+            $.getJSON(App.config.apiEndPoint + '/shared/' + workspace + '/documents/' + documentId + '-' + documentVersion)
                 .then(this.onDocumentFetched.bind(this), this.onError.bind(this));
         },
 
@@ -35,7 +35,7 @@ define([
             var password = this.password;
             $.ajax({
                 type: 'GET',
-                url: App.config.contextPath + '/api/shared/' + uuid + '/documents',
+                url: App.config.apiEndPoint + '/shared/' + uuid + '/documents',
                 beforeSend: function setPassword(xhr) {
                     if (password) {
                         xhr.setRequestHeader('password', password);
@@ -62,7 +62,7 @@ define([
                 this.$el.html(new NotFoundView().render(err).$el);
             }
             else if (err.status === 403 || err.status === 401) {
-                window.location.href = App.config.contextPath + '/?denied=true&originURL=' + encodeURIComponent(window.location.pathname + window.location.hash);
+                window.location.href = App.config.contextPath + '?denied=true&originURL=' + encodeURIComponent(window.location.pathname + window.location.hash);
             }
         },
 

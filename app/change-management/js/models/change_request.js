@@ -5,7 +5,7 @@ define([
 	'use strict';
     var ChangeRequestModel = ChangeItemModel.extend({
         urlRoot: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/changes/requests';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/changes/requests';
         },
         getMilestoneId: function () {
             return this.get('milestoneId');

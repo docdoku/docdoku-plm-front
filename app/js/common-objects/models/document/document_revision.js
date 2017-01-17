@@ -12,7 +12,7 @@ define([
 			if (this.isNew()) {
 				return this.collection.url();
 			}
-			return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/documents';
+			return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/documents';
 		},
 
         initialize: function () {
@@ -269,7 +269,7 @@ define([
 			return encodeURI(
 					window.location.origin +
 					App.config.contextPath +
-					'/documents/#' +
+					'documents/#' +
 					this.getWorkspace() +
 					'/' +
 					this.getReference() +

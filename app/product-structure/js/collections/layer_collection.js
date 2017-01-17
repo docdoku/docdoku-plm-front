@@ -9,7 +9,7 @@ define([
         model: Layer,
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId + '/layers';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId + '/layers';
         },
 
         setAllShown: function (allShown) {

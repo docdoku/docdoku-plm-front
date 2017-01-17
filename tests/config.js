@@ -121,7 +121,6 @@ var config = {
 
         // Product structure
         baseDir + 'js/product-management/assembly/bomInspection.js',
-        baseDir + 'js/product-management/assembly/instancesCheck.js',
         baseDir + 'js/product-management/product-instance/productInstanceData.js',
         baseDir + 'js/product-management/pathToPathLink/pathToPathLinkCheck.js',
         baseDir + 'js/product-management/part/checkUsedByList.js',

@@ -2,10 +2,10 @@
 define([
     'models/change_item'
 ], function (ChangeItemModel) {
-	'use strict';
+    'use strict';
     var ChangeIssueModel = ChangeItemModel.extend({
         urlRoot: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/changes/issues';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/changes/issues';
         },
         getInitiator: function () {
             return this.get('initiator');

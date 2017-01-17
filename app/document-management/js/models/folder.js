@@ -16,7 +16,7 @@ define(['backbone'], function (Backbone) {
         },
         url: function () {
             if (this.get('id')) {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/folders/' + this.get('id');
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/folders/' + this.get('id');
             } else if (this.collection) {
                 return this.collection.url;
             }

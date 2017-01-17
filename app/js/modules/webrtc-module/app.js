@@ -15,12 +15,12 @@ define([
     };
 
     Backbone.Events.on('NotificationSound', function () {
-        new buzz.sound(App.config.contextPath + '/sounds/notification.ogg').play();
+        new buzz.sound(App.config.contextPath + 'sounds/notification.ogg').play();
     });
 
     Backbone.Events.on('IncomingCallSound', function () {
         if (WEBRTC_CONFIG.PLAY_SOUND) {
-            new buzz.sound(App.config.contextPath + '/sounds/incoming-call.ogg').play();
+            new buzz.sound(App.config.contextPath + 'sounds/incoming-call.ogg').play();
         }
     });
 

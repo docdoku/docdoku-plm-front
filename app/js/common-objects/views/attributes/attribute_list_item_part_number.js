@@ -33,7 +33,7 @@ define([
             });
         },
         source: function (query, process) {
-            $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
                 var partNumbers = _(data).map(function (d) {
                     return d.partName + ' < ' + d.partNumber + ' >';
                 });

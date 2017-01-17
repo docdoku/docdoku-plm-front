@@ -314,7 +314,7 @@ define([
                 var self = this;
                 $.ajax({
                     type:'GET',
-                    url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/document-links/' + this.iteration.getReference() + '/' + this.productConfigSpec,
+                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/document-links/' + this.iteration.getReference() + '/' + this.productConfigSpec,
                     contentType:'application/json',
 
                     success:function(linkedDocuments) {

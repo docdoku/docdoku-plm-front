@@ -101,7 +101,7 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
 
         ContextResolver.redirectOnUnauthorized();
 
-        ContextResolver.resolveServerProperties()
+        ContextResolver.resolveServerProperties('..')
             .then(function buildView(){
                 require(['backbone','app','router','common-objects/views/header'],function(Backbone, AppView, Router, HeaderView){
                     App.appView = new AppView();

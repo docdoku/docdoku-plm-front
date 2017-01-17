@@ -69,8 +69,8 @@ define([
 
         logout:function(){
             delete localStorage.jwt;
-            $.get(App.config.contextPath + '/api/auth/logout').complete(function () {
-                window.location.href = App.config.contextPath + '/?logout=true';
+            $.get(App.config.apiEndPoint + '/auth/logout').complete(function () {
+                window.location.href = App.config.contextPath + '?logout=true';
             });
         }
 

@@ -3,7 +3,7 @@ define([
     'backbone',
     'common-objects/models/document/document_revision'
 ], function (Backbone, DocumentRevision) {
-	'use strict';
+    'use strict';
     var TaskDocumentList = Backbone.Collection.extend({
 
         model: DocumentRevision,
@@ -15,7 +15,7 @@ define([
         },
 
         url: function () {
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/tasks/' + App.config.login + '/documents/';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tasks/' + App.config.login + '/documents/';
             if (this.filterStatus) {
                 url += '?filter=' + this.filterStatus;
             }

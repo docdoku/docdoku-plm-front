@@ -220,7 +220,8 @@ casper.test.begin('Document creation with workflow tests suite', 11, function do
     casper.then(function downloadDocumentFile() {
         var modalTab = '.document-modal .tabs li a[href="#tab-iteration-files"]';
         return this.waitForSelector(modalTab, function modalOpened() {
-            var fileLink = '#iteration-files > div > ul > li > a[href="/api/files/' + workspace + '/documents/' + documents.documentWithWorkflow.number + '/A/1/document-upload.txt"]';
+            // [href="/api/files/' + workspace + '/documents/' + documents.documentWithWorkflow.number + '/A/1/document-upload.txt"]
+            var fileLink = '#iteration-files > div > ul > li > a';
             this.test.assertSelectorExist(fileLink, 'A link should be present to download the document');
             this.click(fileLink);
         }, function fail() {
@@ -277,7 +278,7 @@ casper.test.begin('Document creation with workflow tests suite', 11, function do
         this.click('.document-modal .tabs li a[href="#tab-iteration-iteration"]');
         var checkoutButton = '#tab-iteration-iteration .action-checkout';
         return this.waitForSelector(checkoutButton, function buttonFound() {
-            this.test.assert(true, 'Check out button displayed')
+            this.test.assert(true, 'Check out button displayed');
             this.click(checkoutButton);
         }, function fail() {
             this.capture('screenshot/documentCreationWithWorkflow/checkoutDocument-error.png');
@@ -291,7 +292,7 @@ casper.test.begin('Document creation with workflow tests suite', 11, function do
     casper.then(function assertDocumentCheckedOut() {
         var checkinButton = '#tab-iteration-iteration .action-checkin';
         return this.waitForSelector(checkinButton, function buttonFound() {
-            this.test.assert(true, 'Check in button displayed')
+            this.test.assert(true, 'Check in button displayed');
         }, function fail() {
             this.capture('screenshot/documentCreationWithWorkflow/assertDocumentCheckedOut-error.png');
             this.test.assert(false, 'Check in button can not be found');

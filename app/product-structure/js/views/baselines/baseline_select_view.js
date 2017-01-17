@@ -167,7 +167,7 @@ define([
 
         fetchPathToPathLinkTypes: function () {
 
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId;
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId;
             var selectedType = this.$selectConfSpec.val();
 
             if (selectedType === 'serial-number') {

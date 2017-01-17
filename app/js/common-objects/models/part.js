@@ -508,33 +508,33 @@ define([
         },
 
         getVisualizationUrl: function () {
-            return App.config.contextPath + '/visualization/#assembly/' + App.config.workspaceId + '/' + this.getPartKey() + '/0/0/0';
+            return App.config.contextPath + 'visualization/#assembly/' + App.config.workspaceId + '/' + this.getPartKey() + '/0/0/0';
         },
 
         url: function () {
             if (this.getPartKey()) {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey();
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey();
             }
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/';
         },
 
         createEffectivity: function (effectivity) {
             return $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities',
                 data: JSON.stringify(effectivity),
                 contentType: 'application/json; charset=utf-8'
             });
         },
 
         getEffectivities: function () {
-            return $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities');
+            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities');
         },
 
         deleteEffectivity: function (effectivityId) {
             return $.ajax({
                 type: 'DELETE',
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities/' + effectivityId,
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getPartKey() + '/effectivities/' + effectivityId,
                 contentType: 'application/json; charset=utf-8'
             });
         }

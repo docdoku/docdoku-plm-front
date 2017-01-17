@@ -47,12 +47,12 @@ define([
         },
 
         back:function(){
-            window.location.href = App.config.contextPath + '/workspace-management/';
+            window.location.href = App.config.contextPath + 'workspace-management/';
         },
 
         disconnect:function(){
             delete localStorage.jwt;
-            $.get(App.config.contextPath + '/api/auth/logout').complete(function () {
+            $.get(App.config.apiEndPoint + '/auth/logout').complete(function () {
                 location.reload();
             });
         }

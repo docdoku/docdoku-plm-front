@@ -15,7 +15,7 @@ define([
 
             var _this = this;
 
-            var lastIteration = document.documentIterations[document.documentIterations.length-1];
+            var lastIteration = document.documentIterations[document.documentIterations.length - 1];
 
             document.creationDate = date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
@@ -51,21 +51,21 @@ define([
 
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
-                contextPath:App.config.contextPath,
-                document:document,
-                lastIteration:lastIteration
+                contextPath: App.config.contextPath,
+                document: document,
+                lastIteration: lastIteration
             })).show();
 
             date.dateHelper(this.$('.date-popover'));
 
             this.$accordion = this.$('#tab-document-files > .accordion');
 
-            _.each(lastIteration.attachedFiles,function(binaryResource){
-                var url = App.config.contextPath+'/api/viewer?';
-                if(uuid){
-                    url+= 'uuid=' + encodeURIComponent(uuid) + '&';
+            _.each(lastIteration.attachedFiles, function (binaryResource) {
+                var url = App.config.apiEndPoint + '/viewer?';
+                if (uuid) {
+                    url += 'uuid=' + encodeURIComponent(uuid) + '&';
                 }
-                $.get(url+'fileName='+encodeURIComponent(binaryResource.fullName)).then(function(data){
+                $.get(url + 'fileName=' + encodeURIComponent(binaryResource.fullName)).then(function (data) {
                     _this.$accordion.append(data);
                 });
             });

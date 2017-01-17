@@ -10,16 +10,16 @@ define([
 
     var PartRevisionView = Backbone.View.extend({
 
-        events : {
-            'click a[href="#tab-cad-file"]':'showCADFileView'
+        events: {
+            'click a[href="#tab-cad-file"]': 'showCADFileView'
         },
 
-        showCADFileView:function(){
-            if(this.lastIteration.geometryFileURI){
-                if(!this.cadFileView){
+        showCADFileView: function () {
+            if (this.lastIteration.geometryFileURI) {
+                if (!this.cadFileView) {
                     var fileName = App.config.contextPath + this.lastIteration.geometryFileURI;
-                    var nativeCADFile = App.config.contextPath + '/api/files/' + this.lastIteration.nativeCADFile;
-                    this.cadFileView =  new CADFileView().render(nativeCADFile, fileName, this.uuid);
+                    var nativeCADFile = App.config.apiEndPoint + '/files/' + this.lastIteration.nativeCADFile;
+                    this.cadFileView = new CADFileView().render(nativeCADFile, fileName, this.uuid);
                     this.$('#tab-cad-file').html(this.cadFileView.$el);
                 }
                 this.cadFileView.resize();
@@ -31,7 +31,7 @@ define([
             var _this = this;
             this.uuid = uuid;
             this.part = part;
-            var lastIteration = part.partIterations[part.partIterations.length-1];
+            var lastIteration = part.partIterations[part.partIterations.length - 1];
             this.lastIteration = lastIteration;
 
             part.creationDate = date.formatTimestamp(
@@ -66,21 +66,21 @@ define([
 
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
-                contextPath:App.config.contextPath,
-                part:part,
-                lastIteration:lastIteration
+                contextPath: App.config.contextPath,
+                part: part,
+                lastIteration: lastIteration
             })).show();
 
             date.dateHelper(this.$('.date-popover'));
 
             this.$accordion = this.$('#tab-part-files > .accordion');
 
-            _.each(lastIteration.attachedFiles,function(binaryResource){
-                var url = App.config.contextPath+'/api/viewer?';
-                if(uuid){
-                    url+= 'uuid=' + encodeURIComponent(uuid) + '&';
+            _.each(lastIteration.attachedFiles, function (binaryResource) {
+                var url = App.config.apiEndPoint + '/viewer?';
+                if (uuid) {
+                    url += 'uuid=' + encodeURIComponent(uuid) + '&';
                 }
-                $.get(url+'fileName='+encodeURIComponent(binaryResource.fullName)).then(function(data){
+                $.get(url + 'fileName=' + encodeURIComponent(binaryResource.fullName)).then(function (data) {
                     _this.$accordion.append(data);
                 });
             });

@@ -40,7 +40,7 @@ define([
         },
 
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.get('workspaceId') + '/part-templates/' + this.get('id') + '/';
+            return App.config.apiEndPoint + '/files/' + this.get('workspaceId') + '/part-templates/' + this.get('id') + '/';
         },
 
         getId: function () {
@@ -94,14 +94,14 @@ define([
 
         url: function () {
             if (this.get('id')) {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id');
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id');
             } else {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates';
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates';
             }
         },
 
         generateIdUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id') + '/generate_id';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id') + '/generate_id';
         },
 
         getBaseName: function () {

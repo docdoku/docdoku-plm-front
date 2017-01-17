@@ -9,7 +9,7 @@ define([
         model: WorkspaceUserGroupMembership,
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/memberships/usergroups';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/memberships/usergroups';
         }
 
     });

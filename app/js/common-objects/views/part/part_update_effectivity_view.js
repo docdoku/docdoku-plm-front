@@ -62,7 +62,7 @@ define([
             this.$inputProductId.typeahead({
                 source: function (query, process) {
                     var productIds = [];
-                    $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/numbers?q=' + query, function (data) {
+                    $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/numbers?q=' + query, function (data) {
                         _(data).each(function (d) {
                             productIds.push(d.id);
                             map[d.id] = d.id;

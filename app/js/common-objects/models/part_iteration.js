@@ -113,8 +113,8 @@ define([
         },
 
         getConversionUrl:function(){
-            return App.config.contextPath +
-                '/api/workspaces/' + this.getWorkspace() +
+            return App.config.apiEndPoint +
+                '/workspaces/' + this.getWorkspace() +
                 '/parts/' + this.getNumber() + '-' + this.getVersion() +
                 '/iterations/' + this.get('iteration') +
                 '/conversion';
@@ -129,11 +129,11 @@ define([
         },
 
         getAttachedFilesUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/attachedfiles/';
+            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/attachedfiles/';
         },
 
         getNativeCadFileUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/nativecad/';
+            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/nativecad/';
         }
 
     });

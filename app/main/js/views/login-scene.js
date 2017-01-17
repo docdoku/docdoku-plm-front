@@ -7,8 +7,8 @@ define([
 
     function hasWebGL() {
         try {
-            return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' );
-        } catch( e ) {
+            return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
+        } catch (e) {
             return false;
         }
     }
@@ -16,20 +16,22 @@ define([
     var errorMessage = window.WebGLRenderingContext ? [
         'Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a>.<br />',
         'Find out how to get it <a href="http://get.webgl.org/">here</a>.'
-    ].join( '\n' ) : [
+    ].join('\n') : [
         'Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a>.<br/>',
         'Find out how to get it <a href="http://get.webgl.org/">here</a>.'
-    ].join( '\n' );
+    ].join('\n');
 
 
     var LoginSceneView = Backbone.View.extend({
 
-        initialize:function(){
+        initialize: function () {
 
             var container = this.el;
 
-            if ( ! hasWebGL() ){
+            if (!hasWebGL()) {
                 container.innerHTML = errorMessage;
+                this.handleResize = function () {
+                };
                 return this;
             }
             // standard global variables
@@ -39,14 +41,14 @@ define([
             var model;
 
             // FUNCTIONS
-            function update(){
-                if(model){
-                    model.rotation.set(0.45, model.rotation.y+0.005, model.rotation.z+0.005);
+            function update() {
+                if (model) {
+                    model.rotation.set(0.45, model.rotation.y + 0.005, model.rotation.z + 0.005);
                 }
                 controls.update();
             }
 
-            function animateCamera(){
+            function animateCamera() {
                 camera.position.copy(App.SceneOptions.startCameraPosition);
                 new TWEEN.Tween(camera.position)
                     .to(App.SceneOptions.endCameraPosition, 1000)
@@ -55,24 +57,28 @@ define([
                     .start();
             }
 
-            function render(){
-                renderer.render( scene, camera );
+            function render() {
+                renderer.render(scene, camera);
             }
 
-            function animate(){
+            function animate() {
                 requestAnimationFrame(animate);
                 update();
                 TWEEN.update();
                 render();
             }
 
-            function addModelToScene( geometry ){
-                var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, overdraw: true } );
-                model = new THREE.Mesh( geometry, material );
-                model.scale.set(1,1,1);
+            function addModelToScene(geometry) {
+                var material = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    shading: THREE.FlatShading,
+                    overdraw: true
+                });
+                model = new THREE.Mesh(geometry, material);
+                model.scale.set(1, 1, 1);
                 model.position.set(0, 0, 0);
                 model.rotation.set(0.45, 0, 1.55);
-                scene.add( model );
+                scene.add(model);
                 geometry.computeBoundingBox();
                 controls.target.copy(model.geometry.boundingBox.center());
                 animate();
@@ -83,7 +89,7 @@ define([
                 renderer.setSize(0, 0); // hack to get the canvas element resized
                 camera.aspect = container.clientWidth / container.clientHeight;
                 camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth , container.clientHeight);
+                renderer.setSize(container.clientWidth, container.clientHeight);
                 controls.handleResize();
             }
 
@@ -91,35 +97,35 @@ define([
             scene = new THREE.Scene();
 
             // CAMERA
-            camera = new THREE.PerspectiveCamera( 45, container.clientWidth/container.clientHeight,0.1, 5000);
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 5000);
             scene.add(camera);
-            camera.position.set(0,250,200);
+            camera.position.set(0, 250, 200);
 
             // RENDERER
-            renderer = new THREE.WebGLRenderer( {antialias:true, alpha:true} );
-            renderer.setSize( container.clientWidth, container.clientHeight);
+            renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+            renderer.setSize(container.clientWidth, container.clientHeight);
 
             // CONTROLS
-            controls = new THREE.TrackballControls( camera, container );
+            controls = new THREE.TrackballControls(camera, container);
 
             // LIGHT
             var light = new THREE.PointLight(0xffffff);
-            light.position.set(-100,200,100);
+            light.position.set(-100, 200, 100);
             scene.add(light);
             var light2 = new THREE.PointLight(0xffffff);
-            light2.position.set(100,-200,-100);
+            light2.position.set(100, -200, -100);
             scene.add(light2);
 
             // SKYBOX/FOG
-            scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+            scene.fog = new THREE.FogExp2(0x9999ff, 0.00025);
 
             var binaryLoader = new THREE.BinaryLoader();
-            binaryLoader.load( App.config.contextPath + '/images/pba.json', addModelToScene);
+            binaryLoader.load(App.config.contextPath + 'images/pba.json', addModelToScene);
 
             var ambientLight = new THREE.AmbientLight(0x111111);
             scene.add(ambientLight);
 
-            container.appendChild( renderer.domElement );
+            container.appendChild(renderer.domElement);
             window.addEventListener('resize', handleResize, false);
 
             this.handleResize = handleResize;

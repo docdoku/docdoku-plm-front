@@ -5,7 +5,7 @@ define(['backbone'], function (Backbone) {
         idAttribute: '_id',
 
         urlRoot: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products';
         },
 
         initialize: function () {
@@ -49,19 +49,19 @@ define(['backbone'], function (Backbone) {
         },
 
         getIndexUrl: function () {
-            return App.config.contextPath + '/product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId());
+            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId());
         },
 
         getBomUrl: function () {
-            return App.config.contextPath + '/product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/bom';
+            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/bom';
         },
 
         getSceneUrl: function () {
-            return App.config.contextPath + '/product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/scene';
+            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/scene';
         },
 
         getZipUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + encodeURIComponent(this.getId()) + '/export-files?configSpecType=latest';
+            return App.config.apiEndPoint + 'workspaces/' + App.config.workspaceId + '/products/' + encodeURIComponent(this.getId()) + '/export-files?configSpecType=latest';
         },
 
         hasPathToPathLink: function () {
@@ -75,7 +75,7 @@ define(['backbone'], function (Backbone) {
         createBaseline: function (baselineArgs, callbacks) {
             return $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-baselines',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines',
                 data: JSON.stringify(baselineArgs),
                 contentType: 'application/json; charset=utf-8',
                 success: callbacks.success,
@@ -86,14 +86,14 @@ define(['backbone'], function (Backbone) {
         createConfiguration: function (configurationArgs) {
             return $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-configurations',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-configurations',
                 data: JSON.stringify(configurationArgs),
                 contentType: 'application/json; charset=utf-8'
             });
         },
 
         getConfigurations: function () {
-            return $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-configurations/' + this.getId() + '/configurations');
+            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-configurations/' + this.getId() + '/configurations');
         },
 
         getReleasedChoices: function () {
@@ -132,7 +132,7 @@ define(['backbone'], function (Backbone) {
             $.ajax({
                 type: 'DELETE',
                 async: false,
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.getId() + '/baselines/' + baselineId,
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.getId() + '/baselines/' + baselineId,
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     if (callbacks && _.isFunction(callbacks.success)) {

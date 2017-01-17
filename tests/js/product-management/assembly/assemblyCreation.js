@@ -1,6 +1,6 @@
-/*global casper,urls,products,apiUrls*/
+/*global casper,urls,products,App*/
 
-casper.test.begin('Assembly creation tests suite', 14, function assemblyCreationTestsSuite() {
+casper.test.begin('Assembly creation tests suite', 10, function assemblyCreationTestsSuite() {
 
     'use strict';
 
@@ -153,14 +153,14 @@ casper.test.begin('Assembly creation tests suite', 14, function assemblyCreation
 
     partNumbers.forEach(function (partNumber) {
         casper.then(function checkinPart() {
-            // Run xhrs, more convenient here.
-            return this.open(apiUrls.getParts + '/' + partNumber + '-A/checkin', {method: 'PUT'}).then(function (response) {
-                this.test.assertEquals(response.status, 200, 'Part ' + partNumber + ' is checked in');
-            }, function () {
-                this.test.assert(false, 'Part ' + partNumber + ' has not been checked in');
-                this.capture('screenshot/assemblyCreation/checkinPart-' + partNumber + '-error.png');
-            });
+            this.evaluate(function (n) {
+                $.ajax({
+                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + n + '-A/checkin',
+                    type: 'PUT'
+                });
+            }, partNumber);
         });
+        return casper.wait(200);
     });
 
     casper.run(function allDone() {

@@ -60,6 +60,7 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
 
             XMLHttpRequest.prototype.open = function () {
 
+                // todo : test configPath compliance for string "'/api/files'"
                 if (arguments[1].indexOf('/api/files/') === 0) {
 
                     var totalAdded = false,

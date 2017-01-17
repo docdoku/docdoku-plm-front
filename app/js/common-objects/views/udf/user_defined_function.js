@@ -86,7 +86,7 @@ define([
             this.availableAttributes = [];
             var self = this;
             $.ajax({
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/attributes/part-iterations',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/part-iterations',
                 success: function (attributes) {
                     _.each(attributes,function(attribute){
                         if(attribute.type === 'NUMBER'){
@@ -147,7 +147,7 @@ define([
                 },
 
                 urlBase: function () {
-                    return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + productId;
+                    return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + productId;
                 }
             });
 

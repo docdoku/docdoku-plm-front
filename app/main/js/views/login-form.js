@@ -50,7 +50,7 @@ define([
             this.disableLoginButton();
             $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/auth/login',
+                url: App.config.apiEndPoint + '/auth/login',
                 data: JSON.stringify({
                     login:this.$('#login_form-login').val(),
                     password:this.$('#login_form-password').val()
@@ -60,7 +60,7 @@ define([
                 var jwt = xhr.getResponseHeader('jwt');
                 localStorage.jwt = jwt;
                 var originURL = UrlUtils.getParameterByName('originURL');
-                window.location.href = originURL ? decodeURIComponent(originURL):App.config.contextPath + '/workspace-management/';
+                window.location.href = originURL ? decodeURIComponent(originURL):App.config.contextPath + 'workspace-management/';
             }, this.onLoginFailed.bind(this));
             e.preventDefault();
             return false;

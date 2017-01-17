@@ -10,7 +10,7 @@ define([
         className: 'ModificationNotificationCollection',
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/notifications/';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/notifications/';
         },
 
         hasUnreadModificationNotifications: function () {

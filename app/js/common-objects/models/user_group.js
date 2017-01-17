@@ -9,13 +9,13 @@ function (Backbone) {
     });
 
     UserGroupModel.getTagSubscriptions = function (workspaceId, group) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions');
     };
 
     UserGroupModel.addOrEditTagSubscription = function (workspaceId, group, tagSubscription, error) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions/' + tagSubscription.getTag(),
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions/' + tagSubscription.getTag(),
             data: JSON.stringify(tagSubscription),
             contentType: 'application/json; charset=utf-8',
             error: error
@@ -25,7 +25,7 @@ function (Backbone) {
     UserGroupModel.removeTagSubscription = function (workspaceId, group, tagId, error) {
         return $.ajax({
             type: 'DELETE',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions/' + tagId,
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/groups/' + group + '/tag-subscriptions/' + tagId,
             error: error
         });
     };

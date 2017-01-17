@@ -4,7 +4,7 @@ define([
     'common-objects/collections/reachable_users',
     'modules/coworkers-access-module/views/coworkers_item_view'
 ], function (Backbone, Users, CoWorkersItemView) {
-	'use strict';
+    'use strict';
     var CoWorkersAccessModuleView = Backbone.View.extend({
 
         el: '#coworkers_access_module',
@@ -16,31 +16,33 @@ define([
 
             var $ul = this.$('#coworkers_access_module_entries');
 
-            users.fetch({reset: true, success: function () {
+            users.fetch({
+                reset: true, success: function () {
 
-                var coWorkers = users.models.filter(function(user){
-                    return user.attributes.login !== App.config.login;
-                });
+                    var coWorkers = users.models.filter(function (user) {
+                        return user.attributes.login !== App.config.login;
+                    });
 
-                if(!coWorkers.length){
-                    var menuUrl = App.config.contextPath+'/workspace-management/';
-                    $ul.append('<li><i>&nbsp;'+App.config.i18n.NO_COWORKER+'</i></li>');
-                    $ul.append('<li><a href="'+menuUrl+'"><i class="fa fa-cog"></i> '+App.config.i18n.WORKSPACES_ADMINISTRATION+'</a></li>');
-                    return;
-                }
-
-                _.each(coWorkers, function (user) {
-                    if (user.attributes.login !== App.config.login) {
-                        var cwiv = new CoWorkersItemView({
-                            model: user.attributes
-                        });
-
-                        that._coworkersItemViews.push(cwiv);
-
-                        $ul.append(cwiv.render().el);
+                    if (!coWorkers.length) {
+                        var menuUrl = App.config.contextPath + 'workspace-management/';
+                        $ul.append('<li><i>&nbsp;' + App.config.i18n.NO_COWORKER + '</i></li>');
+                        $ul.append('<li><a href="' + menuUrl + '"><i class="fa fa-cog"></i> ' + App.config.i18n.WORKSPACES_ADMINISTRATION + '</a></li>');
+                        return;
                     }
-                });
-            }});
+
+                    _.each(coWorkers, function (user) {
+                        if (user.attributes.login !== App.config.login) {
+                            var cwiv = new CoWorkersItemView({
+                                model: user.attributes
+                            });
+
+                            that._coworkersItemViews.push(cwiv);
+
+                            $ul.append(cwiv.render().el);
+                        }
+                    });
+                }
+            });
 
             this.$el.show();
 

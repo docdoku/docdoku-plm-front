@@ -12,7 +12,7 @@ define([
         className: 'FolderList',
 
         url: function () {
-            var baseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/folders';
+            var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/folders';
             if (this.parent) {
                 return baseUrl + '/' + this.parent.get('id') + '/folders';
             } else {

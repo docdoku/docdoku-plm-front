@@ -90,7 +90,7 @@ casper.test.begin('Parts multiple checkout tests suite', 3, function partsMultip
             });
             this.test.assertSelectorHasText('.nav-checkedOut-number-item', nbPart, 'checkout number updated (' + nbPart + ' in nav)');
         });
-    })
+    });
 
     casper.run(function allDone() {
         return this.test.done();

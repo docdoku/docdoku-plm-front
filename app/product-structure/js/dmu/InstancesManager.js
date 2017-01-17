@@ -42,7 +42,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             var timer = null;
             var evalRunning = false;
 
-            var worker = new Worker(App.config.contextPath + '/product-structure/js/workers/InstancesWorker.js');
+            var worker = new Worker(App.config.contextPath + 'product-structure/js/workers/InstancesWorker.js');
 
             var workerMessages = {
                 stats: function (stats) {
@@ -117,7 +117,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 }
 
                 // Load the instance
-                var quality = App.config.contextPath + '/' + instance.files[directive.quality].fullName;
+                var quality = App.config.contextPath + instance.files[directive.quality].fullName;
 
                 var texturePath = quality.substring(0, quality.lastIndexOf('/'));
                 loaderManager.parseFile(quality, texturePath, {
@@ -214,7 +214,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function loadPath(path, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + path + '&timestamp=' + getTimestamp();
 
@@ -236,7 +236,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function loadPaths(paths, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances';
 
                 if (App.config.diverge) {
@@ -264,7 +264,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function unLoadPath(path, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + path + '&timestamp=' + getTimestamp();
 
@@ -385,7 +385,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             // Method called from product visualization iframe
             this.loadProduct = function(pathToLoad, callback){
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + pathToLoad + '&timestamp=' + getTimestamp();
 
@@ -403,7 +403,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             // Method called from assembly visualization iframe
             this.loadAssembly = function(partRevisionKey, callback){
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' +
                     partRevisionKey + '/instances';
 
                 $.ajax({

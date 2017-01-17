@@ -23,8 +23,6 @@ define([
                 return '';
             }
             try {
-                console.log(timestamp)
-                console.log(moment(timestamp))
                 // set the timezone to be the current one (problem with daylight saving time)
                 // and return the string with the format specified
                 var timestampOffset = moment(timestamp).tz(timeZone).utcOffset();
@@ -89,8 +87,7 @@ define([
                 $(this).popover({
                     title: '<b>' + timeZone + '</b><br /><i class="fa fa-clock-o"></i> ' + _date + '<br />' + fromNow,
                     html: true,
-                    content: '<b>UTC</b><br /><i class="fa fa-clock-o"></i>  '
-                    + utcDate.format(App.config.i18n._DATE_FORMAT),
+                    content: '<b>UTC</b><br /><i class="fa fa-clock-o"></i>  ' + utcDate.format(App.config.i18n._DATE_FORMAT),
                     trigger: 'manual',
                     placement: placement
                 }).click(function (e) {

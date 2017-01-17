@@ -8,7 +8,7 @@ define([
         model: Role,
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/roles/inuse';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/roles/inuse';
         }
 
     });

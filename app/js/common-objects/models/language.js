@@ -8,7 +8,7 @@ define(['backbone'], function (Backbone) {
     });
 
     Language.getLanguages = function () {
-        return $.getJSON(App.config.contextPath + '/api/languages');
+        return $.getJSON(App.config.apiEndPoint + '/languages');
     };
 
     return Language;

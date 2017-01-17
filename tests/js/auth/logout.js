@@ -33,17 +33,6 @@ casper.test.begin('Logout tests suite', 1, function logoutTestsSuite() {
         });
     });
 
-    /**
-     * Test session state
-
-     casper.then(function checkResource(){
-        console.log(apiUrls.userInfo)
-        this.open(apiUrls.userInfo, {method: 'GET'}).then(function (response) {
-            console.log(this.getPageContent())
-            this.test.assert(response.status == 401,'We should get a 401 HTTP code');
-        });
-    });
-     */
     casper.run(function () {
         return this.test.done();
     });

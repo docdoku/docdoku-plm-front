@@ -21,7 +21,7 @@ define(['backbone',
         },
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' +
+            return App.config.apiEndPoint + '/workspaces/' +
                 App.config.workspaceId + '/product-instances/' +
                 App.config.productId + '/instances/' +
                 this.serialNumber + '/pathdata/' +

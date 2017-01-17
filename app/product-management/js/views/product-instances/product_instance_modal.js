@@ -263,7 +263,7 @@ define([
             var fullPath = event.data.fullPath;
             var pathData = _.findWhere(this.iteration.getPathData(), {path: fullPath});
             $.ajax({
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + self.model.getConfigurationItemId() + '/product-instances/' + self.model.getSerialNumber() + '/pathdata/' + pathData.id,
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + self.model.getConfigurationItemId() + '/product-instances/' + self.model.getSerialNumber() + '/pathdata/' + pathData.id,
                 type: 'DELETE',
                 error: function (error, type) {
                     self.onError(type, error);
@@ -328,7 +328,7 @@ define([
             //Do the rebase
             var selectedBaselineId = this.$('.rebase-baseline-select').val();
 
-            var url = App.config.contextPath + '/api/workspaces/' +
+            var url = App.config.apiEndPoint + '/workspaces/' +
                 App.config.workspaceId + '/product-instances/' +
                 this.productId + '/instances/' +
                 this.model.getSerialNumber() + '/rebase';

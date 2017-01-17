@@ -59,7 +59,7 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
             });
         };
 
-        ContextResolver.resolveServerProperties()
+        ContextResolver.resolveServerProperties('..')
             .then(ContextResolver.resolveAccount)
             .then(function(){
                 App.config.connected = true;

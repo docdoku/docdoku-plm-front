@@ -13,6 +13,7 @@ var protocol = casper.cli.get('protocol');
 var defaultUrl = protocol + '://' + domain + ':' + port;
 var homeUrl = defaultUrl + contextPath;
 
+
 function twoDigit(n) {
     'use strict';
     return n > 9 ? n : '0' + n;
@@ -228,7 +229,6 @@ var workflows = {
 var urls = {
     productManagement: homeUrl + 'product-management/#' + workspace,
     productStructure: homeUrl + 'product-structure/#' + workspace + '/' + products.product1.number + '/config-spec/wip/bom',
-    productStructureInstances: homeUrl + 'api/workspaces/' + workspace + '/products/' + products.product1.number + '/instances?configSpec=wip&path=-1',
     productStructureForDeliverable: homeUrl + 'product-structure/#' + workspace + '/' + products.product1.number + '/config-spec/pi-' + productInstances.productInstance1.serialNumber + '/bom',
     documentManagement: homeUrl + 'document-management/#' + workspace,
     changeManagement: homeUrl + 'change-management/#' + workspace,
@@ -243,29 +243,4 @@ var urls = {
 
     privatePartPermalink: null,
     privatePartPermalinkExpired: null
-};
-
-var apiUrls = {
-    userInfo: homeUrl + 'api/workspaces/' + workspace + '/users/me',
-    deletePart1: homeUrl + 'api/workspaces/' + workspace + '/parts/' + products.part1.number + '-A',
-    deletePart2: homeUrl + 'api/workspaces/' + workspace + '/parts/' + products.part2.number + '-A',
-    deletePartTemplate: homeUrl + 'api/workspaces/' + workspace + '/part-templates/' + products.template1.number,
-    deletePartTemplate2: homeUrl + 'api/workspaces/' + workspace + '/part-templates/' + products.template2.number,
-    deleteDocumentTemplate: homeUrl + 'api/workspaces/' + workspace + '/document-templates/' + documents.lov.template.number,
-    deleteLov1: homeUrl + 'api/workspaces/' + workspace + '/lov/' + documents.lov.itemName,
-    deleteLov2: homeUrl + 'api/workspaces/' + workspace + '/lov/' + documents.lov.color.itemName,
-    deleteDocument1: homeUrl + 'api/workspaces/' + workspace + '/documents/' + documents.document1.number + '-A',
-    deleteDocument2: homeUrl + 'api/workspaces/' + workspace + '/documents/' + documents.document2.number + '-A',
-    deleteDocument3: homeUrl + 'api/workspaces/' + workspace + '/documents/' + documents.document3.number + '-A',
-    deleteProduct: homeUrl + 'api/workspaces/' + workspace + '/products/' + products.product1.number,
-    deleteFolder: homeUrl + 'api/workspaces/' + workspace + '/folders/' + workspace + ':' + documents.folder1,
-    getBaselines: homeUrl + 'api/workspaces/' + workspace + '/product-baselines',
-    deleteProductInstance: homeUrl + 'api/workspaces/' + workspace + '/product-instances/' + products.product1.number + '/instances/' + productInstances.productInstance1.serialNumber,
-    getWorkflows: homeUrl + 'api/workspaces/' + workspace + '/workflow-models',
-    getRoles: homeUrl + 'api/workspaces/' + workspace + '/roles',
-    getTags: homeUrl + 'api/workspaces/' + workspace + '/tags',
-    getDocuments: homeUrl + 'api/workspaces/' + workspace + '/documents',
-    getParts: homeUrl + 'api/workspaces/' + workspace + '/parts',
-    milestones: homeUrl + 'api/workspaces/' + workspace + '/changes/milestones',
-    queries: homeUrl + 'api/workspaces/' + workspace + '/parts/queries'
 };

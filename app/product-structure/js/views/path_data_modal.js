@@ -95,7 +95,7 @@ define([
             },
             initAndOpenModal: function () {
 
-                var url = App.config.contextPath + '/api/workspaces/' +
+                var url = App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     App.config.productId + '/instances/' +
                     this.serialNumber + '/pathdata/' + this.path;
@@ -225,7 +225,7 @@ define([
                         this.iteration.setIterationNote(this.$('.description-input').val());
 
                         //POST
-                        var creationURL = App.config.contextPath + '/api/workspaces/' +
+                        var creationURL = App.config.apiEndPoint + '/workspaces/' +
                             App.config.workspaceId + '/product-instances/' +
                             App.config.productId + '/instances/' + this.serialNumber +
                             '/pathdata/' + this.iteration.getPath() + '/new';
@@ -274,7 +274,7 @@ define([
                 });
 
                 //PUT
-                var updateURL = App.config.contextPath + '/api/workspaces/' +
+                var updateURL = App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     App.config.productId + '/instances/' +
                     this.serialNumber + '/pathdata/' +
@@ -312,7 +312,7 @@ define([
                 });
 
                 //POST
-                var url = App.config.contextPath + '/api/workspaces/' +
+                var url = App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     App.config.productId + '/instances/' +
                     this.serialNumber + '/pathdata/' + this.iteration.getId();

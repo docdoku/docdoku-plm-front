@@ -28,7 +28,7 @@ define([
             $.ajax({
                 context :this,
                 type:'GET',
-                url:App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/documents/countCheckedOut'
+                url:App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/documents/countCheckedOut'
             }).success(function(data){
                 var numberOfItem = data.count;
                 var badge = that.$('.badge.nav-checkedOut-number-item');

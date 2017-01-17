@@ -16,7 +16,7 @@ define(['backbone'
 
         urlRoot: function () {
             if (this.getConfigurationItemId) {
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/' +
                     this.getConfigurationItemId() + '/instances/' +
                     this.getSerialNumber() + '/iterations/';
@@ -25,7 +25,7 @@ define(['backbone'
             }
         },
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.getBaseName();
+            return App.config.apiEndPoint + '/files/' + this.getBaseName();
 
         },
         getBaseName: function () {

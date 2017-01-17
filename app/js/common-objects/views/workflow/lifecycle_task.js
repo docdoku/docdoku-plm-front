@@ -104,8 +104,8 @@ define([
 
         submitClosure: function (e) {
 
-            var processUrl = App.config.contextPath +
-	            '/api/workspaces/' +
+            var processUrl = App.config.apiEndPoint +
+	            '/workspaces/' +
                 App.config.workspaceId + '/tasks/' +
                 this.task.parentWorkflowId + '-' +  this.task.parentActivityStep + '-' + this.task.index +
                 '/process';

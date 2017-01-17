@@ -3,13 +3,13 @@ define([
     'backbone',
     'common-objects/models/document/document_revision'
 ], function (Backbone, DocumentRevision) {
-	'use strict';
+    'use strict';
     var FolderDocumentList = Backbone.Collection.extend({
 
         model: DocumentRevision,
 
         url: function () {
-            var baseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId;
+            var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId;
             if (this.parent) {
                 return baseUrl + '/folders' + '/' + this.parent.id + '/documents';
             } else {

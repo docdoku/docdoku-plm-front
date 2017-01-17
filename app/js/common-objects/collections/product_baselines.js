@@ -10,10 +10,10 @@ define(['backbone', 'common-objects/models/product_baseline'],
 
             url: function () {
                 if (this.productId) {
-                    return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId +
+                    return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId +
                         '/product-baselines/' + this.productId + '/baselines';
                 }
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-baselines';
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines';
             },
 
             model: ProductBaseline

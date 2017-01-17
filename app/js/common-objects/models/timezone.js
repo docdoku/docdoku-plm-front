@@ -8,7 +8,7 @@ define(['backbone'], function (Backbone) {
     });
 
     TimeZone.getTimeZones = function () {
-        return $.getJSON(App.config.contextPath + '/api/timezones');
+        return $.getJSON(App.config.apiEndPoint + '/timezones');
     };
 
     return TimeZone;

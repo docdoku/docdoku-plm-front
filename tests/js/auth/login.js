@@ -1,4 +1,4 @@
-/*global casper,homeUrl,login,pass,apiUrls*/
+/*global casper,homeUrl,login,pass,workspace*/
 casper.test.begin('Login tests suite', 4, function loginTestsSuite() {
 
     'use strict';
@@ -89,9 +89,10 @@ casper.test.begin('Login tests suite', 4, function loginTestsSuite() {
      * Assert workspace has been created
      */
     casper.then(function checkSessionState() {
-        return this.open(apiUrls.userInfo).then(function (response) {
-            this.test.assertEqual(response.status, 200, 'User "' + login + '" should log in');
-        });
+        var workspaceExists = this.evaluate(function (w) {
+            return $('div.home-workspace-list-container.administrated-workspaces > div > div > h4:contains(' + w + ')').length === 1;
+        }, workspace);
+        this.test.assert(workspaceExists, 'Workspace exists');
     });
 
     casper.run(function allDone() {

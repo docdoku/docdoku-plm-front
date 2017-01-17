@@ -207,7 +207,7 @@ define([
         },
 
         getProductUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId;
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId;
         },
         getUrlForBom: function () {
 
@@ -223,14 +223,14 @@ define([
                 }
 
             } else {
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getNumber() + '-' + this.getVersion();
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getNumber() + '-' + this.getVersion();
             }
 
             return url;
         },
 
         getRootUrlForBom: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.getNumber() + '-' + this.getVersion();
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.getNumber() + '-' + this.getVersion();
         },
 
         cascadeCheckin: function (callback, iterationNote) {
@@ -331,7 +331,7 @@ define([
         },
 
         urlBase: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId;
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId;
         },
 
         parse: function (response) {

@@ -120,7 +120,7 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
 
     ContextResolver.redirectOnUnauthorized();
 
-    ContextResolver.resolveServerProperties()
+    ContextResolver.resolveServerProperties('..')
         .then(ContextResolver.resolveAccount)
         .then(ContextResolver.resolveWorkspaces)
         .then(ContextResolver.resolveGroups)

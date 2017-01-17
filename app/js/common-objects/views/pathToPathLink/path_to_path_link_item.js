@@ -42,7 +42,7 @@ define([
         onDeleteItem: function () {
             if (this.model.canSuppress) {
                 var self = this;
-                var urlToDelete = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.model.serialNumber + '/path-to-path-links/' + this.model.pathToPath.id;
+                var urlToDelete = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.model.serialNumber + '/path-to-path-links/' + this.model.pathToPath.id;
                 $.ajax({
                     type: 'DELETE',
                     url: urlToDelete,

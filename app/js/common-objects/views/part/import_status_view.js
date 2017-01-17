@@ -23,7 +23,7 @@ define([
         },
 
         deleteImport:function(){
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/import/'+this.model.id;
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import/'+this.model.id;
             $.ajax({
                 url:url,
                 method:'DELETE',
@@ -32,7 +32,7 @@ define([
         },
 
         refresh:function(){
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/import/'+this.model.id;
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import/'+this.model.id;
             var _this = this;
             $.get(url).then(function(pImport){
                 _this.model = pImport;

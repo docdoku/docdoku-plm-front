@@ -211,7 +211,7 @@ define([
                     };
 
                     this.searchingForPartList = true;
-                    var previewBaseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/importPreview';
+                    var previewBaseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/importPreview';
                     var previewUrl = previewBaseUrl + '?' + $.param(params);
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', previewUrl, true);
@@ -246,7 +246,7 @@ define([
         },
         formSubmit: function () {
 
-            var baseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/import';
+            var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import';
 
             if (this.file) {
 
@@ -287,7 +287,7 @@ define([
             _this.$('.import-status-views').empty();
 
             if (this.file) {
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
                 $.get(url).then(function (imports) {
                     _.each(imports, function (pImport) {
                         var view = new ImportStatusView({model: pImport}).render();

@@ -15,6 +15,8 @@ define([
         login: '',
         groups: [],
         contextPath: '',
+        apiEndPoint: '',
+        webSocketEndPoint: '',
         locale: window.localStorage.getItem('locale') || 'en'
     };
 
@@ -35,14 +37,14 @@ define([
         }
     });
 
-    ContextResolver.prototype.redirectOnUnauthorized = function(){
+    ContextResolver.prototype.redirectOnUnauthorized = function () {
         $.ajaxSetup({
             statusCode: {
                 401: function () {
                     delete localStorage.jwt;
                     // Prevent redirection loop
-                    if(App.config.contextPath + '/' !== window.location.pathname){
-                        window.location.href = App.config.contextPath + '/?denied=true&originURL=' +
+                    if (App.config.contextPath !== window.location.pathname) {
+                        window.location.href = App.config.contextPath + '?denied=true&originURL=' +
                             encodeURIComponent(window.location.pathname + window.location.hash);
                     }
                 }
@@ -55,9 +57,19 @@ define([
         return res;
     }
 
-    ContextResolver.prototype.resolveServerProperties = function () {
-        return $.getJSON('../webapp.properties.json').then(function (properties) {
-            App.config.contextPath = properties.contextRoot;
+    function addTrailingSlash(s) {
+        function endsWith(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
+        }
+        return s ? endsWith(s, '/') ? s : s + '/' : '/';
+    }
+
+    ContextResolver.prototype.resolveServerProperties = function (relativeLocation) {
+        return $.getJSON(relativeLocation + '/webapp.properties.json').then(function (properties) {
+            App.config.apiEndPoint = properties.apiEndPoint;
+            App.config.webSocketEndPoint = properties.webSocketEndPoint;
+            App.config.webSocketEndPoint = properties.webSocketEndPoint;
+            App.config.contextPath = addTrailingSlash(properties.contextPath);
         }, onError);
     };
 

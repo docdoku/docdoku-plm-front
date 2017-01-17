@@ -8,13 +8,13 @@ define(['backbone'], function (Backbone) {
     });
 
     Workspace.getWorkspaces = function () {
-        return $.getJSON(App.config.contextPath + '/api/workspaces');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces');
     };
 
     Workspace.createWorkspace = function (workspace) {
         return $.ajax({
             type: 'POST',
-            url: App.config.contextPath + '/api/workspaces',
+            url: App.config.apiEndPoint + '/workspaces',
             data: JSON.stringify(workspace),
             contentType: 'application/json; charset=utf-8'
         });
@@ -23,7 +23,7 @@ define(['backbone'], function (Backbone) {
     Workspace.updateWorkspace = function (workspace) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspace.id,
+            url: App.config.apiEndPoint + '/workspaces/' + workspace.id,
             data: JSON.stringify(workspace),
             contentType: 'application/json; charset=utf-8'
         });
@@ -32,7 +32,7 @@ define(['backbone'], function (Backbone) {
     Workspace.deleteWorkspace = function (workspaceId) {
         return $.ajax({
             type: 'DELETE',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId
         });
     };
 
@@ -47,7 +47,7 @@ define(['backbone'], function (Backbone) {
     Workspace.removeUserFromWorkspace = function (workspaceId, user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/remove-from-workspace',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/remove-from-workspace',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -56,7 +56,7 @@ define(['backbone'], function (Backbone) {
     Workspace.enableUser = function (workspaceId, user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/enable-user',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/enable-user',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -80,7 +80,7 @@ define(['backbone'], function (Backbone) {
     Workspace.disableUser = function (workspaceId, user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/disable-user',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/disable-user',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -89,7 +89,7 @@ define(['backbone'], function (Backbone) {
     Workspace.addUser = function (workspaceId, user, group) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/add-user' + (group ? '?group=' + group : ''),
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/add-user' + (group ? '?group=' + group : ''),
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -98,7 +98,7 @@ define(['backbone'], function (Backbone) {
     Workspace.addGroup = function (workspaceId, group) {
         return $.ajax({
             type: 'POST',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/user-group',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/user-group',
             data: JSON.stringify(group),
             contentType: 'application/json; charset=utf-8'
         });
@@ -106,7 +106,7 @@ define(['backbone'], function (Backbone) {
     Workspace.removeUserFromGroup = function (workspaceId, groupId, login) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/remove-from-group/' + groupId,
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/remove-from-group/' + groupId,
             data: JSON.stringify({login: login}),
             contentType: 'application/json; charset=utf-8'
         });
@@ -114,26 +114,26 @@ define(['backbone'], function (Backbone) {
     Workspace.removeGroup = function (workspaceId, groupId) {
         return $.ajax({
             type: 'DELETE',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/user-group/' + groupId
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/user-group/' + groupId
         });
     };
 
     Workspace.getUsersMemberships = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/memberships/users');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/memberships/users');
     };
 
     Workspace.getUsers = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/users');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/users');
     };
 
     Workspace.getUserGroupsMemberships = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/memberships/usergroups');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/memberships/usergroups');
     };
 
     Workspace.setUsersMembership = function (workspaceId, membership) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/user-access',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/user-access',
             data: JSON.stringify(membership),
             contentType: 'application/json; charset=utf-8'
         });
@@ -142,34 +142,34 @@ define(['backbone'], function (Backbone) {
     Workspace.setGroupAccess = function (workspaceId, membership) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/workspaces/' + workspaceId + '/group-access',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/group-access',
             data: JSON.stringify(membership),
             contentType: 'application/json; charset=utf-8'
         });
     };
 
     Workspace.getStatsOverView = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/stats-overview');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/stats-overview');
     };
 
     Workspace.getDiskUsageStats = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/disk-usage-stats');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/disk-usage-stats');
     };
 
     Workspace.getCheckedOutDocumentsStats = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/checked-out-documents-stats');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/checked-out-documents-stats');
     };
 
     Workspace.getCheckedOutPartsStats = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/checked-out-parts-stats');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/checked-out-parts-stats');
     };
 
     Workspace.getUsersStats = function (workspaceId) {
         return $.when.apply(undefined, [
-            $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/users').then(function (data) {
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/users').then(function (data) {
                 return data;
             }),
-            $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/users-stats').then(function (data) {
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/users-stats').then(function (data) {
                 return data;
             })
         ]);
@@ -180,7 +180,7 @@ define(['backbone'], function (Backbone) {
         var next = args.next;
         var promiseArray = [];
         _.each(groups, function (group) {
-            promiseArray.push($.getJSON(App.config.contextPath + '/api/workspaces/' + group.workspaceId + '/groups/' + group.memberId + '/users').then(function (users) {
+            promiseArray.push($.getJSON(App.config.apiEndPoint + '/workspaces/' + group.workspaceId + '/groups/' + group.memberId + '/users').then(function (users) {
                 return next(group, users);
             }));
         });
@@ -196,7 +196,7 @@ define(['backbone'], function (Backbone) {
     };
 
     Workspace.getTags = function (workspaceId) {
-        return $.getJSON(App.config.contextPath + '/api/workspaces/' + workspaceId + '/tags');
+        return $.getJSON(App.config.apiEndPoint + '/workspaces/' + workspaceId + '/tags');
     };
 
     return Workspace;

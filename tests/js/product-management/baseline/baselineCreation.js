@@ -1,4 +1,4 @@
-/*global casper,urls,baselines,$*/
+/*global casper,urls,baselines*/
 
 casper.test.begin('Baseline creation tests suite', 2, function baselineCreationTestsSuite() {
     'use strict';

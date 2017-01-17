@@ -100,7 +100,7 @@ function (ContextResolver,  commonStrings, changeManagementStrings, ErrorView) {
 
     ContextResolver.redirectOnUnauthorized();
 
-    ContextResolver.resolveServerProperties()
+    ContextResolver.resolveServerProperties('..')
         .then(ContextResolver.resolveAccount)
         .then(ContextResolver.resolveWorkspaces)
         .then(ContextResolver.resolveGroups)

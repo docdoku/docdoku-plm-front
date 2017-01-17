@@ -15,7 +15,7 @@ define([
         },
 
         initialize: function () {
-            this.urlBase = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/search/';
+            this.urlBase = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/search/';
         },
 
         fetchPageCount: function () {
