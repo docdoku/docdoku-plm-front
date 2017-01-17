@@ -4,8 +4,6 @@ var moduleName = 'serverFront';
 var LIVERELOAD_PORT = 35730;
 var SERVER_HOSTNAME = 'localhost';
 var SERVER_PORT = 9001;
-var DEV_HOSTNAME = 'localhost';
-var DEV_PORT = 8989;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
 
 var mountFolder = function (connect, dir) {
@@ -82,7 +80,7 @@ module.exports = {
                 path: 'http://localhost:<%= connect.options.port %>'
             },
             dev: {
-                path: 'http://' + DEV_HOSTNAME + ':' + DEV_PORT
+                path: 'http://localhost:9001'
             }
         };
 
