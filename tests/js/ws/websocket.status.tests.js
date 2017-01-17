@@ -68,7 +68,7 @@ describe('Websocket status module tests', function () {
 
         var testMessage = JSON.stringify({
             type: 'USER_STATUS',
-            remoteUser: 'foo'
+            remoteUser: 'ws3'
         });
 
 
@@ -76,8 +76,8 @@ describe('Websocket status module tests', function () {
 
             ws1.send(testMessage);
 
-            ws1.on('message', function () {
-                assert(false, 'Should not have been called');
+            ws1.on('message', function (data) {
+                assert(false, 'Should not have been called with message : ' + data);
                 ws1.close();
             });
 

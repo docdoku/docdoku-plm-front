@@ -13,7 +13,7 @@ module.exports = {
             path: '/api/auth/login',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             }
         };
 
@@ -22,13 +22,8 @@ module.exports = {
             if (res.statusCode === 200) {
 
                 var jwt = res.headers.jwt;
-                var cookie = res.headers['set-cookie'];
 
-                var ws = new WebSocket('ws://localhost:8080/ws', {
-                    headers: {
-                        Cookie: cookie
-                    }
-                });
+                var ws = new WebSocket('ws://localhost:8080/ws');
 
                 if (autoConnect) {
 

@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ *
+ * curl 'http://localhost:8080/api/accounts/create' -H 'Content-Type: application/json' --data '{"login":"ws1","name":"ws2","email":"test@localhost","language":"fr","timeZone":"CET","newPassword":"password"}'
+ *
+ */
+
 var utils = require('./ws.utils');
 var assert = require('assert');
 
