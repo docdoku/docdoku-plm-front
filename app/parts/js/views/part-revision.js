@@ -4,8 +4,9 @@ define([
     'mustache',
     'text!templates/part-revision.html',
     'views/cad-file-view',
-    'common-objects/utils/date'
-], function (Backbone, Mustache, template, CADFileView, date) {
+    'common-objects/utils/date',
+    'common-objects/views/viewers/viewers-factory'
+], function (Backbone, Mustache, template, CADFileView, date, ViewersFactory) {
     'use strict';
 
     var PartRevisionView = Backbone.View.extend({
@@ -85,17 +86,12 @@ define([
             this.$accordion = this.$('#tab-part-files > .accordion');
 
             _.each(lastIteration.attachedFiles, function (binaryResource) {
-                var url = App.config.apiEndPoint + '/viewer?';
-                if (uuid) {
-                    url += 'uuid=' + encodeURIComponent(uuid) + '&';
-                }
-                $.get(url + 'fileName=' + encodeURIComponent(binaryResource.fullName)).then(function (data) {
-                    _this.$accordion.append(data);
-                });
+                var viewer = ViewersFactory.getViewer(binaryResource, uuid);
+                _this.$accordion.append(viewer);
             });
 
             return this;
-        }
+        },
     });
 
     return PartRevisionView;

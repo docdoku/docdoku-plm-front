@@ -3,8 +3,9 @@ define([
     'backbone',
     'mustache',
     'text!templates/document-revision.html',
-    'common-objects/utils/date'
-], function (Backbone, Mustache, template, date) {
+    'common-objects/utils/date',
+    'common-objects/views/viewers/viewers-factory'
+], function (Backbone, Mustache, template, date, ViewersFactory) {
     'use strict';
 
     var DocumentRevisionView = Backbone.View.extend({
@@ -61,14 +62,10 @@ define([
             this.$accordion = this.$('#tab-document-files > .accordion');
 
             _.each(lastIteration.attachedFiles, function (binaryResource) {
-                var url = App.config.apiEndPoint + '/viewer?';
-                if (uuid) {
-                    url += 'uuid=' + encodeURIComponent(uuid) + '&';
-                }
-                $.get(url + 'fileName=' + encodeURIComponent(binaryResource.fullName)).then(function (data) {
-                    _this.$accordion.append(data);
-                });
+                var viewer = ViewersFactory.getViewer(binaryResource, uuid);
+                _this.$accordion.append(viewer);
             });
+
             return this;
         }
     });
