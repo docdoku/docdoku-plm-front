@@ -1,6 +1,6 @@
 /*global _,define,THREE*/
 define(['views/progress_bar_view'], function (ProgressBarView) {
-	'use strict';
+    'use strict';
     var LoaderManager = function (options) {
 
         this.ColladaLoader = null;
@@ -16,20 +16,20 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
         }
     };
 
-    var defaultMaterial = new THREE.MeshLambertMaterial({color:new THREE.Color(0x62697B)});
+    var defaultMaterial = new THREE.MeshLambertMaterial({color: new THREE.Color(0x62697B)});
 
-    function setShadows(object){
-        object.traverse( function ( o ) {
-            if ( o instanceof THREE.Mesh) {
+    function setShadows(object) {
+        object.traverse(function (o) {
+            if (o instanceof THREE.Mesh) {
                 o.castShadow = true;
                 o.receiveShadow = true;
             }
         });
     }
 
-    function updateMaterial(object){
-        object.traverse( function ( o ) {
-            if ( o instanceof THREE.Mesh && !o.material.name) {
+    function updateMaterial(object) {
+        object.traverse(function (o) {
+            if (o instanceof THREE.Mesh && !o.material.name) {
                 o.material = defaultMaterial;
             }
         });
@@ -60,8 +60,8 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
 
             XMLHttpRequest.prototype.open = function () {
 
-                // todo : test configPath compliance for string "'/api/files'"
-                if (arguments[1].indexOf('/api/files/') === 0) {
+                // Subscribe only to files requests
+                if (arguments[1].indexOf(App.config.serverBasePath + 'api/files/') === 0) {
 
                     var totalAdded = false,
                         totalLoaded = 0,
@@ -100,7 +100,6 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
         },
 
 
-
         parseFile: function (filename, texturePath, callbacks) {
 
 
@@ -114,7 +113,7 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                         this.OBJLoader = new THREE.OBJLoader();
                     }
 
-                    this.OBJLoader.load(filename, texturePath+'/attachedfiles/', function ( object ) {
+                    this.OBJLoader.load(filename, texturePath + '/attachedfiles/', function (object) {
                         setShadows(object);
                         updateMaterial(object);
                         callbacks.success(object);
@@ -158,7 +157,7 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                         this.STLLoader = new THREE.STLLoader();
                     }
 
-                    this.STLLoader.load(filename, function(geometry){
+                    this.STLLoader.load(filename, function (geometry) {
                         var object = new THREE.Object3D();
                         object.add(new THREE.Mesh(geometry));
                         setShadows(object);
@@ -177,10 +176,10 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                     this.JSONLoader.load(filename, function (geometry, materials) {
                         geometry.dynamic = false;
                         var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry,new THREE.MeshFaceMaterial(materials)));
+                        object.add(new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials)));
                         setShadows(object);
                         callbacks.success(object);
-                    }, texturePath+'/attachedfiles/');
+                    }, texturePath + '/attachedfiles/');
 
                     break;
 
@@ -192,10 +191,10 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                     }
 
                     this.BinaryLoader.load(filename, function (geometry, materials) {
-                        var _material = new THREE.MeshPhongMaterial({color: materials[0].color, overdraw: true });
+                        var _material = new THREE.MeshPhongMaterial({color: materials[0].color, overdraw: true});
                         geometry.dynamic = false;
                         var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry,_material));
+                        object.add(new THREE.Mesh(geometry, _material));
                         setShadows(object);
                         callbacks.success(object);
                     }, texturePath);
