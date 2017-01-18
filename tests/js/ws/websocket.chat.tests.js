@@ -83,7 +83,7 @@ describe('Websocket chat module tests', function () {
                     assert.equal(chatMessage, message);
                     ws2.close();
                     mayBeDone();
-                })
+                });
 
             });
         });

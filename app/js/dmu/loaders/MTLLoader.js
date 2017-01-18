@@ -14,13 +14,22 @@ THREE.MTLLoader.prototype = {
 
         var scope = this;
 
-        var loader = new THREE.XHRLoader();
-        loader.setCrossOrigin( this.crossOrigin );
-        loader.load( url, function ( text ) {
+        var xhr = new XMLHttpRequest();
 
-            onLoad( scope.parse( text ) );
+        xhr.open('GET', url, true);
+        xhr.addEventListener('load', function () {
+            onLoad(scope.parse(this.response));
+        }, false);
 
-        }, onProgress, onError );
+        xhr.addEventListener( 'error', function ( event ) {
+            console.error( 'THREE.MTLLoader: Couldn\'t load [' + url + '] [' + xhr.status + ']' );
+        }, false );
+
+        if(localStorage.jwt){
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+        }
+
+        xhr.send();
 
     },
 
@@ -379,16 +388,26 @@ THREE.MTLLoader.MaterialCreator.prototype = {
 
             texture = new THREE.Texture();
 
-            loader = new THREE.ImageLoader();
-            loader.crossOrigin = this.crossOrigin;
-            loader.load( url, function ( image ) {
+            var xhr = new XMLHttpRequest();
 
-                texture.image = THREE.MTLLoader.ensurePowerOfTwo_( image );
+            xhr.open('GET', url, true);
+            xhr.addEventListener('load', function () {
+                texture.image = THREE.MTLLoader.ensurePowerOfTwo_( this.response );
                 texture.needsUpdate = true;
-
                 if ( onLoad ) onLoad( texture );
 
-            } );
+
+            }, false);
+
+            xhr.addEventListener( 'error', function ( event ) {
+                console.error( 'THREE.MTLLoader: Couldn\'t load [' + url + '] [' + xhr.status + ']' );
+            }, false );
+
+            if(localStorage.jwt){
+                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+            }
+
+            xhr.send();
 
         }
 

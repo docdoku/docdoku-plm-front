@@ -1,5 +1,9 @@
-{
-    "apiEndPoint":"http://localhost:8080/api",
-    "webSocketEndPoint":"ws://localhost:8080/ws",
-    "contextPath":"/"
-}
+    {
+        "server": {
+            "ssl": false,
+            "domain": "localhost",
+            "port": 8080,
+            "contextPath": "/"
+        },
+        "contextPath": "/"
+    }

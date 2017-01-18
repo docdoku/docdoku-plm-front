@@ -117,9 +117,10 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 }
 
                 // Load the instance
-                var quality = App.config.contextPath + instance.files[directive.quality].fullName;
+                var quality = App.config.serverBasePath + instance.files[directive.quality].fullName;
 
                 var texturePath = quality.substring(0, quality.lastIndexOf('/'));
+
                 loaderManager.parseFile(quality, texturePath, {
                     success: function (object3d) {
 
@@ -383,7 +384,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             // Method called from product visualization iframe
-            this.loadProduct = function(pathToLoad, callback){
+            this.loadProduct = function (pathToLoad, callback) {
 
                 var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
@@ -401,7 +402,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             // Method called from assembly visualization iframe
-            this.loadAssembly = function(partRevisionKey, callback){
+            this.loadAssembly = function (partRevisionKey, callback) {
 
                 var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' +
                     partRevisionKey + '/instances';
@@ -418,9 +419,9 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             };
 
-            this.computeGlobalBBox = function(){
+            this.computeGlobalBBox = function () {
 
-                var box = new THREE.Box3(new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0));
+                var box = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0));
 
                 _.each(instancesIndexed, function (instance) {
                     var min = new THREE.Vector3(instance.xMin, instance.yMin, instance.zMin);

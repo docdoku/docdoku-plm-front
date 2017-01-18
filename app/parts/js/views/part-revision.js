@@ -17,8 +17,17 @@ define([
         showCADFileView: function () {
             if (this.lastIteration.geometryFileURI) {
                 if (!this.cadFileView) {
-                    var fileName = App.config.contextPath + this.lastIteration.geometryFileURI;
-                    var nativeCADFile = App.config.apiEndPoint + '/files/' + this.lastIteration.nativeCADFile;
+
+
+                    var fileName = this.lastIteration.geometryFileURI;
+
+                    if (fileName.indexOf('/') === 0) {
+                        fileName = fileName.substr(1, fileName.length);
+                    }
+
+                    fileName = App.config.serverBasePath + fileName;
+
+                    var nativeCADFile = App.config.apiEndPoint + '/files/' + this.lastIteration.nativeCADFile.fullName;
                     this.cadFileView = new CADFileView().render(nativeCADFile, fileName, this.uuid);
                     this.$('#tab-cad-file').html(this.cadFileView.$el);
                 }

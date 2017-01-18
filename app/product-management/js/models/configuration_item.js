@@ -61,7 +61,7 @@ define(['backbone'], function (Backbone) {
         },
 
         getZipUrl: function () {
-            return App.config.apiEndPoint + 'workspaces/' + App.config.workspaceId + '/products/' + encodeURIComponent(this.getId()) + '/export-files?configSpecType=latest';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + encodeURIComponent(this.getId()) + '/export-files?configSpecType=latest';
         },
 
         hasPathToPathLink: function () {

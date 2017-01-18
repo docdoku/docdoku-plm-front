@@ -10,8 +10,8 @@ require.config({
         jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
         bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
         backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        popoverUtils: {deps: ['jquery'], exports: 'jQuery'}
-
+        popoverUtils: {deps: ['jquery'], exports: 'jQuery'},
+        fileDownload: {deps: ['jquery'], exports: 'jQuery'}
     },
 
     paths: {
@@ -28,7 +28,8 @@ require.config({
         pluginDetect:'../../js/lib/plugin-detect',
         moment: '../../bower_components/moment/min/moment-with-locales',
         momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
-        popoverUtils: '../../js/utils/popover.utils'
+        popoverUtils: '../../js/utils/popover.utils',
+        fileDownload: '../../js/utils/file-download'
     },
 
     deps: [
@@ -37,7 +38,8 @@ require.config({
         'bootstrap',
         'jqueryUI',
         'pluginDetect',
-        'popoverUtils'
+        'popoverUtils',
+        'fileDownload'
     ],
     config: {
         i18n: {

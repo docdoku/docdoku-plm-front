@@ -61,15 +61,20 @@ define([
         function endsWith(str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         }
+
         return s ? endsWith(s, '/') ? s : s + '/' : '/';
     }
 
     ContextResolver.prototype.resolveServerProperties = function (relativeLocation) {
         return $.getJSON(relativeLocation + '/webapp.properties.json').then(function (properties) {
-            App.config.apiEndPoint = properties.apiEndPoint;
-            App.config.webSocketEndPoint = properties.webSocketEndPoint;
-            App.config.webSocketEndPoint = properties.webSocketEndPoint;
+
+            var isSSL = properties.server.ssl;
+            var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
+            App.config.serverBasePath = (isSSL ? 'https' : 'http') + base;
+            App.config.apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
+            App.config.webSocketEndPoint = (isSSL ? 'wss' : 'ws') + base + 'ws';
             App.config.contextPath = addTrailingSlash(properties.contextPath);
+
         }, onError);
     };
 
