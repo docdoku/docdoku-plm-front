@@ -974,19 +974,15 @@ define([
         };
 
         this.takeScreenShot = function () {
-
             var imageSource = _this.renderer.domElement.toDataURL('image/png');
-            var filename = App.config.productId + '-' + date.formatTimestamp(App.config.i18n._DATE_SHORT_FORMAT, Date.now());
-
-            var save = document.createElement('a');
-            save.href = imageSource;
-            save.download = filename;
-            var event = document.createEvent('MouseEvents');
-            event.initMouseEvent(
-                'click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
-            );
-            save.dispatchEvent(event);
-
+            var fileName = App.config.productId + '-' + date.formatTimestamp(App.config.i18n._DATE_SHORT_FORMAT, Date.now());
+            var a = document.createElement('a');
+            a.href = imageSource;
+            a.download = fileName;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         };
 
         this.setCameraNear = function (n) {
