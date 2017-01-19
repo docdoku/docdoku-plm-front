@@ -1,26 +1,25 @@
 <div>
     <h4>
         {{#administrated}}
-        <i class="fa fa-graduation-cap"></i>
+            <i class="fa fa-graduation-cap"></i>
         {{/administrated}}
         {{^administrated}}
-        <i class="fa fa-user"></i>
+            <i class="fa fa-user"></i>
         {{/administrated}}
-        {{workspace.id}}
-        <br/>
-        <small>{{workspace.description}}</small>
+        <span>{{workspace.id}}</span>
     </h4>
-
+    {{#workspace.description}}<p>{{.}}</p>{{/workspace.description}}
 </div>
 
 {{#isAdmin}}
-<div class="controls">
-    <label for="workspace-enable-switch-{{workspace.id}}">{{i18n.ENABLE_WORKSPACE}}</label>
-    <div class="workspace-enable-switch switch switch-small" data-on="success" data-off="danger">
-        <input id="workspace-enable-switch-{{workspace.id}}" type="checkbox" checked/>
-    </div>
+    <div class="controls">
+        <label for="workspace-enable-switch-{{workspace.id}}">{{i18n.ENABLE_WORKSPACE}}</label>
 
-</div>
+        <div class="workspace-enable-switch switch switch-small" data-on="success" data-off="danger">
+            <input id="workspace-enable-switch-{{workspace.id}}" type="checkbox" checked/>
+        </div>
+
+    </div>
 {{/isAdmin}}
 
 
@@ -29,7 +28,7 @@
         {{#administrated}}
         <a href="#/workspace/{{workspace.id}}/users">
         {{/administrated}}
-            {{i18n.USERS}}
+        {{i18n.USERS}}
         {{#administrated}}
         </a>
         {{/administrated}}
@@ -38,9 +37,9 @@
     <li>
         {{^isAdmin}}
         <a href="../document-management/#{{workspace.id}}">
-            {{/isAdmin}}
-            {{i18n.DOCUMENTS}}
-            {{^isAdmin}}
+        {{/isAdmin}}
+        {{i18n.DOCUMENTS}}
+        {{^isAdmin}}
         </a>
         {{/isAdmin}}
         (<span class="documents-count"></span>)
@@ -48,9 +47,9 @@
     <li>
         {{^isAdmin}}
         <a href="../product-management/#{{workspace.id}}/parts">
-            {{/isAdmin}}
-            {{i18n.PARTS}}
-            {{^isAdmin}}
+        {{/isAdmin}}
+        {{i18n.PARTS}}
+        {{^isAdmin}}
         </a>
         {{/isAdmin}}
         (<span class="parts-count"></span>)
@@ -58,9 +57,9 @@
     <li>
         {{^isAdmin}}
         <a href="../product-management/#{{workspace.id}}/products">
-            {{/isAdmin}}
-            {{i18n.PRODUCTS}}
-            {{^isAdmin}}
+        {{/isAdmin}}
+        {{i18n.PRODUCTS}}
+        {{^isAdmin}}
         </a>
         {{/isAdmin}}
         (<span class="products-count"></span>)
@@ -68,13 +67,13 @@
 
 </ul>
 {{#administrated}}
-<div class="workspace-actions ">
-    {{#administrated}}
-    <a href="#/workspace/{{workspace.id}}/edit">{{i18n.EDIT}}</i></a> |
-    <a href="#/workspace/{{workspace.id}}/dashboard">{{i18n.DASHBOARD}}</a>
-    {{/administrated}}
-    {{#isAdmin}}
-    | <a href="#" class="index-workspace" data-workspace-id="{{workspace.id}}">{{i18n.INDEX_WORKSPACE}}</a>
-    {{/isAdmin}}
-</div>
+    <div class="workspace-actions ">
+        {{#administrated}}
+            <a href="#/workspace/{{workspace.id}}/edit">{{i18n.EDIT}}</i></a> |
+            <a href="#/workspace/{{workspace.id}}/dashboard">{{i18n.DASHBOARD}}</a>
+        {{/administrated}}
+        {{#isAdmin}}
+            | <a href="#" class="index-workspace" data-workspace-id="{{workspace.id}}">{{i18n.INDEX_WORKSPACE}}</a>
+        {{/isAdmin}}
+    </div>
 {{/administrated}}

@@ -1,33 +1,34 @@
 #document-management-menu {
     // Custom menu code
 
-    .nav-list-entry {
-
-        &.move-doc-into {
-            border: 1px dashed @menu-drop-item;
-            height: 25px;
-            margin-top: -1px;
-            padding-left: 5px;
-        }
-
-        .dropdown-menu {
-            li.new-folder .icon {
-                .plm-icon-menu-folder-new;
-                margin: 4px 6px 4px 6px;
-            }
-            li.edit .icon {
-                .plm-icon-menu-edit;
-                margin: 4px 6px 4px 6px;
-            }
-            li.delete .icon {
-                .plm-icon-menu-delete;
-                margin: 4px 6px 4px 6px;
-            }
-        }
-
-    }
-
     #folder-nav {
+
+        .nav-list-entry {
+
+            &.move-doc-into {
+                border: 1px dashed @menu-drop-item;
+                height: 25px;
+                margin-top: -1px;
+                padding-left: 5px;
+            }
+
+            .dropdown-menu {
+                li.new-folder .icon {
+                    .plm-icon-menu-folder-new;
+                    margin: 4px 6px 4px 6px;
+                }
+                li.edit .icon {
+                    .plm-icon-menu-edit;
+                    margin: 4px 6px 4px 6px;
+                }
+                li.delete .icon {
+                    .plm-icon-menu-delete;
+                    margin: 4px 6px 4px 6px;
+                }
+            }
+
+        }
+
         *zoom: 1;
         &:before,
         &:after {

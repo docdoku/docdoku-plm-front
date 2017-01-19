@@ -33,20 +33,22 @@ define([
                 document.obsoleteDate
             );
 
-            lastIteration.creationDate = date.formatTimestamp(
-                App.config.i18n._DATE_FORMAT,
-                lastIteration.creationDate
-            );
+            if(lastIteration){
+                lastIteration.creationDate = date.formatTimestamp(
+                    App.config.i18n._DATE_FORMAT,
+                    lastIteration.creationDate
+                );
 
-            lastIteration.checkInDate = date.formatTimestamp(
-                App.config.i18n._DATE_FORMAT,
-                lastIteration.checkInDate
-            );
+                lastIteration.checkInDate = date.formatTimestamp(
+                    App.config.i18n._DATE_FORMAT,
+                    lastIteration.checkInDate
+                );
 
-            lastIteration.modificationDate = date.formatTimestamp(
-                App.config.i18n._DATE_FORMAT,
-                lastIteration.modificationDate
-            );
+                lastIteration.modificationDate = date.formatTimestamp(
+                    App.config.i18n._DATE_FORMAT,
+                    lastIteration.modificationDate
+                );
+            }
 
             document.encodedRoutePath = encodeURIComponent(document.routePath);
 
@@ -61,10 +63,12 @@ define([
 
             this.$accordion = this.$('#tab-document-files > .accordion');
 
-            _.each(lastIteration.attachedFiles, function (binaryResource) {
-                var viewer = ViewersFactory.getViewer(binaryResource, uuid);
-                _this.$accordion.append(viewer);
-            });
+            if(lastIteration){
+                _.each(lastIteration.attachedFiles, function (binaryResource) {
+                    var viewer = ViewersFactory.getViewer(binaryResource, uuid);
+                    _this.$accordion.append(viewer);
+                });
+            }
 
             return this;
         }

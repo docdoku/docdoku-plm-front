@@ -26,15 +26,12 @@
                         {{/currentWorkspace}}
                     </a>
                     <ul class="BreadcrumbMenuList dropdown-menu">
-                        <li class="BreadcrumbMenuList-sectionTitle">
-                            <i class="fa fa-graduation-cap"></i>{{i18n.ADMINISTRATED}}
-                        </li>
 
                         {{#administratedWorkspaces}}
                         <li class="BreadcrumbSubMenuItem dropdown-submenu visible-desktop">
                             <a>
                                 {{#isCurrent}}<i class="fa fa-check"></i>{{/isCurrent}}
-                                <span>{{id}}</span>
+                                <i class="fa fa-graduation-cap"></i> <span>{{id}}</span>
                             </a>
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
                                 <li>
@@ -69,18 +66,11 @@
                         </li>
                         {{/administratedWorkspaces}}
 
-                        <li class="BreadcrumbMenuList-hr">
-                            <hr/>
-                        </li>
-                        <li class="BreadcrumbMenuList-sectionTitle">
-                            {{i18n.OTHERS}}
-                        </li>
-
                         {{#nonAdministratedWorkspaces}}
                         <li class="BreadcrumbSubMenuItem dropdown-submenu visible-desktop">
                             <a>
                                 {{#isCurrent}}<i class="fa fa-check"></i>{{/isCurrent}}
-                                <span>{{id}}</span>
+                                <i class="fa fa-user"></i> <span>{{id}}</span>
                             </a>
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
                                 <li><a href="{{contextPath}}document-management/#{{id}}/folders"
