@@ -61,7 +61,9 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
             XMLHttpRequest.prototype.open = function () {
 
                 // Subscribe only to files requests
-                if (arguments[1].indexOf(App.config.serverBasePath + 'api/files/') === 0) {
+                var isGeometryRequest = arguments[1].indexOf(App.config.serverBasePath + 'api/files/') === 0;
+
+                if (isGeometryRequest) {
 
                     var totalAdded = false,
                         totalLoaded = 0,
@@ -95,7 +97,13 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                     }, false);
                 }
 
-                return _xhrOpen.apply(this, arguments);
+                _xhrOpen.apply(this, arguments);
+
+                // Force server to send the file without compression (custom header)
+                if(isGeometryRequest){
+                    this.setRequestHeader('x-accept-encoding', 'identity');
+                }
+
             };
         },
 
