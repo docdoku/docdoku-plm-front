@@ -8,7 +8,7 @@ var config = {
     // URL
     protocol: 'http',
     domain: 'localhost',
-    port: '8080',
+    port: '9001',
     contextPath: '/',
 
     // User authentication

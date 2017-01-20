@@ -1,4 +1,4 @@
-/*global casper,urls,products,App*/
+/*global casper,urls,products,workspace*/
 
 casper.test.begin('Assembly creation tests suite', 10, function assemblyCreationTestsSuite() {
 
@@ -151,17 +151,30 @@ casper.test.begin('Assembly creation tests suite', 10, function assemblyCreation
      * Checkin all parts
      */
 
-    partNumbers.forEach(function (partNumber) {
-        casper.then(function checkinPart() {
-            this.evaluate(function (n) {
-                $.ajax({
-                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + n + '-A/checkin',
-                    type: 'PUT'
+
+    casper.then(function checkinPart() {
+        // run XHRs on ui thred
+        this.evaluate(function (args) {
+
+            $.getJSON('../webapp.properties.json').then(function (properties) {
+
+                var isSSL = properties.server.ssl;
+                var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
+                var apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
+
+                args.partNumbers.forEach(function (n) {
+                    $.ajax({
+                        url: apiEndPoint + '/workspaces/' + args.workspace + '/parts/' + n + '-A/checkin',
+                        type: 'PUT'
+                    });
                 });
-            }, partNumber);
-        });
+            });
+
+        }, {partNumbers: partNumbers, workspace: workspace});
+
         return casper.wait(200);
     });
+
 
     casper.run(function allDone() {
         return this.test.done();
