@@ -69,7 +69,7 @@ define([
         return $.getJSON(relativeLocation + '/webapp.properties.json').then(function (properties) {
 
             var isSSL = properties.server.ssl;
-            var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
+            var base = '://' + properties.server.domain + ':' + properties.server.port + addTrailingSlash(properties.server.contextPath);
             App.config.serverBasePath = (isSSL ? 'https' : 'http') + base;
             App.config.apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
             App.config.webSocketEndPoint = (isSSL ? 'wss' : 'ws') + base + 'ws';
