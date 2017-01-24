@@ -156,13 +156,19 @@ casper.test.begin('Assembly creation tests suite', 10, function assemblyCreation
         // run XHRs on ui thread
         this.evaluate(function (args) {
 
+            function endsWith(str, suffix) {
+                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+            }
+
             $.getJSON('../webapp.properties.json').then(function (properties) {
 
                 var isSSL = properties.server.ssl;
                 var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
-                if (!base.endsWith('/')) {
+
+                if (!endsWith(base, '/')) {
                     base += '/';
                 }
+
                 var apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
 
                 args.partNumbers.forEach(function (n) {
