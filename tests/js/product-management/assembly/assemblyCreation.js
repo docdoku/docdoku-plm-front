@@ -153,13 +153,16 @@ casper.test.begin('Assembly creation tests suite', 10, function assemblyCreation
 
 
     casper.then(function checkinPart() {
-        // run XHRs on ui thred
+        // run XHRs on ui thread
         this.evaluate(function (args) {
 
             $.getJSON('../webapp.properties.json').then(function (properties) {
 
                 var isSSL = properties.server.ssl;
                 var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
+                if (!base.endsWith('/')) {
+                    base += '/';
+                }
                 var apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
 
                 args.partNumbers.forEach(function (n) {
