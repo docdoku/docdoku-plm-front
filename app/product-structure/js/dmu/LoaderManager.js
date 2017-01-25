@@ -1,4 +1,4 @@
-/*global _,define,THREE*/
+/*global _,define,THREE,App*/
 define(['views/progress_bar_view'], function (ProgressBarView) {
     'use strict';
     var LoaderManager = function (options) {

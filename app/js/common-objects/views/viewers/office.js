@@ -1,4 +1,4 @@
-/*global define,PluginDetect*/
+/*global define*/
 define([
     'backbone',
     'mustache',

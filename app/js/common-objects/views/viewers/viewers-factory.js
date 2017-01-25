@@ -7,6 +7,8 @@ define([
     'common-objects/views/viewers/video'
 ], function (DefaultViewer, ViewersUtils, ImageViewer, OfficeViewer, VideoViewer) {
 
+    'use strict';
+
     var viewers = [ImageViewer, OfficeViewer, VideoViewer];
 
     return {
@@ -26,5 +28,6 @@ define([
 
         }
 
-    }
+    };
+
 });
