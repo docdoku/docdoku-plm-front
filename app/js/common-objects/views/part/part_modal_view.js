@@ -20,7 +20,7 @@ define([
     'common-objects/utils/date',
     'common-objects/views/tags/tag',
     'common-objects/models/tag'
-], function (Backbone, Mustache, ModalView, FileListView, template, AttributesView, TemplateNewAttributesView, PartEffectivitiesView, PartAssemblyView, ModificationNotificationGroupListView, LinkedDocumentsView, UsedByView, AlertView, LinkedDocumentCollection, LinkedDocumentIterationCollection, LifecycleView, ConversionStatusView, date,TagView,Tag) {
+], function (Backbone, Mustache, ModalView, FileListView, template, AttributesView, TemplateNewAttributesView, PartEffectivitiesView, PartAssemblyView, ModificationNotificationGroupListView, LinkedDocumentsView, UsedByView, AlertView, LinkedDocumentCollection, LinkedDocumentIterationCollection, LifecycleView, ConversionStatusView, date, TagView, Tag) {
 
     'use strict';
 
@@ -79,11 +79,11 @@ define([
             this.$tabs.eq(index).children().tab('show');
         },
 
-        activateFileTab: function(){
+        activateFileTab: function () {
             this.activateTab(4);
         },
 
-        activateNotificationsTab: function(){
+        activateNotificationsTab: function () {
             this.activateTab(this.$tabs.length - 1);
         },
 
@@ -98,7 +98,7 @@ define([
             this.editMode = this.model.isCheckoutByConnectedUser() && this.iterations.isLast(this.iteration);
             data.editMode = this.editMode;
             data.isCheckout = this.model.isCheckout();
-            this.isCheckout = data.isCheckout ;
+            this.isCheckout = data.isCheckout;
             this.isReleased = this.model.attributes.status === 'RELEASED';
             data.isReleased = this.isReleased;
             this.isObsolete = this.model.attributes.status === 'OBSOLETE';
@@ -132,7 +132,7 @@ define([
                     );
                 }
             }
-            data.hasOneIteration= (this.iterations.length < 1);
+            data.hasOneIteration = (this.iterations.length < 1);
             this.$el.html(Mustache.render(template, data));
 
             this.$authorLink = this.$('.author-popover');
@@ -195,10 +195,10 @@ define([
                 that.attributesView.addAndFillAttribute(item);
             });
 
-            this.attributeTemplatesView =  new TemplateNewAttributesView({
+            this.attributeTemplatesView = new TemplateNewAttributesView({
                 el: this.$('#attribute-templates-list'),
                 attributesLocked: false,
-                editMode : this.editMode
+                editMode: this.editMode
             });
             this.attributeTemplatesView.render();
             this.attributeTemplatesView.collection.reset(this.iteration.getAttributeTemplates());
@@ -229,7 +229,7 @@ define([
                 linkedDocuments: this.linkedDocumentsView.collection.toJSON()
             }, {
                 success: function () {
-                    if (that.model.collection){
+                    if (that.model.collection) {
                         that.model.collection.fetch();
                     }
                     that.model.fetch();
@@ -264,9 +264,9 @@ define([
             }).render();
 
             this.$('#iteration-files').html(this.cadFileView.el);
-            if(this.editMode){
+            if (this.editMode) {
                 this.conversionStatusView = new ConversionStatusView({
-                    model:this.iteration
+                    model: this.iteration
                 }).render();
                 this.$('.file-list').first().after(this.conversionStatusView.el);
             }
@@ -287,12 +287,16 @@ define([
 
         },
 
-        updateConversionStatusView:function(){
-            this.conversionStatusView.launch();
+        updateConversionStatusView: function () {
+            var _this = this;
+            // Add a little delay, conversion may not be started again
+            setTimeout(function () {
+                _this.conversionStatusView.fetch();
+            }, 100);
         },
 
         initPartEffectivitiesView: function () {
-            this.partEffectivitiesView = new PartEffectivitiesView({
+            new PartEffectivitiesView({
                 el: '#effectivities-list',
                 notifications: this.$el.find('.notifications').first(),
                 productId: this.model.id,
@@ -313,16 +317,16 @@ define([
             if (this.productConfigSpec) {
                 var self = this;
                 $.ajax({
-                    type:'GET',
+                    type: 'GET',
                     url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/document-links/' + this.iteration.getReference() + '/' + this.productConfigSpec,
-                    contentType:'application/json',
+                    contentType: 'application/json',
 
-                    success:function(linkedDocuments) {
+                    success: function (linkedDocuments) {
                         self.iteration.setLinkedDocuments(linkedDocuments);
                         self.displayLinkedDocumentIterationsView();
                     },
 
-                    error: function() {
+                    error: function () {
                         self.displayLinkedDocumentsView();
                     }
                 });
@@ -335,7 +339,7 @@ define([
         displayLinkedDocumentsView: function () {
             this.linkedDocumentsView = new LinkedDocumentsView({
                 editMode: this.editMode,
-                commentEditable:true,
+                commentEditable: true,
                 documentIteration: this.iteration,
                 collection: new LinkedDocumentCollection(this.iteration.getLinkedDocuments())
             }).render();
@@ -347,7 +351,7 @@ define([
         displayLinkedDocumentIterationsView: function () {
             this.linkedDocumentsView = new LinkedDocumentsView({
                 editMode: this.editMode,
-                commentEditable:true,
+                commentEditable: true,
                 documentIteration: this.iteration,
                 collection: new LinkedDocumentIterationCollection(this.iteration.getLinkedDocuments())
             }).render();
@@ -374,9 +378,11 @@ define([
                 }).setWorkflow(this.model.get('workflow')).setEntityType('parts').render();
 
                 this.lifecycleView.on('lifecycle:change', function () {
-                    that.model.fetch({success: function () {
-                        that.lifecycleView.setWorkflow(that.model.get('workflow')).setEntityType('parts').render();
-                    }});
+                    that.model.fetch({
+                        success: function () {
+                            that.lifecycleView.setWorkflow(that.model.get('workflow')).setEntityType('parts').render();
+                        }
+                    });
                 });
 
             } else {
@@ -393,7 +399,7 @@ define([
 
         updateModificationNotifications: function () {
             var unread = 0;
-            this.model.getModificationNotifications().each(function(notif) {
+            this.model.getModificationNotifications().each(function (notif) {
                 if (!notif.isAcknowledged()) {
                     unread++;
                 }

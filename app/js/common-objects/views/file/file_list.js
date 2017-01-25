@@ -121,7 +121,6 @@ define([
             this.filesUL.empty();
             this.filesToDelete.reset();
             this.addOneFile(attachedFile);
-            this.$el.trigger('file:uploaded');
         },
 
         toggleCheckAll: function() {
@@ -164,6 +163,8 @@ define([
                     return false;
                 }
 
+                self.$el.trigger('file:uploaded', fileName);
+
                 self.xhrFinishedWithSuccess(xhr);
                 progressBar.remove();
                 newFile.isNew = function () {
@@ -200,7 +201,6 @@ define([
                 var message = this.options.singleFile ? App.config.i18n.FILE_UPLOADED : App.config.i18n.FILES_UPLOADED;
                 this.printNotifications('info',message);
             }
-
         },
 
         xhrFinishedWithError: function(xhr, error) {
