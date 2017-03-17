@@ -78,7 +78,7 @@ module.exports = {
                     dest: 'dist',
                     src: [
                         'product-structure/js/workers/*',
-                        'js/dmu/*'
+                        'js/dmu/**'
                     ]
                 }
             ]

@@ -34,11 +34,6 @@ module.exports = {
         grunt.registerTask('build', [
             'clean:dist',
             'less',
-            'copy:libs',
-            'copy:assets',
-            'copy:properties',
-            'copy:dmu',
-            'copy:i18n',
             'build-module:main',
             'build-module:accountManagement',
             'build-module:workspaceManagement',
@@ -51,6 +46,11 @@ module.exports = {
             'build-module:productStructure',
             'build-module:visualization',
             'build-module:changeManagement',
+            'copy:libs',
+            'copy:assets',
+            'copy:properties',
+            'copy:dmu',
+            'copy:i18n',
             'compress:dist'
         ]);
     }
