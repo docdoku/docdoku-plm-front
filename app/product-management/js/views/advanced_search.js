@@ -208,8 +208,11 @@ define([
                 // remove last '+'
                 queryString = queryString.substr(0, queryString.length - 1);
             }
-            //replace first occurence of & to ?
+            //replace first occurrence of & to ?
             queryString = queryString.replace('&','?');
+
+            queryString += '&from=0&size=10000';
+
             return queryString;
 
         }

@@ -202,6 +202,8 @@ define([
                 queryString = queryString.substr(0, queryString.length - 1);
             }
 
+            queryString += '&from=0&size=10000';
+
             return queryString;
 
         }
