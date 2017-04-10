@@ -523,6 +523,7 @@ define({
         QUERY_SELECT:'Select',
         QUERY_CONTEXT:'Context',
         QUERY_WHERE:'Where',
+        QUERY_WHERE_CONTEXT:'Context filters',
         QUERY_ORDER_BY:'Order by',
         QUERY_GROUP_BY:'Group by',
         QUERY_CLEAR:'clear',

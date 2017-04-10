@@ -520,6 +520,7 @@ define({
     QUERY_SELECT:'Champs',
     QUERY_CONTEXT:'Contexte',
     QUERY_WHERE:'Critères',
+    QUERY_WHERE_CONTEXT:'Critères d\'exemplaires',
     QUERY_ORDER_BY:'Ordonner par',
     QUERY_GROUP_BY:'Grouper par',
     QUERY_CLEAR:'vider',

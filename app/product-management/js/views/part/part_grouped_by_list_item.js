@@ -109,6 +109,7 @@ define([
             this.$el.on('click', this.openModal.bind(this));
 
             date.dateHelper(this.$('.date-popover'));
+
             return this;
         },
 

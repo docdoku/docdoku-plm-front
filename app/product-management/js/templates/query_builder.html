@@ -8,10 +8,13 @@
         <div style="display:none" class="choose-existing-request-area">
             <label>{{i18n.QUERY_CHOOSE_EXISTING_REQUEST}}</label>
             <select class="form-control query-list"></select>
-            <button style="display:none" type="button" class="btn btn-danger delete-selected-query" title="{{i18n.DELETE}}">
+            <button style="display:none" type="button" class="btn btn-danger delete-selected-query"
+                    title="{{i18n.DELETE}}">
                 {{i18n.QUERY_REMOVE_SAVED_QUERY}}
             </button>
-            <button type="button" class="btn btn-primary export-existing-query-excel-button" data-loading-text="{{i18n.QUERY_EXPORT_EXCEL_LOADING}}">{{i18n.QUERY_EXPORT_EXCEL}}</button>
+            <button type="button" class="btn btn-primary export-existing-query-excel-button"
+                    data-loading-text="{{i18n.QUERY_EXPORT_EXCEL_LOADING}}">{{i18n.QUERY_EXPORT_EXCEL}}
+            </button>
         </div>
 
         <div class="query-context-block">
@@ -29,6 +32,11 @@
             <div id="where" class="query-where-builder"></div>
         </div>
 
+        <div class="query-where-block">
+            <label>{{i18n.QUERY_WHERE_CONTEXT}} <span class="badge clear-path-data-where-badge">{{i18n.QUERY_CLEAR}}</span></label>
+            <div id="path-data-where" class="query-where-builder"></div>
+        </div>
+
         <div class="order-by-block">
             <label class="order-by-label">{{i18n.QUERY_ORDER_BY}} <span class="badge clear-order-by-badge">{{i18n.QUERY_CLEAR}}</span></label>
             <input type="text" id="orderBy" class="order-by-input">
@@ -43,8 +51,12 @@
     <div class="query-actions-block">
         <button type="button" class="btn btn-success save-button">{{i18n.SAVE}}</button>
         <button type="button" class="btn btn-warning reset-button">{{i18n.RESET}}</button>
-        <button type="button" class="btn btn-primary search-button" data-loading-text="{{i18n.SEARCHING}}">{{i18n.SEARCH}}</button>
-        <button type="button" class="btn btn-primary export-excel-button" data-loading-text="{{i18n.QUERY_EXPORT_EXCEL_LOADING}}">{{i18n.QUERY_EXPORT_EXCEL}}</button>
+        <button type="button" class="btn btn-primary search-button" data-loading-text="{{i18n.SEARCHING}}">
+            {{i18n.SEARCH}}
+        </button>
+        <button type="button" class="btn btn-primary export-excel-button"
+                data-loading-text="{{i18n.QUERY_EXPORT_EXCEL_LOADING}}">{{i18n.QUERY_EXPORT_EXCEL}}
+        </button>
     </div>
 
 </div>

@@ -8,7 +8,7 @@
 
     {{#isStringArray}}
     {{#value}}
-    <span class="well">{{.}}</span>
+    <span class="qb-string">{{.}}</span>
     {{/value}}
     {{/isStringArray}}
 
@@ -20,7 +20,7 @@
 
     {{#isLinkedDocuments}}
     {{#value}}
-        <span class="well"><a target="_blank" class="linkedDocument" href="{{link}}">{{name}}</a></span>
+        <span class="qb-link"><a target="_blank" class="linkedDocument" href="{{link}}">{{name}}</a></span>
     {{/value}}
     {{/isLinkedDocuments}}
 
