@@ -37,6 +37,7 @@ define([
 
             this.$el.html(Mustache.render(template, {i18n: App.config.i18n}));
             this.bindDomElements();
+            this.$pathDataWhereContainer.hide();
 
             this.fetchPartIterationsAttributes()
                 .then(this.fetchPathDataAttributes.bind(this))
