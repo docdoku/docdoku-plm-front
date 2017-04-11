@@ -567,6 +567,7 @@ define([
             this.$displayQueryBuilderButton.toggleClass('fa-angle-double-up', this.isQueryBuilderDisplayed);
             this.$queryTableContainer.toggle(this.isQueryBuilderDisplayed);
             this.$partTableContainer.toggle(!this.isQueryBuilderDisplayed);
+            this.pageControls.toggle(!this.isQueryBuilderDisplayed);
 
             this.$('.actions *:not(.display-query-builder-button)').prop('disabled', this.isQueryBuilderDisplayed);
 
