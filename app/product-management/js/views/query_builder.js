@@ -613,6 +613,8 @@ define([
                 pathDataRules = this.$pathDataWhere.queryBuilder('getRules');
                 if (pathDataRules.rules && pathDataRules.rules.length > 0) {
                     this.sendValuesInArray(pathDataRules.rules);
+                }else{
+                    pathDataRules = null;
                 }
             }
 
