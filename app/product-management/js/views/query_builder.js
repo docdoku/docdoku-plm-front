@@ -156,11 +156,15 @@ define([
                 if (query.queryRule) {
                     this.extractArrayValues(query.queryRule);
                     this.$where.queryBuilder('setRules', query.queryRule);
+                } else {
+                    this.$where.queryBuilder('setRules',{rules:[]});
                 }
 
                 if (query.pathDataQueryRule) {
                     this.extractArrayValues(query.pathDataQueryRule);
                     this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
+                } else {
+                    this.$pathDataWhere.queryBuilder('setRules',{rules:[]});
                 }
 
                 _.each(query.contexts, function (value) {
@@ -613,7 +617,7 @@ define([
                 pathDataRules = this.$pathDataWhere.queryBuilder('getRules');
                 if (pathDataRules.rules && pathDataRules.rules.length > 0) {
                     this.sendValuesInArray(pathDataRules.rules);
-                }else{
+                } else {
                     pathDataRules = null;
                 }
             }
