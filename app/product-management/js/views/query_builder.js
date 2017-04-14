@@ -151,7 +151,9 @@ define([
 
             if (e.target.value) {
 
-                var query = _.findWhere(this.queries, {id: parseInt(e.target.value, 10)});
+                var originalQuery = _.findWhere(this.queries, {id: parseInt(e.target.value, 10)});
+                // Deep clone query to not alter original one
+                var query = JSON.parse(JSON.stringify(originalQuery));
 
                 if (query.queryRule) {
                     this.extractArrayValues(query.queryRule);
@@ -752,7 +754,11 @@ define([
                     } else {
                         rules[i].value = rules[i].values;
                     }
-                    rules[i].values = undefined;
+                    if(rules[i].rules && rules[i].rules.length){
+                        for (var j = 0; j < rules[i].rules.length; j++) {
+                            this.extractArrayValues(rules[i]);
+                        }
+                    }
                 }
             }
         },
