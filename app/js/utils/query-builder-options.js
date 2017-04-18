@@ -264,6 +264,20 @@ define(function () {
         });
     });
 
+    // Should be removed when filter implemented
+    fields.push({
+        name: App.config.i18n.LIFECYCLE_STATE,
+        value: 'pr.lifeCycleState',
+        group: 'pr'
+    });
+
+    // Should be removed when filter implemented
+    fields.push({
+        name: App.config.i18n.LINKED_DOCUMENTS,
+        value: 'pr.linkedDocuments',
+        group: 'pr'
+    });
+
     var contextFields = [];
 
     contextFields.push({
