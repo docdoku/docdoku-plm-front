@@ -191,14 +191,15 @@ define(function () {
         realType: 'date'
     });
 
-    filters.push({
+    // Non working filter, should be implemented server side. Uncomment when fixed
+    /*filters.push({
         id: 'pr.lifeCycleState',
         label: App.config.i18n.LIFECYCLE_STATE,
         type: 'string',
         operators: stringOperators,
         optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
         realType: 'string'
-    });
+    });*/
 
     filters.push({
         id: 'pr.status',
