@@ -11,39 +11,40 @@ define([
 
     var AccountCreationFormView = Backbone.View.extend({
 
-        tagName:'form',
-        id:'account_creation_form',
-        events:{
-            'submit':'onAccountCreationFormSubmit'
+        tagName: 'form',
+        id: 'account_creation_form',
+        events: {
+            'submit': 'onAccountCreationFormSubmit'
         },
 
         render: function () {
 
-
             var _this = this;
 
+            delete localStorage.jwt;
+
             TimeZone.getTimeZones()
-                .then(function(timeZones){
+                .then(function (timeZones) {
                     _this.timeZones = timeZones;
                 })
                 .then(Language.getLanguages)
-                .then(function(languages){
+                .then(function (languages) {
                     _this.languages = languages;
                 })
-                .then(function(){
+                .then(function () {
                     _this.$el.html(Mustache.render(template, {
                         i18n: App.config.i18n,
-                        account:App.config.account,
+                        account: App.config.account,
                         timeZones: _this.timeZones,
                         languages: _this.languages
                     }));
                     _this.$notifications = _this.$('.notifications');
                     _this.$confirmPassword = _this.$('#account_creation_form-confirmPassword');
                     _this.$password = _this.$('#account_creation_form-password');
-                    _this.$('#account_creation_form-language option').each(function(){
+                    _this.$('#account_creation_form-language option').each(function () {
                         $(this).text(App.config.i18n.LANGUAGES[$(this).val()]);
                     });
-                    _this.$('#account_creation_form-timeZone option').each(function(){
+                    _this.$('#account_creation_form-timeZone option').each(function () {
                         // Fixed type error. Assume CET is in list.
                         // TODO : detect browser timezone for auto selection
                         $(this).attr('selected', $(this).val() === 'CET');
@@ -53,11 +54,11 @@ define([
             return this;
         },
 
-        onAccountCreationFormSubmit:function(e){
+        onAccountCreationFormSubmit: function (e) {
 
             this.$notifications.empty();
 
-            if(this.$password.val() !== this.$confirmPassword.val()){
+            if (this.$password.val() !== this.$confirmPassword.val()) {
                 this.$notifications.append(new AlertView({
                     type: 'error',
                     message: App.config.i18n.PASSWORD_NOT_CONFIRMED
@@ -70,12 +71,12 @@ define([
                 type: 'POST',
                 url: App.config.apiEndPoint + '/accounts/create',
                 data: JSON.stringify({
-                    login:this.$('#account_creation_form-login').val(),
-                    name:this.$('#account_creation_form-name').val(),
-                    email:this.$('#account_creation_form-email').val(),
-                    language:this.$('#account_creation_form-language').val(),
-                    timeZone:this.$('#account_creation_form-timeZone').val(),
-                    newPassword:this.$('#account_creation_form-password').val()
+                    login: this.$('#account_creation_form-login').val(),
+                    name: this.$('#account_creation_form-name').val(),
+                    email: this.$('#account_creation_form-email').val(),
+                    language: this.$('#account_creation_form-language').val(),
+                    timeZone: this.$('#account_creation_form-timeZone').val(),
+                    newPassword: this.$('#account_creation_form-password').val()
                 }),
                 contentType: 'application/json; charset=utf-8'
             }).then(this.onAccountCreated.bind(this), this.onAccountCreationFailed.bind(this));
@@ -83,8 +84,9 @@ define([
             return false;
         },
 
-        onAccountCreated : function(account){
-            if(account.enabled){
+        onAccountCreated: function (account, status, xhr) {
+            localStorage.jwt = xhr.getResponseHeader('jwt');
+            if (account.enabled) {
                 window.location.href = App.config.contextPath + 'workspace-management/?accountCreated=true';
             } else {
                 this.$notifications.append(new AlertView({
@@ -94,7 +96,7 @@ define([
             }
         },
 
-        onAccountCreationFailed:function(err){
+        onAccountCreationFailed: function (err) {
             this.$notifications.append(new AlertView({
                 type: 'error',
                 message: err.responseText
