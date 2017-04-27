@@ -3,8 +3,6 @@ define([
     'backbone',
     'mustache',
     'async',
-    'common-objects/collections/part_collection',
-    'common-objects/collections/part_search_collection',
     'text!templates/part/part_content.html',
     'views/part/part_list',
     'views/part/part_creation_view',
@@ -31,7 +29,7 @@ define([
     'views/advanced_search',
     'views/part/part_grouped_by_list',
     'text!common-objects/templates/buttons/import_button.html',
-], function (Backbone, Mustache, Async, PartCollection, PartSearchCollection, template, PartListView, PartCreationView, PartCreationEffectivityView, PartNewVersionView, PromptView, ACLEditView, QueryBuilder, deleteButton, newEffectivityButton, checkoutButtonGroup, newVersionButton, releaseButton, aclButton, newProductButton, tagsButton, obsoleteButton, searchForm, statusFilter, AlertView, TagsManagementView, PartImporterView, ProductCreationView, AdvancedSearchView, PartGroupedByView, importButton) {
+], function (Backbone, Mustache, Async, template, PartListView, PartCreationView, PartCreationEffectivityView, PartNewVersionView, PromptView, ACLEditView, QueryBuilder, deleteButton, newEffectivityButton, checkoutButtonGroup, newVersionButton, releaseButton, aclButton, newProductButton, tagsButton, obsoleteButton, searchForm, statusFilter, AlertView, TagsManagementView, PartImporterView, ProductCreationView, AdvancedSearchView, PartGroupedByView, importButton) {
     'use strict';
     var PartContentView = Backbone.View.extend({
         events: {
@@ -94,13 +92,6 @@ define([
             this.tagsButton.show();
             this.tagsButton.prop('disabled', App.config.isReadOnly);
 
-            if (!this.query && !this.partsCollection) {
-                this.partsCollection = new PartCollection();
-            } else if (this.query) {
-                this.partsCollection = new PartSearchCollection();
-                this.partsCollection.setQuery(this.query);
-            }
-
             if (this.partListView) {
                 this.partListView.remove();
             }
@@ -128,11 +119,6 @@ define([
 
         setCollection: function (collection) {
             this.partsCollection = collection;
-            return this;
-        },
-
-        setQuery: function (query) {
-            this.query = query;
             return this;
         },
 
@@ -488,6 +474,8 @@ define([
         onQuickSearch: function (e) {
             if (e.target.children[1].value) {
                 App.router.navigate(App.config.workspaceId + '/parts-search/?q=' + e.target.children[1].value, {trigger: true});
+            }else{
+                App.router.navigate(App.config.workspaceId + '/parts', {trigger: true});
             }
             e.preventDefault();
             return false;

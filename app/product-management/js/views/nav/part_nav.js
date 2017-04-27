@@ -4,8 +4,10 @@ define([
     'mustache',
     'common-objects/common/singleton_decorator',
     'text!templates/nav/part_nav.html',
-    'views/part/part_content'
-], function (Backbone, Mustache, singletonDecorator, template, PartContentView) {
+    'views/part/part_content',
+    'common-objects/collections/part_collection',
+    'common-objects/collections/part_search_collection'
+], function (Backbone, Mustache, singletonDecorator, template, PartContentView, PartCollection, PartSearchCollection) {
 	'use strict';
     var PartNavView = Backbone.View.extend({
         el: '#part-nav',
@@ -28,10 +30,22 @@ define([
         showContent: function (query) {
             this.setActive();
             this.cleanView();
+
             if(!this.partContentView){
                 this.partContentView = new PartContentView();
             }
-            this.partContentView.setQuery(query).render();
+
+            var partsCollection;
+
+            if (query) {
+                partsCollection = new PartSearchCollection();
+                partsCollection.setQuery(query);
+            }else{
+                partsCollection = new PartCollection();
+            }
+
+            this.partContentView.setCollection(partsCollection).render();
+
             App.$productManagementContent.html(this.partContentView.el);
         },
 
