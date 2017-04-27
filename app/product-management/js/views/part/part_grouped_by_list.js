@@ -28,8 +28,6 @@ define([
             var groups = {};
             var i = 0;
 
-            console.log(itemsGroupBy)
-
             _.each(_.keys(itemsGroupBy).sort(), function (key) {
                 groups['' + i] = {
                     key: '' + i,
