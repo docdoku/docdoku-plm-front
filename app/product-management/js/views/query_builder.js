@@ -386,14 +386,14 @@ define([
             this.$where.queryBuilder({
                 filters: this.partIterationFilters,
                 icons: queryBuilderOptions.icons,
-                allow_empty: true
+                'allow_empty': true
             });
 
             if (this.pathDataIterationFilters.length) {
                 this.$pathDataWhere.queryBuilder({
                     filters: this.pathDataIterationFilters,
                     icons: queryBuilderOptions.icons,
-                    allow_empty: true
+                    'allow_empty': true
                 });
             }
 
