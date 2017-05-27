@@ -55,5 +55,6 @@ define({
         ENABLE_WORKSPACE:'Enable workspace'
     },
     'fr': true,
-    'es': true
+    'es': true,
+    'ru': true
 });
