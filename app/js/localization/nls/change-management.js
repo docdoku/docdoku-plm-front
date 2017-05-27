@@ -13,5 +13,6 @@ define({
         WARNING_ACTIVITIES_MISSING:'You should create at least an activity and some tasks'
     },
     fr: true,
-    es: true
+    es: true,
+    ru: true
 });
