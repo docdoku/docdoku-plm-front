@@ -728,5 +728,6 @@ define({
         }
 	},
 	'es': true,
-	'fr': true
+	'fr': true,
+    'ru': true
 });
