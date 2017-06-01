@@ -1,59 +1,54 @@
 /*global define*/
 define({
-    root: {
-        CONNECTION:'Connection',
-        USER:'User',
-        RECOVERY:'Forgot your password?',
-        RECOVER:'Recover your password',
-        ENTER_NEW_PASSWORD:'Enter your new password',
-        RECOVER_OK:'Your password has been updated, you can now sign in',
-        MANAGE_DOCUMENTS:'Manage your documents',
-        DISCONNECTED:'You have been disconnected',
-        FAILED_LOGIN:'DocdokuPLM failed to connect',
-        RECOVERY_REQUEST_SENT:'An email with the instructions necessary to change your password has been sent to you',
-        USER_NOT_FOUND:'User not found',
-        LANGUAGE:'Language',
-        TIMEZONE:'Time zone',
-        ACCOUNT_NOT_ENABLED_YET:'Your account has been created but is not enabled yet. An email has been sent to the provided address, contact your platform administrator or follow mail instructions...',
-        MANAGE_DOCUMENTS_STRINGS:[
-            'Manage changes with version control' ,
-            'Add tags and custom attributes' ,
-            'Create document templates' ,
-            'Create links between documents' ,
-            'Organize, browse, search documents'
-        ],
+    CONNECTION: 'Подключение',
+    USER: 'Пользователь',
+    RECOVERY: 'Забыли пароль?',
+    RECOVER: 'Восстановить пароль',
+    ENTER_NEW_PASSWORD: 'Введите новый пароль',
+    RECOVER_OK: 'Ваш пароль был обновлен, теперь вы можете войти в систему',
+    MANAGE_DOCUMENTS: 'Управление документами',
+    DISCONNECTED: 'Вы были отключены',
+    FAILED_LOGIN: 'DocdokuPLM не удалось подключиться',
+    RECOVERY_REQUEST_SENT: 'Вам было отправлено электронное письмо с инструкциями, необходимыми для смены пароля.',
+    USER_NOT_FOUND: 'Пользователь не найден',
+    LANGUAGE: 'Язык',
+    TIMEZONE: 'Часовой пояс',
+    ACCOUNT_NOT_ENABLED_YET: 'Ваша учетная запись создана, но пока не включена. На указанный адрес отправлено письмо, обратитесь к администратору платформы или следуйте инструкциям по почте ...',
+    MANAGE_DOCUMENTS_STRINGS: [
+        'Управление изменениями с помощью систы контроля версий',
+        'Добавить теги и стандартные атрибуты',
+        'Создавать шаблоны документов',
+        'Создавать ссылки между документами',
+        'Организация, просмотр, поиск документов'
+    ],
 
-        MANAGE_PRODUCTS:'Manage your products',
-        MANAGE_PRODUCTS_STRINGS:[
-            'Create and manage product structures' ,
-            'Manage bill of materials' ,
-            'Visualize 3D models of your products'
-        ],
+    MANAGE_PRODUCTS: 'Управление вашими изделиями',
+    MANAGE_PRODUCTS_STRINGS: [
+        'Создавать и управлять структурой изделия',
+        'Управлять спецификацией',
+        'Визуализировать 3D модели ваших изделий'
+    ],
 
-        TRACK_CHANGES:'Track and organize changes',
-        TRACK_CHANGES_STRINGS:[
-            'Define workflow processes' ,
-            'Manage users and tasks' ,
-            'Follow the work progress' ,
-            'Be notified on changes'
-        ],
+    TRACK_CHANGES: 'Управляйте и отслеживайте изменения',
+    TRACK_CHANGES_STRINGS: [
+        'Создавайте потоки работ',
+        'Управляйте пользователями и задачами',
+        'Следите за ходом работ',
+        'Получайте уведомление об изменениях'
+    ],
 
-        SOCIAL_FEATURES:'Social knowledge management',
-        SOCIAL_FEATURES_STRINGS:[
-            'Do realtime comunication' ,
-            'Chat, audio and video conference' ,
-            'Create workspaces and user groups' ,
-            'Share part visualizations'
-        ],
-        ENTER_ID:'Enter your ID',
-        USER_ID:'User ID',
-        FIRSTNAME_NAME:'First name, name',
-        REGISTRATION:'Registration',
-        CREATE_ID:'Create your DocDokuPLM ID',
-        TERMS_OF_SERVICES:'Terms of Service',
-        TERMS_OF_SERVICES_TEXT:'You\'re registering for a free, evaluation purpose account. There\'s hence no guarantee that your account could not be deactivated someday. If you wish to use DocDokuPLM for production, contact us.'
-
-    },
-    'fr': true,
-    'es': true
+    SOCIAL_FEATURES: 'Управлениями общими знанями',
+    SOCIAL_FEATURES_STRINGS: [
+        'Организовывайте совещание в реальном времени',
+        'Чать, аудио и видео конференции',
+        'Создавайте рабочие места и группы пользователей',
+        'Визуализируйте общие детали'
+    ],
+    ENTER_ID: 'Введите свой ID',
+    USER_ID: 'ID пользователя',
+    FIRSTNAME_NAME: 'Имя, фамилия',
+    REGISTRATION: 'Регистрация',
+    CREATE_ID: 'Создайте свой DocDokuPLM ID',
+    TERMS_OF_SERVICES: 'Условия использования',
+    TERMS_OF_SERVICES_TEXT: 'Вы регистрируете бесплатную учетную запись для тестирования системы. Таким образом, нет гарантии, что ваша учетная запись не будет деактивирована. Если вы хотите использовать DocDokuPLM для производства, свяжитесь с нами.'
 });
