@@ -272,7 +272,7 @@ define([
 					'documents/#' +
 					this.getWorkspace() +
 					'/' +
-					this.getReference() +
+                    encodeURIComponent(this.getReference()) +
 					'/' +
 					this.getVersion()
 			);

@@ -74,12 +74,16 @@ define([
             return  this.get('number') + '-' + this.get('version');
         },
 
+        getEncodedPartKey: function () {
+            return encodeURIComponent(this.get('number')) + '-' + this.get('version');
+        },
+
         getAttachedFiles: function () {
             return this.get('attachedFiles');
         },
 
         getBaseName: function (subType) {
-            return this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/' + subType;
+            return this.getWorkspace() + '/parts/' + encodeURIComponent(this.getNumber()) + '/' + this.getVersion() + '/' + this.get('iteration') + '/' + subType;
         },
 
         getNumber: function () {
@@ -115,7 +119,7 @@ define([
         getConversionUrl:function(){
             return App.config.apiEndPoint +
                 '/workspaces/' + this.getWorkspace() +
-                '/parts/' + this.getNumber() + '-' + this.getVersion() +
+                '/parts/' + this.getEncodedPartKey() +
                 '/iterations/' + this.get('iteration') +
                 '/conversion';
         },
@@ -129,11 +133,11 @@ define([
         },
 
         getAttachedFilesUploadBaseUrl: function () {
-            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/attachedfiles/';
+            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + encodeURIComponent(this.getNumber()) + '/' + this.getVersion() + '/' + this.get('iteration') + '/attachedfiles/';
         },
 
         getNativeCadFileUploadBaseUrl: function () {
-            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + this.getNumber() + '/' + this.getVersion() + '/' + this.get('iteration') + '/nativecad/';
+            return App.config.apiEndPoint + '/files/' + this.getWorkspace() + '/parts/' + encodeURIComponent(this.getNumber()) + '/' + this.getVersion() + '/' + this.get('iteration') + '/nativecad/';
         }
 
     });

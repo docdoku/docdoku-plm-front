@@ -20,7 +20,7 @@ define([
 	    },
 
 	    baseUrl: function(){
-			return this.document.urlRoot()+ '/'+this.document.getId()+ '/iterations';
+			return this.document.urlRoot()+ '/'+ encodeURIComponent(this.document.getReference()) + '-' + this.document.getVersion() + '/iterations';
 		},
 
         comparator: function (documentIteration) {
