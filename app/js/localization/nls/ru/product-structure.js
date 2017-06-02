@@ -1,13 +1,9 @@
 /*global define*/
 define({
-    root: {
-        CASCADE: 'Cascade',
-        CASCADE_RESULT: 'Result',
-        DONE: 'Done',
-        SELECTED: 'Selected',
-        PRODUCT_VIEW: 'Product view',
-        STRUCTURE: 'Product structure'
-    },
-    fr: true,
-    es: true
+    CASCADE: 'Каскадно',
+    CASCADE_RESULT: 'Результат',
+    DONE: 'Завершено',
+    SELECTED: 'Выделено',
+    PRODUCT_VIEW: 'Просмотр изделия',
+    STRUCTURE: 'Стуктура изделия'
 });
