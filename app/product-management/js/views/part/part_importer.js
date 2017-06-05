@@ -29,7 +29,6 @@ define([
             'click .import-button': 'formSubmit',
             'click #auto_checkout_part': 'changeAutoCheckout',
             'hidden .importer-view': 'onHidden',
-            'click .import-preview-button': 'showPreview',
             'click .back-button': 'backToForm',
             'hidden.bs.modal .modal.importer-view': 'deleteImportStatus'
         },
@@ -135,9 +134,9 @@ define([
             //this.delegateEvents();
             this.bindDomElements();
 
-            if (!this.searchingForPartList) {
-                this.$('.import-button').removeAttr('disabled');
-            }
+
+            this.$('.import-button').removeAttr('disabled');
+
 
             if (this.autocheckout) {
                 this.checkboxAutoCheckout.prop('checked', true);
@@ -163,7 +162,7 @@ define([
 
         addOneFile: function (attachedFile) {
             this.filedisplay.html('<li>' + attachedFile.getShortName() + '</li>');
-            this.$('.import-preview-button').removeAttr('disabled');
+            this.$('.import-button').removeAttr('disabled');
         },
 
         bindDomElements: function () {
@@ -252,6 +251,14 @@ define([
         },
 
         formSubmit: function () {
+            if (this.importForm && this.checkboxDryRun.is(':checked')) {
+                this.showPreview();
+            } else {
+                this.startImport();
+            }
+        },
+
+        startImport: function () {
 
             var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import';
 
@@ -280,7 +287,7 @@ define([
                 formData.append('upload', this.file);
                 xhr.send(formData);
 
-            } else if (!this.file) {
+            } else {
                 this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
             }
 
