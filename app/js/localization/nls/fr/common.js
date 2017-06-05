@@ -184,6 +184,7 @@ define({
     DOWNLOAD_ZIP:'Télécharger tous les fichiers dans un zip',
 	DROP_FILE_HERE: 'ou déposez le ici',
 	DROP_FILES_HERE: 'ou déposez les ici',
+    DRY_RUN: 'Prévisualiser les modifications',
 	DUE_DATE: 'Date d\'échéance',
 	DUPLICATE: 'Dupliquer',
     DUPLICATE_WORKFLOW: 'Dupliquer le processus métier',

@@ -185,6 +185,7 @@ define({
         DOWNLOAD_ZIP:'Download all files in a zip',
 		DROP_FILE_HERE: 'or drop it here',
         DROP_FILES_HERE: 'or drop them here',
+        DRY_RUN: 'Show modifications preview',
 		DUE_DATE: 'Due date',
 		DUPLICATE: 'Duplicate',
         DUPLICATE_WORKFLOW: 'Duplicate workflow',
