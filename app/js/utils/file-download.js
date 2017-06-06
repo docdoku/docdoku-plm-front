@@ -39,10 +39,6 @@
         xhr.open('GET', url);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
-        if (localStorage.jwt) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-        }
-
         xhr.responseType = 'blob';
         xhr.send();
 

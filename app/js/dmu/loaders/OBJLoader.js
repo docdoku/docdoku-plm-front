@@ -63,10 +63,6 @@ THREE.OBJLoader.prototype = {
             console.error( 'THREE.OBJLoader: Couldn\'t load [' + url + '] [' + xhr.status + ']' );
         }, false );
 
-        if(localStorage.jwt){
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-        }
-
         xhr.send();
 
     },

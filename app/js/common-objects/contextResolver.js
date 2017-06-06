@@ -29,13 +29,27 @@ define([
         }
     };
 
-    $.ajaxSetup({
-        beforeSend: function (xhr) {
+
+    (function (send) {
+        XMLHttpRequest.prototype.send = function (data) {
             if (localStorage.jwt) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
+                this.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
             }
+            send.call(this, data);
         }
-    });
+    })(XMLHttpRequest.prototype.send);
+
+    (function(open) {
+        XMLHttpRequest.prototype.open = function() {
+            this.addEventListener('readystatechange', function() {
+                var jwt = this.getResponseHeader('jwt');
+                if(jwt){
+                    localStorage.jwt = jwt;
+                }
+            }, false);
+            open.apply(this, arguments);
+        };
+    })(XMLHttpRequest.prototype.open);
 
     ContextResolver.prototype.redirectOnUnauthorized = function () {
         $.ajaxSetup({

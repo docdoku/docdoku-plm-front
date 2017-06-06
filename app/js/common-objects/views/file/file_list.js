@@ -184,7 +184,6 @@ define([
             }, false);
 
             xhr.open('POST', this.options.uploadBaseUrl);
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
 
             var fd = new window.FormData();
             fd.append('upload', file);

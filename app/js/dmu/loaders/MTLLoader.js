@@ -25,10 +25,6 @@ THREE.MTLLoader.prototype = {
             console.error( 'THREE.MTLLoader: Couldn\'t load [' + url + '] [' + xhr.status + ']' );
         }, false );
 
-        if(localStorage.jwt){
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-        }
-
         xhr.send();
 
     },
@@ -402,10 +398,6 @@ THREE.MTLLoader.MaterialCreator.prototype = {
             xhr.addEventListener( 'error', function ( event ) {
                 console.error( 'THREE.MTLLoader: Couldn\'t load [' + url + '] [' + xhr.status + ']' );
             }, false );
-
-            if(localStorage.jwt){
-                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-            }
 
             xhr.send();
 

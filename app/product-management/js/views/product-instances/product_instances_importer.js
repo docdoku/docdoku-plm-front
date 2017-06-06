@@ -189,10 +189,6 @@ define([
                 xhr.onload = this.fetchImports.bind(this);
                 xhr.open('POST', importUrl);
 
-                if(localStorage.jwt){
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-                }
-
                 var formdata = new window.FormData();
                 formdata.append('upload', this.file);
                 xhr.send(formdata);

@@ -56,9 +56,7 @@ define([
                     password:this.$('#login_form-password').val()
                 }),
                 contentType: 'application/json; charset=utf-8'
-            }).then(function(account, status, xhr ){
-                var jwt = xhr.getResponseHeader('jwt');
-                localStorage.jwt = jwt;
+            }).then(function(){
                 var originURL = UrlUtils.getParameterByName('originURL');
                 window.location.href = originURL ? decodeURIComponent(originURL):App.config.contextPath + 'workspace-management/';
             }, this.onLoginFailed.bind(this));
