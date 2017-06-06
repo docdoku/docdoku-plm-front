@@ -36,7 +36,7 @@ define([
                 this.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
             }
             send.call(this, data);
-        }
+        };
     })(XMLHttpRequest.prototype.send);
 
     (function(open) {
