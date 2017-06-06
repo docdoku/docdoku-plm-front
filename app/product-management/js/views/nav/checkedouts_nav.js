@@ -14,6 +14,7 @@ define([
         initialize: function () {
             this.render();
             Backbone.Events.on('part:iterationChange', this.refreshCount, this);
+            Backbone.Events.on('import:success', this.refreshCount, this);
         },
 
         render: function () {

@@ -174,7 +174,6 @@ define([
             this.notifications = this.$('div.notifications');
             this.checkboxAutoCheckin = this.$('#auto_checkin_part');
             this.checkboxAutoCheckout = this.$('#auto_checkout_part');
-            this.checkboxDryRun = this.$('#dry_run');
         },
 
         /**
@@ -192,62 +191,75 @@ define([
         showPreview: function () {
 
             if (!this.file) {
+                this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
                 return;
             }
 
             this.clearNotifications();
 
-            this.autocheckin = this.checkboxAutoCheckin.is(':checked');
-            this.autocheckout = this.checkboxAutoCheckout.is(':checked');
-            this.dryRun = this.checkboxDryRun.is(':checked');
-            this.permissive = this.$('#permissive_update_part').is(':checked');
-            this.revisionNote = this.$('#revision_text_part').val().trim();
+            var params = {
+                autoCheckout: this.autocheckout,
+                autoCheckin: this.autocheckin,
+                permissiveUpdate: this.permissive
+            };
 
-            this.options = this.autocheckin || this.autocheckout || this.permissive || this.revisionNote !== '';
+            this.searchingForPartList = true;
+            this.importForm = false;
+            this.importPreviewMode = true;
 
-            if (this.dryRun) {
+            var previewBaseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/importPreview';
+            var previewUrl = previewBaseUrl + '?' + $.param(params);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', previewUrl, true);
 
-                var params = {
-                    autoCheckout: this.autocheckout,
-                    autoCheckin: this.autocheckin,
-                    permissiveUpdate: this.permissive
-                };
-
-                this.searchingForPartList = true;
-                this.importForm = false;
-                this.importPreviewMode = true;
-
-                var previewBaseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/importPreview';
-                var previewUrl = previewBaseUrl + '?' + $.param(params);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', previewUrl, true);
-
-                var formData = new window.FormData();
-                var _this = this;
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        _this.importPreview = $.parseJSON(xhr.response);
-                        _this.partCheckoutList = _this.importPreview.partRevsToCheckOut;
-                        _this.partsToCreate = _this.importPreview.partsToCreate;
-                        _this.searchingForPartList = false;
-                        _this.importForm = false;
-                        _this.importPreviewMode = true;
-                        _this.rerender();
-                    }
-                };
-                formData.append('upload', this.file);
-                xhr.send(formData);
-            } else {
-                this.partCheckoutList = null;
-                this.partsToCreate = null;
-            }
+            var formData = new window.FormData();
+            var _this = this;
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    _this.importPreview = $.parseJSON(xhr.response);
+                    _this.partCheckoutList = _this.importPreview.partRevsToCheckout;
+                    _this.partsToCreate = _this.importPreview.partsToCreate;
+                    _this.searchingForPartList = false;
+                    _this.importForm = false;
+                    _this.importPreviewMode = true;
+                    _this.rerender();
+                }
+            };
+            formData.append('upload', this.file);
+            xhr.send(formData);
 
             this.rerender();
 
         },
 
         formSubmit: function () {
-            if (this.importForm && this.checkboxDryRun.is(':checked')) {
+
+            var checkinCheckBox = this.$('#auto_checkin_part');
+            var checkoutCheckBox = this.$('#auto_checkout_part');
+            var permissiveCheckBox = this.$('#permissive_update_part');
+
+            if(checkinCheckBox.length){
+                this.autocheckin = checkinCheckBox.is(':checked');
+            }
+
+            if(checkoutCheckBox.length){
+                this.autocheckout = checkoutCheckBox.is(':checked');
+            }
+
+            if(permissiveCheckBox.length){
+                this.permissive = permissiveCheckBox.is(':checked');
+            }
+
+            var revisionText = this.$('#revision_text_part');
+
+            if (revisionText.length) {
+                this.revisionNote = (revisionText.val() || '' ).trim();
+            }
+
+            var dryRunCheckBox = this.$('#dry_run');
+            this.dryRun = dryRunCheckBox.length && dryRunCheckBox.is(':checked');
+
+            if (this.importForm && this.dryRun) {
                 this.showPreview();
             } else {
                 this.startImport();
@@ -258,31 +270,28 @@ define([
 
             var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import';
 
-            if (this.file) {
-
-                var params = {
-                    autoCheckout: this.autocheckout,
-                    autoCheckin: this.autocheckin,
-                    permissiveUpdate: this.permissive,
-                    revisionNote: this.revisionNote
-                };
-
-                this.deleteImportStatus();
-
-                var importUrl = baseUrl + '?' + $.param(params);
-
-                var xhr = new XMLHttpRequest();
-                xhr.onload = this.fetchImports.bind(this);
-                xhr.open('POST', importUrl, true);
-
-                var formData = new window.FormData();
-                formData.append('upload', this.file);
-                xhr.send(formData);
-
-            } else {
+            if (!this.file) {
                 this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
+                return;
             }
+            var params = {
+                autoCheckout: this.autocheckout,
+                autoCheckin: this.autocheckin,
+                permissiveUpdate: this.permissive,
+                revisionNote: this.revisionNote
+            };
 
+            this.deleteImportStatus();
+
+            var importUrl = baseUrl + '?' + $.param(params);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onload = this.fetchImports.bind(this);
+            xhr.open('POST', importUrl, true);
+
+            var formData = new window.FormData();
+            formData.append('upload', this.file);
+            xhr.send(formData);
             this.backToForm();
             return false;
         },
@@ -330,6 +339,7 @@ define([
 
         onHidden: function () {
             this.remove();
+            Backbone.Events.trigger('import:success');
         },
 
         backToForm: function () {

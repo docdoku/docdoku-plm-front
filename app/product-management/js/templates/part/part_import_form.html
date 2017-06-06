@@ -58,30 +58,49 @@
 
     {{/importForm}}
 
+
     {{#importPreviewMode}}
 
-    {{#options}}
-    <h5>{{i18n.CONFIRM_IMPORT_WITH_OPTION}}</h5>
-    {{/options}}
-    {{^options}}
     <h5>{{i18n.CONFIRM_IMPORT}}</h5>
-    {{/options}}
+
+    {{#revisionNote}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.REVISION_NOTE}}</label>
+        <div class="controls">
+            {{revisionNote}}
+        </div>
+    </div>
+    {{/revisionNote}}
 
     {{#checkout}}
-    <p>{{i18n.AUTO_CHECKOUT}}</p>
+    <div class="control-group">
+        <label class="control-label">{{i18n.AUTO_CHECKOUT}}</label>
+    </div>
+    {{/checkout}}
+
+    {{#checkin}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.AUTO_CHECKIN}}</label>
+    </div>
+    {{/checkin}}
+
+    {{#permissive}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.PERMISSIVE_UPDATE_PART}}</label>
+    </div>
+    {{/permissive}}
 
     {{#partCheckoutList.length}}
-    <p>{{i18n.CHECKOUT_PART_LIST}}</p>
+    <h6>{{i18n.CHECKOUT_PART_LIST}}</h6>
     <ul>
         {{#partCheckoutList}}
         <li>{{partNumber}}</li>
         {{/partCheckoutList}}
     </ul>
     {{/partCheckoutList.length}}
-    {{/checkout}}
 
     {{#partsToCreate.length}}
-    <p>{{i18n.CREATE_PART_LIST}}</p>
+    <h6>{{i18n.CREATE_PART_LIST}}</h6>
     <ul>
         {{#partsToCreate}}
         <li>{{number}}</li>
@@ -93,21 +112,10 @@
     <p>{{i18n.SEARCHING_FOR_PARTS}} <i class="fa fa-spin fa-refresh loader"></i></p>
     {{/searchingForPartList}}
 
-    {{#checkin}}
-    <p>{{i18n.AUTO_CHECKIN}}</p>
-    {{/checkin}}
-
-    {{#permissive}}
-    <p>{{i18n.PERMISSIVE_UPDATE_PART}}</p>
-    {{/permissive}}
-
-    {{#revisionNote}}
-    <p>{{i18n.REVISION_NOTE}}: {{revisionNote}}</p>
-    {{/revisionNote}}
-
     {{/importPreviewMode}}
 
 </div>
+
 <div class="modal-footer">
     {{#importForm}}
     <button class="btn" data-dismiss="modal" aria-hidden="true">{{i18n.CLOSE}}</button>

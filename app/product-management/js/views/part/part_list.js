@@ -24,6 +24,7 @@ define([
             this.listItemViews = [];
             this.selectedPartIndexes = [];
             this.$el.on('remove', this.removeSubviews);
+            Backbone.Events.on('import:success', this.collection.fetch, this.collection);
         },
 
         render: function () {
