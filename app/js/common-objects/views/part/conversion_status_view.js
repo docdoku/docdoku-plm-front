@@ -32,6 +32,8 @@ define([
             this.renderStatus(status);
             if (!status || status && status.pending) {
                 this.launchTimer();
+            } else if (status && status.succeed) {
+                this.trigger('conversion:success');
             }
         },
 

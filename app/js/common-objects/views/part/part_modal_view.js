@@ -270,7 +270,6 @@ define([
                 }).render();
                 this.$('.file-list').first().after(this.conversionStatusView.el);
             }
-
         },
 
         initAttachedFilesUploadView: function () {
@@ -284,10 +283,10 @@ define([
             }).render();
 
             this.$('#iteration-files').append(this.attachedFilesView.el);
-
         },
 
         updateConversionStatusView: function () {
+            this.listenToOnce(this.conversionStatusView, 'conversion:success', this.onConversionSuccess);
             var _this = this;
             // Add a little delay, conversion may not be started again
             setTimeout(function () {
@@ -533,6 +532,17 @@ define([
                 type: 'error',
                 message: errorMessage
             }).render().$el);
+        },
+
+        onConversionSuccess: function () {
+            this.model.fetch().success(function () {
+                this.iteration = this.model.getLastIteration();
+                this.iterations = this.model.getIterations();
+                this.render();
+                this.activateFileTab();
+                Backbone.Events.trigger('part:saved');
+                Backbone.Events.trigger('part:iterationChange');
+            }.bind(this));
         },
 
         closeModal: function () {
