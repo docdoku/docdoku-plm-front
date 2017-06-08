@@ -11,7 +11,12 @@ define([
     var Part = Backbone.Model.extend({
         idAttribute: 'partKey',
 
-        initialize: function () {
+        initialize: function (data) {
+            if (data && data.partKey) {
+                var number = data.partKey.substr(0, data.partKey.lastIndexOf('-'));
+                var version = data.partKey.substr(data.partKey.lastIndexOf('-') + 1, data.partKey.length);
+                this.init(number, version);
+            }
             _.bindAll(this);
         },
 
