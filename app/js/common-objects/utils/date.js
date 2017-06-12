@@ -40,6 +40,10 @@ define([
             return moment(value, 'YYYY-MM-DD').toDate();
         },
 
+        formatShort:function(input){
+            return input ? moment(input).format('YYYY-MM-DD'): null;
+        },
+
         getMainZonesDates: function (timestamp) {
             var mainZones = ['America/Los_Angeles', 'America/New_York', 'Europe/London', 'Europe/Paris', 'Europe/Moscow', 'Asia/Tokyo'];
             var mainZonesDates = [];

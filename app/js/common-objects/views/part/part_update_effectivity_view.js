@@ -2,7 +2,7 @@
 define([
     'backbone',
     'mustache',
-    'moment',
+    'common-objects/utils/date',
     'text!common-objects/templates/part/part_creation_effectivity_view.html',
     'text!common-objects/templates/part/part_effectivity_serial_number.html',
     'text!common-objects/templates/part/part_effectivity_date.html',
@@ -10,7 +10,7 @@ define([
     'common-objects/models/part',
     'common-objects/models/effectivity',
     'common-objects/views/alert'
-], function (Backbone, Mustache, moment, template, effectivitySerialNumber, effectivityDate, effectivityLot, Part, Effectivity, AlertView) {
+], function (Backbone, Mustache, date, template, effectivitySerialNumber, effectivityDate, effectivityLot, Part, Effectivity, AlertView) {
     'use strict';
     var PartCreationView = Backbone.View.extend({
 
@@ -86,8 +86,8 @@ define([
                     break;
                 case this.Effectivity.getEffectivityTypeById('DATEBASEDEFFECTIVITY').id:
                     fields = effectivityDate;
-                    this.effectivity.startDate = moment(this.effectivity.startDate).format('YYYY-MM-DD');
-                    this.effectivity.endDate = this.effectivity.endDate ? moment(this.effectivity.endDate).format('YYYY-MM-DD') : null;
+                    this.effectivity.startDate = date.formatShort(this.effectivity.startDate);
+                    this.effectivity.endDate = date.formatShort(this.effectivity.endDate);
                     break;
                 case this.Effectivity.getEffectivityTypeById('LOTBASEDEFFECTIVITY').id:
                     fields = effectivityLot;
@@ -135,8 +135,8 @@ define([
 
             if (currentType === this.Effectivity.getEffectivityTypeById('DATEBASEDEFFECTIVITY').id) {
                 var endInputValue = this.$inputEnd.val();
-                this.updatedEffectivity[start] = moment(this.$inputStart.val()).format();
-                this.updatedEffectivity[end] = endInputValue ? moment(endInputValue).format() : null;
+                this.updatedEffectivity[start] = date.getDateFromDateInput(this.$inputStart.val());
+                this.updatedEffectivity[end] = endInputValue ? date.getDateFromDateInput(endInputValue) : null;
             } else {
                 this.updatedEffectivity[start] = this.$inputStart.val();
                 this.updatedEffectivity[end] = this.$inputEnd.val();
