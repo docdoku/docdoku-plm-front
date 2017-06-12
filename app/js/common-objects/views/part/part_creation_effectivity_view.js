@@ -2,7 +2,7 @@
 define([
     'backbone',
     'mustache',
-    'moment',
+    'common-objects/utils/date',
     'text!common-objects/templates/part/part_creation_effectivity_view.html',
     'text!common-objects/templates/part/part_effectivity_serial_number.html',
     'text!common-objects/templates/part/part_effectivity_date.html',
@@ -10,7 +10,7 @@ define([
     'common-objects/models/part',
     'common-objects/models/effectivity',
     'common-objects/views/alert'
-], function (Backbone, Mustache, moment, template, effectivitySerialNumber, effectivityDate, effectivityLot, Part, Effectivity, AlertView) {
+], function (Backbone, Mustache, date, template, effectivitySerialNumber, effectivityDate, effectivityLot, Part, Effectivity, AlertView) {
     'use strict';
     var PartCreationView = Backbone.View.extend({
 
@@ -148,8 +148,8 @@ define([
                 this.effectivity[start] = this.$inputStart.val();
                 this.effectivity[end] = this.$inputEnd.val();
             } else {
-                this.effectivity[start] = moment(this.$inputStart.val()).format();
-                this.effectivity[end] = moment(this.$inputEnd.val()).format();
+                this.effectivity[start] = date.getDateFromDateInput(this.$inputStart.val());
+                this.effectivity[end] = date.getDateFromDateInput(this.$inputEnd.val());
             }
 
             this.Part = new Part({
