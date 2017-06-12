@@ -98,8 +98,6 @@ function (ContextResolver,  commonStrings, changeManagementStrings, ErrorView) {
         return;
     }
 
-    ContextResolver.redirectOnUnauthorized();
-
     ContextResolver.resolveServerProperties('..')
         .then(ContextResolver.resolveAccount)
         .then(ContextResolver.resolveWorkspaces)

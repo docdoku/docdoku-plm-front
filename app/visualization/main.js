@@ -118,8 +118,6 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
         transformControls:false
     };
 
-    ContextResolver.redirectOnUnauthorized();
-
     ContextResolver.resolveServerProperties('..')
         .then(ContextResolver.resolveAccount)
         .then(ContextResolver.resolveWorkspaces)

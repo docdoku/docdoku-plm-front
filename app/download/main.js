@@ -60,14 +60,8 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
         };
 
         ContextResolver.resolveServerProperties('..')
-            .then(ContextResolver.resolveAccount)
-            .then(function(){
-                App.config.connected = true;
-                return  ContextResolver.resolveWorkspaces();
-            },function(response){
-                App.config.connected = response.status !== 401;
-                load();
-            }).then(load);
+            //.then(ContextResolver.resolveAccount)
+            .then(load);
 
     });
 

@@ -102,8 +102,6 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
             cameraLight2Color: 0xffffff
         };
 
-        ContextResolver.redirectOnUnauthorized();
-
         ContextResolver.resolveServerProperties('..')
             .then(function buildView() {
                 require(['backbone', 'app', 'router', 'common-objects/views/header'], function (Backbone, AppView, Router, HeaderView) {

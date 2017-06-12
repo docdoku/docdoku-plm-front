@@ -42,6 +42,14 @@ define([
     (function(open) {
         XMLHttpRequest.prototype.open = function() {
             this.addEventListener('readystatechange', function() {
+                if(this.status === 401){
+                    delete localStorage.jwt;
+                    if (App.config.contextPath !== window.location.pathname) {
+                        window.location.href = App.config.contextPath + '?denied=true&originURL=' +
+                            encodeURIComponent(window.location.pathname + window.location.hash);
+                    }
+                    return;
+                }
                 var jwt = this.getResponseHeader('jwt');
                 if(jwt){
                     localStorage.jwt = jwt;
@@ -50,22 +58,6 @@ define([
             open.apply(this, arguments);
         };
     })(XMLHttpRequest.prototype.open);
-
-    ContextResolver.prototype.redirectOnUnauthorized = function () {
-        $.ajaxSetup({
-            statusCode: {
-                401: function () {
-                    delete localStorage.jwt;
-                    // Prevent redirection loop
-                    if (App.config.contextPath !== window.location.pathname) {
-                        window.location.href = App.config.contextPath + '?denied=true&originURL=' +
-                            encodeURIComponent(window.location.pathname + window.location.hash);
-                    }
-                }
-            }
-        });
-    };
-
 
     function onError(res) {
         return res;

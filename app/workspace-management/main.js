@@ -101,8 +101,6 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
 
         App.config.i18n = _.extend(commonStrings,workspaceManagementStrings);
 
-        ContextResolver.redirectOnUnauthorized();
-
         ContextResolver.resolveServerProperties('..')
             .then(ContextResolver.resolveAccount)
             .then(ContextResolver.resolveWorkspaces)

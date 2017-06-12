@@ -110,8 +110,6 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
             return;
         }
 
-        ContextResolver.redirectOnUnauthorized();
-
         ContextResolver.resolveServerProperties('..')
             .then(ContextResolver.resolveAccount)
             .then(ContextResolver.resolveWorkspaces)
