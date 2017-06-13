@@ -191,7 +191,7 @@ define([
             if (this.attributes.length) {
                 queryString += '&attributes=';
                 this.attributes.each(function (attribute) {
-                    var type = attribute.get('type');
+                    var type = attribute.get('type') || attribute.get('attributeType');
                     var name = attribute.get('name');
                     var value = attribute.get('value');
                     value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
