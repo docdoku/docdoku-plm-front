@@ -14,7 +14,7 @@ define([
 
         renderTask: function (taskId) {
             var _this = this;
-            $.getJSON(App.config.apiEndPoint + '//workspaces/' + App.config.workspaceId + '/tasks/' + taskId)
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tasks/' + taskId)
                 .then(function (task) {
                     _this.task = task;
                     _this.renderWorkflow(task.workflowId);
