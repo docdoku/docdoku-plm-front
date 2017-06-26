@@ -30,6 +30,14 @@ define([
             App.appView.$content.html(this.contentView.el);
         },
 
+        showTasksContent: function () {
+            this.setActive();
+            this.cleanView();
+            this.contentView = new TaskListView();
+            this.contentView.render();
+            App.appView.$content.html(this.contentView.el);
+        },
+
         showWorkflowContent: function (workflowId) {
             this.setActive();
             this.cleanView();
@@ -37,6 +45,7 @@ define([
             this.contentView.renderWorkflow(workflowId);
             App.appView.$content.html(this.contentView.el);
         },
+
         cleanView: function () {
             if (this.contentView) {
                 this.contentView.remove();
