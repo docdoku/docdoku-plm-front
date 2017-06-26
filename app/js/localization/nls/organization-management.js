@@ -26,5 +26,6 @@ define({
         SUBSCRIPTIONS: 'Subscriptions'
     },
     'fr': true,
-    'es': true
+    'es': true,
+    'ru': true
 });

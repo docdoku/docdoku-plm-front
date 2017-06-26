@@ -24,5 +24,6 @@ define({
         UPDATE_EFFECTIVITY_SUCCESS: 'Effectivity updated'
     },
     fr: true,
-    es: true
+    es: true,
+    ru: true
 });
