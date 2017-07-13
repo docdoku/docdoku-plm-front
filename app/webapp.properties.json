@@ -2,7 +2,7 @@
         "server": {
             "ssl": false,
             "domain": "localhost",
-            "port": 10080,
+            "port": 8080,
             "contextPath": "/docdoku-server-rest"
         },
         "contextPath": "/"
