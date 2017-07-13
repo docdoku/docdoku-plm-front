@@ -231,7 +231,7 @@ define({
     FILES_UPLOADED: 'Файлы загружены',
     FILES: 'Файлы',
     FILL: 'Заполнить',
-    FILTER: 'Филтр',
+    FILTER: 'Фильтр',
     FINAL_STATE_PLACEHOLDER: 'Конечное состояние',
     FIRST_PAGE: 'Первая страница',
     FIT_VIEW: 'Подходящий вид',
