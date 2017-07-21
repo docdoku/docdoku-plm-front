@@ -29,6 +29,9 @@ define([
         }
     };
 
+    if (window.location.pathname.endsWith('/')) {
+        window.location.pathname = '/index.html';
+    }
 
     (function (send) {
         XMLHttpRequest.prototype.send = function (data) {
@@ -39,19 +42,20 @@ define([
         };
     })(XMLHttpRequest.prototype.send);
 
-    (function(open) {
-        XMLHttpRequest.prototype.open = function() {
-            this.addEventListener('readystatechange', function() {
-                if(this.status === 401){
+    (function (open) {
+        XMLHttpRequest.prototype.open = function () {
+            this.addEventListener('readystatechange', function () {
+                if (this.status === 401) {
                     delete localStorage.jwt;
-                    if (App.config.contextPath !== window.location.pathname) {
-                        window.location.href = App.config.contextPath + '?denied=true&originURL=' +
+                    if (App.config.contextPath + 'index.html' !== window.location.pathname) {
+                        debugger
+                        window.location.href = App.config.contextPath + 'index.html?denied=true&originURL=' +
                             encodeURIComponent(window.location.pathname + window.location.hash);
                     }
                     return;
                 }
                 var jwt = this.getResponseHeader('jwt');
-                if(jwt){
+                if (jwt) {
                     localStorage.jwt = jwt;
                 }
             }, false);

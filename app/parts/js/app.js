@@ -62,7 +62,7 @@ define([
                 this.$el.html(new NotFoundView().render(err).$el);
             }
             else if(err.status === 403 || err.status === 401){
-                window.location.href = App.config.contextPath + '?denied=true&originURL=' + encodeURIComponent(window.location.pathname + window.location.hash);
+                window.location.href = App.config.contextPath + 'index.html?denied=true&originURL=' + encodeURIComponent(window.location.pathname + window.location.hash);
             }
         },
 

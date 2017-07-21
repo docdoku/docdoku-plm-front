@@ -38,12 +38,12 @@ define(['common-objects/models/baseline'],
             },
 
             getBomUrl: function () {
-                return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
+                return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                     '/' + encodeURIComponent(this.getConfigurationItemId()) + '/config-spec/' + this.getId() + '/bom';
             },
 
             getSceneUrl: function () {
-                return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
+                return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                     '/' + encodeURIComponent(this.getConfigurationItemId()) + '/config-spec/' + this.getId() + '/scene';
             },
 

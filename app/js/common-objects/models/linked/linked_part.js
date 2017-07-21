@@ -50,7 +50,7 @@ define(['backbone'], function (Backbone) {
             return encodeURI(
                     window.location.origin +
                     App.config.contextPath +
-                    '/parts/#' +
+                    '/parts/index.html#' +
                     this.getWorkspace() +
                     '/' +
                     this.getNumber() +

@@ -269,7 +269,7 @@ define([
 			return encodeURI(
 					window.location.origin +
 					App.config.contextPath +
-					'documents/#' +
+					'documents/index.html#' +
 					this.getWorkspace() +
 					'/' +
                     encodeURIComponent(this.getReference()) +

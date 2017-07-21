@@ -7,7 +7,7 @@
 
 <div class="HeaderContent Header-content navbar-inner">
 
-    <a class="Brand" href="{{contextPath}}{{#connected}}workspace-management/{{/connected}}#">
+    <a class="Brand" href="{{contextPath}}{{#connected}}workspace-management/{{/connected}}index.html#">
         <img class="Brand-logo" alt="docdoku_plm" src="{{contextPath}}images/plm_logo2.png"/>
         <span class="Brand-name">DocDoku<strong>PLM</strong></span>
     </a>
@@ -35,19 +35,19 @@
                             </a>
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
                                 <li>
-                                    <a href="{{contextPath}}document-management/#{{id}}/folders"
+                                    <a href="{{contextPath}}document-management/index.html#{{id}}/folders"
                                        title="{{i18n.DOCUMENT_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{contextPath}}product-management/#{{id}}/products"
+                                    <a href="{{contextPath}}product-management/index.html#{{id}}/products"
                                        title="{{i18n.PRODUCT_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{contextPath}}change-management/#{{id}}/workflows"
+                                    <a href="{{contextPath}}change-management/index.html#{{id}}/workflows"
                                        title="{{i18n.CHANGE_MANAGEMENT}}">{{i18n.CHANGES}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{contextPath}}workspace-management/#/workspace/{{id}}/edit"
+                                    <a href="{{contextPath}}workspace-management/index.html#/workspace/{{id}}/edit"
                                        title="{{i18n.WORKSPACE_MANAGEMENT}}">{{i18n.WORKSPACE_MANAGEMENT}}</a>
                                 </li>
                             </ul>
@@ -58,10 +58,10 @@
                                 <span><i class="fa fa-graduation-cap"></i> {{id}}</span>
                             </div>
                             <ul class="BreadcrumbSubMenuList">
-                                <li><a href="{{contextPath}}document-management/#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
-                                <li><a href="{{contextPath}}product-management/#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
-                                <li><a href="{{contextPath}}change-management/#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
-                                <li><a href="{{contextPath}}workspace-management/#/workspace/{{id}}" title="{{i18n.WORKSPACE_MANAGEMENT}}"><i class="fa fa-cog"></i></a></li>
+                                <li><a href="{{contextPath}}document-management/index.html#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
+                                <li><a href="{{contextPath}}product-management/index.html#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
+                                <li><a href="{{contextPath}}change-management/index.html#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
+                                <li><a href="{{contextPath}}workspace-management/index.html#/workspace/{{id}}" title="{{i18n.WORKSPACE_MANAGEMENT}}"><i class="fa fa-cog"></i></a></li>
                             </ul>
                         </li>
                         {{/administratedWorkspaces}}
@@ -73,13 +73,13 @@
                                 <i class="fa fa-user"></i> <span>{{id}}</span>
                             </a>
                             <ul class="BreadcrumbSubMenuList dropdown-menu">
-                                <li><a href="{{contextPath}}document-management/#{{id}}/folders"
+                                <li><a href="{{contextPath}}document-management/index.html#{{id}}/folders"
                                        title="{{i18n.DOCUMENT_MANAGEMENT}}">{{i18n.DOCUMENTS}}</a>
                                 </li>
-                                <li><a href="{{contextPath}}product-management/#{{id}}/products"
+                                <li><a href="{{contextPath}}product-management/index.html#{{id}}/products"
                                        title="{{i18n.PRODUCT_MANAGEMENT}}">{{i18n.PRODUCTS}}</a>
                                 </li>
-                                <li><a href="{{contextPath}}change-management/#{{id}}/workflows"
+                                <li><a href="{{contextPath}}change-management/index.html#{{id}}/workflows"
                                        title="{{i18n.CHANGE_MANAGEMENT}}">{{i18n.CHANGES}}</a>
                                 </li>
                             </ul>
@@ -90,9 +90,9 @@
                                 <span>{{id}}</span>
                             </div>
                             <ul class="BreadcrumbSubMenuList">
-                                <li><a href="{{contextPath}}document-management/#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
-                                <li><a href="{{contextPath}}product-management/#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
-                                <li><a href="{{contextPath}}change-management/#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
+                                <li><a href="{{contextPath}}document-management/index.html#{{id}}/folders" title="{{i18n.DOCUMENT_MANAGEMENT}}"><i class="fa fa-folder"></i></a></li>
+                                <li><a href="{{contextPath}}product-management/index.html#{{id}}/products" title="{{i18n.PRODUCT_MANAGEMENT}}"><i class="fa fa-briefcase"></i></a></li>
+                                <li><a href="{{contextPath}}change-management/index.html#{{id}}/workflows" title="{{i18n.CHANGE_MANAGEMENT}}"><i class="fa fa-refresh"></i></a></li>
                             </ul>
                         </li>
                         {{/nonAdministratedWorkspaces}}
@@ -124,23 +124,23 @@
                     {{/isWorkspaceManagement}}
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{contextPath}}document-management/#{{currentWorkspace}}/folders">
+                            <a href="{{contextPath}}document-management/index.html#{{currentWorkspace}}/folders">
                                 {{#isDocumentManagement}}<i class="fa fa-check"></i>{{/isDocumentManagement}}
                                 {{i18n.DOCUMENTS}}
                             </a>
                         </li>
-                        <li><a href="{{contextPath}}product-management/#{{currentWorkspace}}/products">
+                        <li><a href="{{contextPath}}product-management/index.html#{{currentWorkspace}}/products">
                             {{#isProductManagement}}<i class="fa fa-check"></i>{{/isProductManagement}}
                             {{#isProductStructure}}<i class="fa fa-check"></i>{{/isProductStructure}}
                             {{i18n.PRODUCTS}}
                         </a></li>
-                        <li><a href="{{contextPath}}change-management/#{{currentWorkspace}}/workflows">
+                        <li><a href="{{contextPath}}change-management/index.html#{{currentWorkspace}}/workflows">
                             {{#isChangeManagement}}
                             <i class="fa fa-check"></i>
                             {{/isChangeManagement}}
                             {{i18n.CHANGES}}
                         </a></li>
-                        <li><a href="{{contextPath}}workspace-management/#/workspace/{{currentWorkspace}}/edit">
+                        <li><a href="{{contextPath}}workspace-management/index.html#/workspace/{{currentWorkspace}}/edit">
                             {{#isWorkspaceManagement}}
                             <i class="fa fa-check"></i>
                             {{/isWorkspaceManagement}}
@@ -173,23 +173,23 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{contextPath}}account-management/">
+                        <li><a href="{{contextPath}}account-management/index.html">
                             <i class="fa fa-user"></i>
                             {{i18n.MY_ACCOUNT}}
                         </a>
                         </li>
-                        <li><a href="{{contextPath}}organization-management/">
+                        <li><a href="{{contextPath}}organization-management/index.html">
                             <i class="fa fa-building-o"></i>
                             {{i18n.MY_ORGANIZATION}}
                         </a>
                         </li>
-                        <li><a href="{{contextPath}}workspace-management">
+                        <li><a href="{{contextPath}}workspace-management/index.html">
                             <i class="fa fa-cog"></i>
                             {{i18n.WORKSPACES_ADMINISTRATION}}
                         </a>
                         </li>
                         <li class="divider"></li>
-                        <li class="dplm_download_link"><a href="{{contextPath}}download/">
+                        <li class="dplm_download_link"><a href="{{contextPath}}download/index.html">
                             <i class="fa fa-download"></i>
                             {{i18n.DOWNLOAD_DPLM_CLIENT}}
                         </a>
@@ -226,7 +226,7 @@
                     <a href="http://www.docdokuplm.com/" target="_blank"><i class="fa fa-cloud"></i> {{i18n.OFFICIAL_SITE}}</a>
                 </li>
                 <li class="dplm_download_link">
-                    <a href="{{contextPath}}download">
+                    <a href="{{contextPath}}download/index.html">
                     <i class="fa fa-download"></i>
                      {{i18n.DOWNLOAD_DPLM_CLIENT}}
                     </a>
@@ -234,7 +234,7 @@
             </ul>
             <ul class="nav pull-right">
                 <li id="registration_link_container">{{i18n.NOT_YET_REGISTERED_QUESTION}}
-                    <a href="{{contextPath}}#create-account">{{i18n.NOT_YET_REGISTERED_REGISTER}}</a>
+                    <a href="{{contextPath}}index.html#create-account">{{i18n.NOT_YET_REGISTERED_REGISTER}}</a>
                 </li>
             </ul>
         </div>

@@ -49,15 +49,15 @@ define(['backbone'], function (Backbone) {
         },
 
         getIndexUrl: function () {
-            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId());
+            return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId());
         },
 
         getBomUrl: function () {
-            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/bom';
+            return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/bom';
         },
 
         getSceneUrl: function () {
-            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/scene';
+            return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId + '/' + encodeURIComponent(this.getId()) + '/config-spec/wip/scene';
         },
 
         getZipUrl: function () {

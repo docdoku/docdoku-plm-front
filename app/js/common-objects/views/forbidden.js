@@ -47,7 +47,7 @@ define([
         },
 
         back:function(){
-            window.location.href = App.config.contextPath + 'workspace-management/';
+            window.location.href = App.config.contextPath + 'workspace-management/index.html';
         },
 
         disconnect:function(){
