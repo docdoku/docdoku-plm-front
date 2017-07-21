@@ -110,7 +110,7 @@ define([
                 aclEditView.on('acl:update', function () {
                     var acl = aclEditView.toList();
                     modelChecked.updateACL({
-                        acl: acl || {userEntries: {}, groupEntries: {}},
+                        acl: acl || {userEntries: [], groupEntries: []},
                         success: function () {
                             modelChecked.set('acl', acl);
                             aclEditView.closeModal();

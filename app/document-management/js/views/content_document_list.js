@@ -546,7 +546,7 @@ define([
                     var acl = aclEditView.toList();
 
                     documentChecked.updateACL({
-                        acl: acl || {userEntries: {}, groupEntries: {}},
+                        acl: acl || {userEntries: [], groupEntries: []},
                         success: function () {
                             documentChecked.set('acl', acl);
                             aclEditView.closeModal();

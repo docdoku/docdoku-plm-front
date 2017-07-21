@@ -16,9 +16,9 @@ define([
         initialize: function () {
         },
 
-        render: function (binaryResource, uuid) {
+        render: function (binaryResource, uuid, resourceToken) {
 
-            var url = ViewersUtils.getBinaryDownloadUrl(binaryResource, uuid);
+            var url = ViewersUtils.getBinaryDownloadUrl(binaryResource, uuid, resourceToken);
             var fileName = ViewersUtils.getFileName(binaryResource.fullName);
 
             var viewer = Mustache.render(template, {

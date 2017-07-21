@@ -8,40 +8,47 @@ define([
 
     var CADFileView = Backbone.View.extend({
 
-        id:'cad-file-view',
+        id: 'cad-file-view',
 
-        resize:function(){
-            setTimeout(this.handleResize.bind(this),50);
+        resize: function () {
+            setTimeout(this.handleResize.bind(this), 50);
         },
 
-        render:function(nativeCADFile, fileName, uuid){
+        render: function (nativeCADFile, fileName, uuid, resourceToken) {
 
             var extension = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
             var texturePath = fileName.substring(0, fileName.lastIndexOf('/'));
             var width, height;
 
-            if(uuid){
-                fileName += '/uuid/'+uuid;
-                nativeCADFile += '/uuid/'+uuid;
+            var options = [];
+            if (uuid) {
+                options.push('uuid=' + uuid);
+            }
+            if (resourceToken) {
+                options.push('token=' + resourceToken);
+            }
+            if (options.length) {
+                fileName += '?' + options.join('&');
+                nativeCADFile += '?' + options.join('&');
             }
 
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
-                contextPath:App.config.contextPath,
-                nativeCADFile:nativeCADFile
+                contextPath: App.config.contextPath,
+                nativeCADFile: nativeCADFile
             }));
 
             var $container = this.$('#cad-file');
 
-            function calculateWith(){
-                var max = $container.innerWidth() - 20;
+            function calculateWith() {
+                var max = $container.innerWidth() - 20;
                 return max > 10 ? max : 10;
             }
 
-            function calculateHeight(){
+            function calculateHeight() {
                 var fit = width / 16 * 9;
                 var max = window.innerHeight - 340;
-                if(max <= 10){
+                if (max <= 10) {
                     max = 10;
                 }
                 return fit < max ? fit : max;
@@ -62,12 +69,12 @@ define([
                 camera.add(dirLight1);
                 camera.add(dirLight1.target);
 
-                var dirLight2 = new THREE.DirectionalLight( App.SceneOptions.cameraLight2Color, 1 );
-                dirLight2.color.setHSL( 0.1, 1, 0.95 );
-                dirLight2.position.set( -1, 1.75, 1 );
-                dirLight2.position.multiplyScalar( 50 );
-                dirLight2.name='CameraLight2';
-                camera.add( dirLight2 );
+                var dirLight2 = new THREE.DirectionalLight(App.SceneOptions.cameraLight2Color, 1);
+                dirLight2.color.setHSL(0.1, 1, 0.95);
+                dirLight2.position.set(-1, 1.75, 1);
+                dirLight2.position.multiplyScalar(50);
+                dirLight2.name = 'CameraLight2';
+                camera.add(dirLight2);
 
                 dirLight2.castShadow = true;
 
@@ -85,12 +92,12 @@ define([
                 dirLight2.shadowBias = -0.0001;
                 dirLight2.shadowDarkness = 0.35;
 
-                var hemiLight = new THREE.HemisphereLight( App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6 );
-                hemiLight.color.setHSL( 0.6, 1, 0.6 );
-                hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-                hemiLight.position.set( 0, 0, 500 );
-                hemiLight.name='AmbientLight';
-                camera.add( hemiLight );
+                var hemiLight = new THREE.HemisphereLight(App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6);
+                hemiLight.color.setHSL(0.6, 1, 0.6);
+                hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+                hemiLight.position.set(0, 0, 500);
+                hemiLight.name = 'AmbientLight';
+                camera.add(hemiLight);
 
             }
 
@@ -137,20 +144,20 @@ define([
                 }
             }
 
-            var defaultMaterial = new THREE.MeshLambertMaterial({color:new THREE.Color(0x62697B)});
+            var defaultMaterial = new THREE.MeshLambertMaterial({color: new THREE.Color(0x62697B)});
 
-            function setShadows(object){
-                object.traverse( function ( o ) {
-                    if ( o instanceof THREE.Mesh) {
+            function setShadows(object) {
+                object.traverse(function (o) {
+                    if (o instanceof THREE.Mesh) {
                         o.castShadow = true;
                         o.receiveShadow = true;
                     }
                 });
             }
 
-            function updateMaterial(object){
-                object.traverse( function ( o ) {
-                    if ( o instanceof THREE.Mesh && !o.material.name) {
+            function updateMaterial(object) {
+                object.traverse(function (o) {
+                    if (o instanceof THREE.Mesh && !o.material.name) {
                         o.material = defaultMaterial;
                     }
                 });
@@ -222,10 +229,10 @@ define([
                     jsonLoader.load(fileName, function (geometry, materials) {
                         geometry.dynamic = false;
                         var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry,new THREE.MeshFaceMaterial(materials)));
+                        object.add(new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials)));
                         setShadows(object);
                         onParseSuccess(object);
-                    }, texturePath+'/attachedfiles/');
+                    }, texturePath + '/attachedfiles/');
 
                     break;
 
@@ -237,7 +244,7 @@ define([
                         var _material = new THREE.MeshPhongMaterial({color: materials[0].color, overdraw: true});
                         geometry.dynamic = false;
                         var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry,_material));
+                        object.add(new THREE.Mesh(geometry, _material));
                         setShadows(object);
                         onParseSuccess(object);
                     }, texturePath);

@@ -99,7 +99,7 @@ define([
                 var acl = aclEditView.toList();
 
                 templateSelected.updateACL({
-                    acl: acl || {userEntries: {}, groupEntries: {}},
+                    acl: acl || {userEntries: [], groupEntries: []},
                     success: function () {
                         templateSelected.set('acl', acl);
                         aclEditView.closeModal();
