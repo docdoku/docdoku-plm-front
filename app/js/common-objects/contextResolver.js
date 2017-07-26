@@ -29,10 +29,6 @@ define([
         }
     };
 
-    if (window.location.pathname.endsWith('/')) {
-        window.location.pathname = '/index.html';
-    }
-
     (function (send) {
         XMLHttpRequest.prototype.send = function (data) {
             if (localStorage.jwt) {
