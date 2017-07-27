@@ -92,7 +92,7 @@
                 $progress.show();
                 $bar.width(value + '%');
             } else {
-                if (uncompressedArchiveSize !== undefined) {
+                if (uncompressedArchiveSize) {
                     $downloadStatus.html(App.config.i18n.COMPRESSING);
                     $fileSize.html(App.config.i18n.UNCOMPRESSED_SIZE + bytesToSize(uncompressedArchiveSize));
                 } else {
