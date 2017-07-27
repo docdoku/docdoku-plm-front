@@ -1,4 +1,4 @@
-/*global jQuery*/
+/*global jQuery,App*/
 (function ($) {
 
     'use strict';
@@ -80,24 +80,24 @@
         var $fileSize = $el.find('.file-size');
         var $filePercentage = $el.find('.file-percentage');
 
-        $el.find('.download-status').html('Preparing download...');
+        $el.find('.download-status').html(App.config.i18n.PREPARING_DOWNLOAD);
 
         xhr.onprogress = function (e) {
             if (e.lengthComputable) {
                 var percentComplete = e.loaded / e.total;
                 var value = Math.round(100 * percentComplete);
-                $downloadStatus.html('Downloading...');
+                $downloadStatus.html(App.config.i18n.DOWNLOADING);
                 $fileSize.html(bytesToSize(e.total));
                 $filePercentage.html(value + '%');
                 $progress.show();
                 $bar.width(value + '%');
             } else {
                 if (uncompressedArchiveSize !== undefined) {
-                    $downloadStatus.html('Compressing...');
-                    $fileSize.html('Uncompressed size:' + bytesToSize(uncompressedArchiveSize));
+                    $downloadStatus.html(App.config.i18n.COMPRESSING);
+                    $fileSize.html(App.config.i18n.UNCOMPRESSED_SIZE + bytesToSize(uncompressedArchiveSize));
                 } else {
-                    $downloadStatus.html('Downloading compressed content...');
-                    $fileSize.html('File size unknown');
+                    $downloadStatus.html(App.config.i18n.DOWNLOADING_COMPRESSED_CONTENT);
+                    $fileSize.html(App.config.i18n.UNKNOWN_FILE_SIZE);
                 }
                 $filePercentage.html(bytesToSize(e.loaded));
                 $progress.hide();
