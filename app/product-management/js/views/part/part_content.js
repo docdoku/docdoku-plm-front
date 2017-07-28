@@ -128,7 +128,7 @@ define([
         setCollection: function (collection) {
             this.partsCollection = collection;
             this.listenTo(collection, 'beforeFetch', this.onBeforeFetch.bind(this));
-            this.listenTo(collection, 'reset', this.onAfterFetch.bind(this));
+            this.listenTo(collection, 'sync', this.onAfterFetch.bind(this));
             return this;
         },
 
