@@ -4,8 +4,9 @@ define([
     'mustache',
     'text!templates/admin-dashboard.html',
     'common-objects/models/admin',
-    'charts-helpers'
-], function (Backbone, Mustache, template, Admin, ChartsHelpers) {
+    'charts-helpers',
+    'fileDownload'
+], function (Backbone, Mustache, template, Admin, ChartsHelpers, FileDownloads) {
     'use strict';
 
     var AdminDashboardView = Backbone.View.extend({
@@ -44,13 +45,13 @@ define([
 
             for (var key in diskUsage) {
                 if(diskUsage[key]){
-                    diskUsageData.push({key: key, y: diskUsage[key], f: ChartsHelpers.bytesToSize(diskUsage[key])});
+                    diskUsageData.push({key: key, y: diskUsage[key], f: FileDownloads.bytesToSize(diskUsage[key])});
                 }
                 totalDiskUsage += diskUsage[key];
             }
 
             var $chart = this.$('#admin_disk_usage_chart');
-            $chart.parent().find('span.total').html(ChartsHelpers.bytesToSize(totalDiskUsage));
+            $chart.parent().find('span.total').html(FileDownloads.bytesToSize(totalDiskUsage));
             var width = $chart.width();
             var height = $chart.height();
             $chart.find('svg')

@@ -1,7 +1,7 @@
 /*global jQuery,App*/
-(function ($) {
-
+define(function () {
     'use strict';
+    console.log('Require download module');
 
     function bytesToSize(bytes) {
         var sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
@@ -41,19 +41,10 @@
         document.body.removeChild(a);
     }
 
-    function saveFile($link, url, outputExtension) {
-
+    function saveFile(url, outputExtension) {
 
         var xhr = new XMLHttpRequest();
-
-        var uncompressedArchiveSize;
-
         xhr.onreadystatechange = function () {
-
-            if (xhr.readyState === 2) {
-                uncompressedArchiveSize = xhr.getResponseHeader('x-archive-content-length');
-            }
-
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var headers = xhr.getAllResponseHeaders();
                 triggerDownload(xhr.response, extractFileName(url), headers['Content-Type'], outputExtension);
@@ -63,8 +54,12 @@
         xhr.open('GET', url);
         xhr.setRequestHeader('Content-Type', 'application/json');
         //xhr.setRequestHeader('x-accept-encoding', 'identity');
-
         xhr.responseType = 'blob';
+        xhr.send();
+        return xhr;
+    }
+
+    function bindXhr(xhr, $parent) {
 
         var $el = $('<div class="file-loading-view">' +
             '<span class="download-status"></span>' +
@@ -79,6 +74,7 @@
         var $downloadStatus = $el.find('.download-status');
         var $fileSize = $el.find('.file-size');
         var $filePercentage = $el.find('.file-percentage');
+        var uncompressedArchiveSize = xhr.getResponseHeader('x-archive-content-length');
 
         $el.find('.download-status').html(App.config.i18n.PREPARING_DOWNLOAD);
 
@@ -108,16 +104,28 @@
             $(this).remove();
         });
 
-        $link.parent().append($el);
-        xhr.send();
+        $parent.append($el);
     }
 
-    $(document).on('click', '[data-file-download]', function (e) {
-        var $link = $(this);
-        var output = $link.attr('data-file-download-output') || '';
-        saveFile($link, $link.attr('data-file-download'), output);
-        e.preventDefault();
-        return false;
-    });
+    (function ($) {
+        console.log('init bindings');
+        $(document).on('click', '[data-file-download]', function (e) {
+            var $link = $(this);
+            var output = $link.attr('data-file-download-output') || '';
+            var xhr = saveFile($link.attr('data-file-download'), output);
+            bindXhr(xhr, $link.parent());
+            e.preventDefault();
+            return false;
+        });
+    })(jQuery);
 
-})(jQuery);
+    return {
+        bytesToSize: bytesToSize,
+        extractFileName: extractFileName,
+        bindXhr: bindXhr
+    };
+
+
+});
+
+

@@ -4,8 +4,9 @@ define([
     'mustache',
     'text!templates/workspace-dashboard.html',
     'common-objects/models/workspace',
-    'charts-helpers'
-], function (Backbone, Mustache, template, Workspace, ChartsHelpers) {
+    'charts-helpers',
+    'fileDownload'
+], function (Backbone, Mustache, template, Workspace, ChartsHelpers, FileDownloads) {
     'use strict';
 
     var MAX_DAYS = 30;
@@ -63,7 +64,7 @@ define([
                     diskUsageData.push({
                         key: translates[key],
                         y: diskUsage[key],
-                        f: ChartsHelpers.bytesToSize(diskUsage[key])
+                        f: FileDownloads.bytesToSize(diskUsage[key])
                     });
                 }
                 totalDiskUsage += diskUsage[key];
@@ -82,7 +83,7 @@ define([
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
                 .attr('preserveAspectRatio', 'xMinYMin');
 
-            $chart.parent().find('span.total').html(ChartsHelpers.bytesToSize(totalDiskUsage));
+            $chart.parent().find('span.total').html(FileDownloads.bytesToSize(totalDiskUsage));
 
             nv.addGraph(function () {
 
