@@ -60,6 +60,14 @@ define([
         };
     })(XMLHttpRequest.prototype.open);
 
+    (function() {
+        var fetch = Backbone.Collection.prototype.fetch;
+        Backbone.Collection.prototype.fetch = function() {
+            this.trigger('beforeFetch');
+            return fetch.apply(this, arguments);
+        };
+    })();
+
     function onError(res) {
         return res;
     }
