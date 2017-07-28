@@ -163,11 +163,13 @@ define([
                     this.$where.queryBuilder('setRules', {rules: []});
                 }
 
-                if (query.pathDataQueryRule) {
-                    this.extractArrayValues(query.pathDataQueryRule);
-                    this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
-                } else {
-                    this.$pathDataWhere.queryBuilder('setRules', {rules: []});
+                if (this.pathDataIterationFilters.length) {
+                    if (query.pathDataQueryRule) {
+                        this.extractArrayValues(query.pathDataQueryRule);
+                        this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
+                    } else {
+                        this.$pathDataWhere.queryBuilder('setRules', {rules: []});
+                    }
                 }
 
                 _.each(query.contexts, function (value) {
