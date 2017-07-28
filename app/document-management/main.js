@@ -102,8 +102,10 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
         var match = /^#([^\/]+)/.exec(window.location.hash) || ['',''];
         App.config.workspaceId = decodeURIComponent(match[1] || '').trim();
 
-        if(!App.config.workspaceId){
-            new ErrorView({el:'#content'}).render404();
+        if (!App.config.workspaceId) {
+            new ErrorView({el: '#content'})
+                .renderWorkspaceSelection(ContextResolver.resolveServerProperties('..')
+                    .then(ContextResolver.resolveWorkspaces));
             return;
         }
 
