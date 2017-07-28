@@ -43,7 +43,9 @@ define([
             this.addEventListener('readystatechange', function () {
                 if (this.status === 401) {
                     delete localStorage.jwt;
-                    if (App.config.contextPath + 'index.html' !== window.location.pathname) {
+                    var isLoginPage = [App.config.contextPath + 'index.html', App.config.contextPath]
+                            .indexOf(window.location.pathname) > -1;
+                    if (!isLoginPage) {
                         window.location.href = App.config.contextPath + 'index.html?denied=true&originURL=' +
                             encodeURIComponent(window.location.pathname + window.location.hash);
                     }
