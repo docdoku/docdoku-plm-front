@@ -57,8 +57,7 @@ define([
                 .attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
 
             nv.addGraph(function () {
 
@@ -78,7 +77,12 @@ define([
                     .datum(diskUsageData)
                     .transition().duration(1200)
                     .call(chart);
-                nv.utils.windowResize(chart.update);
+
+                nv.utils.windowResize(function () {
+                    chart.width($chart.width())
+                        .height($chart.height());
+                    chart.update();
+                });
 
                 return chart;
             });
@@ -112,9 +116,7 @@ define([
                     .attr('width', '100%')
                     .attr('height', '100%')
                     .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                    .attr('preserveAspectRatio', 'xMinYMin')
-                    .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
-
+                    .attr('preserveAspectRatio', 'xMinYMin');
 
                 nv.addGraph(function () {
                     var chart = nv.models.multiBarHorizontalChart()
