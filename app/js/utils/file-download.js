@@ -1,7 +1,6 @@
 /*global jQuery,App*/
 define(function () {
     'use strict';
-    console.log('Require download module');
 
     function bytesToSize(bytes) {
         var sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
@@ -108,7 +107,6 @@ define(function () {
     }
 
     (function ($) {
-        console.log('init bindings');
         $(document).on('click', '[data-file-download]', function (e) {
             var $link = $(this);
             var output = $link.attr('data-file-download-output') || '';
