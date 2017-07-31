@@ -1,9 +1,10 @@
-    {
-        "server": {
-            "ssl": false,
-            "domain": "localhost",
-            "port": 8080,
-            "contextPath": "/docdoku-server-rest"
-        },
-        "contextPath": "/"
-    }
+{
+    "server": {
+        "ssl": false,
+        "domain": "localhost",
+        "port": 8080,
+        "contextPath": "/docdoku-server-rest",
+        "wsDomain": "localhost"
+    },
+    "contextPath": "/"
+}

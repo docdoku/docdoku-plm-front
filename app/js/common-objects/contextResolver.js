@@ -60,9 +60,9 @@ define([
         };
     })(XMLHttpRequest.prototype.open);
 
-    (function() {
+    (function () {
         var fetch = Backbone.Collection.prototype.fetch;
-        Backbone.Collection.prototype.fetch = function() {
+        Backbone.Collection.prototype.fetch = function () {
             this.trigger('beforeFetch');
             return fetch.apply(this, arguments);
         };
@@ -85,9 +85,10 @@ define([
 
             var isSSL = properties.server.ssl;
             var base = '://' + properties.server.domain + ':' + properties.server.port + addTrailingSlash(properties.server.contextPath);
+            var wsBase = properties.server.wsDomain ? '://' + properties.server.wsDomain + ':' + properties.server.port + addTrailingSlash(properties.server.contextPath) : base;
             App.config.serverBasePath = (isSSL ? 'https' : 'http') + base;
             App.config.apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
-            App.config.webSocketEndPoint = (isSSL ? 'wss' : 'ws') + base + 'ws';
+            App.config.webSocketEndPoint = (isSSL ? 'wss' : 'ws') + wsBase + 'ws';
             App.config.contextPath = addTrailingSlash(properties.contextPath);
 
         }, onError);
