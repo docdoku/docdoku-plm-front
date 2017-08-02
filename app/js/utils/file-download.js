@@ -73,11 +73,11 @@ define(function () {
         var $downloadStatus = $el.find('.download-status');
         var $fileSize = $el.find('.file-size');
         var $filePercentage = $el.find('.file-percentage');
-        var uncompressedArchiveSize = xhr.getResponseHeader('x-archive-content-length');
 
         $el.find('.download-status').html(App.config.i18n.PREPARING_DOWNLOAD);
 
         xhr.onprogress = function (e) {
+            var uncompressedArchiveSize = xhr.getResponseHeader('x-archive-content-length');
             if (e.lengthComputable) {
                 var percentComplete = e.loaded / e.total;
                 var value = Math.round(100 * percentComplete);
