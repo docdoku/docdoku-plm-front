@@ -45,7 +45,8 @@ require.config({
         objloader: '../../js/dmu/loaders/OBJLoader',
         mtlloader: '../../js/dmu/loaders/MTLLoader',
         stats:'../../js/dmu/utils/Stats',
-        utilsprototype:'../../js/utils/utils.prototype'
+        utilsprototype:'../../js/utils/utils.prototype',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

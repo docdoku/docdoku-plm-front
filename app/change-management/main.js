@@ -49,7 +49,8 @@ require.config({
         utilsprototype: '../../js/utils/utils.prototype',
         inputValidity: '../../js/utils/input-validity',
         datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
-        selectize: '../../bower_components/selectize/dist/js/standalone/selectize'
+        selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

@@ -94,7 +94,7 @@ define([
                 this.bindDatGUIControls();
             } catch (ex) {
                 console.error('Got exception in dmu');
-                Logger.log(ex);
+                Logger.log('DMU', ex);
                 this.onNoWebGLSupport();
             }
 

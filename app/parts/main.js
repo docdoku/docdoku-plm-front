@@ -49,6 +49,7 @@ require.config({
         fileDownload: '../../js/utils/file-download',
         moment: '../../bower_components/moment/min/moment-with-locales',
         momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

@@ -59,7 +59,8 @@ require.config({
         datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
         d3:'../../bower_components/d3/d3',
         nvd3:'../../bower_components/nvd3/build/nv.d3',
-        'charts-helpers':'../../js/utils/charts-helpers'
+        'charts-helpers':'../../js/utils/charts-helpers',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

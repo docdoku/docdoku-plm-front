@@ -58,7 +58,8 @@ require.config({
         'query-builder': '../../bower_components/jQuery-QueryBuilder/dist/js/query-builder.standalone',
         'query-builder-options': '../../js/utils/query-builder-options',
         selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
-        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr'
+        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

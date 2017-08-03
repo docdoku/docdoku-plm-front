@@ -61,7 +61,8 @@ require.config({
         d3: '../../bower_components/d3/d3',
         nvd3: '../../bower_components/nvd3/build/nv.d3',
         'charts-helpers': '../../js/utils/charts-helpers',
-        fileDownload: '../../js/utils/file-download'
+        fileDownload: '../../js/utils/file-download',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

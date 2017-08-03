@@ -29,8 +29,10 @@ require.config({
         tween: '../../bower_components/tweenjs/src/Tween',
         trackballcontrols: '../../js/dmu/controls/TrackballControls',
         binaryloader: '../../js/dmu/loaders/BinaryLoader',
-        urlUtils: '../../js/utils/url-utils'
-
+        urlUtils: '../../js/utils/url-utils',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data'
     },
 
     deps: [

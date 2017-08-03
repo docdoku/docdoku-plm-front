@@ -151,12 +151,12 @@ define([
             camera.add(dirLight1);
             camera.add(dirLight1.target);
 
-            var dirLight2 = new THREE.DirectionalLight( App.SceneOptions.cameraLight2Color, 1 );
-            dirLight2.color.setHSL( 0.1, 1, 0.95 );
-            dirLight2.position.set( -1, 1.75, 1 );
-            dirLight2.position.multiplyScalar( 50 );
-            dirLight2.name='CameraLight2';
-            camera.add( dirLight2 );
+            var dirLight2 = new THREE.DirectionalLight(App.SceneOptions.cameraLight2Color, 1);
+            dirLight2.color.setHSL(0.1, 1, 0.95);
+            dirLight2.position.set(-1, 1.75, 1);
+            dirLight2.position.multiplyScalar(50);
+            dirLight2.name = 'CameraLight2';
+            camera.add(dirLight2);
 
             dirLight2.castShadow = true;
 
@@ -174,12 +174,12 @@ define([
             dirLight2.shadowBias = -0.0001;
             dirLight2.shadowDarkness = 0.35;
 
-            var hemiLight = new THREE.HemisphereLight( App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6 );
-            hemiLight.color.setHSL( 0.6, 1, 0.6 );
-            hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-            hemiLight.position.set( 0, 0, 500 );
-            hemiLight.name='AmbientLight';
-            camera.add( hemiLight );
+            var hemiLight = new THREE.HemisphereLight(App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6);
+            hemiLight.color.setHSL(0.6, 1, 0.6);
+            hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+            hemiLight.position.set(0, 0, 500);
+            hemiLight.name = 'AmbientLight';
+            camera.add(hemiLight);
         }
 
         function handleResize() {
@@ -262,8 +262,8 @@ define([
 
             // Ask the browser to lock the pointer
             _this.$container[0].requestPointerLock = (_this.$container[0].requestPointerLock) ||
-            (_this.$container[0].mozRequestPointerLock) ||
-            (_this.$container[0].webkitRequestPointerLock);
+                (_this.$container[0].mozRequestPointerLock) ||
+                (_this.$container[0].webkitRequestPointerLock);
 
             _this.$container[0].requestPointerLock();
         }
@@ -512,32 +512,32 @@ define([
             }
             _this.scene.remove(object);
 
-            Logger.log('%c object removed', 'SM');
+            Logger.log('SM', 'object removed');
 
             _this.reDraw();
         }
 
-        function saveMaterials(object){
-            _.each(object.children,function(o){
-                if(o instanceof THREE.Mesh){
+        function saveMaterials(object) {
+            _.each(object.children, function (o) {
+                if (o instanceof THREE.Mesh) {
                     o.initialMaterial = o.material;
                     saveMaterials(o);
                 }
             });
         }
 
-        function setEditedMaterials(object){
-            _.each(object.children,function(o){
-                if(o instanceof THREE.Mesh){
+        function setEditedMaterials(object) {
+            _.each(object.children, function (o) {
+                if (o instanceof THREE.Mesh) {
                     o.material = materialEditedObject;
                     setEditedMaterials(o);
                 }
             });
         }
 
-        function restoreInitialMaterials(object){
-            _.each(object.children,function(o){
-                if(o instanceof THREE.Mesh){
+        function restoreInitialMaterials(object) {
+            _.each(object.children, function (o) {
+                if (o instanceof THREE.Mesh) {
                     o.material = o.initialMaterial;
                     restoreInitialMaterials(o);
                 }
@@ -668,10 +668,10 @@ define([
             var curCamPos = camera.position;
 
             var tween1 = new TWEEN.Tween(curTar)
-                    .to({x: endTarPos.x, y: endTarPos.y, z: endTarPos.z}, duration)
-                    .interpolation(TWEEN.Interpolation.CatmullRom)
-                    .easing(TWEEN.Easing.Linear.None)
-                    .onUpdate(_this.reDraw);
+                .to({x: endTarPos.x, y: endTarPos.y, z: endTarPos.z}, duration)
+                .interpolation(TWEEN.Interpolation.CatmullRom)
+                .easing(TWEEN.Easing.Linear.None)
+                .onUpdate(_this.reDraw);
 
 
             var tween2 = new TWEEN.Tween(curCamPos)
@@ -1090,7 +1090,7 @@ define([
                 if (editedObjectsColoured) {
                     _this.colourEditedObjects();
                 }
-                Logger.log('%c Mesh added : \n\t' + this.editedObjects, 'SM');
+                Logger.log('SM', 'Mesh added : \n\t' + this.editedObjects);
                 App.collaborativeController.sendEditedObjects();
             }
             transformControls.bindEvents();
@@ -1161,7 +1161,7 @@ define([
                 .start();
             _this.editedObjects = _.without(_this.editedObjects, object.uuid);
             restoreInitialMaterials(object);
-            Logger.log('%c Mesh removed', 'SM');
+            Logger.log('SM', 'Mesh removed');
             App.collaborativeController.sendEditedObjects();
 
             _this.reDraw();
@@ -1232,17 +1232,17 @@ define([
             });
         };
 
-        this.bestFitView = function(){
+        this.bestFitView = function () {
 
             var box = App.instancesManager.computeGlobalBBox();
             var size = box.size();
 
-            if(size.length()){
+            if (size.length()) {
                 var cog = box.center().clone();
                 var radius = Math.max(size.x, size.y, size.z);
                 var camera = _this.cameraObject;
                 var dir = new THREE.Vector3().copy(cog).sub(camera.position).normalize();
-                var distance = radius ? radius / 2  : 1000;
+                var distance = radius ? radius / 2 : 1000;
                 distance = distance < App.SceneOptions.cameraNear ? App.SceneOptions.cameraNear + 100 : distance;
                 var endCamPos = new THREE.Vector3().copy(cog).sub(dir.multiplyScalar(distance));
                 cameraAnimation(cog, 2000, endCamPos);

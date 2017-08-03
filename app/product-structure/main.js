@@ -75,7 +75,8 @@ require.config({
         stats:'../../js/dmu/utils/Stats',
         typeface:'../../js/lib/helvetiker_regular.typeface',
         selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
-        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr'
+        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps:[

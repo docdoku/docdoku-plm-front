@@ -22,7 +22,10 @@ require.config({
         i18n: '../../bower_components/requirejs-i18n/i18n',
         bootstrap: '../../bower_components/bootstrap/docs/assets/js/bootstrap',
         'common-objects': '../../js/common-objects',
-        localization: '../../js/localization'
+        localization: '../../js/localization',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data'
     },
 
     deps: [
