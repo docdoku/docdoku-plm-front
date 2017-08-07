@@ -4,7 +4,7 @@ define([
     'mustache',
     'text!modules/coworkers-access-module/templates/coworker_item_template.html'
 ], function (Backbone, Mustache, template) {
-	'use strict';
+    'use strict';
     var CoWorkersItemView = Backbone.View.extend({
         tagName: 'li',
 
@@ -37,9 +37,9 @@ define([
             // Listen for the status request done
             Backbone.Events.on('UserStatusRequestDone', function (message) {
                 if (message.remoteUser === that.model.login && message.status !== null) {
-                    if (message.status === 'OFFLINE') {
+                    if (message.status === 'USER_STATUS_OFFLINE') {
                         that.$('.fa-user').addClass('user-offline').removeClass('user-online').attr('title', App.config.i18n.OFFLINE);
-                    } else if (message.status === 'ONLINE') {
+                    } else if (message.status === 'USER_STATUS_ONLINE') {
                         that.$('.fa-user').addClass('user-online').removeClass('user-offline').attr('title', App.config.i18n.ONLINE);
                     }
                 }
@@ -49,11 +49,11 @@ define([
         },
 
         onVideoButtonClick: function () {
-            Backbone.Events.trigger('NewOutgoingCall', { remoteUser: this.model.login, context: App.config.workspaceId });
+            Backbone.Events.trigger('NewOutgoingCall', {remoteUser: this.model.login, context: App.config.workspaceId});
         },
 
         onChatButtonClick: function () {
-            Backbone.Events.trigger('NewChatSession', { remoteUser: this.model.login, context: App.config.workspaceId });
+            Backbone.Events.trigger('NewChatSession', {remoteUser: this.model.login, context: App.config.workspaceId});
         },
 
         onMailButtonClick: function () {
