@@ -408,7 +408,7 @@ define([
             return encodeURI(
                 window.location.origin +
                 App.config.contextPath +
-                'parts/#' +
+                'parts/index.html#' +
                 this.getWorkspace() +
                 '/' +
                 encodeURIComponent(this.getNumber()) +
@@ -517,7 +517,7 @@ define([
         },
 
         getVisualizationUrl: function () {
-            return App.config.contextPath + 'visualization/#assembly/' + App.config.workspaceId + '/' + this.getEncodedPartKey() + '/0/0/0';
+            return App.config.contextPath + 'visualization/index.html#assembly/' + App.config.workspaceId + '/' + this.getEncodedPartKey() + '/0/0/0';
         },
 
         url: function () {

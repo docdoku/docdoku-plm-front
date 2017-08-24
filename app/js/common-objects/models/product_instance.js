@@ -112,13 +112,13 @@ define(['backbone',
         },
 
         getBomUrl: function () {
-            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
+            return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                 '/' + encodeURIComponent(this.getConfigurationItemId()) +
                 '/config-spec/pi-' + encodeURIComponent(this.getSerialNumber()) + '/bom';
         },
 
         getSceneUrl: function () {
-            return App.config.contextPath + 'product-structure/#' + App.config.workspaceId +
+            return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                 '/' + encodeURIComponent(this.getConfigurationItemId()) +
                 '/config-spec/pi-' + encodeURIComponent(this.getSerialNumber()) + '/scene';
         },

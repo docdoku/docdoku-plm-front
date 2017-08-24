@@ -4,8 +4,9 @@ define([
     'mustache',
     'text!templates/admin-dashboard.html',
     'common-objects/models/admin',
-    'charts-helpers'
-], function (Backbone, Mustache, template, Admin, ChartsHelpers) {
+    'charts-helpers',
+    'fileDownload'
+], function (Backbone, Mustache, template, Admin, ChartsHelpers, FileDownloads) {
     'use strict';
 
     var AdminDashboardView = Backbone.View.extend({
@@ -44,21 +45,20 @@ define([
 
             for (var key in diskUsage) {
                 if(diskUsage[key]){
-                    diskUsageData.push({key: key, y: diskUsage[key], f: ChartsHelpers.bytesToSize(diskUsage[key])});
+                    diskUsageData.push({key: key, y: diskUsage[key], f: FileDownloads.bytesToSize(diskUsage[key])});
                 }
                 totalDiskUsage += diskUsage[key];
             }
 
             var $chart = this.$('#admin_disk_usage_chart');
-            $chart.parent().find('span.total').html(ChartsHelpers.bytesToSize(totalDiskUsage));
+            $chart.parent().find('span.total').html(FileDownloads.bytesToSize(totalDiskUsage));
             var width = $chart.width();
             var height = $chart.height();
             $chart.find('svg')
                 .attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
 
             nv.addGraph(function () {
 
@@ -78,7 +78,12 @@ define([
                     .datum(diskUsageData)
                     .transition().duration(1200)
                     .call(chart);
-                nv.utils.windowResize(chart.update);
+
+                nv.utils.windowResize(function () {
+                    chart.width($chart.width())
+                        .height($chart.height());
+                    chart.update();
+                });
 
                 return chart;
             });
@@ -112,9 +117,7 @@ define([
                     .attr('width', '100%')
                     .attr('height', '100%')
                     .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                    .attr('preserveAspectRatio', 'xMinYMin')
-                    .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
-
+                    .attr('preserveAspectRatio', 'xMinYMin');
 
                 nv.addGraph(function () {
                     var chart = nv.models.multiBarHorizontalChart()

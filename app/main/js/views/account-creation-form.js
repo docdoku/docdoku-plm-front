@@ -87,7 +87,7 @@ define([
         onAccountCreated: function (account, status, xhr) {
             localStorage.jwt = xhr.getResponseHeader('jwt');
             if (account.enabled) {
-                window.location.href = App.config.contextPath + 'workspace-management/?accountCreated=true';
+                window.location.href = App.config.contextPath + 'workspace-management/index.html?accountCreated=true';
             } else {
                 this.$notifications.append(new AlertView({
                     type: 'success',

@@ -9,7 +9,7 @@ define([
 
     var timeZone = App.config.timeZone || 'CET';
 
-    Logger.log('Using timezone ' + timeZone + ' and locale ' + App.config.locale);
+    Logger.log('DATE', 'Using timezone ' + timeZone + ' and locale ' + App.config.locale);
 
     moment.locale(App.config.locale);
 
@@ -40,8 +40,8 @@ define([
             return moment(value, 'YYYY-MM-DD').toDate();
         },
 
-        formatShort:function(input){
-            return input ? moment(input).format('YYYY-MM-DD'): null;
+        formatShort: function (input) {
+            return input ? moment(input).format('YYYY-MM-DD') : null;
         },
 
         getMainZonesDates: function (timestamp) {

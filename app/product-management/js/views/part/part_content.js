@@ -117,8 +117,18 @@ define([
             return this;
         },
 
+        onBeforeFetch: function () {
+            this.$el.addClass('before-fetch');
+        },
+
+        onAfterFetch: function () {
+            this.$el.removeClass('before-fetch');
+        },
+
         setCollection: function (collection) {
             this.partsCollection = collection;
+            this.listenTo(collection, 'beforeFetch', this.onBeforeFetch.bind(this));
+            this.listenTo(collection, 'sync', this.onAfterFetch.bind(this));
             return this;
         },
 
@@ -380,7 +390,7 @@ define([
                 var acl = aclEditView.toList();
 
                 selectedPart.updateACL({
-                    acl: acl || {userEntries: {}, groupEntries: {}},
+                    acl: acl || {userEntries: [], groupEntries: []},
                     success: function () {
                         selectedPart.set('acl', acl);
                         aclEditView.closeModal();
@@ -474,7 +484,7 @@ define([
         onQuickSearch: function (e) {
             if (e.target.children[1].value) {
                 App.router.navigate(App.config.workspaceId + '/parts-search/?q=' + e.target.children[1].value, {trigger: true});
-            }else{
+            } else {
                 App.router.navigate(App.config.workspaceId + '/parts', {trigger: true});
             }
             e.preventDefault();

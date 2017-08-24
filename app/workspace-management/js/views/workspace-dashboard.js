@@ -4,8 +4,9 @@ define([
     'mustache',
     'text!templates/workspace-dashboard.html',
     'common-objects/models/workspace',
-    'charts-helpers'
-], function (Backbone, Mustache, template, Workspace, ChartsHelpers) {
+    'charts-helpers',
+    'fileDownload'
+], function (Backbone, Mustache, template, Workspace, ChartsHelpers, FileDownloads) {
     'use strict';
 
     var MAX_DAYS = 30;
@@ -59,8 +60,12 @@ define([
             };
 
             for (var key in diskUsage) {
-                if(diskUsage[key]){
-                    diskUsageData.push({key: translates[key], y: diskUsage[key], f: ChartsHelpers.bytesToSize(diskUsage[key])});
+                if (diskUsage[key]) {
+                    diskUsageData.push({
+                        key: translates[key],
+                        y: diskUsage[key],
+                        f: FileDownloads.bytesToSize(diskUsage[key])
+                    });
                 }
                 totalDiskUsage += diskUsage[key];
             }
@@ -70,35 +75,43 @@ define([
             }
 
             var $chart = this.$('#disk_usage_chart');
+            var $svg = $chart.find('svg');
             var width = $chart.width();
             var height = $chart.height();
-            $chart.find('svg')
-                .attr('width', '100%')
+            $svg.attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
 
-            $chart.parent().find('span.total').html(ChartsHelpers.bytesToSize(totalDiskUsage));
+            $chart.parent().find('span.total').html(FileDownloads.bytesToSize(totalDiskUsage));
 
             nv.addGraph(function () {
 
                 var chart = nv.models.pieChart()
-                    .x(function(d) { return d.key; })
-                    .y(function(d) { return d.y; })
-                    .width(width)
-                    .height(height)
+                    .x(function (d) {
+                        return d.key;
+                    })
+                    .y(function (d) {
+                        return d.y;
+                    })
+                    .width($chart.width())
+                    .height($chart.height())
                     .showTooltipPercent(true);
 
                 chart.tooltip.contentGenerator(function (obj) {
                     return ChartsHelpers.diskUsageTooltip(obj.data.key, obj.data.f);
                 });
 
-
                 d3.select('#disk_usage_chart svg')
                     .datum(diskUsageData)
                     .transition().duration(1200)
                     .call(chart);
+
+                nv.utils.windowResize(function () {
+                    chart.width($chart.width())
+                        .height($chart.height());
+                    chart.update();
+                });
 
                 return chart;
             });
@@ -127,8 +140,7 @@ define([
                 .attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
 
             nv.addGraph(function () {
                 var chart = nv.models.discreteBarChart()
@@ -194,8 +206,8 @@ define([
                 .attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
+
             $chart.parent().find('span.total').html(totalCod);
 
             if (codData.length) {
@@ -267,8 +279,7 @@ define([
                 .attr('width', '100%')
                 .attr('height', '100%')
                 .attr('viewBox', '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height))
-                .attr('preserveAspectRatio', 'xMinYMin')
-                .attr('transform', 'translate(' + Math.min(width, height) / 2 + ',' + Math.min(width, height) / 2 + ')');
+                .attr('preserveAspectRatio', 'xMinYMin');
 
             $chart.parent().find('span.total').html(totalCop);
 

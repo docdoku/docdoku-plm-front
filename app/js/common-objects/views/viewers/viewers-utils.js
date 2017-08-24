@@ -3,15 +3,24 @@ define([], function () {
 
     'use strict';
 
-    function getBinaryDownloadUrl(binaryResource, uuid) {
+    function getBinaryDownloadUrl(binaryResource, uuid, token) {
 
-        var url = App.config.apiEndPoint + '/files/' + binaryResource.fullName + '?';
+        var url = App.config.apiEndPoint + '/files/' + binaryResource.fullName;
 
+        var options = [];
         if (uuid) {
-            url += 'uuid=' + encodeURIComponent(uuid) + '&';
+            options.push('uuid=' + uuid);
         }
 
-        return url + 'fileName=' + encodeURIComponent(binaryResource.fullName);
+        if (token) {
+            options.push('token=' + token);
+        }
+
+        if (options.length) {
+            url += '?' + options.join('&');
+        }
+
+        return url;
 
     }
 
@@ -35,14 +44,8 @@ define([], function () {
             s4() + '-' + s4() + s4() + s4();
     }
 
-    function getBinaryEmbeddableUrl(binaryResource, uuid) {
-        var url = getBinaryDownloadUrl(binaryResource, uuid);
-
-        if (localStorage.jwt) {
-            url += '&jwtToken=' + localStorage.jwt;
-        }
-
-        return url;
+    function getBinaryEmbeddableUrl(binaryResource, uuid, resourceToken) {
+        return getBinaryDownloadUrl(binaryResource, uuid, resourceToken);
     }
 
     return {

@@ -58,7 +58,7 @@ define([
                 contentType: 'application/json; charset=utf-8'
             }).then(function(){
                 var originURL = UrlUtils.getParameterByName('originURL');
-                window.location.href = originURL ? decodeURIComponent(originURL):App.config.contextPath + 'workspace-management/';
+                window.location.href = originURL ? decodeURIComponent(originURL):App.config.contextPath + 'workspace-management/index.html';
             }, this.onLoginFailed.bind(this));
             e.preventDefault();
             return false;

@@ -52,7 +52,8 @@ require.config({
         utilsprototype: '../../js/utils/utils.prototype',
         userPopover: '../../js/modules/user-popover-module/app',
         async: '../../bower_components/async/lib/async',
-        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr'
+        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

@@ -75,7 +75,8 @@ require.config({
         stats:'../../js/dmu/utils/Stats',
         typeface:'../../js/lib/helvetiker_regular.typeface',
         selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
-        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr'
+        datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps:[
@@ -134,8 +135,10 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
         var match = /^#([^\/]+)/.exec(window.location.hash) || ['',''];
         App.config.workspaceId = decodeURIComponent(match[1] || '').trim();
 
-        if(!App.config.workspaceId){
-            new ErrorView({el:'#content'}).render404();
+        if (!App.config.workspaceId) {
+            new ErrorView({el: '#content'})
+                .renderWorkspaceSelection(ContextResolver.resolveServerProperties('..')
+                    .then(ContextResolver.resolveWorkspaces));
             return;
         }
 

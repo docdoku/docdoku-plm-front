@@ -13,17 +13,17 @@ define([
 
     return {
 
-        getViewer: function (binaryResource, uuid) {
+        getViewer: function (binaryResource, uuid, resourceToken) {
 
             var selectedViewers = viewers.filter(function (viewer) {
                 return viewer.canDisplayExtension(ViewersUtils.getExtension(binaryResource.fullName));
             });
 
             if (selectedViewers.length > 0) {
-                return new selectedViewers[0]().render(binaryResource, uuid).$el;
+                return new selectedViewers[0]().render(binaryResource, uuid, resourceToken).$el;
             }
             else {
-                return new DefaultViewer().render(binaryResource, uuid).$el;
+                return new DefaultViewer().render(binaryResource, uuid, resourceToken).$el;
             }
 
         }

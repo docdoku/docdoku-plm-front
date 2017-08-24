@@ -9,7 +9,7 @@ define([
     'use strict';
 
     var DocumentRevisionView = Backbone.View.extend({
-        render: function (document, uuid) {
+        render: function (document, uuid, resourceToken) {
 
             this.uuid = uuid;
             this.document = document;
@@ -65,7 +65,7 @@ define([
 
             if(lastIteration){
                 _.each(lastIteration.attachedFiles, function (binaryResource) {
-                    var viewer = ViewersFactory.getViewer(binaryResource, uuid);
+                    var viewer = ViewersFactory.getViewer(binaryResource, uuid, resourceToken);
                     _this.$accordion.append(viewer);
                 });
             }

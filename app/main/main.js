@@ -29,8 +29,10 @@ require.config({
         tween: '../../bower_components/tweenjs/src/Tween',
         trackballcontrols: '../../js/dmu/controls/TrackballControls',
         binaryloader: '../../js/dmu/loaders/BinaryLoader',
-        urlUtils: '../../js/utils/url-utils'
-
+        urlUtils: '../../js/utils/url-utils',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data'
     },
 
     deps: [
@@ -78,7 +80,7 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
         ContextResolver.resolveServerProperties('.')
             .then(ContextResolver.resolveAccount)
             .then(function () {
-                window.location.href = App.config.contextPath + 'workspace-management/';
+                window.location.href = App.config.contextPath + 'workspace-management/index.html';
             }, function buildView(xhr) {
                 if (xhr.status === 401) {
                     require(['backbone', 'app', 'router', 'common-objects/views/header'], function (Backbone, AppView, Router, HeaderView) {

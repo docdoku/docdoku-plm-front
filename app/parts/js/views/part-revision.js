@@ -29,17 +29,18 @@ define([
                     fileName = App.config.serverBasePath + fileName;
 
                     var nativeCADFile = App.config.apiEndPoint + '/files/' + this.lastIteration.nativeCADFile.fullName;
-                    this.cadFileView = new CADFileView().render(nativeCADFile, fileName, this.uuid);
+                    this.cadFileView = new CADFileView().render(nativeCADFile, fileName, this.uuid, this.resourceToken);
                     this.$('#tab-cad-file').html(this.cadFileView.$el);
                 }
                 this.cadFileView.resize();
             }
         },
 
-        render: function (part, uuid) {
+        render: function (part, uuid, resourceToken) {
 
             var _this = this;
             this.uuid = uuid;
+            this.resourceToken = resourceToken;
             this.part = part;
             var lastIteration = part.partIterations[part.partIterations.length - 1];
             this.lastIteration = lastIteration;
@@ -89,7 +90,7 @@ define([
 
             if (lastIteration) {
                 _.each(lastIteration.attachedFiles, function (binaryResource) {
-                    var viewer = ViewersFactory.getViewer(binaryResource, uuid);
+                    var viewer = ViewersFactory.getViewer(binaryResource, uuid, resourceToken);
                     _this.$accordion.append(viewer);
                 });
             }

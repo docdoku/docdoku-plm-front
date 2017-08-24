@@ -29,7 +29,8 @@ require.config({
         moment: '../../bower_components/moment/min/moment-with-locales',
         momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
         popoverUtils: '../../js/utils/popover.utils',
-        fileDownload: '../../js/utils/file-download'
+        fileDownload: '../../js/utils/file-download',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [

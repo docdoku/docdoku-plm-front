@@ -79,7 +79,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 if (typeof  workerMessages[message.data.fn] === 'function') {
                     workerMessages[message.data.fn](message.data.obj);
                 } else {
-                    Logger.log('%c Unrecognized command  : \n\t' + message.data, 'IM');
+                    Logger.log('IM', 'Unrecognized command  : \n\t' + message.data);
                 }
             }, false);
 
@@ -155,7 +155,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 }
                 evalRunning = true;
                 var sceneContext = App.sceneManager.getControlsContext();
-                Logger.log('%c Updating worker', 'IM');
+                Logger.log('IM', 'Updating worker');
                 worker.postMessage({
                     fn: 'context',
                     obj: {
@@ -297,26 +297,26 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             }, 1);
 
             this.loadQueue.drain = function () {
-                Logger.log('Load Queue %c All paths have been processed', 'IM');
+                Logger.log('IM', 'Load Queue  All paths have been processed');
             };
             this.loadQueue.empty = function () {
-                Logger.log('Load Queue %c  Empty Queue', 'IM');
+                Logger.log('IM', 'Load Queue   Empty Queue');
             };
             this.loadQueue.saturated = function () {
-                Logger.log('Load Queue %c Saturated Queue', 'IM');
+                Logger.log('IM', 'Load Queue  Saturated Queue');
             };
 
 
             this.xhrQueue = async.queue(loadProcess, 4);
 
             this.xhrQueue.drain = function () {
-                Logger.log('XHR Queue %c All items have been processed', 'IM');
+                Logger.log('IM', 'XHR Queue  All items have been processed');
             };
             this.xhrQueue.empty = function () {
-                Logger.log('XHR Queue %c Empty Queue', 'IM');
+                Logger.log('IM', 'XHR Queue  Empty Queue');
             };
             this.xhrQueue.saturated = function () {
-                Logger.log('XHR Queue %c Saturated Queue', 'IM');
+                Logger.log('IM', 'XHR Queue  Saturated Queue');
             };
 
             this.getLoadedGeometries = function (n) {
@@ -357,7 +357,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             this.clear = function () {
-                Logger.log('%c Clearing Scene', 'IM');
+                Logger.log('IM', ' Clearing Scene');
 
                 _this.xhrQueue.kill();
                 _this.loadQueue.kill();

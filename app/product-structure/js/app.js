@@ -94,7 +94,7 @@ define([
                 this.bindDatGUIControls();
             } catch (ex) {
                 console.error('Got exception in dmu');
-                Logger.log(ex);
+                Logger.log('DMU', ex);
                 this.onNoWebGLSupport();
             }
 
@@ -295,7 +295,7 @@ define([
             var splitUrl = window.location.href.split('/');
             var urlRoot = splitUrl[0] + '//' + splitUrl[2];
 
-            var iframeSrc = urlRoot + '/visualization/#product/' + App.config.workspaceId + '/' + App.config.productId +
+            var iframeSrc = urlRoot + '/visualization/index.html#product/' + App.config.workspaceId + '/' + App.config.productId +
                 '/' + App.sceneManager.cameraObject.position.x +
                 '/' + App.sceneManager.cameraObject.position.y +
                 '/' + App.sceneManager.cameraObject.position.z;

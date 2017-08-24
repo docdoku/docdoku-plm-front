@@ -45,7 +45,8 @@ require.config({
         objloader: '../../js/dmu/loaders/OBJLoader',
         mtlloader: '../../js/dmu/loaders/MTLLoader',
         stats:'../../js/dmu/utils/Stats',
-        utilsprototype:'../../js/utils/utils.prototype'
+        utilsprototype:'../../js/utils/utils.prototype',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [
@@ -88,8 +89,10 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
     App.config.workspaceId = decodeURIComponent(/^#(product|assembly)\/([^\/]+)/.exec(window.location.hash)[2]).trim() || null;
     App.config.productId = decodeURIComponent(window.location.hash.split('/')[2]).trim() || null;
 
-    if(!App.config.workspaceId){
-        new ErrorView({el:'#content'}).render404();
+    if (!App.config.workspaceId) {
+        new ErrorView({el: '#content'})
+            .renderWorkspaceSelection(ContextResolver.resolveServerProperties('..')
+                .then(ContextResolver.resolveWorkspaces));
         return;
     }
 

@@ -8,8 +8,9 @@ define([
     'common-objects/views/alert',
     'collections/configuration_items',
     'common-objects/collections/product_instances',
-    'common-objects/views/prompt'
-], function (Backbone, Mustache, template, selectize, queryBuilderOptions, AlertView, ConfigurationItemCollection, ProductInstances, PromptView) {
+    'common-objects/views/prompt',
+    'fileDownload'
+], function (Backbone, Mustache, template, selectize, queryBuilderOptions, AlertView, ConfigurationItemCollection, ProductInstances, PromptView, FileDownload) {
     'use strict';
     var QueryBuilderView = Backbone.View.extend({
 
@@ -159,14 +160,16 @@ define([
                     this.extractArrayValues(query.queryRule);
                     this.$where.queryBuilder('setRules', query.queryRule);
                 } else {
-                    this.$where.queryBuilder('setRules',{rules:[]});
+                    this.$where.queryBuilder('setRules', {rules: []});
                 }
 
-                if (query.pathDataQueryRule) {
-                    this.extractArrayValues(query.pathDataQueryRule);
-                    this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
-                } else {
-                    this.$pathDataWhere.queryBuilder('setRules',{rules:[]});
+                if (this.pathDataIterationFilters.length) {
+                    if (query.pathDataQueryRule) {
+                        this.extractArrayValues(query.pathDataQueryRule);
+                        this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
+                    } else {
+                        this.$pathDataWhere.queryBuilder('setRules', {rules: []});
+                    }
                 }
 
                 _.each(query.contexts, function (value) {
@@ -567,7 +570,6 @@ define([
             var query = _.findWhere(this.queries, {id: parseInt(queryId, 10)});
             var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries/' + query.id + '/format/XLS';
 
-
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 var a;
@@ -582,6 +584,7 @@ define([
             };
             xhr.open('GET', url);
             xhr.responseType = 'blob';
+            FileDownload.bindXhr(xhr, this.$exportExistingQueryButton.parent());
             xhr.send();
 
         },
@@ -683,6 +686,7 @@ define([
                 xhr.open('POST', url);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.responseType = 'blob';
+                FileDownload.bindXhr(xhr, this.$('.query-actions-block'));
                 xhr.send(JSON.stringify(queryData));
             }
 
@@ -744,7 +748,7 @@ define([
                     } else {
                         rules[i].value = rules[i].values;
                     }
-                    if(rules[i].rules && rules[i].rules.length){
+                    if (rules[i].rules && rules[i].rules.length) {
                         for (var j = 0; j < rules[i].rules.length; j++) {
                             this.extractArrayValues(rules[i]);
                         }

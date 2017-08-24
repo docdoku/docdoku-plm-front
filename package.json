@@ -47,6 +47,7 @@
     "predev": "npm install && node_modules/.bin/bower install",
     "clean": "grunt clean",
     "build": "grunt build",
+    "dist": "grunt serve:dist",
     "dev": "grunt serve"
   }
 }

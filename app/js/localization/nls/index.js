@@ -1,15 +1,15 @@
 /*global define*/
 define({
     root: {
-        CONNECTION: 'Connection',
+        CONNECTION: 'Log in',
         USER: 'User',
         RECOVERY: 'Forgot your password?',
         RECOVER: 'Recover your password',
         ENTER_NEW_PASSWORD: 'Enter your new password',
         RECOVER_OK: 'Your password has been updated, you can now sign in',
         MANAGE_DOCUMENTS: 'Manage your documents',
-        DISCONNECTED: 'You have been disconnected',
-        FAILED_LOGIN: 'DocdokuPLM failed to connect',
+        DISCONNECTED: 'You have been logged out',
+        FAILED_LOGIN: 'DocDokuPLM log in was unsuccessful',
         RECOVERY_REQUEST_SENT: 'An email with the instructions necessary to change your password has been sent to you',
         USER_NOT_FOUND: 'User not found',
         LANGUAGE: 'Language',

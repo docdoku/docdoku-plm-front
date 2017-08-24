@@ -1,7 +1,7 @@
 /*global _,define,App*/
 define(['backbone', 'models/component_module', 'views/component_views', 'common-objects/log'
 ], function (Backbone, ComponentModule, ComponentViews, Logger) {
-	'use strict';
+    'use strict';
 
     var PartsTreeView = Backbone.View.extend({
         el: '#product_nav_list',
@@ -17,22 +17,22 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
             'checkbox:selected': 'onCheckboxSelected'
         },
 
-        checkedPath : [],
+        checkedPath: [],
 
         initialize: function () {
             _.bindAll(this);
         },
 
-        uncheckAll: function() {
+        uncheckAll: function () {
             this.componentViews.setChecked(false);
             this.checkedPath.length = 0;
             Backbone.Events.trigger('path:selected', this.checkedPath);
         },
 
-        onCheckboxSelected:function(e, checked, model){
-            if(checked){
+        onCheckboxSelected: function (e, checked, model) {
+            if (checked) {
                 this.checkedPath.push(model);
-            }else{
+            } else {
                 this.checkedPath.splice(this.checkedPath.indexOf(model), 1);
             }
             Backbone.Events.trigger('path:selected', this.checkedPath);
@@ -48,23 +48,23 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
             App.appView.onComponentSelected(true);
         },
 
-        setTitleSelected:function(selected){
-            if(selected){
+        setTitleSelected: function (selected) {
+            if (selected) {
                 this.$('li.active').removeClass('active');
                 this.$('#product_title .product_title').addClass('active');
-            }else{
+            } else {
                 this.$('#product_title .product_title').removeClass('active');
             }
         },
 
-        refreshProductView: function(){
+        refreshProductView: function () {
             this.refreshAll();
         },
 
         render: function () {
             var self = this;
 
-            this.rootCollection = new ComponentModule.Collection([], { isRoot: true });
+            this.rootCollection = new ComponentModule.Collection([], {isRoot: true});
 
             this.smartPath = [];
 
@@ -74,7 +74,7 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
 
                 self.rootComponent = collection.first();
 
-                if(!self.componentSelected){
+                if (!self.componentSelected) {
                     self.setSelectedComponent(self.rootComponent);
                 }
 
@@ -150,7 +150,7 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
 
             if (relativeInput.parentNode.id === 'path_-1') {
                 // Root node : master send the new smartPaths
-	            App.collaborativeController.sendSmartPath(this.smartPath);
+                App.collaborativeController.sendSmartPath(this.smartPath);
             }
         },
 
@@ -166,33 +166,33 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
 
         setSmartPaths: function (arrayPaths) {
 
-	        arrayPaths = (arrayPaths) ? arrayPaths : [];
+            arrayPaths = (arrayPaths) ? arrayPaths : [];
             var pathsToLoad = _.difference(arrayPaths, this.smartPath);
             var pathsToUnload = _.difference(this.smartPath, arrayPaths);
 
             // Remove child path of path to load from the pathsToUnload
-            pathsToUnload = _.filter(pathsToUnload,function(unloadPath){
+            pathsToUnload = _.filter(pathsToUnload, function (unloadPath) {
                 var isChildOfALoadedPath = false;
-                _.each(pathsToLoad,function(loadPath){
-                    if(loadPath==='null'){
+                _.each(pathsToLoad, function (loadPath) {
+                    if (loadPath === 'null') {
                         isChildOfALoadedPath = true;
-                    }else{
-                        var isChildOfThis = unloadPath.indexOf(loadPath)===0;
+                    } else {
+                        var isChildOfThis = unloadPath.indexOf(loadPath) === 0;
                         isChildOfALoadedPath = isChildOfALoadedPath || isChildOfThis;
                     }
                 });
-                return ! isChildOfALoadedPath;
+                return !isChildOfALoadedPath;
             });
 
             // We have to unload path before load it because some path to unload can be child of path to load
             if (pathsToUnload.length !== 0) {
-                Logger.log('%c Path to unload : \n\t'+pathsToUnload, 'PTV');
+                Logger.log('PTV', 'Path to unload : \n\t' + pathsToUnload);
                 App.instancesManager.unLoadComponentsByPaths(pathsToUnload);
             }
             if (pathsToLoad.length !== 0) {
-                Logger.log('%c Paths to load : \n\t'+pathsToLoad, 'PTV');
-		        App.instancesManager.loadComponentsByPaths(pathsToLoad);
-	        }
+                Logger.log('PTV', 'Paths to load : \n\t' + pathsToLoad);
+                App.instancesManager.loadComponentsByPaths(pathsToLoad);
+            }
 
             this.smartPath = arrayPaths;
             this.setCheckboxes();
@@ -202,7 +202,7 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
             this.$('li input.load-3D').prop('checked', false);
             _.each(this.smartPath, function (path) {
                 this.$('li[id^="path_' + path + '"] input.load-3D').prop('checked', true);
-            },this);
+            }, this);
         },
 
         onComponentSelected: function (e, componentModel, li) {
@@ -225,7 +225,7 @@ define(['backbone', 'models/component_module', 'views/component_views', 'common-
             App.collaborativeController.sendConfigSpec(App.config.productConfigSpec);
         },
 
-        toggleComment:function(){
+        toggleComment: function () {
             this.$el.toggleClass('displayComment');
         }
 
