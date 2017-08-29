@@ -58,9 +58,11 @@ define([
                 name:this.$('#account-name').val().trim(),
                 email:this.$('#account-email').val().trim(),
                 language:this.$('#account-language').val(),
-                timeZone:this.$('#account-timezone').val()
+                timeZone:this.$('#account-timezone').val(),
             };
 
+            account.password = this.$('#current-password').val().trim();
+            
             if(this.enablePasswordUpdate){
                 var newPassword = this.$('#account-password').val().trim();
                 var confirmedPassword = this.$('#account-confirm-password').val().trim();
