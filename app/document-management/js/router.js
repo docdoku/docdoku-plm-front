@@ -106,7 +106,7 @@ function (Backbone, singletonDecorator, FolderNavView, TagNavView, SearchNavView
         },
 
         home:function(workspaceId){
-            this.navigate(workspaceId+'/folders',{trigger:true});
+            this.navigate(encodeURIComponent(workspaceId)+'/folders',{trigger:true});
         }
     });
 

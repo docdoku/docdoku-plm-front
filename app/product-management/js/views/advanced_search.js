@@ -107,7 +107,7 @@ define([
         onSubmitForm: function () {
             var queryString = this.constructQueryString();
             if (queryString) {
-                App.router.navigate(App.config.workspaceId + '/parts-search/' + encodeURIComponent(queryString), {trigger: true});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/' + encodeURIComponent(queryString), {trigger: true});
                 this.closeModal();
             }
             return false;

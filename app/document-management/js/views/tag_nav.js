@@ -40,14 +40,14 @@ define([
             this.isOpen = true;
             this.tagsView.showTag(this.tag);
             if (!this.tag) {
-                App.router.navigate(App.config.workspaceId + '/tags', {trigger: false});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/tags', {trigger: false});
             }
             this.trigger('shown');
         },
         hide: function () {
             this.isOpen = false;
             this.tagsView.hide();
-            App.router.navigate(App.config.workspaceId + '/tags', {trigger: false});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/tags', {trigger: false});
             this.trigger('hidden');
         },
         shown: function () {

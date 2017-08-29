@@ -483,9 +483,9 @@ define([
 
         onQuickSearch: function (e) {
             if (e.target.children[1].value) {
-                App.router.navigate(App.config.workspaceId + '/parts-search/?q=' + e.target.children[1].value, {trigger: true});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/?q=' + encodeURIComponent(e.target.children[1].value), {trigger: true});
             } else {
-                App.router.navigate(App.config.workspaceId + '/parts', {trigger: true});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts', {trigger: true});
             }
             e.preventDefault();
             return false;

@@ -253,11 +253,11 @@ define([
         },
 
         sceneButton: function () {
-            App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/scene', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/scene', {trigger: true});
         },
 
         bomButton: function () {
-            App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/bom', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/bom', {trigger: true});
         },
 
         setSpectatorView: function () {
@@ -356,9 +356,9 @@ define([
             App.config.productConfigSpec = configSpec || App.config.productConfigSpec;
 
             if (App.collaborativeView.roomKey) {
-                App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/room/' + App.collaborativeView.roomKey, {trigger: false});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/room/' + App.collaborativeView.roomKey, {trigger: false});
             } else {
-                App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/bom', {trigger: false});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/bom', {trigger: false});
             }
 
             App.sceneManager.clear();

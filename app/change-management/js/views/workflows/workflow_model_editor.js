@@ -174,7 +174,7 @@ define([
             return false;
         },
 	    goToWorkflows: function () {
-            App.router.navigate(App.config.workspaceId + '/workflows', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/workflows', {trigger: true});
         },
         cancelAction: function () {
             this.goToWorkflows();

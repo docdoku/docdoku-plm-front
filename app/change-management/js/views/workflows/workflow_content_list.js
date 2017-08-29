@@ -80,7 +80,7 @@ define([
 
         actionNew: function () {
             this.$notifications.html('');
-            App.router.navigate(App.config.workspaceId + '/workflow-model-editor', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/workflow-model-editor', {trigger: true});
             return false;
         },
         actionDelete: function () {

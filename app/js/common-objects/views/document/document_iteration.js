@@ -480,7 +480,7 @@ define([
 
         onFolderPathClicked: function () {
             var redirectPath = this.folderPath ? 'folders/' + encodeURIComponent(this.folderPath) : 'folders';
-            App.router.navigate(App.config.workspaceId + '/' + redirectPath, {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + redirectPath, {trigger: true});
             ModalView.prototype.cancelAction.call(this);
         }
 
