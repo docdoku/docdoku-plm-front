@@ -10,6 +10,7 @@ define({
         CHECKED_OUT_DOCUMENTS:'Checked out documents',
         CHECKED_OUT_PARTS:'Checked out parts',
         CUSTOMIZATIONS:'Customizations',
+        CUSTOMIZE_PART_TABLE_COLUMNS:'Customize part table columns',
         DASHBOARD:'Dashboard',
         DELETE_WORKSPACE_TEXT:'This cannot be undone, all its data will be deleted.',
         DELETE_WORKSPACE_QUESTION:'Are you sure to want to delete this workspace ?',
