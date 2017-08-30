@@ -21,17 +21,7 @@ define([
             optgroupField: 'group',
             optgroupLabelField: 'name',
             optgroupValueField: 'id',
-            optgroups: [
-                {id: 'pr', name: App.config.i18n.PART_REVISION},
-                {id: 'attr-TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_STRING},
-                {id: 'attr-LONG_TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LONG_STRING},
-                {id: 'attr-PART_NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_PART_NUMBER},
-                {id: 'attr-URL', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_URL},
-                {id: 'attr-LOV', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LOV},
-                {id: 'attr-NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_NUMBER},
-                {id: 'attr-DATE', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_DATE},
-                {id: 'attr-BOOLEAN', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_BOOLEAN},
-            ],
+            optgroups: PartTableColumns.optgroups,
             valueField: 'value',
             searchField: ['name'],
             options: null,
@@ -46,6 +36,7 @@ define([
         },
 
         initialize: function () {
+            this.availableColumns = _.clone(PartTableColumns.defaultColumns);
         },
 
         render: function () {
@@ -60,42 +51,45 @@ define([
             var _this = this;
             this.fetchPartTableColumns()
                 .then(function (workspaceCustomization) {
-                    _this.columns = workspaceCustomization.partTableColumns;
+                    _this.customColumns = workspaceCustomization.partTableColumns;
                 })
                 .then(this.fetchPartIterationsAttributes.bind(this))
                 .then(this.initSelectize.bind(this));
         },
 
         reset: function () {
-            this.selectize.clear();
-            this.columns = _.clone(PartTableColumns.defaultColumns);
+            this.customColumns = _.clone( this.availableColumns);
             this.initSelectize();
         },
 
         initSelectize: function (attributes) {
 
-            var columns = this.columns;
-
+            var columns = this.customColumns;
             this.$selectize = this.$('#customize-columns');
             this.$selectize.selectize(this.selectizeOptions);
             var selectize = this.$selectize[0].selectize;
             this.selectize = selectize;
+            selectize.clear();
 
-            _.each(columns, function (column) {
+            // add all available as options
+            _.each(this.availableColumns, function (column) {
                 selectize.addOption({
                     name: PartTableColumns.columnNameMapping[column],
                     value: column,
                     group: column.split('.')[0]
                 });
-                selectize.addItem(column, true);
             });
-
             _.each(attributes, function (attribute) {
                 selectize.addOption({
                     name: attribute.name,
                     value: 'attr-' + attribute.type + '.' + attribute.name,
                     group: 'attr-' + attribute.type
                 });
+            });
+
+            // add custom columns as items
+            _.each(columns, function (column) {
+                selectize.addItem(column, true);
             });
         },
 

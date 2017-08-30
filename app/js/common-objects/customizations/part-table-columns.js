@@ -16,6 +16,18 @@ define(function () {
         'pr.acl': App.config.i18n.ACL
     };
 
+    var optgroups = [
+        {id: 'pr', name: App.config.i18n.PART},
+        {id: 'attr-TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_STRING},
+        {id: 'attr-LONG_TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LONG_STRING},
+        {id: 'attr-PART_NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_PART_NUMBER},
+        {id: 'attr-URL', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_URL},
+        {id: 'attr-LOV', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LOV},
+        {id: 'attr-NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_NUMBER},
+        {id: 'attr-DATE', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_DATE},
+        {id: 'attr-BOOLEAN', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_BOOLEAN},
+    ];
+
 
     // improvements: use mustache to compile templates
     var cellsFactory = {
@@ -88,6 +100,7 @@ define(function () {
         columnNameMapping: columnNameMapping,
         defaultColumns: defaultColumns,
         cellsFactory: cellsFactory,
+        optgroups:optgroups,
         mock: defaultColumns.map(function (column) {
             return column.value;
         }).reverse()
