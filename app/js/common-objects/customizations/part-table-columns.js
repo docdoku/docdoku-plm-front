@@ -79,57 +79,9 @@ define(function () {
     };
 
 
-    var defaultColumns = [
-        {
-            name: columnNameMapping['pr.number'],
-            value: 'pr.number',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.version'],
-            value: 'pr.version',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.iteration'],
-            value: 'pr.iteration',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.type'],
-            value: 'pr.type',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.name'],
-            value: 'pr.name',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.author'],
-            value: 'pr.author',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.modificationDate'],
-            value: 'pr.modificationDate',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.lifecycleSate'],
-            value: 'pr.lifecycleSate',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.checkoutUser'],
-            value: 'pr.checkoutUser',
-            group: 'pr'
-        },
-        {
-            name: columnNameMapping['pr.acl'],
-            value: 'pr.acl',
-            group: 'pr'
-        }
+    var defaultColumns = ["pr.number", "pr.version",
+        "pr.iteration", "pr.type", "pr.name", "pr.author",
+        "pr.modificationDate", "pr.lifecycleSate", "pr.checkoutUser", "pr.acl"
     ];
 
     return {

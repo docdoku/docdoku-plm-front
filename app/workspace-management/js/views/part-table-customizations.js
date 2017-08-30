@@ -57,17 +57,24 @@ define([
         },
 
         init: function () {
-            this.fetchPartIterationsAttributes().then(this.initSelectize.bind(this));
+            var _this = this;
+            this.fetchPartTableColumns()
+                .then(function (workspaceCustomization) {
+                    _this.columns = workspaceCustomization.partTableColumns;
+                })
+                .then(this.fetchPartIterationsAttributes.bind(this))
+                .then(this.initSelectize.bind(this));
         },
 
         reset: function () {
             this.selectize.clear();
-            this.init();
+            this.columns = _.clone(PartTableColumns.defaultColumns);
+            this.initSelectize();
         },
 
         initSelectize: function (attributes) {
 
-            var columns = _.clone(PartTableColumns.defaultColumns);
+            var columns = this.columns;
 
             this.$selectize = this.$('#customize-columns');
             this.$selectize.selectize(this.selectizeOptions);
@@ -75,8 +82,12 @@ define([
             this.selectize = selectize;
 
             _.each(columns, function (column) {
-                selectize.addOption(column);
-                selectize.addItem(column.value, true);
+                selectize.addOption({
+                    name: PartTableColumns.columnNameMapping[column],
+                    value: column,
+                    group: column.split('.')[0]
+                });
+                selectize.addItem(column, true);
             });
 
             _.each(attributes, function (attribute) {
@@ -88,17 +99,27 @@ define([
             });
         },
 
+        fetchPartTableColumns: function () {
+            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations');
+        },
+
         fetchPartIterationsAttributes: function () {
             return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/part-iterations');
         },
 
         save: function () {
-            // TODO call WS with list
-            // this.selectize.items : ["pr.name", "pr.number", ...]
             $.ajax({
-                url: 'TODO',
-                data: {
-                    columns: this.selectize.items
+                method: 'PUT',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    partTableColumns: this.selectize.items
+                }),
+                success: function () {
+                    console.log('saved')
+                },
+                error: function () {
+                    console.log('error on save')
                 }
             });
         }
