@@ -163,14 +163,17 @@ define([
         },
 
         addCustomColumns: function () {
-            // TODO
-            // Get from webservice custom columns
-            // mock
-            var columns = PartTableColumns.mock;
+            var columns = this.options.columns;
             var model = this.model;
             var thirdTd = this.$('td:nth-child(3)');
             _.each(columns, function (column) {
-                thirdTd.after(PartTableColumns.cellsFactory[column](model));
+                var fn = PartTableColumns.cellsFactory[column];
+                if (fn && typeof fn === 'function') {
+                    console.log(fn(model))
+                    thirdTd.after(fn(model));
+                } else {
+                    thirdTd.after('<td>???</td>');
+                }
             });
         }
 

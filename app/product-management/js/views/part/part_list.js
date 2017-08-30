@@ -28,10 +28,18 @@ define([
             Backbone.Events.on('import:success', this.collection.fetch, this.collection);
         },
 
+        getColumns: function () {
+            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations');
+        },
+
         render: function () {
             var that = this;
-            this.collection.fetch({reset: true}).error(function (err) {
-                that.trigger('error', null, err);
+            this.getColumns().then(function (workspaceCustomization) {
+                that.columns = workspaceCustomization.partTableColumns.reverse();
+            }).then(function () {
+                that.collection.fetch({reset: true}).error(function (err) {
+                    that.trigger('error', null, err);
+                });
             });
             return this;
         },
@@ -88,7 +96,7 @@ define([
         },
 
         addPartView: function (model) {
-            var view = new PartListItemView({model: model}).render();
+            var view = new PartListItemView({model: model, columns: this.columns}).render();
             this.listItemViews.push(view);
             this.$('.items').append(view.$el);
             view.on('selectionChanged', this.onSelectionChanged);
@@ -391,11 +399,7 @@ define([
                 this.oTable.fnDestroy();
             }
 
-            // TODO
-            // Get from webservice custom columns
-            // mock
-            var columns = PartTableColumns.mock;
-
+            var columns = this.columns;
             // Before - Columns - After
             var totalColumns = 3 + columns.length + 3;
 
@@ -424,10 +428,7 @@ define([
         },
 
         addCustomColumns: function () {
-            // TODO
-            // Get from webservice custom columns
-            // mock
-            var columns = PartTableColumns.mock;
+            var columns = this.columns;
             var thirdCol = this.$('th:nth-child(3)');
             var _this = this;
             _.each(columns, function (column) {
