@@ -23,7 +23,6 @@ define([
             optgroupValueField: 'id',
             optgroups: [
                 {id: 'pr', name: App.config.i18n.PART_REVISION},
-                {id: 'pi', name: App.config.i18n.PART_ITERATION},
                 {id: 'attr-TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_STRING},
                 {id: 'attr-LONG_TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LONG_STRING},
                 {id: 'attr-PART_NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_PART_NUMBER},

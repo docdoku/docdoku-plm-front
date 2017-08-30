@@ -6,6 +6,7 @@ define(function () {
     var columnNameMapping = {
         'pr.number': App.config.i18n.PART_NUMBER,
         'pr.version': App.config.i18n.VERSION,
+        'pr.iteration': App.config.i18n.ITERATION,
         'pr.type': App.config.i18n.TYPE,
         'pr.name': App.config.i18n.PART_NAME,
         'pr.author': App.config.i18n.AUTHOR_NAME,
@@ -16,12 +17,34 @@ define(function () {
     };
 
 
+    // improvements: use mustache to compile templates
     var cellsFactory = {
         'pr.number': function (model) {
-            return '<td class="part_number"><span class="part_number_value">' + model.getNumber() + '</span></td>';
+            var statusIcon;
+
+            if (model.isCheckout()) {
+                if (model.isCheckoutByConnectedUser()) {
+                    statusIcon = 'fa-pencil';
+                } else {
+                    statusIcon = 'fa-lock';
+                }
+            } else if (model.isReleased()) {
+                statusIcon = 'fa-check'
+            } else if (model.isObsolete()) {
+                statusIcon = 'fa-frown-o';
+            } else {
+                statusIcon = 'fa-eye';
+            }
+
+            var assemblyIcon = model.isLastIterationAssembly() ? 'fa-cubes' : 'fa-cube';
+
+            return '<td class="part_number"><i class="fa ' + statusIcon + '"></i> <i class="fa ' + assemblyIcon + '"></i> <span class="part_number_value"> ' + model.getNumber() + '</span></td>';
         },
         'pr.version': function (model) {
             return '<td><span>' + model.getVersion() + '</span></td>';
+        },
+        'pr.iteration': function (model) {
+            return '<td><span>' + ( model.getLastIteration() ? model.getLastIteration().id : '-') + '</span></td>';
         },
         'pr.type': function (model) {
             return '<td><span>' + (model.getType() || '-') + '</span></td>';
@@ -65,6 +88,11 @@ define(function () {
         {
             name: columnNameMapping['pr.version'],
             value: 'pr.version',
+            group: 'pr'
+        },
+        {
+            name: columnNameMapping['pr.iteration'],
+            value: 'pr.iteration',
             group: 'pr'
         },
         {
