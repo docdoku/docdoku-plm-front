@@ -3,8 +3,9 @@ define([
     'backbone',
     'mustache',
     'text!templates/part/part_list.html',
-    'views/part/part_list_item'
-], function (Backbone, Mustache, template, PartListItemView) {
+    'views/part/part_list_item',
+    'common-objects/customizations/part-table-columns'
+], function (Backbone, Mustache, template, PartListItemView, PartTableColumns) {
     'use strict';
     var PartListView = Backbone.View.extend({
 
@@ -43,11 +44,13 @@ define([
             this.removeSubviews();
 
             this.$el.html(Mustache.render(template, {i18n: App.config.i18n}));
+            this.addCustomColumns();
             this.bindDomElements();
 
             this.collection.each(function (model) {
                 _this.addPart(model);
             });
+
             this.dataTable();
             this.onSelectionChanged();
         },
@@ -387,6 +390,19 @@ define([
                 }
                 this.oTable.fnDestroy();
             }
+
+            // TODO
+            // Get from webservice custom columns
+            // mock
+            var columns = PartTableColumns.mock;
+
+            // Before - Columns - After
+            var totalColumns = 3 + columns.length + 3;
+
+            var excludeFromSort = [0, 1, 2, totalColumns - 3, totalColumns - 2, totalColumns - 1];
+            var dateColumns = [];
+            var stripHTMLColumns = [3];
+
             this.oTable = this.$el.dataTable({
                 aaSorting: oldSort,
                 bDestroy: true,
@@ -398,12 +414,30 @@ define([
                 },
                 sDom: 'ft',
                 aoColumnDefs: [
-                    {'bSortable': false, 'aTargets': [0, 1, 2, 12, 13, 14, 15]},
-                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': [9]},
-                    {'sType': 'strip_html', 'aTargets': [3]}
+                    {'bSortable': false, 'aTargets': excludeFromSort},
+                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': dateColumns},
+                    {'sType': 'strip_html', 'aTargets': stripHTMLColumns}
                 ]
             });
+
             this.$el.parent().find('.dataTables_filter input').attr('placeholder', App.config.i18n.FILTER);
+        },
+
+        addCustomColumns: function () {
+            // TODO
+            // Get from webservice custom columns
+            // mock
+            var columns = PartTableColumns.mock;
+            var thirdCol = this.$('th:nth-child(3)');
+            var _this = this;
+            _.each(columns, function (column) {
+                thirdCol.after('<th>' + _this.getColumnCellValue(column) + '</th>');
+            });
+        },
+
+        getColumnCellValue: function (column) {
+            // TODO : verify column name, it may begin with attr-XXX which is not defined in columnNameMapping
+            return PartTableColumns.columnNameMapping[column];
         }
 
     });

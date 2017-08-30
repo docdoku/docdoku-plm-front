@@ -2,8 +2,9 @@
 define([
     'backbone',
     'mustache',
-    'text!templates/part-table-customizations.html'
-], function (Backbone, Mustache, template) {
+    'text!templates/part-table-customizations.html',
+    'common-objects/customizations/part-table-columns'
+], function (Backbone, Mustache, template, PartTableColumns) {
     'use strict';
 
     var PartTableCustomizationsView = Backbone.View.extend({
@@ -13,54 +14,6 @@ define([
             'click .submit': 'save'
         },
 
-        defaultColumns: [
-            {
-                name: App.config.i18n.PART_NUMBER,
-                value: 'pr.number',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.VERSION,
-                value: 'pr.version',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.TYPE,
-                value: 'pr.type',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.PART_NAME,
-                value: 'pr.name',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.AUTHOR_NAME,
-                value: 'pr.author',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.MODIFICATION_DATE,
-                value: 'pr.moidficationDate',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.LIFECYCLE_STATE,
-                value: 'pr.lifecycleSate',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.CHECKOUT_BY,
-                value: 'pr.checkoutUser',
-                group: 'pr'
-            },
-            {
-                name: App.config.i18n.ACL,
-                value: 'pr.acl',
-                group: 'pr'
-            }
-        ],
-
         selectizeOptions: {
             plugins: ['remove_button', 'drag_drop', 'optgroup_columns'],
             persist: true,
@@ -69,8 +22,8 @@ define([
             optgroupLabelField: 'name',
             optgroupValueField: 'id',
             optgroups: [
-                {id: 'pr', name: "Part revision"},
-                {id: 'pi', name: "Part iteration"},
+                {id: 'pr', name: App.config.i18n.PART_REVISION},
+                {id: 'pi', name: App.config.i18n.PART_ITERATION},
                 {id: 'attr-TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_STRING},
                 {id: 'attr-LONG_TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_LONG_STRING},
                 {id: 'attr-PART_NUMBER', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_PART_NUMBER},
@@ -115,7 +68,7 @@ define([
 
         initSelectize: function (attributes) {
 
-            var columns = _.clone(this.defaultColumns);
+            var columns = _.clone(PartTableColumns.defaultColumns);
 
             this.$selectize = this.$('#customize-columns');
             this.$selectize.selectize(this.selectizeOptions);

@@ -6,8 +6,9 @@ define([
     'text!templates/part/part_list_item.html',
     'common-objects/views/share/share_entity',
     'common-objects/views/part/part_modal_view',
-    'common-objects/utils/date'
-], function (Backbone, Mustache, Part, template, ShareView, PartModalView, date) {
+    'common-objects/utils/date',
+    'common-objects/customizations/part-table-columns'
+], function (Backbone, Mustache, Part, template, ShareView, PartModalView, date, PartTableColumns) {
     'use strict';
     var PartListItemView = Backbone.View.extend({
 
@@ -42,6 +43,9 @@ define([
                 this.check();
                 this.trigger('selectionChanged', this);
             }
+
+            this.addCustomColumns();
+
             this.bindUserPopover();
             this.bindDescriptionPopover();
             date.dateHelper(this.$('.date-popover'));
@@ -101,8 +105,8 @@ define([
             });
         },
 
-        bindDescriptionPopover: function() {
-            if(this.model.getDescription() !== undefined && this.model.getDescription() !== null && this.model.getDescription() !== '') {
+        bindDescriptionPopover: function () {
+            if (this.model.getDescription() !== undefined && this.model.getDescription() !== null && this.model.getDescription() !== '') {
                 var self = this;
                 this.$('.part_number')
                     .popover({
@@ -156,6 +160,18 @@ define([
                 Backbone.Events.off('part-error-moved');
             }
             this.$el.removeClass('moving');
+        },
+
+        addCustomColumns: function () {
+            // TODO
+            // Get from webservice custom columns
+            // mock
+            var columns = PartTableColumns.mock;
+            var model = this.model;
+            var thirdTd = this.$('td:nth-child(3)');
+            _.each(columns, function (column) {
+                thirdTd.after(PartTableColumns.cellsFactory[column](model));
+            });
         }
 
     });
