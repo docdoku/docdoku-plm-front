@@ -24,7 +24,8 @@ require.config({
         d3: {deps: [], exports: 'window'},
         nvd3: {deps: ['d3'], exports: 'window'},
         helpers: {deps: ['nvd3', 'd3']},
-        fileDownload: {deps: ['jquery'], exports: 'jQuery'}
+        fileDownload: {deps: ['jquery'], exports: 'jQuery'},
+        selectize: {deps: ['jquery'], exports: 'jQuery'}
     },
 
     paths: {
@@ -62,7 +63,8 @@ require.config({
         nvd3: '../../bower_components/nvd3/build/nv.d3',
         'charts-helpers': '../../js/utils/charts-helpers',
         fileDownload: '../../js/utils/file-download',
-        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        selectize: '../../bower_components/selectize/dist/js/standalone/selectize'
     },
 
     deps: [
@@ -83,7 +85,8 @@ require.config({
         'datePickerLang',
         'd3',
         'nvd3',
-        'fileDownload'
+        'fileDownload',
+        'selectize'
     ],
     config: {
         i18n: {
