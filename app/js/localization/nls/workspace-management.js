@@ -9,6 +9,7 @@ define({
         CREATE_WORKSPACE_SIDE_TEXT:'Only the creator of the workspace has administrator rights. These rights allow to edit the workspace properties and add and remove users.',
         CHECKED_OUT_DOCUMENTS:'Checked out documents',
         CHECKED_OUT_PARTS:'Checked out parts',
+        CUSTOMIZATIONS:'Customizations',
         DASHBOARD:'Dashboard',
         DELETE_WORKSPACE_TEXT:'This cannot be undone, all its data will be deleted.',
         DELETE_WORKSPACE_QUESTION:'Are you sure to want to delete this workspace ?',

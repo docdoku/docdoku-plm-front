@@ -11,6 +11,7 @@ define({
     CREATE_WORKSPACE_SIDE_TEXT:'Seul le créateur de l\'espace de travail dispose des droits administrateur. Ces droits l\'autorisent à éditer les propriétés de l\'espace de travail et à y ajouter ou supprimer des utilisateurs.',
     CHECKED_OUT_DOCUMENTS:'Documents réservés',
     CHECKED_OUT_PARTS:'Articles réservés',
+    CUSTOMIZATIONS:'Personnalisation',
     DASHBOARD:'Tableau de bord',
     DELETE_WORKSPACE_TEXT:'Cela ne peut pas être annulé, toutes ses données seront effacées.',
     DELETE_WORKSPACE_QUESTION:'Êtes-vous sûr de vouloir supprimer cet espace de travail ?',

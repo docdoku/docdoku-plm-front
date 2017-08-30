@@ -19,6 +19,11 @@
                 {{i18n.USERS}}
             </a>
         </li>
+        <li  class="header nav-list-entry {{#isCustomizations}}active{{/isCustomizations}}">
+            <a href="#/workspace/{{workspaceId}}/customizations">
+                {{i18n.CUSTOMIZATIONS}}
+            </a>
+        </li>
         <li  class="header nav-list-entry {{#isNotifications}}active{{/isNotifications}}">
             <a href="#/workspace/{{workspaceId}}/notifications">
                 {{i18n.NOTIFICATIONS}}
