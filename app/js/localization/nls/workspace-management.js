@@ -12,6 +12,7 @@ define({
         CUSTOMIZATIONS:'Customizations',
         CUSTOMIZE_PART_TABLE_COLUMNS:'Customize part table columns',
         DASHBOARD:'Dashboard',
+        DEFAULT_COLUMNS:'Default columns',
         DELETE_WORKSPACE_TEXT:'This cannot be undone, all its data will be deleted.',
         DELETE_WORKSPACE_QUESTION:'Are you sure to want to delete this workspace ?',
         DISABLE_USER:'Disable',

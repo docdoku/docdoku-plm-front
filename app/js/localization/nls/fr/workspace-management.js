@@ -14,6 +14,7 @@ define({
     CUSTOMIZATIONS:'Personnalisation',
     CUSTOMIZE_PART_TABLE_COLUMNS:'Personnaliser les colonnes du tableau des articles',
     DASHBOARD:'Tableau de bord',
+    DEFAULT_COLUMNS:'Par défaut',
     DELETE_WORKSPACE_TEXT:'Cela ne peut pas être annulé, toutes ses données seront effacées.',
     DELETE_WORKSPACE_QUESTION:'Êtes-vous sûr de vouloir supprimer cet espace de travail ?',
     DISABLE_USER:'Désactiver',
