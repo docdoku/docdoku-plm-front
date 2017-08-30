@@ -167,12 +167,15 @@ define([
             var model = this.model;
             var thirdTd = this.$('td:nth-child(3)');
             _.each(columns, function (column) {
-                var fn = PartTableColumns.cellsFactory[column];
-                if (fn && typeof fn === 'function') {
-                    console.log(fn(model))
-                    thirdTd.after(fn(model));
-                } else {
-                    thirdTd.after('<td>???</td>');
+                if(column.startsWith('attr')){
+                    thirdTd.after(PartTableColumns.cellsFactory.attr(model, column));
+                }else{
+                    var fn = PartTableColumns.cellsFactory[column];
+                    if (fn && typeof fn === 'function') {
+                        thirdTd.after(fn(model));
+                    } else {
+                        thirdTd.after('<td>-</td>');
+                    }
                 }
             });
         }

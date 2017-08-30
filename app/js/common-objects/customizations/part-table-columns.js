@@ -28,6 +28,15 @@ define(function () {
         {id: 'attr-BOOLEAN', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_BOOLEAN},
     ];
 
+    var findAttribute = function (attributes, key) {
+        var attrs = attributes.filter(function (attr) {
+            return attr.get('name') === key.split('.')[1];
+        });
+        if (attrs.length) {
+            return attrs[0].get('value');
+        }
+        return '-';
+    };
 
     // improvements: use mustache to compile templates
     var cellsFactory = {
@@ -41,7 +50,7 @@ define(function () {
                     statusIcon = 'fa-lock';
                 }
             } else if (model.isReleased()) {
-                statusIcon = 'fa-check'
+                statusIcon = 'fa-check';
             } else if (model.isObsolete()) {
                 statusIcon = 'fa-frown-o';
             } else {
@@ -85,22 +94,28 @@ define(function () {
                 return '<td class="part-acl-info"><i class="fa fa-key ' + className + '" title="' + title + '"></i></td>';
             }
             else {
-                return '<td></td>';
+                return '<td>-</td>';
             }
+        },
+        attr: function (model, key) {
+            var iteration = model.getLastIteration();
+            if (iteration) {
+                return '<td>' + findAttribute(iteration.getAttributes(), key) + ' </td>';
+            }
+            return '<td>-</td>';
         }
     };
 
-
-    var defaultColumns = ["pr.number", "pr.version",
-        "pr.iteration", "pr.type", "pr.name", "pr.author",
-        "pr.modificationDate", "pr.lifecycleSate", "pr.checkoutUser", "pr.acl"
+    var defaultColumns = ['pr.number', 'pr.version',
+        'pr.iteration', 'pr.type', 'pr.name', 'pr.author',
+        'pr.modificationDate', 'pr.lifecycleSate', 'pr.checkoutUser', 'pr.acl'
     ];
 
     return {
         columnNameMapping: columnNameMapping,
         defaultColumns: defaultColumns,
         cellsFactory: cellsFactory,
-        optgroups:optgroups,
+        optgroups: optgroups,
         mock: defaultColumns.map(function (column) {
             return column.value;
         }).reverse()

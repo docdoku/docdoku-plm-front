@@ -110,10 +110,10 @@ define([
                     partTableColumns: this.selectize.items
                 }),
                 success: function () {
-                    console.log('saved')
+                    console.log('saved');
                 },
                 error: function () {
-                    console.log('error on save')
+                    console.log('error on save');
                 }
             });
         }

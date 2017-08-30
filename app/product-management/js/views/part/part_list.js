@@ -14,7 +14,8 @@ define([
         },
 
         removeSubviews: function () {
-            _(this.listItemViews).invoke('remove');                                                                     // Invoke remove for each views in listItemViews
+            // Invoke remove for each views in listItemViews
+            _(this.listItemViews).invoke('remove');
             this.listItemViews = [];
         },
 
@@ -432,12 +433,14 @@ define([
             var thirdCol = this.$('th:nth-child(3)');
             var _this = this;
             _.each(columns, function (column) {
-                thirdCol.after('<th>' + _this.getColumnCellValue(column) + '</th>');
+                thirdCol.after('<th>' + _this.getColumnHeaderValue(column) + '</th>');
             });
         },
 
-        getColumnCellValue: function (column) {
-            // TODO : verify column name, it may begin with attr-XXX which is not defined in columnNameMapping
+        getColumnHeaderValue: function (column) {
+            if (column.startsWith('attr-')) {
+                return column.split('.')[1];
+            }
             return PartTableColumns.columnNameMapping[column];
         }
 
