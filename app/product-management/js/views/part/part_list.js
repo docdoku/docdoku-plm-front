@@ -417,10 +417,13 @@ define([
             var excludeFromSort = [0, 1, 2, totalColumns - 3, totalColumns - 2, totalColumns - 1];
             var dateColumns = [];
             for (var i = 0; i < columns.length; i++) {
-                if (columns[i].startsWith('attr-DATE')) {
-                    dateColumns.push(i);
+                if (columns[i].startsWith('attr-DATE') || PartTableColumns.dateFields.indexOf(columns[i]) !== -1) {
+                    // the array is reversed
+                    // offset 3 + index from the end
+                    dateColumns.push(3 + columns.length - 1 - i);
                 }
             }
+
             var stripHTMLColumns = [3];
 
             this.oTable = this.$el.dataTable({
