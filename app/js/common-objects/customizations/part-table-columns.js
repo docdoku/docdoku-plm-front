@@ -16,6 +16,8 @@ define(function () {
         'pr.acl': App.config.i18n.ACL
     };
 
+    var dateFields = ['pr.modificationDate'];
+
     var optgroups = [
         {id: 'pr', name: App.config.i18n.PART},
         {id: 'attr-TEXT', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_STRING},
@@ -116,6 +118,7 @@ define(function () {
         defaultColumns: defaultColumns,
         cellsFactory: cellsFactory,
         optgroups: optgroups,
+        dateFields: dateFields,
         mock: defaultColumns.map(function (column) {
             return column.value;
         }).reverse()

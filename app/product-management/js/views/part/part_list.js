@@ -30,18 +30,28 @@ define([
         },
 
         getColumns: function () {
-            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations');
+            var $deferred = $.Deferred();
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations')
+                .success(function (workspaceCustomizations) {
+                    $deferred.resolve(workspaceCustomizations.partTableColumns);
+                })
+                .error(function () {
+                    $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
+                });
+            return $deferred;
         },
 
         render: function () {
             var that = this;
-            this.getColumns().then(function (workspaceCustomization) {
-                that.columns = workspaceCustomization.partTableColumns.reverse();
-            }).then(function () {
-                that.collection.fetch({reset: true}).error(function (err) {
-                    that.trigger('error', null, err);
+            this.getColumns()
+                .then(function (partTableColumns) {
+                    that.columns = partTableColumns.reverse();
+                })
+                .then(function () {
+                    that.collection.fetch({reset: true}).error(function (err) {
+                        that.trigger('error', null, err);
+                    });
                 });
-            });
             return this;
         },
 
@@ -406,6 +416,11 @@ define([
 
             var excludeFromSort = [0, 1, 2, totalColumns - 3, totalColumns - 2, totalColumns - 1];
             var dateColumns = [];
+            for (var i = 0; i < columns.length; i++) {
+                if (columns[i].startsWith('attr-DATE')) {
+                    dateColumns.push(i);
+                }
+            }
             var stripHTMLColumns = [3];
 
             this.oTable = this.$el.dataTable({
@@ -441,7 +456,8 @@ define([
             if (column.startsWith('attr-')) {
                 return column.split('.')[1];
             }
-            return PartTableColumns.columnNameMapping[column];
+            var columnName = PartTableColumns.columnNameMapping[column];
+            return columnName ? columnName : '?';
         }
 
     });

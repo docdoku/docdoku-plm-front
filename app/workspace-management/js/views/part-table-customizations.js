@@ -50,15 +50,15 @@ define([
         init: function () {
             var _this = this;
             this.fetchPartTableColumns()
-                .then(function (workspaceCustomization) {
-                    _this.customColumns = workspaceCustomization.partTableColumns;
+                .then(function (columns) {
+                    _this.customColumns = columns;
                 })
                 .then(this.fetchPartIterationsAttributes.bind(this))
                 .then(this.initSelectize.bind(this));
         },
 
         reset: function () {
-            this.customColumns = _.clone( this.availableColumns);
+            this.customColumns = _.clone(this.availableColumns);
             this.initSelectize();
         },
 
@@ -94,7 +94,15 @@ define([
         },
 
         fetchPartTableColumns: function () {
-            return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations');
+            var $deferred = $.Deferred();
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations')
+                .success(function (workspaceCustomizations) {
+                    $deferred.resolve(workspaceCustomizations.partTableColumns);
+                })
+                .error(function () {
+                    $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
+                });
+            return $deferred;
         },
 
         fetchPartIterationsAttributes: function () {
