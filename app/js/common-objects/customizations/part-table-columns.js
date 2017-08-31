@@ -1,5 +1,5 @@
 /*global define,App*/
-define(function () {
+define(['common-objects/utils/date'], function (date) {
 
     'use strict';
 
@@ -30,12 +30,30 @@ define(function () {
         {id: 'attr-BOOLEAN', name: App.config.i18n.QUERY_GROUP_ATTRIBUTE_BOOLEAN},
     ];
 
+    var formatAttribute = function (attr) {
+        var value = attr.get('value');
+        switch (attr.get('type')) {
+
+            case 'DATE':
+                return '<a class="date-popover">' + date.formatTimestamp(App.config.i18n._DATE_FORMAT, value) + '</a>';
+
+            case 'URL':
+                return '<a href="' + value + '">' + value + '</a>';
+
+            case 'BOOLEAN':
+                return value === 'true' ? App.config.i18n.TRUE : App.config.i18n.FALSE;
+
+            default:
+                return value;
+        }
+    };
+
     var findAttribute = function (attributes, key) {
         var attrs = attributes.filter(function (attr) {
             return attr.get('name') === key.split('.')[1];
         });
         if (attrs.length) {
-            return attrs[0].get('value');
+            return formatAttribute(attrs[0]);
         }
         return '-';
     };
