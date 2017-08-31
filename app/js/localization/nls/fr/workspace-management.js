@@ -22,6 +22,7 @@ define({
     DISK_USAGE_TOTAL:'Usage disque total',
     EDIT_WORKSPACE_SUBTITLE:'Editez votre espace de travail',
     EMAIL:'Email',
+    EMPTY_COLUMNS:'Vous devez ajouter au moins une colonne',
     ENTITIES:'Entités',
     ENABLE_USER:'Activer',
     FOLDER_LOCKED:'Geler la structure des répertoires (seul l\'administrateur peut modifier la structure dossier)',

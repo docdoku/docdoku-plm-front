@@ -12,6 +12,7 @@ define([
 
         events: {
             'click .reset': 'reset',
+            'click .clear': 'clear',
             'click .submit': 'save'
         },
 
@@ -64,6 +65,11 @@ define([
             this.initSelectize();
         },
 
+        clear: function () {
+            this.customColumns = [];
+            this.initSelectize();
+        },
+
         initSelectize: function (attributes) {
 
             var columns = this.customColumns;
@@ -113,6 +119,14 @@ define([
 
         save: function () {
             var _this = this;
+            var items = this.selectize.items;
+            if(!items.length){
+                _this.$notifications.append(new AlertView({
+                    type: 'error',
+                    message: App.config.i18n.EMPTY_COLUMNS
+                }).render().$el);
+                return;
+            }
             $.ajax({
                 method: 'PUT',
                 url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations',

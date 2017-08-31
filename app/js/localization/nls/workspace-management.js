@@ -19,6 +19,7 @@ define({
         DISK_USAGE:'Disk usage',
         DISK_USAGE_TOTAL:'Total disk usage',
         EMAIL:'Email',
+        EMPTY_COLUMNS:'You must at least add one column',
         ENTITIES:'Entities',
         EDIT_WORKSPACE_SUBTITLE:'Edit your workspace',
         ENABLE_USER:'Enable',
