@@ -3,8 +3,9 @@ define([
     'backbone',
     'mustache',
     'text!templates/part-table-customizations.html',
-    'common-objects/customizations/part-table-columns'
-], function (Backbone, Mustache, template, PartTableColumns) {
+    'common-objects/customizations/part-table-columns',
+    'common-objects/views/alert'
+], function (Backbone, Mustache, template, PartTableColumns, AlertView) {
     'use strict';
 
     var PartTableCustomizationsView = Backbone.View.extend({
@@ -43,6 +44,7 @@ define([
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n
             }));
+            this.$notifications = this.$('.notifications');
             this.init();
             return this;
         },
@@ -110,6 +112,7 @@ define([
         },
 
         save: function () {
+            var _this = this;
             $.ajax({
                 method: 'PUT',
                 url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations',
@@ -118,10 +121,16 @@ define([
                     partTableColumns: this.selectize.items
                 }),
                 success: function () {
-                    console.log('saved');
+                    _this.$notifications.append(new AlertView({
+                        type: 'success',
+                        message: App.config.i18n.SAVED
+                    }).render().$el);
                 },
-                error: function () {
-                    console.log('error on save');
+                error: function (xhr) {
+                    _this.$notifications.append(new AlertView({
+                        type: 'error',
+                        message: xhr.responseText
+                    }).render().$el);
                 }
             });
         }
