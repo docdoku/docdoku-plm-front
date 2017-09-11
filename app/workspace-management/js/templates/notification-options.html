@@ -1,0 +1,39 @@
+<div id="notification_options_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <i class="fa fa-cog"></i>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>{{i18n.OPTIONS}}</h3>
+    </div>
+
+    <div class="modal-body">
+        <div class="notifications"></div>
+        <div class="tabs">
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab-email" data-toggle="tab">{{i18n.EMAIL}}</a></li>
+                <li><a href="#tab-hooks" data-toggle="tab">{{i18n.HOOKS}}</a></li>
+            </ul>
+
+            <form id="notification_options_form" class="form-horizontal tab-content">
+                <div class="tab-pane active" id="tab-email">
+                    <div class="control-group">
+                        <label class="control-label" for="enable_emails">{{i18n.ENABLE_EMAIL_NOTIFICATIONS}}</label>
+
+                        <div class="controls">
+                            <input type="checkbox" id="enable_emails"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-hooks">
+                    <div class="hooks-container"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{i18n.CLOSE}}</button>
+        <button class="btn btn-primary" form="notification_options_form">{{i18n.SAVE}}</button>
+    </div>
+</div>

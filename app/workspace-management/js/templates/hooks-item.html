@@ -1,0 +1,61 @@
+<div class="control-group">
+    <label class="control-label">{{i18n.NAME}}</label>
+
+    <div class="controls">
+        <input
+            type="text"
+            name="name"
+            class="hook-name"
+            placeholder="{{i18n.NAME}}"
+            />
+    </div>
+</div>
+
+<div class="control-group">
+    <label for="hook-activate-{{id}}" class="control-label">{{i18n.ENABLE_HOOK}}</label>
+
+    <div class="controls">
+        <input
+            type="checkbox"
+            name="active"
+            class="hook-active"
+            id="hook-activate-{{id}}"
+            checked
+            />
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">{{i18n.TYPE}}</label>
+
+    <div class="controls">
+        <select class="hook-type">
+            <option value="SimpleHTTPHook">{{i18n.SIMPLE_HTTP_HOOK}}</option>
+            <option value="SNSHook">{{i18n.SNS_HOOK}}</option>
+        </select>
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">{{i18n.PARAMETERS}}</label>
+
+    <div class="controls specific-hook-configuration"></div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">{{i18n.ACTIONS}}</label>
+
+    <div class="controls">
+        <button type="button" class="btn btn-default remove-hook">
+            {{i18n.DELETE}}
+        </button>
+        <button type="button" class="btn btn-primary save-hook">
+            {{i18n.SAVE}}
+        </button>
+
+    </div>
+</div>
+
+
+
+
