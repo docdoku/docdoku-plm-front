@@ -185,7 +185,7 @@ define([
 
         showNotificationOptions: function () {
             var view = new NotificationOptionsView().render();
-            window.document.body.appendChild(view.render().el);
+            window.document.body.appendChild(view.el);
             view.openModal();
         }
 

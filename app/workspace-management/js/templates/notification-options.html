@@ -17,10 +17,10 @@
             <form id="notification_options_form" class="form-horizontal tab-content">
                 <div class="tab-pane active" id="tab-email">
                     <div class="control-group">
-                        <label class="control-label" for="enable_emails">{{i18n.ENABLE_EMAIL_NOTIFICATIONS}}</label>
+                        <label class="control-label" for="send-emails">{{i18n.ENABLE_EMAIL_NOTIFICATIONS}}</label>
 
                         <div class="controls">
-                            <input type="checkbox" id="enable_emails"/>
+                            <input type="checkbox" id="send-emails" {{#sendEmails}}checked{{/sendEmails}}/>
                         </div>
                     </div>
                 </div>
