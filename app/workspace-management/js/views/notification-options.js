@@ -3,8 +3,9 @@ define([
     'backbone',
     'mustache',
     'text!templates/notification-options.html',
-    'views/hooks-manager'
-], function (Backbone, Mustache, template, HooksManagerView) {
+    'views/hooks-manager',
+    'common-objects/views/alert'
+], function (Backbone, Mustache, template, HooksManagerView, AlertView) {
     'use strict';
 
     var NotificationOptionsView = Backbone.View.extend({
@@ -26,6 +27,7 @@ define([
             }));
 
             this.$modal = this.$('#notification_options_modal');
+            this.$notifications = this.$('.notifications');
             this.$hooksContainer = this.$('.hooks-container');
             this.hooksManagerView = new HooksManagerView({el: this.$hooksContainer}).render();
 
@@ -38,9 +40,7 @@ define([
 
         onOptionsFetched: function (options) {
             this.notificationOptions = options;
-            if (options.sendEmails) {
-                this.$('#send-emails').attr('checked', 'true');
-            }
+            this.$('#send-emails').attr('checked', options.sendEmails);
         },
 
         openModal: function () {
@@ -64,33 +64,26 @@ define([
         },
 
         onSubmitForm: function (e) {
+            var promises = [$.ajax({
+                method: 'PUT',
+                url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options',
+                data: JSON.stringify(this.notificationOptions),
+                contentType: 'application/json'
+            })].concat(this.hooksManagerView.saveHooks());
 
-            var _this = this;
-            try {
+            $.when.apply(undefined, promises).then(this.closeModal.bind(this), this.onError.bind(this));
 
-
-                var promises = [$.ajax({
-                    method: 'PUT',
-                    url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options',
-                    data: JSON.stringify(this.notificationOptions),
-                    contentType: 'application/json'
-                })];
-
-                promises.concat(this.hooksManagerView.saveHooks());
-
-                $.when(promises)
-                    .then(function () {
-                        _this.closeModal();
-                    });
-
-            } catch (e) {
-                console.log(e);
-            }
             e.preventDefault();
             e.stopPropagation();
             return false;
-        }
+        },
 
+        onError: function (error) {
+            this.$notifications.append(new AlertView({
+                type: 'error',
+                message: error.responseText
+            }).render().$el);
+        }
 
     });
 
