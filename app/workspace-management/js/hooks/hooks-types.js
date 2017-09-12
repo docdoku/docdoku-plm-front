@@ -2,8 +2,7 @@
 define(function () {
     'use strict';
     return {
-        SimpleHTTPHook: {
-            wsPath: 'simple-webhook',
+        SIMPLEWEBHOOK: {
             parameters: [
                 {
                     name: 'method',
@@ -20,8 +19,7 @@ define(function () {
                 }
             ]
         },
-        SNSHook: {
-            wsPath: 'sns-webhook',
+        SNSWEBHOOK: {
             parameters: [
                 {
                     name: 'region',

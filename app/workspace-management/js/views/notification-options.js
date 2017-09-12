@@ -66,20 +66,26 @@ define([
         onSubmitForm: function (e) {
 
             var _this = this;
+            try {
 
-            $.ajax({
-                method: 'PUT',
-                url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options',
-                data: JSON.stringify(this.notificationOptions),
-                contentType: 'application/json',
-                success: function () {
-                    _this.closeModal();
-                },
-                error: function () {
-                    console.log('error');
-                }
-            });
 
+                var promises = [$.ajax({
+                    method: 'PUT',
+                    url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options',
+                    data: JSON.stringify(this.notificationOptions),
+                    contentType: 'application/json'
+                })];
+
+                promises.concat(this.hooksManagerView.saveHooks());
+
+                $.when(promises)
+                    .then(function () {
+                        _this.closeModal();
+                    });
+
+            } catch (e) {
+                console.log(e);
+            }
             e.preventDefault();
             e.stopPropagation();
             return false;
