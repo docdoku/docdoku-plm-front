@@ -64,5 +64,9 @@ define({
     SIMPLE_HTTP_HOOK: 'Simple HTTP hook',
     SNS_HOOK: 'SNS hook',
     ENABLE_HOOK: 'Activer',
-    PARAMETERS: 'Paramètres'
+    PARAMETERS: 'Paramètres',
+    CUSTOMIZATIONS:'Personnalisation',
+    CUSTOMIZE_PART_TABLE_COLUMNS:'Personnaliser les colonnes du tableau des articles',
+    DEFAULT_COLUMNS:'Par défaut',
+    EMPTY_COLUMNS:'Vous devez ajouter au moins une colonne'
 });

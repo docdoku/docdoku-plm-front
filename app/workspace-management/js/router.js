@@ -17,6 +17,7 @@ function (Backbone, singletonDecorator) {
             'workspace/:workspaceId/notifications':   'workspaceNotifications',
             'workspace/:workspaceId/edit':   'workspaceEdit',
             'workspace/:workspaceId/dashboard':   'workspaceDashboard',
+            'workspace/:workspaceId/customizations':   'workspaceCustomizations',
             'workspace/:workspaceId/*path':   'workspaceUsers'
         },
 
@@ -61,6 +62,14 @@ function (Backbone, singletonDecorator) {
                 App.config.workspaceId = workspaceId;
                 this.refresh();
                 App.appView.workspaceUsers();
+            }
+        },
+
+        workspaceCustomizations:function(workspaceId){
+            if(this.checkWorkspaceAdmin(workspaceId)){
+                App.config.workspaceId = workspaceId;
+                this.refresh();
+                App.appView.workspaceCustomizations();
             }
         },
 

@@ -57,8 +57,12 @@ define({
         HOOKS: 'Hooks',
         SIMPLE_HTTP_HOOK: 'Simple HTTP hook',
         SNS_HOOK: 'SNS hook',
-        ENABLE_HOOK:'Activate',
-        PARAMETERS:'Parameters'
+        ENABLE_HOOK: 'Activate',
+        PARAMETERS: 'Parameters',
+        CUSTOMIZATIONS: 'Customizations',
+        CUSTOMIZE_PART_TABLE_COLUMNS: 'Customize part table columns',
+        DEFAULT_COLUMNS: 'Default columns',
+        EMPTY_COLUMNS: 'You must at least add one column'
     },
     'fr': true,
     'es': true,

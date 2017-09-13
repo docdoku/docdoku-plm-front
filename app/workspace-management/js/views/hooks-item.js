@@ -17,6 +17,8 @@ define([
             'change input.hook-active': 'updateActive'
         },
 
+        className: 'well',
+
         initialize: function () {
 
         },
