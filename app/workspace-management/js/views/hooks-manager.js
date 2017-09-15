@@ -65,7 +65,6 @@ define([
 
             var saveItem = function (item) {
                 if (item.attributes.id) {
-                    console.log('updating hoook')
                     return $.ajax({
                         method: 'PUT',
                         data: JSON.stringify(item.attributes),
@@ -73,7 +72,6 @@ define([
                         url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/webhooks/' + item.attributes.id
                     });
                 } else {
-                    console.log('saving new')
                     return $.ajax({
                         method: 'POST',
                         data: JSON.stringify(item.attributes),

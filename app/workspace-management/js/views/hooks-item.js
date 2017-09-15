@@ -34,7 +34,7 @@ define([
             this.$typeSelect = this.$('select.hook-type');
 
             _.each(Object.keys(HooksTypes), function (appName) {
-                _this.$typeSelect.append('<option value="' + appName + '">' + appName + '</option>')
+                _this.$typeSelect.append('<option value="' + appName + '">' + appName + '</option>');
             });
 
             this.fillSpecificParametersForm();
