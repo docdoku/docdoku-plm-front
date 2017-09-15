@@ -33,7 +33,7 @@ define([
             var isUsersRegex = new RegExp('#/workspace/' + App.config.workspaceId + '/users', 'g');
             var isNotificationsRegex = new RegExp('#/workspace/' + App.config.workspaceId + '/notifications', 'g');
             var isDashboardRegex = new RegExp('#/workspace/' + App.config.workspaceId + '/dashboard', 'g');
-            var isCustomizationsRegex = new RegExp('#/workspace/' + App.config.workspaceId + '/customizations', 'g');
+            var isCustomizationsRegex = new RegExp('#/workspace/' + App.config.workspaceId + '/front-options', 'g');
             this.$el.html(Mustache.render(template, {
                 isAdmin: App.config.admin,
                 administratedWorkspaces: App.config.workspaces.administratedWorkspaces,

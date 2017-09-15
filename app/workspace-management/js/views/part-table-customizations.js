@@ -103,7 +103,7 @@ define([
 
         fetchPartTableColumns: function () {
             var $deferred = $.Deferred();
-            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations')
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/front-options')
                 .success(function (workspaceCustomizations) {
                     $deferred.resolve(workspaceCustomizations.partTableColumns);
                 })
@@ -129,7 +129,7 @@ define([
             }
             $.ajax({
                 method: 'PUT',
-                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/customizations',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/front-options',
                 contentType: 'application/json',
                 data: JSON.stringify({
                     partTableColumns: this.selectize.items

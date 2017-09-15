@@ -31,7 +31,7 @@ define([
             this.$hooksContainer = this.$('.hooks-container');
             this.hooksManagerView = new HooksManagerView({el: this.$hooksContainer}).render();
 
-            $.getJSON(App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options')
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/back-options')
                 .then(this.onOptionsFetched.bind(this));
 
             return this;
@@ -66,7 +66,7 @@ define([
         onSubmitForm: function (e) {
             var promises = [$.ajax({
                 method: 'PUT',
-                url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/notification-options',
+                url: App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/back-options',
                 data: JSON.stringify(this.notificationOptions),
                 contentType: 'application/json'
             })].concat(this.hooksManagerView.saveHooks());
