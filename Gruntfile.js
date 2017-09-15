@@ -13,18 +13,29 @@ module.exports = function (grunt) {
                 keepSpecialComments: 0
             }
         },
-        copy:{},
-        less:{},
-        usemin:{},
-        htmlmin:{},
-        requirejs:{},
-        uglify:{}
+        copy: {},
+        less: {},
+        usemin: {},
+        htmlmin: {},
+        requirejs: {},
+        uglify: {},
+        replace: {
+            bustCache: {
+                src: ['dist/**/*.{js,html}'],
+                overwrite: true,
+                replacements: [{
+                    from: '__BUST_CACHE__',
+                    to: 'rev=' + Date.now()
+                }]
+            }
+        }
     };
 
     require('time-grunt')(grunt);
     require('jit-grunt')(grunt);
+    grunt.loadNpmTasks('grunt-text-replace');
 
-    function initModule(module){
+    function initModule(module) {
         module.loadConf(config, grunt);
         module.loadTasks(grunt);
         return module;
@@ -51,6 +62,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config);
 
-    grunt.registerTask('default',['jshint','build']);
+    grunt.registerTask('default', ['jshint', 'build']);
 
-};
+}
+;

@@ -1,7 +1,7 @@
 module.exports = {
 
-    loadConf:function(config,grunt){
-        config.clean.dist=['.tmp', 'dist'];
+    loadConf: function (config, grunt) {
+        config.clean.dist = ['.tmp', 'dist'];
 
         config.compress = {
             dist: {
@@ -17,17 +17,17 @@ module.exports = {
 
     },
 
-    loadTasks:function(grunt){
+    loadTasks: function (grunt) {
 
         grunt.registerTask('build-module', function (module) {
             return grunt.task.run([
-                'clean:'+module,
-                'requirejs:'+module,
-                'uglify:'+module,
-                'cssmin:'+module,
-                'htmlmin:'+module,
-                'usemin:'+module,
-                'copy:'+module
+                'clean:' + module,
+                'requirejs:' + module,
+                'uglify:' + module,
+                'cssmin:' + module,
+                'htmlmin:' + module,
+                'usemin:' + module,
+                'copy:' + module
             ]);
         });
 
@@ -51,6 +51,7 @@ module.exports = {
             'copy:properties',
             'copy:dmu',
             'copy:i18n',
+            'replace:bustCache',
             'compress:dist'
         ]);
     }

@@ -2,7 +2,11 @@
 var App = {};
 
 require.config({
+
+    urlArgs:'__BUST_CACHE__',
+
     baseUrl: '../product-structure/js',
+
     shim: {
         jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
         bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },

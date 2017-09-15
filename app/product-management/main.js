@@ -3,7 +3,11 @@
 var App = {};
 
 require.config({
+
+    urlArgs: '__BUST_CACHE__',
+
     baseUrl: 'js',
+
     shim: {
         jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
         effects: {deps: ['jquery'], exports: 'jQuery'},

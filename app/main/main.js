@@ -4,6 +4,8 @@ var App = {};
 
 require.config({
 
+    urlArgs: '__BUST_CACHE__',
+
     baseUrl: 'main/js',
 
     shim: {

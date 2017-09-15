@@ -107,7 +107,7 @@ define([
         }
 
         ContextResolver.prototype.resolveServerProperties = function (relativeLocation) {
-            return $.getJSON(relativeLocation + '/webapp.properties.json').then(function (properties) {
+            return $.getJSON(relativeLocation + '/webapp.properties.json?__BUST_CACHE__').then(function (properties) {
 
                 var isSSL = properties.server.ssl;
                 var base = '://' + properties.server.domain + ':' + properties.server.port + addTrailingSlash(properties.server.contextPath);

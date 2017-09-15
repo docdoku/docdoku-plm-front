@@ -4,12 +4,14 @@ var App = {};
 
 require.config({
 
+    urlArgs: '__BUST_CACHE__',
+
     baseUrl: 'js',
 
     shim: {
-        jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
-        bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
-        backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'}
+        jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
+        bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
+        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'}
     },
 
     paths: {
@@ -36,11 +38,11 @@ require.config({
     ],
     config: {
         i18n: {
-            locale: (function(){
-	            'use strict';
-                try{
+            locale: (function () {
+                'use strict';
+                try {
                     return window.localStorage.locale || 'en';
-                }catch(ex){
+                } catch (ex) {
                     return 'en';
                 }
             })()
@@ -48,15 +50,15 @@ require.config({
     }
 });
 
-require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!localization/nls/download'],
+require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n!localization/nls/download'],
     function (ContextResolver, commonStrings, downloadStrings) {
 
         'use strict';
 
         App.config.i18n = _.extend(commonStrings, downloadStrings);
 
-        var load = function(){
-            require(['backbone','app','common-objects/views/header'],function(Backbone, AppView, HeaderView){
+        var load = function () {
+            require(['backbone', 'app', 'common-objects/views/header'], function (Backbone, AppView, HeaderView) {
                 App.appView = new AppView().render();
                 App.headerView = new HeaderView().render();
             });
