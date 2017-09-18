@@ -33,7 +33,11 @@ define([
             var $deferred = $.Deferred();
             $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/front-options')
                 .success(function (workspaceCustomizations) {
-                    $deferred.resolve(workspaceCustomizations.partTableColumns);
+                    if (workspaceCustomizations.partTableColumns && workspaceCustomizations.partTableColumns.length) {
+                        $deferred.resolve(workspaceCustomizations.partTableColumns);
+                    } else {
+                        $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
+                    }
                 })
                 .error(function () {
                     $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
