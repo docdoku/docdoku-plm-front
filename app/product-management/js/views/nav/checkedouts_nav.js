@@ -31,14 +31,14 @@ define([
             }).success(function(data){
                 var numberOfItem = data.count;
                 var badge = that.$('.badge.nav-checkedOut-number-item');
-                badge.addClass('badge-info');
+                badge.addClass('badge-custom');
                 badge.html(numberOfItem);
                 if(numberOfItem > 0){
-                    badge.addClass('badge-success');
-                    badge.removeClass('badge-info');
+                    badge.addClass('badge-custom');
+                    badge.removeClass('badge-primary');
                 } else{
-                    badge.addClass('badge-info');
-                    badge.removeClass('badge-success');
+                    badge.addClass('badge-primary');
+                    badge.removeClass('badge-custom');
                 }
             });
         },

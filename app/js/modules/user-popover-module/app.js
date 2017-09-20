@@ -12,9 +12,9 @@ define(['backbone', 'common-objects/collections/users'],
         var tipContent = '<div>' +
             '<span class="user-status"></span>' +
             '<hr />' +
-            '<button type="button" class="btn btn-success webRTC_invite_button"><i class="fa fa-video-camera"></i> Video </button> ' +
-            '<button type="button" class="btn btn-info new_chat_session_button"><i class="fa fa-comments"></i> Chat </button> ' +
-            '<a class="btn btn-warning mailto_button" href="" target="_blank"><i class="fa fa-envelope"></i> Mail </a>' +
+            '<button type="button" class="btn btn-custom webRTC_invite_button"><i class="fa fa-video-camera"></i> Video </button> ' +
+            '<button type="button" class="btn btn-custom new_chat_session_button"><i class="fa fa-comments"></i> Chat </button> ' +
+            '<a class="btn btn-custom mailto_button" href="" target="_blank"><i class="fa fa-envelope"></i> Mail </a>' +
             '</div>';
 
         var users = new Users();
