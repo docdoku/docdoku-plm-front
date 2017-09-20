@@ -53,11 +53,11 @@ define([
                 name: 'New hook',
                 appName: 'SIMPLEWEBHOOK',
                 active: true,
-                parameters: {
-                    method: 'POST',
-                    url: 'http://',
-                    authorization: null
-                }
+                parameters: [
+                    {name: 'method', value: 'POST'},
+                    {name: 'uri', value: 'http://'},
+                    {name: 'authorization', value: ''}
+                ]
             }));
         },
 
