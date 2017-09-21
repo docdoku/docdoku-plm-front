@@ -21,7 +21,8 @@ module.exports = {
                         'bower_components/threejs/build/three.min.js',
                         'bower_components/tweenjs/src/Tween.js',
                         'bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
-                        'bower_components/backbone/backbone-min.js'
+                        'bower_components/backbone/backbone-min.js',
+                        'bower_components/fontawesome/fonts/*'
                     ]
                 }
             ]
@@ -52,7 +53,6 @@ module.exports = {
                         'css/**',
                         'images/**',
                         'sounds/**',
-                        'fonts/**',
                         'js/home/main.js',
                         'js/lib/plugin-detect.js',
                         'js/lib/empty.pdf'

@@ -30,14 +30,14 @@
 
     .nav-header {
         font-size: 12px;
-        padding: 3px 10px;
+        padding: 3px 6px;
         display: block;
         font-weight: bold;
         line-height: 18px;
         color: @nav-header-color;
         text-transform: uppercase;
 
-        &.nav-header-bigger{
+        &.nav-header-bigger {
             font-size: 16px;
         }
     }
@@ -53,6 +53,10 @@
         }
 
         > a {
+            color: @plm-primary-color;
+            &:hover {
+                color: @plm-primary-hover-color;
+            }
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 26px;
@@ -85,7 +89,7 @@
         }
 
         .dropdown-toggle:hover {
-            background: @menu-color-hover;
+            background: @table-row-even-hover;
             .caret {
                 opacity: 1;
             }
@@ -125,7 +129,7 @@
         > a {
             text-decoration: none;
         }
-        background-color: @menu-color-hover;
+        background-color: @table-row-even-hover;
         .dropdown-toggle {
             display: block;
         }
