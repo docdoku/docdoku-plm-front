@@ -337,7 +337,7 @@ define([
         },
 
         allCheckinDone: function () {
-            this.resetCollection();
+            _(this.partListView.getSelectedParts()).invoke('fetch');
             Backbone.Events.trigger('part:iterationChange');
         },
 
