@@ -27,7 +27,8 @@ require.config({
         nvd3: {deps: ['d3'], exports: 'window'},
         helpers: {deps: ['nvd3', 'd3']},
         fileDownload: {deps: ['jquery'], exports: 'jQuery'},
-        selectize: {deps: ['jquery'], exports: 'jQuery'}
+        selectize: {deps: ['jquery'], exports: 'jQuery'},
+        oidcClient: {exports: 'Oidc'}
     },
 
     paths: {
@@ -66,7 +67,8 @@ require.config({
         'charts-helpers': '../../js/utils/charts-helpers',
         fileDownload: '../../js/utils/file-download',
         jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
-        selectize: '../../bower_components/selectize/dist/js/standalone/selectize'
+        selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
+        oidcClient: '../../bower_components/oidc-client/dist/oidc-client'
     },
 
     deps: [
@@ -88,7 +90,8 @@ require.config({
         'd3',
         'nvd3',
         'fileDownload',
-        'selectize'
+        'selectize',
+        'oidcClient'
     ],
     config: {
         i18n: {

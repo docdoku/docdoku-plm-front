@@ -2,11 +2,11 @@ var moduleName = 'copy';
 
 module.exports = {
 
-    name:moduleName,
+    name: moduleName,
 
-    loadConf:function(config,grunt){
+    loadConf: function (config, grunt) {
 
-        config.copy.libs =  {
+        config.copy.libs = {
             files: [
                 {
                     expand: true,
@@ -22,6 +22,7 @@ module.exports = {
                         'bower_components/tweenjs/src/Tween.js',
                         'bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
                         'bower_components/backbone/backbone-min.js',
+                        'bower_components/oidc-client/dist/oidc-client.min.js',
                         'bower_components/fontawesome/fonts/*'
                     ]
                 }
@@ -50,6 +51,7 @@ module.exports = {
                     cwd: 'app',
                     dest: 'dist',
                     src: [
+                        'callback.html',
                         'css/**',
                         'images/**',
                         'sounds/**',
@@ -57,7 +59,7 @@ module.exports = {
                         'js/lib/plugin-detect.js',
                         'js/lib/empty.pdf'
                     ]
-                },{
+                }, {
                     expand: true,
                     dot: false,
                     cwd: 'app/bower_components/bootstrap/',
@@ -84,7 +86,7 @@ module.exports = {
             ]
         };
 
-        config.copy.i18n ={
+        config.copy.i18n = {
             files: [
                 {
                     expand: true,
@@ -101,7 +103,7 @@ module.exports = {
         };
     },
 
-    loadTasks:function(grunt){
+    loadTasks: function (grunt) {
     }
 
 };

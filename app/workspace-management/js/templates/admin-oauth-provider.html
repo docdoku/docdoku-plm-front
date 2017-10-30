@@ -1,0 +1,12 @@
+<tr data-id="{{provider.id}}">
+    <td>
+        <input type="checkbox" class="change" data-id="{{provider.id}}" data-option="state"/>
+    </td>
+    <td class="provider-name" data-id="{{provider.id}}">{{provider.name}}</td>
+    <td>{{provider.issuer}}</td>
+    <td>{{provider.clientID}}</td>
+    <td>{{provider.jwsAlgorithm}}</td>
+    <td>
+        {{#provider.enabled}}{{i18n.ENABLED}}{{/provider.enabled}}{{^provider.enabled}}{{i18n.DISABLED}}{{/provider.enabled}}
+    </td>
+</tr>

@@ -164,6 +164,7 @@ define({
     DELETE_TAG_QUESTION: 'Supprimer le libellé ?',
     DELETE_TASK: 'Supprimer la tâche',
     DELETE_QUERY_QUESTION: 'Supprimer la requête',
+    DELETE_PROVIDER_QUESTION: 'Supprimer le  provider ?',
     DESCRIPTION: 'Description',
     DEVICE_ERROR: 'Imposible de se connecter à votre matériel audio/vidéo. Veillez à activer le WebRTC pour votre navigateur, et de vérifier les exceptions.',
     DISPLAY_COMMENTS: 'Afficher/Masquer les descriptions',

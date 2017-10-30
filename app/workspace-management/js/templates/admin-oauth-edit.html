@@ -1,0 +1,120 @@
+<div id="edit_provider_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <i class="fa fa-cog"></i>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>{{i18n.EDIT_PROVIDER}}</h3>
+    </div>
+
+    <div class="modal-body">
+        <div class="notifications"></div>
+
+        <form id="edit_provider_form" class="form-horizontal tab-content">
+
+            <div class="control-group">
+                <label class="control-label" for="provider-name">{{i18n.NAME}}</label>
+
+                <div class="controls">
+                    <input type="text" id="provider-name" value="{{provider.name}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-enabled">{{i18n.ENABLED}}</label>
+
+                <div class="controls">
+                    <input type="checkbox" id="provider-enabled" {{#provider.enabled}}checked{{/provider.enabled}}/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-authority">{{i18n.AUTHORITY}}</label>
+
+                <div class="controls">
+                    <input type="url" id="provider-authority" value="{{provider.authority}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-issuer">{{i18n.ISSUER}}</label>
+
+                <div class="controls">
+                    <input type="url" id="provider-issuer" value="{{provider.issuer}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-clientID">{{i18n.CLIENT_ID}}</label>
+
+                <div class="controls">
+                    <input type="text" id="provider-clientID" value="{{provider.clientID}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-jwsAlgorithm">{{i18n.JWS_ALGORITHM}}</label>
+
+                <div class="controls">
+                    <select id="provider-jwsAlgorithm" required></select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-jwkSetURL">{{i18n.JWK_SET_URL}}</label>
+
+                <div class="controls">
+                    <input type="url" id="provider-jwkSetURL" value="{{provider.jwkSetURL}}"/>
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label" for="provider-redirectUri">{{i18n.REDIRECT_URI}}</label>
+
+                <div class="controls">
+                    <input type="url" id="provider-redirectUri" value="{{provider.redirectUri}}"/>
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label" for="provider-secret">{{i18n.SECRET}}</label>
+
+                <div class="controls">
+                    <input type="text" id="provider-secret" value="{{provider.secret}}"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-scope">{{i18n.SCOPE}}</label>
+
+                <div class="controls">
+                    <input type="text" id="provider-scope" value="{{provider.scope}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="provider-responseType">{{i18n.RESPONSE_TYPE}}</label>
+
+                <div class="controls">
+                    <input type="text" id="provider-responseType" value="{{provider.responseType}}" required/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"
+                       for="provider-authorizationEndpoint">{{i18n.AUTHORIZATION_ENDPOINT}}</label>
+
+                <div class="controls">
+                    <input type="url" id="provider-authorizationEndpoint" value="{{provider.authorizationEndpoint}}" />
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{i18n.CLOSE}}</button>
+        <button class="btn btn-primary" form="edit_provider_form">{{i18n.SAVE}}</button>
+    </div>
+</div>

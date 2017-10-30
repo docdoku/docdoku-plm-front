@@ -13,7 +13,8 @@ require.config({
         bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
         backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'},
         trackballcontrols: {deps: ['threecore'], exports: 'THREE'},
-        binaryloader: {deps: ['threecore'], exports: 'THREE'}
+        binaryloader: {deps: ['threecore'], exports: 'THREE'},
+        oidcClient: {exports: 'Oidc'}
     },
 
     paths: {
@@ -34,7 +35,8 @@ require.config({
         urlUtils: '../../js/utils/url-utils',
         jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
         moment: '../../bower_components/moment/min/moment-with-locales',
-        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data'
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
+        oidcClient: '../../bower_components/oidc-client/dist/oidc-client'
     },
 
     deps: [
@@ -45,7 +47,8 @@ require.config({
         'threecore',
         'tween',
         'trackballcontrols',
-        'binaryloader'
+        'binaryloader',
+        'oidcClient'
     ],
     config: {
         i18n: {

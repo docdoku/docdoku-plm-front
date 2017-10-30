@@ -53,6 +53,18 @@ define([
             }
         };
 
+        var parseTokenFromResponse = function (xhr) {
+            try {
+                var jwt = xhr.getResponseHeader('jwt');
+                if (jwt && jwt !== localStorage.jwt) {
+                    Logger.log('JWT', 'new token set');
+                    localStorage.jwt = jwt;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
         (function (send) {
             XMLHttpRequest.prototype.send = function (data) {
                 if (localStorage.jwt) {
@@ -76,11 +88,7 @@ define([
                         }
                         return;
                     }
-                    var jwt = this.getResponseHeader('jwt');
-                    if (jwt && jwt !== localStorage.jwt) {
-                        Logger.log('JWT', 'new token set');
-                        localStorage.jwt = jwt;
-                    }
+                    parseTokenFromResponse(this);
                 }, false);
                 open.apply(this, arguments);
             };

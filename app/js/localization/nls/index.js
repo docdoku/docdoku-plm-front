@@ -51,8 +51,9 @@ define({
         REGISTRATION: 'Registration',
         CREATE_ID: 'Create your DocDokuPLM ID',
         TERMS_OF_SERVICES: 'Terms of Service',
-        TERMS_OF_SERVICES_TEXT: 'You\'re registering for a free, evaluation purpose account. There\'s hence no guarantee that your account could not be deactivated someday. If you wish to use DocDokuPLM for production, contact us.'
-
+        TERMS_OF_SERVICES_TEXT: 'You\'re registering for a free, evaluation purpose account. There\'s hence no guarantee that your account could not be deactivated someday. If you wish to use DocDokuPLM for production, contact us.',
+        CHOOSE_PROVIDER: 'Choose a provider',
+        LOGIN_WITH: 'Login with'
     },
     'fr': true,
     'es': true,

@@ -13,6 +13,7 @@ function (Backbone, singletonDecorator) {
             'admin/dashboard':'adminDashboard',
             'admin/options':'adminOptions',
             'admin/accounts':'adminAccounts',
+            'admin/oauth':'adminOAuth',
             'workspace/:workspaceId/users':   'workspaceUsers',
             'workspace/:workspaceId/notifications':   'workspaceNotifications',
             'workspace/:workspaceId/edit':   'workspaceEdit',
@@ -115,6 +116,13 @@ function (Backbone, singletonDecorator) {
             if(this.checkRootAdmin()){
                 this.refresh();
                 App.appView.adminAccounts();
+            }
+        },
+
+        adminOAuth:function(){
+            if(this.checkRootAdmin()){
+                this.refresh();
+                App.appView.adminOAuth();
             }
         }
 
