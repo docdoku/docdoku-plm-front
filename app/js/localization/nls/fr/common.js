@@ -58,6 +58,7 @@ define({
     BEST_FIT_VIEW: 'Meilleure vue',
     BLOCKER_TEXT: '(Z, Q, S, D = Déplacer, ESPACE = Haut, CTRL = Bas, SOURIS = Regarder autour, ECHAP = Quitter)',
     BLOCKER_TITLE: 'Cliquez pour lancer la visualisation',
+    BOM: 'Articles',
     BOM_VIEW: 'Visualiser structure produit',
     BOOLEAN: 'Booléen',
     BY: 'par',

@@ -94,6 +94,7 @@ define([
                 checkin: this.autocheckin,
                 permissive: this.permissive,
                 revisionNote: this.revisionNote,
+                importType: this.importType,
                 i18n: App.config.i18n
             }));
             this.bindDomElements();
@@ -127,6 +128,7 @@ define([
                 partCheckoutList: this.partCheckoutList,
                 partsToCreate: this.partsToCreate,
                 searchingForPartList: this.searchingForPartList,
+                importType: this.importType,
                 i18n: App.config.i18n,
                 options: this.options
             }));
@@ -158,6 +160,8 @@ define([
             if (this.permissive) {
                 this.$('#permissive_update_part').prop('checked', true);
             }
+
+            this.$('#import-type').val(this.importType);
         },
 
         addOneFile: function (attachedFile) {
@@ -200,7 +204,8 @@ define([
             var params = {
                 autoCheckout: this.autocheckout,
                 autoCheckin: this.autocheckin,
-                permissiveUpdate: this.permissive
+                permissiveUpdate: this.permissive,
+                importType: this.importType
             };
 
             this.searchingForPartList = true;
@@ -237,16 +242,17 @@ define([
             var checkinCheckBox = this.$('#auto_checkin_part');
             var checkoutCheckBox = this.$('#auto_checkout_part');
             var permissiveCheckBox = this.$('#permissive_update_part');
+            var importTypeSelect = this.$('#import-type');
 
-            if(checkinCheckBox.length){
+            if (checkinCheckBox.length) {
                 this.autocheckin = checkinCheckBox.is(':checked');
             }
 
-            if(checkoutCheckBox.length){
+            if (checkoutCheckBox.length) {
                 this.autocheckout = checkoutCheckBox.is(':checked');
             }
 
-            if(permissiveCheckBox.length){
+            if (permissiveCheckBox.length) {
                 this.permissive = permissiveCheckBox.is(':checked');
             }
 
@@ -254,6 +260,10 @@ define([
 
             if (revisionText.length) {
                 this.revisionNote = (revisionText.val() || '' ).trim();
+            }
+
+            if (importTypeSelect.length) {
+                this.importType = this.$('#import-type').val();
             }
 
             var dryRunCheckBox = this.$('#dry_run');
@@ -278,7 +288,8 @@ define([
                 autoCheckout: this.autocheckout,
                 autoCheckin: this.autocheckin,
                 permissiveUpdate: this.permissive,
-                revisionNote: this.revisionNote
+                revisionNote: this.revisionNote,
+                importType: this.importType
             };
 
             this.deleteImportStatus();
