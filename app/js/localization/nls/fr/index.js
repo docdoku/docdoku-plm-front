@@ -51,6 +51,5 @@ define({
     CREATE_ID: 'Créez votre identifiant DocDokuPLM',
     TERMS_OF_SERVICES: 'Contrat de Service',
     TERMS_OF_SERVICES_TEXT: 'Vous vous enregistrez pour obtenir un compte gratuit, pour évaluer le logiciel. Il n\'y a par conséquent aucune garantie que votre compte ne soit pas désactivé un jour. Si vous souhaitez utiliser DocDokuPLM en production, contactez nous.',
-    CHOOSE_PROVIDER: 'Choose a provider',
-    LOGIN_WITH:'Login with'
+    CHOOSE_PROVIDER: 'Choisir un service de connexion'
 });

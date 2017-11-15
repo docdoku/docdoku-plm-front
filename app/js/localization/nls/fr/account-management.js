@@ -1,5 +1,8 @@
 /*global define*/
 define({
+    AUTH_REQUIRED : 'Authentification requise',
+    AUTH_REQUIRED_PASSWORD_TEXT : 'Please confirm your current password',
+    AUTH_REQUIRED_PROVIDER_TEXT : 'Please refresh your authentication',
     ACCOUNT_NAME : 'Prénom, nom',
     ACCOUNT_EDITION:'Editez votre compte',
     ACCOUNT_UPDATED:'Compte enregistré',

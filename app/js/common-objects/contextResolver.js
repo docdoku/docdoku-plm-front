@@ -21,7 +21,6 @@ define([
             webSocketEndPoint: '',
             locale: window.localStorage.getItem('locale') || 'en'
         };
-
         App.setDebug = function (state) {
             App.debug = state;
             if (state) {
@@ -59,6 +58,7 @@ define([
                 if (jwt && jwt !== localStorage.jwt) {
                     Logger.log('JWT', 'new token set');
                     localStorage.jwt = jwt;
+                    scheduleTokenRefresh();
                 }
             } catch (e) {
                 console.log(e);
@@ -68,7 +68,6 @@ define([
         (function (send) {
             XMLHttpRequest.prototype.send = function (data) {
                 if (localStorage.jwt) {
-                    scheduleTokenRefresh();
                     this.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
                 }
                 send.call(this, data);

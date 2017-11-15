@@ -435,6 +435,7 @@ define({
     PART_VERSION_HELP: 'Version de l\'article',
     PASSWORD: 'Mot de passe',
     PASSWORD_NOT_CONFIRMED: 'Les champs mot de passe et confirmation doivent être identiques',
+    AUTHENTICATION_FAILED: 'Echec de l\'authentification',
     PATH: 'Dossier',
     PATH_TO_PATH_LINKS: 'Liens typés',
     PATH_TO_PATH_SOURCE: 'Source',
@@ -726,6 +727,7 @@ define({
     WORKSPACES: 'Espaces de travail',
     YOU_CANNOT_CREATE_LINK_WITHOUT_TYPE: 'Vous ne pouvez pas créer un lien sans type',
     YOU_HAVE_BEEN_KICKED: 'Vous avez été exclu de la salle collaborative',
+    LOGIN_WITH: 'Se connecter avec',
     LANGUAGES: {
         fr: 'Français',
         en: 'Anglais',

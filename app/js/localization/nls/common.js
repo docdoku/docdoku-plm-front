@@ -440,6 +440,7 @@ define({
         PART_VERSION_HELP: 'Version of the part',
         PASSWORD: 'Password',
         PASSWORD_NOT_CONFIRMED: 'Password and Confirm password must match',
+        AUTHENTICATION_FAILED: 'Authentication failed',
         PATH: 'Folder',
         PATH_TO_PATH_SOURCE: 'Source',
         PATH_TO_PATH_TARGET: 'Target',
@@ -731,6 +732,7 @@ define({
         WORKSPACE: 'Workspace',
         YOU_CANNOT_CREATE_LINK_WITHOUT_TYPE: 'You cannot create a link without a type',
         YOU_HAVE_BEEN_KICKED: 'You have been kicked from the collaborative room',
+        LOGIN_WITH: 'Login with',
         LANGUAGES: {
             fr: 'French',
             en: 'English',

@@ -7,19 +7,20 @@ require.config({
     baseUrl: 'js',
 
     shim: {
-        jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
-        effects: { deps: ['jquery'], exports: 'jQuery' },
-        popoverUtils: { deps: ['jquery'], exports: 'jQuery' },
-        inputValidity: { deps: ['jquery'], exports: 'jQuery' },
-        bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
-        bootbox: { deps: ['jquery'], exports: 'jQuery' },
-        datatables: { deps: ['jquery'], exports: 'jQuery' },
-        unmask: { deps: ['jquery'], exports: 'jQuery' },
-        unmaskConfig: { deps: ['unmask','jquery'], exports: 'jQuery' },
-        bootstrapSwitch: { deps: ['jquery'], exports: 'jQuery'},
-        bootstrapDatepicker: {deps: ['jquery','bootstrap'], exports: 'jQuery'},
-        backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        datePickerLang: { deps: ['bootstrapDatepicker'], exports: 'jQuery'}
+        jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
+        effects: {deps: ['jquery'], exports: 'jQuery'},
+        popoverUtils: {deps: ['jquery'], exports: 'jQuery'},
+        inputValidity: {deps: ['jquery'], exports: 'jQuery'},
+        bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
+        bootbox: {deps: ['jquery'], exports: 'jQuery'},
+        datatables: {deps: ['jquery'], exports: 'jQuery'},
+        unmask: {deps: ['jquery'], exports: 'jQuery'},
+        unmaskConfig: {deps: ['unmask', 'jquery'], exports: 'jQuery'},
+        bootstrapSwitch: {deps: ['jquery'], exports: 'jQuery'},
+        bootstrapDatepicker: {deps: ['jquery', 'bootstrap'], exports: 'jQuery'},
+        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'},
+        datePickerLang: {deps: ['bootstrapDatepicker'], exports: 'jQuery'},
+        oidcClient: {exports: 'Oidc'}
     },
 
     paths: {
@@ -31,17 +32,17 @@ require.config({
         i18n: '../../bower_components/requirejs-i18n/i18n',
         buzz: '../../bower_components/buzz/dist/buzz',
         bootstrap: '../../bower_components/bootstrap/docs/assets/js/bootstrap',
-        bootbox:'../../bower_components/bootbox/bootbox',
+        bootbox: '../../bower_components/bootbox/bootbox',
         datatables: '../../bower_components/datatables/media/js/jquery.dataTables',
         jqueryUI: '../../bower_components/jqueryui/ui/jquery-ui',
-        unmask:'../../bower_components/jquery-maskedinput/dist/jquery.maskedinput',
-        bootstrapSwitch:'../../bower_components/bootstrap-switch/static/js/bootstrap-switch',
-        bootstrapDatepicker:'../../bower_components/bootstrap-datepicker/js/bootstrap-datepicker',
-        date:'../../bower_components/date.format/date.format',
-        unorm:'../../bower_components/unorm/lib/unorm',
-        moment:'../../bower_components/moment/min/moment-with-locales',
-        momentTimeZone:'../../bower_components/moment-timezone/builds/moment-timezone-with-data',
-        unmaskConfig:'../../js/utils/jquery.maskedinput-config',
+        unmask: '../../bower_components/jquery-maskedinput/dist/jquery.maskedinput',
+        bootstrapSwitch: '../../bower_components/bootstrap-switch/static/js/bootstrap-switch',
+        bootstrapDatepicker: '../../bower_components/bootstrap-datepicker/js/bootstrap-datepicker',
+        date: '../../bower_components/date.format/date.format',
+        unorm: '../../bower_components/unorm/lib/unorm',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
+        unmaskConfig: '../../js/utils/jquery.maskedinput-config',
         localization: '../../js/localization',
         modules: '../../js/modules',
         'common-objects': '../../js/common-objects',
@@ -53,7 +54,9 @@ require.config({
         userPopover: '../../js/modules/user-popover-module/app',
         async: '../../bower_components/async/lib/async',
         datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
-        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        oidcClient: '../../bower_components/oidc-client/dist/oidc-client'
+
     },
 
     deps: [
@@ -71,15 +74,16 @@ require.config({
         'datatablesOsortExt',
         'unmaskConfig',
         'utilsprototype',
-        'datePickerLang'
+        'datePickerLang',
+        'oidcClient'
     ],
     config: {
         i18n: {
-            locale: (function(){
+            locale: (function () {
                 'use strict';
-                try{
+                try {
                     return window.localStorage.locale || 'en';
-                }catch(ex){
+                } catch (ex) {
                     return 'en';
                 }
             })()
@@ -87,18 +91,18 @@ require.config({
     }
 });
 
-require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!localization/nls/account-management'],
+require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n!localization/nls/account-management'],
     function (ContextResolver, commonStrings, workspaceManagementStrings) {
 
         'use strict';
 
-        App.config.i18n = _.extend(commonStrings,workspaceManagementStrings);
+        App.config.i18n = _.extend(commonStrings, workspaceManagementStrings);
 
         ContextResolver.resolveServerProperties('..')
             .then(ContextResolver.resolveAccount)
             .then(ContextResolver.resolveWorkspaces)
-            .then(function buildView(){
-                require(['backbone','app','router','common-objects/views/header','modules/all'],function(Backbone, AppView, Router,HeaderView,Modules){
+            .then(function buildView() {
+                require(['backbone', 'app', 'router', 'common-objects/views/header', 'modules/all'], function (Backbone, AppView, Router, HeaderView, Modules) {
                     App.appView = new AppView();
                     App.headerView = new HeaderView();
                     App.headerView.setCoWorkersView(Modules.CoWorkersAccessModuleView);

@@ -1,0 +1,30 @@
+<div class="actions well">
+    <button class="btn btn-default logout">{{i18n.LOGOUT}}</button>
+</div>
+<div class="notifications"></div>
+<div class="margin">
+    <h3>{{i18n.AUTH_REQUIRED}}</h3>
+
+    {{#provider}}
+    <p>{{i18n.AUTH_REQUIRED_PROVIDER_TEXT}}</p>
+    <button class="btn btn-primary" id="login-with-provider">{{i18n.LOGIN_WITH}} {{name}}</button>
+    {{/provider}}
+
+
+    {{^provider}}
+    <p>{{i18n.AUTH_REQUIRED_PASSWORD_TEXT}}</p>
+
+    <div class="control-group">
+        <div class="controls">
+            <input type="password" id="password"/>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button class="btn btn-primary" id="validate-password">Validate</button>
+        </div>
+    </div>
+
+    {{/provider}}
+
+</div>
