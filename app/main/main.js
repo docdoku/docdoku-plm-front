@@ -83,6 +83,7 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
         };
 
         ContextResolver.resolveServerProperties('.')
+            .then(ContextResolver.resolveProviders)
             .then(ContextResolver.resolveAccount)
             .then(function () {
                 window.location.href = App.config.contextPath + 'workspace-management/index.html';
@@ -94,6 +95,9 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
                         App.appView.render();
                         App.headerView.render();
                         App.router = Router.getInstance();
+                        if (App.config.preferLoginWith && !window.location.hash && App.config.providers.length) {
+                            window.location.hash = 'login-with';
+                        }
                         Backbone.history.start();
                     });
                 } else {

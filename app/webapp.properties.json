@@ -6,5 +6,6 @@
         "contextPath": "/eplmp-server-rest",
         "wsDomain": "localhost"
     },
-    "contextPath": "/"
+    "contextPath": "/",
+    "preferLoginWith": false
 }
