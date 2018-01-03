@@ -52,7 +52,8 @@ define({
         CREATE_ID: 'Create your DocDokuPLM ID',
         TERMS_OF_SERVICES: 'Terms of Service',
         TERMS_OF_SERVICES_TEXT: 'If you wish to use DocDokuPLM for production, ensure you have subscribed to a support contract. Do not hesitate to contact us.',
-        CHOOSE_PROVIDER: 'Choose a provider'
+        CHOOSE_PROVIDER: 'Choose a provider',
+        LOGIN_AN_OTHER_WAY: 'Login another way'
     },
     'fr': true,
     'es': true,

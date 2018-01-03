@@ -51,5 +51,6 @@ define({
     CREATE_ID: 'Créez votre identifiant DocDokuPLM',
     TERMS_OF_SERVICES: 'Contrat de Service',
     TERMS_OF_SERVICES_TEXT: 'Si vous souhaitez utiliser DocDokuPLM en production, assurez-vous de disposer d\'un contrat de support. N\'hésitez pas à nous contacter.',
-    CHOOSE_PROVIDER: 'Choisir un service de connexion'
+    CHOOSE_PROVIDER: 'Choisir un service de connexion',
+    LOGIN_AN_OTHER_WAY: 'Se connecter d\'une autre façon'
 });

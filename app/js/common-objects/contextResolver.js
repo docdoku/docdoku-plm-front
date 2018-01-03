@@ -19,6 +19,8 @@ define([
             contextPath: '',
             apiEndPoint: '',
             webSocketEndPoint: '',
+            providers: [],
+            preferLoginWith: false,
             locale: window.localStorage.getItem('locale') || 'en'
         };
         App.setDebug = function (state) {
@@ -123,6 +125,7 @@ define([
                 App.config.apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
                 App.config.webSocketEndPoint = (isSSL ? 'wss' : 'ws') + wsBase + 'ws';
                 App.config.contextPath = addTrailingSlash(properties.contextPath);
+                App.config.preferLoginWith = properties.preferLoginWith;
 
             }, onError);
         };
@@ -179,6 +182,15 @@ define([
                 .then(function (user) {
                     App.config.user = user;
                 }, onError);
+        };
+
+        ContextResolver.prototype.resolveProviders = function () {
+            return $.getJSON(App.config.apiEndPoint + '/auth/providers')
+                .then(function (providers) {
+                    App.config.providers = providers.filter(function (provider) {
+                        return provider.enabled;
+                    });
+                });
         };
 
         return new ContextResolver();

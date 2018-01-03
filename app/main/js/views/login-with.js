@@ -19,24 +19,14 @@ define([
 
         render: function () {
 
-            var _this = this;
+            this.providers = App.config.providers;
 
-            $.getJSON(App.config.apiEndPoint + '/auth/providers')
-                .then(function (providers) {
+            this.$el.html(Mustache.render(template, {
+                i18n: App.config.i18n,
+                providers: App.config.providers
+            }));
 
-                    _this.providers = providers.filter(function (provider) {
-                        return provider.enabled;
-                    });
-
-                    _this.$el.html(Mustache.render(template, {
-                        i18n: App.config.i18n,
-                        providers: _this.providers
-                    }));
-
-                    _this.$notifications = _this.$('.notifications');
-
-                });
-
+            this.$notifications = this.$('.notifications');
 
             return this;
         },
