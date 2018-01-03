@@ -527,14 +527,14 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
         },
 
         onRemoteStreamAdded: function (event) {
-            this.setStatus(App.config.i18n.REMOTE_STEAM_ADDED);
+            this.setStatus(App.config.i18n.REMOTE_STREAM_ADDED);
             this.remoteStream = event.stream;
             webRTCAdapter.attachMediaStream(this.remoteVideo, this.remoteStream);
             this.waitForRemoteVideo();
         },
 
         onRemoteStreamRemoved: function () {
-            this.setStatus(App.config.i18n.REMOTE_STEAM_REMOVED);
+            this.setStatus(App.config.i18n.REMOTE_STREAM_REMOVED);
         },
 
         waitForRemoteVideo: function () {

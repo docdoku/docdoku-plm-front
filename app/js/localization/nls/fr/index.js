@@ -39,10 +39,10 @@ define({
 
     SOCIAL_FEATURES: 'Fonctionnalités sociales',
     SOCIAL_FEATURES_STRINGS: [
-        'Comunication temps réel',
+        'Communication temps réel',
         'Chat, conversation audio et vidéo',
         'Créez vos espaces de travail, vos groupes d\'utilisateurs',
-        'Partagez la visualisation des articles'
+        'Partagez la visualisation des objets'
     ],
     ENTER_ID: 'Entrez votre identifiant',
     USER_ID: 'Identifiant utilisateur',
@@ -50,6 +50,6 @@ define({
     REGISTRATION: 'Enregistrement',
     CREATE_ID: 'Créez votre identifiant DocDokuPLM',
     TERMS_OF_SERVICES: 'Contrat de Service',
-    TERMS_OF_SERVICES_TEXT: 'Vous vous enregistrez pour obtenir un compte gratuit, pour évaluer le logiciel. Il n\'y a par conséquent aucune garantie que votre compte ne soit pas désactivé un jour. Si vous souhaitez utiliser DocDokuPLM en production, contactez nous.',
+    TERMS_OF_SERVICES_TEXT: 'Si vous souhaitez utiliser DocDokuPLM en production, assurez-vous de disposer d\'un contrat de support. N\'hésitez pas à nous contacter.',
     CHOOSE_PROVIDER: 'Choisir un service de connexion'
 });

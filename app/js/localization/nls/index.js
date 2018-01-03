@@ -10,11 +10,11 @@ define({
         MANAGE_DOCUMENTS: 'Manage your documents',
         DISCONNECTED: 'You have been logged out',
         FAILED_LOGIN: 'DocDokuPLM log in was unsuccessful',
-        RECOVERY_REQUEST_SENT: 'An email with the instructions necessary to change your password has been sent to you',
+        RECOVERY_REQUEST_SENT: 'An email with the necessary instructions to change your password has been sent to you',
         USER_NOT_FOUND: 'User not found',
         LANGUAGE: 'Language',
         TIMEZONE: 'Time zone',
-        ACCOUNT_NOT_ENABLED_YET: 'Your account has been created but is not enabled yet. An email has been sent to the provided address, contact your platform administrator or follow mail instructions...',
+        ACCOUNT_NOT_ENABLED_YET: 'Your account has been created but is not enabled yet. An email has been sent to the provided address, contact your platform administrator or follow email instructions...',
         MANAGE_DOCUMENTS_STRINGS: [
             'Manage changes with version control',
             'Add tags and custom attributes',
@@ -26,7 +26,7 @@ define({
         MANAGE_PRODUCTS: 'Manage your products',
         MANAGE_PRODUCTS_STRINGS: [
             'Create and manage product structures',
-            'Manage bill of materials',
+            'Manage bills of materials',
             'Visualize 3D models of your products'
         ],
 
@@ -40,18 +40,18 @@ define({
 
         SOCIAL_FEATURES: 'Social knowledge management',
         SOCIAL_FEATURES_STRINGS: [
-            'Do realtime comunication',
+            'Realtime communication',
             'Chat, audio and video conference',
             'Create workspaces and user groups',
-            'Share part visualizations'
+            'Share object visualizations'
         ],
         ENTER_ID: 'Enter your ID',
         USER_ID: 'User ID',
-        FIRSTNAME_NAME: 'First name, name',
+        FIRSTNAME_NAME: 'First name, last name',
         REGISTRATION: 'Registration',
         CREATE_ID: 'Create your DocDokuPLM ID',
         TERMS_OF_SERVICES: 'Terms of Service',
-        TERMS_OF_SERVICES_TEXT: 'You\'re registering for a free, evaluation purpose account. There\'s hence no guarantee that your account could not be deactivated someday. If you wish to use DocDokuPLM for production, contact us.',
+        TERMS_OF_SERVICES_TEXT: 'If you wish to use DocDokuPLM for production, ensure you have subscribed to a support contract. Do not hesitate to contact us.',
         CHOOSE_PROVIDER: 'Choose a provider'
     },
     'fr': true,
