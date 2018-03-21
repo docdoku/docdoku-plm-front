@@ -114,6 +114,8 @@ function (Backbone, Mustache, template) {
 
         validate:function(){
             if(!this.options.nullable){
+                this.$usersSelect.selectize();
+                this.$groupsSelect.selectize();
                 if(!this.hasSelectedGroups() && !this.hasSelectedUsers()){
                     this.isValid = false;
                     this.$el.addClass('invalid');
