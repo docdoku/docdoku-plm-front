@@ -198,12 +198,15 @@ define([
             if (this.attributes.length) {
                 queryString += '&attributes=';
                 this.attributes.each(function (attribute) {
-                    var type = attribute.get('type') || attribute.get('attributeType');
-                    var name = attribute.get('name');
-                    var value = attribute.get('value')|| '';
-                    value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
-                    value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += encodeURIComponent(type + ':' + name + ':' + value + ';');
+                var type = attribute.get('type') || attribute.get('attributeType');
+                var name = attribute.get('name');
+		        // we escape ';' and ':' because they are used as attribute delimiter and attribute splitter respectively
+		        var nameQuoted = name.replace(/~/g, "~~").replace(/;/g, "~s").replace(/!/g, "!!").replace(/:/g, "!c");
+                var value = attribute.get('value')|| '';
+                value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
+                value = type === 'LOV' ? attribute.get('items')[value].name : value;
+                var valueQuoted = value.replace(/~/g, "~~").replace(/;/g, "~s").replace(/!/g, "!!").replace(/:/g, "!c") || '';
+                queryString += encodeURIComponent(type + ':' + nameQuoted + ':' + valueQuoted + ';');
                 });
                 // remove last 'encoded +'
                 queryString = queryString.substr(0, queryString.length - 3);
