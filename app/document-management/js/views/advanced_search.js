@@ -105,6 +105,12 @@ define([
         onSubmitForm: function () {
             var queryString = this.constructQueryString();
             if (queryString) {
+            	/*After encoding each component of queryString, we must also encode the entire resulting. Doing so, 
+            	 special characters are preserved after the first decoding by Backbone's router. So, the final URL is valid and can be 
+            	parsed correctly in server side. For more details see : 
+            	https://github.com/jashkenas/backbone/issues/3104
+            	https://stackoverflow.com/questions/36646005/prevent-backbone-history-navigate-from-decoding-url-fragment */
+            	
 	            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/search/' + encodeURIComponent(queryString), {trigger: true});
                 this.closeModal();
             }
