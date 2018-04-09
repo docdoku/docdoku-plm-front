@@ -107,6 +107,12 @@ define([
         onSubmitForm: function () {
             var queryString = this.constructQueryString();
             if (queryString) {
+                /*After encoding each component of queryString, we must also encode the entire resulting. Doing so, 
+                 special characters are preserved after the first decoding by Backbone's router. So, the final URL is valid and can be 
+                parsed correctly in server side. For more details see : 
+                https://github.com/jashkenas/backbone/issues/3104
+                https://stackoverflow.com/questions/36646005/prevent-backbone-history-navigate-from-decoding-url-fragment */
+                
                 App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/' + encodeURIComponent(queryString), {trigger: true});
                 this.closeModal();
             }
@@ -159,54 +165,57 @@ define([
             var queryString = '';
 
             if (number) {
-                queryString += '&number=' + number;
+                queryString += '&number=' + encodeURIComponent(number);
             }
             if (name) {
-                queryString += '&name=' + name;
+                queryString += '&name=' + encodeURIComponent(name);
             }
             if (type) {
-                queryString += '&type=' + type;
+                queryString += '&type=' + encodeURIComponent(type);
             }
             if (version) {
-                queryString += '&version=' + version;
+                queryString += '&version=' + encodeURIComponent(version);
             }
             if (author) {
-                queryString += '&author=' + author;
+                queryString += '&author=' + encodeURIComponent(author);
             }
             if (tags) {
-                queryString += '&tags=' + tags;
+                queryString += '&tags=' + encodeURIComponent(tags);
             }
             if (createdFrom) {
-                queryString += '&createdFrom=' + date.getDateFromDateInput(createdFrom);
+                queryString += '&createdFrom=' + encodeURIComponent(date.getDateFromDateInput(createdFrom));
             }
             if (createdTo) {
-                queryString += '&createdTo=' + date.getDateFromDateInput(createdTo);
+                queryString += '&createdTo=' + encodeURIComponent(date.getDateFromDateInput(createdTo));
             }
             if (modifiedFrom) {
-                queryString += '&modifiedFrom=' + date.getDateFromDateInput(modifiedFrom);
+                queryString += '&modifiedFrom=' + encodeURIComponent(date.getDateFromDateInput(modifiedFrom));
             }
             if (modifiedTo) {
-                queryString += '&modifiedTo=' + date.getDateFromDateInput(modifiedTo);
+                queryString += '&modifiedTo=' + encodeURIComponent(date.getDateFromDateInput(modifiedTo));
             }
             if (standardPart) {
-                queryString += '&standardPart=' + standardPart;
+                queryString += '&standardPart=' + encodeURIComponent(standardPart);
             }
             if (content) {
-                queryString += '&content=' + content;
+                queryString += '&content=' + encodeURIComponent(content);
             }
 
             if (this.attributes.length) {
                 queryString += '&attributes=';
                 this.attributes.each(function (attribute) {
-                    var type = attribute.get('type') || attribute.get('attributeType');
-                    var name = attribute.get('name');
-                    var value = attribute.get('value')|| '';
-                    value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
-                    value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += type + ':' + name + ':' + value + ';';
+                var type = attribute.get('type') || attribute.get('attributeType');
+                var name = attribute.get('name');
+		        // we escape ';' and ':' because they are used as attribute delimiter and attribute splitter respectively
+		        var nameQuoted = name.replace(/~/g, "~~").replace(/;/g, "~s").replace(/!/g, "!!").replace(/:/g, "!c");
+                var value = attribute.get('value')|| '';
+                value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
+                value = type === 'LOV' ? attribute.get('items')[value].name : value;
+                var valueQuoted = value.replace(/~/g, "~~").replace(/;/g, "~s").replace(/!/g, "!!").replace(/:/g, "!c") || '';
+                queryString += encodeURIComponent(type + ':' + nameQuoted + ':' + valueQuoted + ';');
                 });
-                // remove last '+'
-                queryString = queryString.substr(0, queryString.length - 1);
+                // remove last 'encoded +'
+                queryString = queryString.substr(0, queryString.length - 3);
             }
             //replace first occurrence of & to ?
             queryString = queryString.replace('&','?');
