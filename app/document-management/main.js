@@ -57,7 +57,8 @@ require.config({
         async: '../../bower_components/async/lib/async',
         datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
         selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
-        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        urlUtils: '../../js/utils/url-utils'
     },
 
     deps: [

@@ -29,7 +29,8 @@ define([
     'views/advanced_search',
     'views/part/part_grouped_by_list',
     'text!common-objects/templates/buttons/import_button.html',
-], function (Backbone, Mustache, Async, template, PartListView, PartCreationView, PartCreationEffectivityView, PartNewVersionView, PromptView, ACLEditView, QueryBuilder, deleteButton, newEffectivityButton, checkoutButtonGroup, newVersionButton, releaseButton, aclButton, newProductButton, tagsButton, obsoleteButton, searchForm, statusFilter, AlertView, TagsManagementView, PartImporterView, ProductCreationView, AdvancedSearchView, PartGroupedByView, importButton) {
+    'urlUtils'
+], function (Backbone, Mustache, Async, template, PartListView, PartCreationView, PartCreationEffectivityView, PartNewVersionView, PromptView, ACLEditView, QueryBuilder, deleteButton, newEffectivityButton, checkoutButtonGroup, newVersionButton, releaseButton, aclButton, newProductButton, tagsButton, obsoleteButton, searchForm, statusFilter, AlertView, TagsManagementView, PartImporterView, ProductCreationView, AdvancedSearchView, PartGroupedByView, importButton, UrlUtils) {
     'use strict';
     var PartContentView = Backbone.View.extend({
         events: {
@@ -483,7 +484,10 @@ define([
 
         onQuickSearch: function (e) {
             if (e.target.children[1].value) {
-                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/?q=' + encodeURIComponent(e.target.children[1].value), {trigger: true});
+                var queryString = {
+                    "q":e.target.children[1].value
+                }
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/?' + UrlUtils.base64urlEncode(JSON.stringify(queryString)), {trigger: true});
             } else {
                 App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts', {trigger: true});
             }
