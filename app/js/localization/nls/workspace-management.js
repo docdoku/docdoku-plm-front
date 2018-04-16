@@ -79,7 +79,9 @@ define({
         SCOPE: 'Scope',
         RESPONSE_TYPE: 'Response type',
         AUTHORIZATION_ENDPOINT: 'Authorization endpoint',
-        SIGNING_KEYS: 'Signing keys'
+        SIGNING_KEYS: 'Signing keys',
+        SET_NEW_ADMIN: 'Set new admin',
+        SET_NEW_WORKSPACE_ADMIN_SUBTITLE: 'Set new admin for your workspace'
     },
     'fr': true,
     'es': true,

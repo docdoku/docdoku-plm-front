@@ -175,6 +175,15 @@ define(['backbone'], function (Backbone) {
         ]);
     };
 
+    Workspace.setAdmin = function(workspaceId, login) {
+        return $.ajax({
+            type: 'PUT',
+            url: App.config.apiEndPoint + '/workspaces/' + workspaceId + '/admin',
+            data: JSON.stringify(login),
+            contentType: 'application/json; charset=utf-8'
+        });
+    };
+
     Workspace.getUsersInGroups = function (args) {
         var groups = args.groups;
         var next = args.next;
