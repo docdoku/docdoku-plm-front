@@ -19,6 +19,7 @@ function (Backbone, singletonDecorator) {
             'workspace/:workspaceId/edit':   'workspaceEdit',
             'workspace/:workspaceId/dashboard':   'workspaceDashboard',
             'workspace/:workspaceId/customizations':   'workspaceCustomizations',
+            'workspace/:workspaceId/admin/new': 'workspaceAdminNew',
             'workspace/:workspaceId/*path':   'workspaceUsers'
         },
 
@@ -95,6 +96,14 @@ function (Backbone, singletonDecorator) {
                 App.config.workspaceId = workspaceId;
                 this.refresh();
                 App.appView.workspaceDashboard();
+            }
+        },
+
+        workspaceAdminNew:function(workspaceId){
+            if(this.checkWorkspaceAdmin(workspaceId)){
+                App.config.workspaceId = workspaceId;
+                this.refresh();
+                App.appView.workspaceAdminNew();
             }
         },
 

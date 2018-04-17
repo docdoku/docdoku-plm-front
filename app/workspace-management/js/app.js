@@ -9,13 +9,14 @@ define([
     'views/workspace-customizations',
     'views/workspace-notifications',
     'views/workspace-dashboard',
+    'views/workspace-admin-new',
     'views/workspace-management-home',
     'views/admin-dashboard',
     'views/admin-options',
     'views/admin-accounts',
     'views/admin-home',
     'views/admin-oauth'
-], function (Backbone, Mustache, template, WorkspaceEditView, WorkspaceCreationView, WorkspaceUsersView, WorkspaceCustomizationsView, WorkspaceNotificationsView, WorkspaceDashboardView, WorkspaceManagementHomeView, AdminDashboardView, AdminOptionsView, AdminAccountsView, AdminHomeView, AdminOAuthView) {
+], function (Backbone, Mustache, template, WorkspaceEditView, WorkspaceCreationView, WorkspaceUsersView, WorkspaceCustomizationsView, WorkspaceNotificationsView, WorkspaceDashboardView, WorkspaceAdminNewView, WorkspaceManagementHomeView, AdminDashboardView, AdminOptionsView, AdminAccountsView, AdminHomeView, AdminOAuthView) {
     'use strict';
     var AppView = Backbone.View.extend({
 
@@ -92,6 +93,11 @@ define([
         },
         workspaceDashboard: function () {
             var view = new WorkspaceDashboardView();
+            view.render();
+            this.$('#workspace-management-content').html(view.$el);
+        },
+        workspaceAdminNew: function () {
+            var view = new WorkspaceAdminNewView();
             view.render();
             this.$('#workspace-management-content').html(view.$el);
         },

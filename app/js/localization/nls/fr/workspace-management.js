@@ -85,5 +85,7 @@ define({
     SCOPE: 'Scope',
     RESPONSE_TYPE: 'Response type',
     AUTHORIZATION_ENDPOINT: 'Authorization endpoint',
-    SIGNING_KEYS: 'Signing keys'
+    SIGNING_KEYS: 'Signing keys',
+    SET_NEW_ADMIN: 'Définir nouvel administrateur',
+    SET_NEW_WORKSPACE_ADMIN_SUBTITLE: 'Définir un nouvel administrateur pour votre espace de travail'
 });
