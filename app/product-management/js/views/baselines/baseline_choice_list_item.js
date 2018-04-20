@@ -87,7 +87,7 @@ define([
                 this.choice = radios.first().val();
             }
             if (this.options.removable) {
-                this.model.retained = this.choice != null;
+                this.model.retained = this.choice !== null;
                 this.$el.toggleClass('not-retained', !this.model.retained);
             }
         },
