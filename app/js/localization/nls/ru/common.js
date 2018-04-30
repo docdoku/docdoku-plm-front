@@ -452,7 +452,6 @@ define({
     PRODUCT_INSTANCE_DATA: 'Дата доставки изделия',
     PRODUCT_INSTANCE_DATA_ATTRIBUTES: 'Данные атрибутов для доставки изделия',
     PRODUCT_INSTANCE_DATA_ATTRIBUTES_TEMPLATES: 'Шаблон для данных атрибутов доставки изделия',
-    PRODUCT_NAME: 'Название',
     PRODUCT_MANAGEMENT: 'Управление изделиями',
     PRODUCTS: 'Изделия',
     PRODUCT_STRUCTURE: 'Структура изделия',

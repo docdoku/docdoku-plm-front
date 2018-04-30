@@ -294,7 +294,7 @@ define(function () {
 
     contextFields.push({
         value: 'ctx.productId',
-        name: App.config.i18n.PRODUCT_NAME,
+        name: App.config.i18n.PRODUCT_ID,
         group: 'ctx'
     });
 

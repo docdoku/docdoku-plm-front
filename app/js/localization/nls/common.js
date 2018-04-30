@@ -463,7 +463,6 @@ define({
         PRODUCT_INSTANCE_DATA: 'Deliverable data',
         PRODUCT_INSTANCE_DATA_ATTRIBUTES: 'Deliverable data attributes',
         PRODUCT_INSTANCE_DATA_ATTRIBUTES_TEMPLATES: 'Templates of deliverable data attributes',
-        PRODUCT_NAME: 'Product name',
         PRODUCT_MANAGEMENT: 'Product management',
         PRODUCTS: 'Products',
         PRODUCT_STRUCTURE: 'Product structure',
