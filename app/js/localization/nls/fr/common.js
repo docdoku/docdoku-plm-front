@@ -459,7 +459,6 @@ define({
     PRODUCT_INSTANCE_DATA: 'Données de l\'exemplaire',
     PRODUCT_INSTANCE_DATA_ATTRIBUTES: 'Attributs des données dans l\'exemplaire',
     PRODUCT_INSTANCE_DATA_ATTRIBUTES_TEMPLATES: 'Modèles d\'attributs associés aux données dans l\'exemplaire',
-    PRODUCT_NAME: 'Nom de produit',
     PRODUCT_MANAGEMENT: 'Gestion des produits',
     PRODUCTS: 'Produits',
     PRODUCT_STRUCTURE: 'Structure du produit',
