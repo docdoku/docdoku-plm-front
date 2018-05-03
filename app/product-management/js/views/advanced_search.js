@@ -7,8 +7,9 @@ define([
     'common-objects/views/attributes/attribute_list',
     'collections/part_templates',
     'common-objects/utils/date',
-    'common-objects/collections/lovs'
-], function (Backbone, Mustache, template, Users, PartAttributeListView, Templates, date, LOVCollection) {
+    'common-objects/collections/lovs',
+    'urlUtils'
+], function (Backbone, Mustache, template, Users, PartAttributeListView, Templates, date, LOVCollection, UrlUtils) {
     'use strict';
     var AdvancedSearchView = Backbone.View.extend({
 
@@ -107,7 +108,7 @@ define([
         onSubmitForm: function () {
             var queryString = this.constructQueryString();
             if (queryString) {
-                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/' + encodeURIComponent(queryString), {trigger: true});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/parts-search/?' + UrlUtils.base64urlEncode(queryString), {trigger: true});
                 this.closeModal();
             }
             return false;
@@ -156,64 +157,66 @@ define([
             var standardPart = this.$standardPart.filter(':checked').val() === 'all' ? null : this.$standardPart.filter(':checked').val();
             var content = this.$content.val();
 
-            var queryString = '';
+            var queryString = {};
 
             if (number) {
-                queryString += '&number=' + number;
+                queryString.number = number;
             }
             if (name) {
-                queryString += '&name=' + name;
+                queryString.name = name;
             }
             if (type) {
-                queryString += '&type=' + type;
+                queryString.type = type;
             }
             if (version) {
-                queryString += '&version=' + version;
+                queryString.version = version;
             }
             if (author) {
-                queryString += '&author=' + author;
+                queryString.author = author;
             }
             if (tags) {
-                queryString += '&tags=' + tags;
+                queryString.tags = tags;
             }
             if (createdFrom) {
-                queryString += '&createdFrom=' + date.getDateFromDateInput(createdFrom);
+                queryString.createdFrom = date.getDateFromDateInput(createdFrom);
             }
             if (createdTo) {
-                queryString += '&createdTo=' + date.getDateFromDateInput(createdTo);
+                queryString.createdFrom = date.getDateFromDateInput(createdTo);
             }
             if (modifiedFrom) {
-                queryString += '&modifiedFrom=' + date.getDateFromDateInput(modifiedFrom);
+                queryString.createdFrom = date.getDateFromDateInput(modifiedFrom);
             }
             if (modifiedTo) {
-                queryString += '&modifiedTo=' + date.getDateFromDateInput(modifiedTo);
+                queryString.createdFrom = date.getDateFromDateInput(modifiedTo);
             }
             if (standardPart) {
-                queryString += '&standardPart=' + standardPart;
+                queryString.standardPart = standardPart;
             }
             if (content) {
-                queryString += '&content=' + content;
+                queryString.content = content;
             }
 
             if (this.attributes.length) {
-                queryString += '&attributes=';
+                var attributes = [];
+              //  queryString += '&attributes=';
+                queryString.attributes = attributes;
                 this.attributes.each(function (attribute) {
-                    var type = attribute.get('type') || attribute.get('attributeType');
-                    var name = attribute.get('name');
-                    var value = attribute.get('value')|| '';
-                    value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
-                    value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += type + ':' + name + ':' + value + ';';
+                var type = attribute.get('type') || attribute.get('attributeType');
+                var name = attribute.get('name');
+                var value = attribute.get('value')|| '';
+                value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
+                value = type === 'LOV' ? attribute.get('items')[value].name : value;
+                var attr ={
+                        "type": type,
+                        "name": name,
+                        "value": value
+                    }
+                queryString.attributes.push(attr);
                 });
-                // remove last '+'
-                queryString = queryString.substr(0, queryString.length - 1);
             }
-            //replace first occurrence of & to ?
-            queryString = queryString.replace('&','?');
-
-            queryString += '&from=0&size=10000';
-
-            return queryString;
+            queryString.from = "0";
+            queryString.size = "10000";
+            return JSON.stringify(queryString);
 
         }
 

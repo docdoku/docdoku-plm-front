@@ -7,8 +7,9 @@ define([
     'common-objects/views/attributes/attribute_list',
     'collections/template',
     'common-objects/utils/date',
-    'common-objects/collections/lovs'
-], function (Backbone,Mustache, template, Users, DocumentAttributeListView, Templates, date,LOVCollection) {
+    'common-objects/collections/lovs',
+    'urlUtils'
+], function (Backbone,Mustache, template, Users, DocumentAttributeListView, Templates, date,LOVCollection, UrlUtils) {
     'use strict';
     var AdvancedSearchView = Backbone.View.extend({
 
@@ -105,7 +106,7 @@ define([
         onSubmitForm: function () {
             var queryString = this.constructQueryString();
             if (queryString) {
-                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/search/' + encodeURIComponent(queryString), {trigger: true});
+	            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/search/' + UrlUtils.base64urlEncode(queryString), {trigger: true});
                 this.closeModal();
             }
             return false;
@@ -138,6 +139,14 @@ define([
             }
         },
 
+        quoteSeparator: function (str, separator, quoteChar, otherChar) {
+
+        	var str = str.replace(/quoteChar/g, quoteChar+quoteChar);
+        	str = str.replace(/separator/g, quoteChar+otherChar);
+        	return str;
+
+        }, 
+
         constructQueryString: function () {
 
             var id = this.$id.val();
@@ -152,59 +161,65 @@ define([
             var modifiedFrom = this.$modifiedFrom.val();
             var modifiedTo = this.$modifiedTo.val();
 
-            var queryString = '';
+            var queryString = {};
 
             if (id) {
-                queryString += '&id=' + id;
+                queryString.id = id;
             }
             if (title) {
-                queryString += '&title=' + title;
+                queryString.title = title;
             }
             if (type) {
-                queryString += '&type=' + type;
+                queryString.type = type;
             }
             if (version) {
-                queryString += '&version=' + version;
+                queryString.vesrion = version;
             }
             if (author) {
-                queryString += '&author=' + author;
+                queryString.author = author;
             }
             if (tags) {
-                queryString += '&tags=' + tags;
+                queryString.tags = tags;
             }
             if (content) {
-                queryString += '&content=' + content;
+                queryString.content = content;
             }
             if (createdFrom) {
-                queryString += '&createdFrom=' + date.getDateFromDateInput(createdFrom);
+               queryString.createdFrom = createdFrom;
             }
             if (createdTo) {
-                queryString += '&createdTo=' + date.getDateFromDateInput(createdTo);
+                queryString.createdTo = createdTo;
+
             }
             if (modifiedFrom) {
-                queryString += '&modifiedFrom=' + date.getDateFromDateInput(modifiedFrom);
+                queryString.modifiedFrom = modifiedFrom;
             }
             if (modifiedTo) {
-                queryString += '&modifiedTo=' + date.getDateFromDateInput(modifiedTo);
+                queryString.modifiedTo = date.getDateFromDateInput(modifiedTo);
             }
 
             if (this.attributes.length) {
-                queryString += '&attributes=';
+            	var attributes = [];
+                queryString.attributes = attributes;
                 this.attributes.each(function (attribute) {
                     var type = attribute.get('type') || attribute.get('attributeType');
                     var name = attribute.get('name');
-                    var value = attribute.get('value') || '';
+                    var value = attribute.get('value') || '';                    
                     value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
                     value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += type + ':' + name + ':' + value + ';';
+                    var attr ={
+                    	"type": type,
+                    	"name": name,
+                    	"value": value
+                    }
+                    queryString.attributes.push(attr);
                 });
-                // remove last '+'
-                queryString = queryString.substr(0, queryString.length - 1);
             }
 
-            queryString += '&from=0&size=10000';
+            queryString.from = "0";
+            queryString.size = "10000";
 
-            return queryString;
+            return JSON.stringify(queryString);
 
         }
 

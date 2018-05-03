@@ -10,8 +10,9 @@ define([
     'common-objects/views/tags/tags_management',
     'common-objects/views/alert',
     'views/baselines/baseline_creation_view',
-    'async'
-], function (Backbone, ContentView, DocumentListView, DocumentNewVersionView, AdvancedSearchView, PromptView, ACLEditView, TagsManagementView, AlertView, BaselineCreationView, async) {
+    'async',
+    'urlUtils'
+], function (Backbone, ContentView, DocumentListView, DocumentNewVersionView, AdvancedSearchView, PromptView, ACLEditView, TagsManagementView, AlertView, BaselineCreationView, async, UrlUtils) {
     'use strict';
     var ContentDocumentListView = ContentView.extend({
 
@@ -509,7 +510,10 @@ define([
         onQuickSearch: function (e) {
 
             if (e.target.children[0].value) {
-                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/search/q=' + encodeURIComponent(e.target.children[0].value), {trigger: true});
+            	var queryString = {
+            		"q":e.target.children[0].value
+            	}
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/search/' + UrlUtils.base64urlEncode(JSON.stringify(queryString)), {trigger: true});
             }
 
             return false;
