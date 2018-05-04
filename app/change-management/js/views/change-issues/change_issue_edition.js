@@ -1,4 +1,4 @@
-/*global _,define,App,window*/
+/*global _,define,App*/
 define([
         'backbone',
         'mustache',
@@ -10,15 +10,16 @@ define([
         'common-objects/views/linked/linked_documents',
         'common-objects/collections/linked/linked_document_collection',
         'common-objects/views/linked/linked_parts',
-        'common-objects/collections/linked/linked_part_collection'
+        'common-objects/collections/linked/linked_part_collection',
+        'common-objects/views/alert'
     ],
-    function (Backbone, Mustache, template, UserList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection) {
+    function (Backbone, Mustache, template, UserList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, AlertView) {
         'use strict';
         var ChangeIssueEditionView = Backbone.View.extend({
             events: {
                 'submit #issue_edition_form': 'onSubmitForm',
                 'hidden #issue_edition_modal': 'onHidden',
-                'close-modal-request':'closeModal'
+                'close-modal-request': 'closeModal'
             },
 
             initialize: function () {
@@ -57,14 +58,14 @@ define([
             },
             fillPriorityList: function () {
                 var self = this;
-                _.each(this.model.priorities, function(priority){
+                _.each(this.model.priorities, function (priority) {
                     self.$inputIssuePriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
                 });
                 this.$inputIssuePriority.val(this.model.getPriority());
             },
             fillCategoryList: function () {
                 var self = this;
-                _.each(this.model.categories, function(category){
+                _.each(this.model.categories, function (category) {
                     self.$inputIssueCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
                 });
                 this.$inputIssueCategory.val(this.model.getCategory());
@@ -104,7 +105,7 @@ define([
                 that._affectedDocumentsCollection = new LinkedDocumentCollection(affectedDocuments);
                 var linkedDocumentsView = new LinkedDocumentsView({
                     editMode: that.editMode,
-                    commentEditable:false,
+                    commentEditable: false,
                     collection: that._affectedDocumentsCollection
                 }).render();
 
@@ -135,6 +136,7 @@ define([
                 this.$inputIssueCategory = this.$('#inputIssueCategory');
                 this.$inputIssueInitiator = this.$('#inputIssueInitiator');
                 this.$authorLink = this.$('.author-popover');
+                this.$notifications = this.$('.notifications');
             },
 
             bindUserPopover: function () {
@@ -163,7 +165,7 @@ define([
                     wait: true
                 });
 
-                this.deleteClickedTags();                                                                                   // Delete tags if needed
+                this.deleteClickedTags();
                 this.updateAffectedDocuments();
                 this.updateAffectedParts();
 
@@ -173,7 +175,10 @@ define([
             },
 
             onError: function (model, error) {
-                window.alert(App.config.i18n.EDITION_ERROR + ' : ' + error.responseText);
+                this.$notifications.append(new AlertView({
+                    type: 'error',
+                    message: error.responseText
+                }).render().$el);
             },
 
             openModal: function () {

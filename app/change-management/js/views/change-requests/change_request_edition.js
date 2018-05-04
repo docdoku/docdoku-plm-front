@@ -1,4 +1,4 @@
-/*global _,define,App,window*/
+/*global _,define,App*/
 define([
         'backbone',
         'mustache',
@@ -14,15 +14,16 @@ define([
         'common-objects/views/linked/linked_parts',
         'common-objects/collections/linked/linked_part_collection',
         'common-objects/views/linked/linked_issues',
-        'common-objects/collections/linked/linked_change_item_collection'
+        'common-objects/collections/linked/linked_change_item_collection',
+        'common-objects/views/alert'
     ],
-    function (Backbone, Mustache, template, ChangeRequestModel, UserList, MilestoneList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedIssuesView, LinkedChangeItemCollection) {
-	    'use strict';
+    function (Backbone, Mustache, template, ChangeRequestModel, UserList, MilestoneList, date, Tag, TagView, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedIssuesView, LinkedChangeItemCollection, AlertView) {
+        'use strict';
         var ChangeRequestEditionView = Backbone.View.extend({
             events: {
                 'submit #request_edition_form': 'onSubmitForm',
                 'hidden #request_edition_modal': 'onHidden',
-                'close-modal-request':'closeModal'
+                'close-modal-request': 'closeModal'
             },
 
 
@@ -30,7 +31,7 @@ define([
                 this.tagsToRemove = [];
                 this._subViews = [];
                 _.bindAll(this);
-                this.$el.on('remove', this.removeSubviews);                                                                  // Remove cascade
+                this.$el.on('remove', this.removeSubviews);
             },
 
             removeSubviews: function () {
@@ -71,17 +72,17 @@ define([
                 this.$inputRequestAssignee.val(this.model.getAssignee());
             },
             fillPriorityList: function () {
-	            var self = this;
-	            _.each(this.model.priorities, function(priority){
-		            self.$inputRequestPriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
-	            });
+                var self = this;
+                _.each(this.model.priorities, function (priority) {
+                    self.$inputRequestPriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
+                });
                 this.$inputRequestPriority.val(this.model.getPriority());
             },
             fillCategoryList: function () {
-	            var self = this;
-	            _.each(this.model.categories, function(category){
-		            self.$inputRequestCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
-	            });
+                var self = this;
+                _.each(this.model.categories, function (category) {
+                    self.$inputRequestCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
+                });
                 this.$inputRequestCategory.val(this.model.getCategory());
             },
 
@@ -119,7 +120,7 @@ define([
                 that._affectedDocumentsCollection = new LinkedDocumentCollection(affectedDocuments);
                 that._linkedDocumentsView = new LinkedDocumentsView({
                     editMode: that.editMode,
-                    commentEditable:false,
+                    commentEditable: false,
                     collection: that._affectedDocumentsCollection
                 }).render();
 
@@ -163,6 +164,7 @@ define([
                 this.$inputRequestAssignee = this.$('#inputRequestAssignee');
                 this.$inputRequestCategory = this.$('#inputRequestCategory');
                 this.$authorLink = this.$('.author-popover');
+                this.$notifications = this.$('.notifications');
             },
 
             bindUserPopover: function () {
@@ -186,11 +188,11 @@ define([
 
                 this.model.save(data, {
                     success: this.closeModal,
-                    error: this.error,
+                    error: this.onError,
                     wait: true
                 });
 
-                this.deleteClickedTags();                                                                                   // Delete tags if needed
+                this.deleteClickedTags();
                 this.updateAffectedDocuments();
                 this.updateAffectedParts();
                 this.updateAffectedIssues();
@@ -201,7 +203,10 @@ define([
             },
 
             onError: function (model, error) {
-                window.alert(App.config.i18n.EDITION_ERROR + ' : ' + error.responseText);
+                this.$notifications.append(new AlertView({
+                    type: 'error',
+                    message: error.responseText
+                }).render().$el);
             },
 
             openModal: function () {

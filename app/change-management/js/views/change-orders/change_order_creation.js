@@ -1,4 +1,4 @@
-/*global _,define,App,window*/
+/*global _,define,App*/
 define([
     'backbone',
     'mustache',
@@ -10,23 +10,24 @@ define([
     'common-objects/collections/linked/linked_document_collection',
     'common-objects/views/linked/linked_parts',
     'common-objects/collections/linked/linked_part_collection',
-	'common-objects/views/linked/linked_requests',
-	'common-objects/collections/linked/linked_change_item_collection'
-], function (Backbone, Mustache, template, ChangeOrderModel, UserList, MilestoneList, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection,LinkedRequestsView,LinkedChangeItemCollection) {
+    'common-objects/views/linked/linked_requests',
+    'common-objects/collections/linked/linked_change_item_collection',
+    'common-objects/views/alert'
+], function (Backbone, Mustache, template, ChangeOrderModel, UserList, MilestoneList, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedRequestsView, LinkedChangeItemCollection, AlertView) {
     'use strict';
     var ChangeOrderCreationView = Backbone.View.extend({
         events: {
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #order_creation_form': 'onSubmitForm',
             'hidden #order_creation_modal': 'onHidden',
-            'close-modal-request':'closeModal'
+            'close-modal-request': 'closeModal'
         },
 
         initialize: function () {
             this._subViews = [];
             this.model = new ChangeOrderModel();
             _.bindAll(this);
-            this.$el.on('remove', this.removeSubviews);                                                                  // Remove cascade
+            this.$el.on('remove', this.removeSubviews);
         },
 
         removeSubviews: function () {
@@ -62,16 +63,16 @@ define([
             }
         },
         fillPriorityList: function () {
-	        var self = this;
-	        _.each(this.model.priorities, function(priority){
-		        self.$inputOrderPriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
-	        });
+            var self = this;
+            _.each(this.model.priorities, function (priority) {
+                self.$inputOrderPriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
+            });
         },
         fillCategoryList: function () {
-	        var self = this;
-	        _.each(this.model.categories, function(category){
-		        self.$inputOrderCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
-	        });
+            var self = this;
+            _.each(this.model.categories, function (category) {
+                self.$inputOrderCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
+            });
         },
 
         linkManagement: function () {
@@ -81,7 +82,7 @@ define([
             that._affectedDocumentsCollection = new LinkedDocumentCollection();
             that._linkedDocumentsView = new LinkedDocumentsView({
                 editMode: true,
-                commentEditable:false,
+                commentEditable: false,
                 collection: that._affectedDocumentsCollection
             }).render();
 
@@ -122,14 +123,15 @@ define([
             this.$inputOrderPriority = this.$('#inputOrderPriority');
             this.$inputOrderAssignee = this.$('#inputOrderAssignee');
             this.$inputOrderCategory = this.$('#inputOrderCategory');
+            this.$notifications = this.$('.notifications');
         },
 
-        interceptSubmit : function(){
-            this.isValid = ! this.$('.tabs').invalidFormTabSwitcher();
+        interceptSubmit: function () {
+            this.isValid = !this.$('.tabs').invalidFormTabSwitcher();
         },
 
         onSubmitForm: function (e) {
-            if(this.isValid){
+            if (this.isValid) {
                 var data = {
                     name: this.$inputOrderName.val(),
                     description: this.$inputOrderDescription.val(),
@@ -142,7 +144,7 @@ define([
 
                 this.model.save(data, {
                     success: this.onOrderCreated,
-                    error: this.error,
+                    error: this.onError,
                     wait: true
                 });
             }
@@ -160,7 +162,10 @@ define([
         },
 
         onError: function (model, error) {
-            window.alert(App.config.i18n.CREATION_ERROR + ' : ' + error.responseText);
+            this.$notifications.append(new AlertView({
+                type: 'error',
+                message: error.responseText
+            }).render().$el);
         },
 
         openModal: function () {
