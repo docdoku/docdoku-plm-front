@@ -23,6 +23,7 @@ define([
 
             this.$el.html(Mustache.render(template, {
                 organization:App.config.organization,
+                isOwner:(App.config.login === App.config.organization.owner),
                 organizationName:App.config.organization.name,
                 i18n: App.config.i18n
             }));

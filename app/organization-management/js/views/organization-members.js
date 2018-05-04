@@ -34,6 +34,7 @@ define([
             }).then(function() {
                 _this.$el.html(Mustache.render(template, {
                     i18n: App.config.i18n,
+                    isOwner:(App.config.login === App.config.organization.owner),
                     members:_this.members
                 }));
                 _this.bindDOMElements();
