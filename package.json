@@ -43,9 +43,10 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "preclean": "npm install && node_modules/.bin/bower install",
-    "prebuild": "npm install && node_modules/.bin/bower install",
-    "predev": "npm install && node_modules/.bin/bower install",
+    "preclean": "npm install",
+    "prebuild": "npm install",
+    "predev": "npm install",
+    "postinstall": " bower install",
     "clean": "grunt clean",
     "build": "grunt build",
     "dist": "grunt serve:dist",
