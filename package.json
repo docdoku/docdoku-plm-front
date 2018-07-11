@@ -47,7 +47,7 @@
     "preclean": "npm install",
     "prebuild": "npm install",
     "predev": "npm install",
-    "postinstall": " bower install",
+    "postinstall": "bower install",
     "clean": "grunt clean",
     "build": "grunt build",
     "dist": "grunt serve:dist",
