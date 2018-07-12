@@ -7,8 +7,9 @@ define([
     'common-objects/views/attributes/attribute_list',
     'collections/template',
     'common-objects/utils/date',
+    'common-objects/utils/query',
     'common-objects/collections/lovs'
-], function (Backbone,Mustache, template, Users, DocumentAttributeListView, Templates, date,LOVCollection) {
+], function (Backbone,Mustache, template, Users, DocumentAttributeListView, Templates, date, query, LOVCollection) {
     'use strict';
     var AdvancedSearchView = Backbone.View.extend({
 
@@ -140,72 +141,20 @@ define([
 
         constructQueryString: function () {
 
-            var id = this.$id.val();
-            var title = this.$title.val();
-            var type = this.$type.val();
-            var version = this.$version.val();
-            var author = this.$author.val();
-            var tags = this.$tags.val().replace(/ /g, '');
-            var content = this.$content.val();
-            var createdFrom = this.$createdFrom.val();
-            var createdTo = this.$createdTo.val();
-            var modifiedFrom = this.$modifiedFrom.val();
-            var modifiedTo = this.$modifiedTo.val();
-
-            var queryString = '';
-
-            if (id) {
-                queryString += '&id=' + id;
-            }
-            if (title) {
-                queryString += '&title=' + title;
-            }
-            if (type) {
-                queryString += '&type=' + type;
-            }
-            if (version) {
-                queryString += '&version=' + version;
-            }
-            if (author) {
-                queryString += '&author=' + author;
-            }
-            if (tags) {
-                queryString += '&tags=' + tags;
-            }
-            if (content) {
-                queryString += '&content=' + content;
-            }
-            if (createdFrom) {
-                queryString += '&createdFrom=' + date.getDateFromDateInput(createdFrom);
-            }
-            if (createdTo) {
-                queryString += '&createdTo=' + date.getDateFromDateInput(createdTo);
-            }
-            if (modifiedFrom) {
-                queryString += '&modifiedFrom=' + date.getDateFromDateInput(modifiedFrom);
-            }
-            if (modifiedTo) {
-                queryString += '&modifiedTo=' + date.getDateFromDateInput(modifiedTo);
-            }
-
-            if (this.attributes.length) {
-                queryString += '&attributes=';
-                this.attributes.each(function (attribute) {
-                    var type = attribute.get('type') || attribute.get('attributeType');
-                    var name = attribute.get('name');
-                    var value = attribute.get('value') || '';
-                    value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
-                    value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += type + ':' + name + ':' + value + ';';
-                });
-                // remove last '+'
-                queryString = queryString.substr(0, queryString.length - 1);
-            }
-
-            queryString += '&from=0&size=10000';
-
-            return queryString;
-
+            var data = {
+                id: this.$id.val(),
+                title: this.$title.val(),
+                type: this.$type.val(),
+                version: this.$version.val(),
+                author: this.$author.val(),
+                tags: this.$tags.val().replace(/ /g, ''),
+                content: this.$content.val(),
+                createdFrom: this.$createdFrom.val() ? date.getDateFromDateInput(this.$createdFrom.val()) : null,
+                createdTo: this.$createdTo.val() ? date.getDateFromDateInput(this.$createdTo.val()) : null,
+                modifiedFrom: this.$modifiedFrom.val() ? date.getDateFromDateInput(this.$modifiedFrom.val()) : null,
+                modifiedTo: this.$modifiedTo.val() ? date.getDateFromDateInput(this.$modifiedTo.val()) : null,
+            };
+            return query.constructSearchQuery(data, this.attributes);
         }
 
     });
