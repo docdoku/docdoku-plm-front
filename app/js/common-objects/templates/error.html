@@ -14,18 +14,18 @@
 {{#showDisconnectButton}}
 <button class="btn btn-primary disconnect">{{i18n.LOGOUT}}</button>{{/showDisconnectButton}}
 
-{{#workspaces.length}}
+{{#workspaces.allWorkspaces.length}}
 <span class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="workspace-dropdown-menu" data-toggle="dropdown">
         {{i18n.WORKSPACES}}
         <span class="caret"></span>
     </button>
     <ul style="margin-top:10px; text-align:left;" class="dropdown-menu" role="menu" aria-labelledby="workspace-dropdown-menu">
-        {{#workspaces}}
+        {{#workspaces.allWorkspaces}}
         <li>
             <a class="navigate" href="#{{id}}">{{id}}</a>
         </li>
-        {{/workspaces}}
+        {{/workspaces.allWorkspaces}}
     </ul>
 </span>
-{{/workspaces.length}}
+{{/workspaces.allWorkspaces.length}}

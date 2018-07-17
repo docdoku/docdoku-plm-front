@@ -36,7 +36,7 @@ define([
                     content: App.config.i18n.NOTHING_HERE,
                     showReloadButton: true,
                     showBackButton: true,
-                    workspaces: App.config.workspaces.allWorkspaces,
+                    workspaces: App.config.workspaces,
                     xhr: xhr
                 });
             }
