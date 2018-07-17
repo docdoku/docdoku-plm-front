@@ -19,7 +19,7 @@ define([], function () {
                     var value = attribute.get('value') || '';
                     value = type === 'BOOLEAN' ? (value ? 'true' : 'false') : value;
                     value = type === 'LOV' ? attribute.get('items')[value].name : value;
-                    queryString += type + ':' + name + ':' + that.sanitize(value) + ';';
+                    queryString += type + ':' + that.sanitize(name) + ':' + that.sanitize(value) + ';';
                 });
                 // remove last '+'
                 queryString = queryString.substr(0, queryString.length - 1);
