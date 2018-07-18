@@ -5,6 +5,9 @@ var baseDir = __dirname + '/';
 
 var config = {
 
+    // Custom casperjs
+    //casperjs: '/usr/local/bin/casperjs',
+
     // URL
     protocol: 'http',
     domain: 'localhost',

@@ -15,13 +15,14 @@ var config = require('./config');
 var xml2js = require('xml2js');
 var del = require('del');
 var argv = require('yargs').argv;
-var casperJsBinary = __dirname + '/../node_modules/.bin/casperjs';
 
 del.sync(['screenshot/**']);
 
 var conf = _.extend(config, argv);
 var uuidV4 = require('uuid/v4');
 var workspace = uuidV4();
+
+var casperJsBinary = conf.casperjs || __dirname + '/../node_modules/.bin/casperjs';
 
 var casperCommand = casperJsBinary + ' test' +
     ' --ssl-protocol=any --ignore-ssl-errors=true ' +
