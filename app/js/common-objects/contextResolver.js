@@ -127,6 +127,9 @@ define([
                 App.config.contextPath = addTrailingSlash(properties.contextPath);
                 App.config.preferLoginWith = properties.preferLoginWith;
 
+                if(typeof properties.debug !== 'undefined'){
+                    App.setDebug(properties.debug);
+                }
             }, onError);
         };
 
