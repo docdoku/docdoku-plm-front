@@ -248,31 +248,18 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
         },
 
         onNewOutgoingCall: function (sessionArgs) {
-
-            // store rtc session vars
-            this.setRemoteUser(sessionArgs.remoteUser);
-            this.setContext(sessionArgs.context);
-            this.setRoomKey(App.config.login + '-' + this.remoteUser);
-            this.setTitle(this.remoteUser + ' | ' + this.context);
-
-            this.$el.show();
-            this.$el.removeClass('webrtc_minimized').addClass('webrtc_shown');
-
             if (!App.mainChannel.isReady()) {
                 this.setStatus(App.config.i18n.ERROR + ' : ' + App.config.i18n.CHANNEL_NOT_READY_ERROR);
                 this.stop();
                 return;
             }
-
+            
             if (this.callState !== CALL_STATE.NO_CALL) {
                 // cannot initiate a new call in not a NO CALL state
                 return;
             }
-
-            // local user initiate the call
-            this.setState(CALL_STATE.OUTGOING);
-            this.setStatus(App.config.i18n.WAITING_USER_MEDIA);
-            this.initMedia();
+            sessionArgs.roomKey = App.config.login + '-' + sessionArgs.remoteUser; 
+            this.initCall(sessionArgs, CALL_STATE.OUTGOING);
         },
 
         onCallAcceptedByLocalUser: function (message) {
@@ -280,15 +267,8 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
             if (this.callState !== CALL_STATE.INCOMING) {
                 return;
             }
-
-            this.setState(CALL_STATE.NEGOTIATING);
-
-            // remote user initiate the call
             this.initiator = 1;
-
-            this.setRemoteUser(message.remoteUser);
-            this.setContext(message.context);
-            this.setRoomKey(message.roomKey);
+            this.initCall(message, CALL_STATE.NEGOTIATING);
 
             // tell the remote user we accept the call.
             // this will trigger a room.addUser
@@ -296,13 +276,22 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
                 type: ChannelMessagesType.WEBRTC_ACCEPT,
                 roomKey: message.roomKey,
                 remoteUser: this.remoteUser
-            });
+            });            
 
+        },
+
+        initCall: function(data, state) {
+            this.setRemoteUser(data.remoteUser);
+            this.setContext(data.context);
+            this.setRoomKey(data.roomKey);
             this.setTitle(this.remoteUser + ' | ' + this.context);
             this.setStatus(App.config.i18n.WAITING_USER_MEDIA);
-            this.$el.addClass('webrtc_shown').show();
+            this.setState(state);
+            this.$el.show();
+            this.$el.removeClass('webrtc_minimized').addClass('webrtc_shown');
+            this.localVideo.classList.add('webrtc_loading');
+            this.localVideo.style.opacity = 1;
             this.initMedia();
-
         },
 
         onCallTimeoutByLocalUser: function (message) {
@@ -378,7 +367,7 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
 
             this.localStream = stream;
             webRTCAdapter.attachMediaStream(this.localVideo, this.localStream);
-            this.localVideo.style.opacity = 1;
+            this.localVideo.classList.remove('webrtc_loading');
 
             // Caller creates PeerConnection.
             if (this.initiator) {
