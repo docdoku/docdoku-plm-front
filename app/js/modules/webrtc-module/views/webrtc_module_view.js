@@ -253,12 +253,12 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
                 this.stop();
                 return;
             }
-            
+
             if (this.callState !== CALL_STATE.NO_CALL) {
                 // cannot initiate a new call in not a NO CALL state
                 return;
             }
-            sessionArgs.roomKey = App.config.login + '-' + sessionArgs.remoteUser; 
+            sessionArgs.roomKey = App.config.login + '-' + sessionArgs.remoteUser;
             this.initCall(sessionArgs, CALL_STATE.OUTGOING);
         },
 
@@ -276,7 +276,7 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
                 type: ChannelMessagesType.WEBRTC_ACCEPT,
                 roomKey: message.roomKey,
                 remoteUser: this.remoteUser
-            });            
+            });
 
         },
 
@@ -284,7 +284,7 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
             this.setRemoteUser(data.remoteUser);
             this.setContext(data.context);
             this.setRoomKey(data.roomKey);
-            this.setTitle(this.remoteUser + ' | ' + this.context);
+            this.setTitle(this.remoteUser + (this.context ? ' | ' + this.context : ''));
             this.setStatus(App.config.i18n.WAITING_USER_MEDIA);
             this.setState(state);
             this.$el.show();

@@ -1,5 +1,5 @@
 <div class="chat_session_header">
-    <span class="chat_session_title"><i class="fa fa-comments"></i>  {{ chatSession.remoteUser }} | {{ chatSession.context }}</span>
+    <span class="chat_session_title"><i class="fa fa-comments"></i>  {{ chatSession.remoteUser }} {{#chatSession.context}}| {{ chatSession.context }} {{/chatSession.context}}</span>
     <i class="fa fa-times"></i>
     <i class="fa fa-video-camera"></i>
 </div>
