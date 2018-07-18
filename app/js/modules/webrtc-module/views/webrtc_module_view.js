@@ -189,13 +189,17 @@ function (Backbone, webRTCAdapter, template, ChannelMessagesType, CALL_STATE, RE
                 this.pc = null;
             }
 
-            if (this.localStream !== null && this.localStream.stop) {
-                this.localStream.stop();
+            if (this.localStream !== null) {
+                this.localStream.getTracks().forEach(function(track) {
+                    track.stop();
+                });
                 this.localStream = null;
             }
 
-            if (this.remoteStream !== null && this.remoteStream.stop) {
-                this.remoteStream.stop();
+            if (this.remoteStream !== null) {
+                this.remoteStream.getTracks().forEach(function(track) {
+                    track.stop();
+                });
                 this.remoteStream = null;
             }
 
