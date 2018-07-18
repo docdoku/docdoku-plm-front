@@ -76,11 +76,15 @@ casper.on('remote.alert', function (msg) {
 });
 
 casper.on('remote.message', function remoteMessage(message) {
-    this.log('[WebConsole] ' + message, 'info');
+    if(conf.showWebConsole){
+        this.log('[WebConsole] ' + message, 'info');
+    }
 });
 
 casper.on('page.error', function pageError(message) {
-    this.log('[WebConsole] ' + message, 'error');
+    if(conf.showWebConsole){
+        this.log('[WebConsole] ' + message, 'warning');
+    }
 });
 
 casper.start();

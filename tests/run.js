@@ -49,10 +49,15 @@ var casperCommand = casperJsBinary + ' test' +
     ' --log-level=' + conf.logLevel +
     ' ' + conf.paths.join(' ');
 
-util.print('Running DocdokuPLM tests. Command : \n ' + casperCommand + '\n\n');
+if(conf.debug){
+    console.log('Running DocdokuPLM tests. Command : \n ' + casperCommand + '\n\n');
+}
 
 var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
-    util.print(error || '');
+    if(error){
+        console.log(error);
+        return;
+    }
     if (conf.soundOnTestsEnd) {
         var parser = new xml2js.Parser();
         fs.readFile(__dirname + '/results.xml', function (err, data) {
@@ -69,5 +74,8 @@ var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
     }
 });
 
-child.stdout.on('data', util.print);
-child.stderr.on('data', util.print);
+child.stdout.on('data', console.log);
+
+if(conf.debug){
+    child.stderr.on('data', console.error);
+}
