@@ -54,10 +54,7 @@ if(conf.debug){
 }
 
 var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
-    if(error){
-        console.log(error);
-        return;
-    }
+
     if (conf.soundOnTestsEnd) {
         var parser = new xml2js.Parser();
         fs.readFile(__dirname + '/results.xml', function (err, data) {
@@ -71,6 +68,10 @@ var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
                 }
             });
         });
+    }
+
+    if(error){
+        process.exit(1);
     }
 });
 
