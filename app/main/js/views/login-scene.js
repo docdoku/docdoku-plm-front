@@ -1,7 +1,10 @@
-/*global define,THREE,App,TWEEN,requestAnimationFrame*/
+/*global define,App,TWEEN,requestAnimationFrame*/
 define([
+    'threecore',
+    'trackballcontrols',
+    'binaryloader',
     'backbone'
-], function (Backbone) {
+], function (THREE, TrackballControls, BinaryLoader, Backbone) {
 
     'use strict';
 
@@ -71,7 +74,7 @@ define([
             function addModelToScene(geometry) {
                 var material = new THREE.MeshLambertMaterial({
                     color: 0xffffff,
-                    shading: THREE.FlatShading,
+                    flatShading: THREE.FlatShading,
                     overdraw: true
                 });
                 model = new THREE.Mesh(geometry, material);
@@ -80,7 +83,7 @@ define([
                 model.rotation.set(0.45, 0, 1.55);
                 scene.add(model);
                 geometry.computeBoundingBox();
-                controls.target.copy(model.geometry.boundingBox.center());
+                controls.target.copy(model.geometry.boundingBox.getCenter());
                 animate();
                 animateCamera();
             }
@@ -106,7 +109,7 @@ define([
             renderer.setSize(container.clientWidth, container.clientHeight);
 
             // CONTROLS
-            controls = new THREE.TrackballControls(camera, container);
+            controls = new TrackballControls(camera, container);
 
             // LIGHT
             var light = new THREE.PointLight(0xffffff);
@@ -119,7 +122,7 @@ define([
             // SKYBOX/FOG
             scene.fog = new THREE.FogExp2(0x9999ff, 0.00025);
 
-            var binaryLoader = new THREE.BinaryLoader();
+            var binaryLoader = new BinaryLoader();
             binaryLoader.load(App.config.contextPath + 'images/pba.json', addModelToScene);
 
             var ambientLight = new THREE.AmbientLight(0x111111);

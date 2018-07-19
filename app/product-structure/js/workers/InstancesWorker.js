@@ -4,7 +4,7 @@
 
 importScripts(
     '../../../bower_components/underscore/underscore-min.js',
-    '../../../bower_components/threejs/build/three.min.js',
+    '../../../bower_components/threejs/index.js',
     'InstancesSorter.js',
     'DegradationLevelBalancer.js'
 );

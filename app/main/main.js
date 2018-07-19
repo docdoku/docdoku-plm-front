@@ -12,8 +12,6 @@ require.config({
         jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
         bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
         backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        trackballcontrols: {deps: ['threecore'], exports: 'THREE'},
-        binaryloader: {deps: ['threecore'], exports: 'THREE'},
         oidcClient: {exports: 'Oidc'}
     },
 
@@ -28,7 +26,7 @@ require.config({
         bootstrap: '../../bower_components/bootstrap/docs/assets/js/bootstrap',
         'common-objects': '../../js/common-objects',
         localization: '../../js/localization',
-        threecore: '../../bower_components/threejs/build/three',
+        threecore: '../../bower_components/threejs/index',
         tween: '../../bower_components/tweenjs/src/Tween',
         trackballcontrols: '../../js/dmu/controls/TrackballControls',
         binaryloader: '../../js/dmu/loaders/BinaryLoader',
@@ -44,10 +42,6 @@ require.config({
         'underscore',
         'bootstrap',
         'jqueryUI',
-        'threecore',
-        'tween',
-        'trackballcontrols',
-        'binaryloader',
         'oidcClient'
     ],
     config: {

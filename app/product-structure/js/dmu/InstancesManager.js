@@ -1,6 +1,6 @@
-/*global _,$,define,App,THREE,Worker*/
-define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
-    function (LoaderManager, async, Backbone, Logger) {
+/*global _,$,define,App,Worker*/
+define(['threecore', 'dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
+    function (THREE, LoaderManager, async, Backbone, Logger) {
 
         'use strict';
 
@@ -143,10 +143,12 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             }
 
             function adaptMatrix(matrix) {
-                return new THREE.Matrix4(matrix[0], matrix[1], matrix[2], matrix[3],
+                var mat = new THREE.Matrix4();
+                mat.set(matrix[0], matrix[1], matrix[2], matrix[3],
                     matrix[4], matrix[5], matrix[6], matrix[7],
                     matrix[8], matrix[9], matrix[10], matrix[11],
                     matrix[12], matrix[13], matrix[14], matrix[15]);
+                return mat;
             }
 
             function updateWorker() {
@@ -184,10 +186,10 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                         var max = new THREE.Vector3(instance.xMax, instance.yMax, instance.zMax);
                         var box = new THREE.Box3(min, max).applyMatrix4(instance.matrix);
 
-                        var cog = box.center();
+                        var cog = box.getCenter();
 
                         // Allow parts that don't have box to be displayed
-                        var radius = box.size().length() || 0.01;
+                        var radius = box.getSize().length() || 0.01;
 
 
                         worker.postMessage({

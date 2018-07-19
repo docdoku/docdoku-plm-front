@@ -18,7 +18,7 @@ module.exports = {
                         'bower_components/modernizr/modernizr.js',
                         'bower_components/jquery/jquery.min.*',
                         'bower_components/underscore/underscore-min.js',
-                        'bower_components/threejs/build/three.min.js',
+                        'bower_components/threejs/index.js',
                         'bower_components/tweenjs/src/Tween.js',
                         'bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
                         'bower_components/backbone/backbone-min.js',
@@ -57,7 +57,8 @@ module.exports = {
                         'sounds/**',
                         'js/home/main.js',
                         'js/lib/plugin-detect.js',
-                        'js/lib/empty.pdf'
+                        'js/lib/empty.pdf',
+                        'js/lib/helvetiker_regular.typeface.json'
                     ]
                 }, {
                     expand: true,

@@ -1,13 +1,14 @@
-/*global define,App,THREE*/
+/*global define,App*/
 define([
+    'threecore',
     'collections/layer_collection',
     'models/layer',
     'views/layers-list-view',
     'views/marker_info_modal_view'
-], function (LayerCollection, Layer, LayersListView, MarkerInfoModalView) {
-	'use strict';
+], function (THREE, LayerCollection, Layer, LayersListView, MarkerInfoModalView) {
+    'use strict';
 
-    var STATE = { FULL: 0, TRANSPARENT: 1};
+    var STATE = {FULL: 0, TRANSPARENT: 1};
 
     var LayerManager = function () {
         this.meshs = [];
@@ -108,9 +109,11 @@ define([
                 });
             }
 
-            this.layersCollection.create(layer, {success: function () {
-                App.collaborativeController.sendLayersRefresh('create layer');
-            }});
+            this.layersCollection.create(layer, {
+                success: function () {
+                    App.collaborativeController.sendLayersRefresh('create layer');
+                }
+            });
             return layer;
         },
 

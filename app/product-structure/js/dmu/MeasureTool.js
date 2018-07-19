@@ -1,9 +1,9 @@
-/*global define,App,THREE*/
-define(function(){
+/*global define,App*/
+define(['threecore'], function (THREE) {
 
     'use strict';
 
-    var MeasureTool = function(callbacks){
+    var MeasureTool = function (callbacks) {
 
         var material = new THREE.LineBasicMaterial({
             color: 0xf47922
@@ -15,15 +15,15 @@ define(function(){
         this.callbacks = callbacks;
     };
 
-    MeasureTool.prototype.onClick = function(point){
-        if(this.points[0] === null) {
+    MeasureTool.prototype.onClick = function (point) {
+        if (this.points[0] === null) {
             this.setFirstPoint(point);
-        }else if(this.points[1]=== null) {
+        } else if (this.points[1] === null) {
             this.setSecondPoint(point);
         }
     };
 
-    MeasureTool.prototype.setFirstPoint = function(point){
+    MeasureTool.prototype.setFirstPoint = function (point) {
         this.line.geometry.vertices[0] = point;
         this.line.geometry.vertices[1] = point;
         this.line.geometry.verticesNeedUpdate = true;
@@ -31,12 +31,12 @@ define(function(){
         this.callbacks.onFirstPoint();
     };
 
-    MeasureTool.prototype.setVirtualPoint = function(point){
+    MeasureTool.prototype.setVirtualPoint = function (point) {
         this.line.geometry.vertices[1] = point;
         this.line.geometry.verticesNeedUpdate = true;
     };
 
-    MeasureTool.prototype.setSecondPoint = function(point){
+    MeasureTool.prototype.setSecondPoint = function (point) {
         this.line.geometry.vertices[1] = point;
         this.points[1] = point.clone();
         this.line.geometry.verticesNeedUpdate = true;
@@ -46,11 +46,11 @@ define(function(){
         this.clear();
     };
 
-    MeasureTool.prototype.clear = function(){
+    MeasureTool.prototype.clear = function () {
         this.points = [null, null];
     };
 
-    MeasureTool.prototype.hasOnlyFirstPoint = function(){
+    MeasureTool.prototype.hasOnlyFirstPoint = function () {
         return this.points[0] && !this.points[1];
     };
 

@@ -1,51 +1,39 @@
-/*global _,define,THREE,App*/
-define(['views/progress_bar_view'], function (ProgressBarView) {
+/*global _,define,App*/
+define(['threecore', 'objloader', 'views/progress_bar_view'], function (THREE, OBJLoader, ProgressBarView) {
     'use strict';
     var LoaderManager = function (options) {
-
-        this.ColladaLoader = null;
-        this.STLLoader = null;
-        this.BinaryLoader = null;
-        this.OBJLoader = null;
-        this.JSONLoader = null;
-
         _.extend(this, options);
-
         if (this.progressBar) {
             this.listenXHRProgress();
         }
     };
 
-    var defaultMaterial = new THREE.MeshLambertMaterial({color: new THREE.Color(0x62697B)});
+    var defaultMaterial = new THREE.MeshLambertMaterial({color: new THREE.Color(0xff0000)});
 
     function setShadows(object) {
-        object.traverse(function (o) {
-            if (o instanceof THREE.Mesh) {
-                o.castShadow = true;
-                o.receiveShadow = true;
-            }
-        });
+        if (object instanceof THREE.Object3D) {
+            object.traverse(function (o) {
+                if (o instanceof THREE.Mesh) {
+                    o.castShadow = true;
+                    o.receiveShadow = true;
+                }
+            });
+        } else if (object instanceof THREE.Mesh) {
+            object.castShadow = true;
+            object.receiveShadow = true;
+        }
     }
 
     function updateMaterial(object) {
-        object.traverse(function (o) {
-            if (o instanceof THREE.Mesh && !o.material.name) {
-                o.material = defaultMaterial;
-            }
-        });
-    }
-
-    /*
-     * Parse all meshes geometries in collada object given by COlladaLoader
-     * */
-    function getMeshGeometries(collada, geometries) {
-        if (collada) {
-            _.each(collada.children, function (child) {
-                if (child instanceof THREE.Mesh && child.geometry) {
-                    geometries.push(child.geometry);
+        if (object instanceof THREE.Object3D) {
+            object.traverse(function (o) {
+                if (o instanceof THREE.Mesh && !o.material.name) {
+                    o.material = defaultMaterial;
                 }
-                getMeshGeometries(child, geometries);
             });
+        } else if (object instanceof THREE.Mesh && !object.material.name) {
+            object.castShadow = true;
+            object.receiveShadow = true;
         }
     }
 
@@ -100,7 +88,7 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
                 _xhrOpen.apply(this, arguments);
 
                 // Force server to send the file without compression (custom header)
-                if(isGeometryRequest){
+                if (isGeometryRequest) {
                     this.setRequestHeader('x-accept-encoding', 'identity');
                 }
 
@@ -109,111 +97,12 @@ define(['views/progress_bar_view'], function (ProgressBarView) {
 
 
         parseFile: function (filename, texturePath, callbacks) {
-
-
-            var extension = filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
-
-            switch (extension) {
-
-                case 'obj' :
-
-                    if (this.OBJLoader === null) {
-                        this.OBJLoader = new THREE.OBJLoader();
-                    }
-
-                    this.OBJLoader.load(filename, texturePath + '/attachedfiles/', function (object) {
-                        setShadows(object);
-                        updateMaterial(object);
-                        callbacks.success(object);
-                    });
-
-
-                    break;
-
-                case 'dae':
-
-                    if (this.ColladaLoader === null) {
-                        this.ColladaLoader = new THREE.ColladaLoader();
-                    }
-
-                    this.ColladaLoader.load(filename, function (collada) {
-
-                        var geometries = [], combined = new THREE.Geometry();
-                        getMeshGeometries(collada.scene, geometries);
-
-                        // Merge all sub meshes into one
-                        _.each(geometries, function (geometry) {
-                            combined.merge(geometry);
-                        });
-
-                        combined.dynamic = false;
-                        combined.mergeVertices();
-
-                        combined.computeBoundingSphere();
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(combined));
-                        setShadows(object);
-                        updateMaterial(object);
-                        callbacks.success(object);
-
-                    });
-
-                    break;
-
-                case 'stl':
-                    if (this.STLLoader === null) {
-                        this.STLLoader = new THREE.STLLoader();
-                    }
-
-                    this.STLLoader.load(filename, function (geometry) {
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry));
-                        setShadows(object);
-                        updateMaterial(object);
-                        callbacks.success(object);
-                    });
-
-                    break;
-
-                // Used for json files only (no referenced buffers)
-                case 'json':
-                    if (this.JSONLoader === null) {
-                        this.JSONLoader = new THREE.JSONLoader();
-                    }
-
-                    this.JSONLoader.load(filename, function (geometry, materials) {
-                        geometry.dynamic = false;
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials)));
-                        setShadows(object);
-                        callbacks.success(object);
-                    }, texturePath + '/attachedfiles/');
-
-                    break;
-
-                // Used for binary json files only (referenced buffers - bin file)
-                case 'js':
-
-                    if (this.BinaryLoader === null) {
-                        this.BinaryLoader = new THREE.BinaryLoader();
-                    }
-
-                    this.BinaryLoader.load(filename, function (geometry, materials) {
-                        var _material = new THREE.MeshPhongMaterial({color: materials[0].color, overdraw: true});
-                        geometry.dynamic = false;
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry, _material));
-                        setShadows(object);
-                        callbacks.success(object);
-                    }, texturePath);
-
-                    break;
-
-
-                default:
-                    break;
-
-            }
+            var loader = new OBJLoader();
+            loader.load(filename, /* texturePath + '/attachedfiles/',*/ function (object) {
+                setShadows(object);
+                updateMaterial(object);
+                callbacks.success(object);
+            });
         }
     };
     return LoaderManager;
