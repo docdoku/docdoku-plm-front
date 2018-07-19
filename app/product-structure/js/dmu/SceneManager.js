@@ -1,5 +1,12 @@
-/*global _,define,App,THREE,TWEEN,Stats,requestAnimationFrame,Element*/
+/*global _,define,App,Stats,requestAnimationFrame,Element*/
 define([
+    'threecore',
+    'tween',
+    'pointerlockcontrols',
+    'trackballcontrols',
+    'orbitcontrols',
+    'transformcontrols',
+    'buffergeometryutils',
     'backbone',
     'views/marker_create_modal_view',
     'views/blocker_view',
@@ -7,7 +14,8 @@ define([
     'dmu/MeasureTool',
     'common-objects/utils/date',
     'common-objects/log'
-], function (Backbone, MarkerCreateModalView, BlockerView, LayerManager, MeasureTool, date, Logger) {
+], function (THREE, TWEEN, PointerLockControls, TrackballControls, OrbitControls, TransformControls, BufferGeometryUtils,
+             Backbone, MarkerCreateModalView, BlockerView, LayerManager, MeasureTool, date, Logger) {
     'use strict';
     var SceneManager = function (pOptions) {
         var _this = this;
@@ -19,7 +27,6 @@ define([
         var isMoving = false;
         var currentLayer = null;
         var explosionValue = 0;
-        var projector = new THREE.Projector();
         var controlsObject = null;                                                                                      // Switching controls means different camera management
         var clock = new THREE.Clock();
         var needsRedraw = false;
@@ -29,6 +36,9 @@ define([
         var controlChanged = false;
         var editedObjectsColoured = false;
         var transformControls = null;
+
+        var raycaster = new THREE.Raycaster(); // create once
+        var mouse = new THREE.Vector2(); // create once
 
         var measureTool = null;
         var measures = [];
@@ -92,7 +102,7 @@ define([
         }
 
         function initAxes() {
-            var axes = new THREE.AxisHelper(100);
+            var axes = new THREE.AxesHelper(100);
             axes.position.set(0, 0, 0);
             _this.scene.add(axes);
             var arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 100);
@@ -130,7 +140,7 @@ define([
                 var color = i === 0 ? color1 : color2;
                 geometry.colors.push(color, color, color, color);
             }
-            _this.grid = new THREE.Line(geometry, material, THREE.LinePieces);
+            _this.grid = new THREE.Line(geometry, material, THREE.LineSegments);
         }
 
 
@@ -160,19 +170,18 @@ define([
 
             dirLight2.castShadow = true;
 
-            dirLight2.shadowMapWidth = 2048;
-            dirLight2.shadowMapHeight = 2048;
+            dirLight2.shadow.mapSize.width = 2048;
+            dirLight2.shadow.mapSize.height = 2048;
 
             var d = 50;
 
-            dirLight2.shadowCameraLeft = -d;
-            dirLight2.shadowCameraRight = d;
-            dirLight2.shadowCameraTop = d;
-            dirLight2.shadowCameraBottom = -d;
+            dirLight2.shadow.camera.left = -d;
+            dirLight2.shadow.camera.right = d;
+            dirLight2.shadow.camera.top = d;
+            dirLight2.shadow.camera.bottom = -d;
 
-            dirLight2.shadowCameraFar = 3500;
-            dirLight2.shadowBias = -0.0001;
-            dirLight2.shadowDarkness = 0.35;
+            dirLight2.shadow.camera.far = 3500;
+            dirLight2.shadow.bias = -0.0001;
 
             var hemiLight = new THREE.HemisphereLight(App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6);
             hemiLight.color.setHSL(0.6, 1, 0.6);
@@ -191,7 +200,8 @@ define([
         }
 
         function setSelectionBoxOnMesh(mesh) {
-            selectionBox.update(mesh);
+            selectionBox.setFromObject(mesh);
+            selectionBox.update();
             selectionBox.visible = true;
         }
 
@@ -204,7 +214,7 @@ define([
          */
         function createPointerLockControls() {
             _this.pointerLockCamera = new THREE.PerspectiveCamera(45, _this.$container.width() / _this.$container.height(), App.SceneOptions.cameraNear, App.SceneOptions.cameraFar);
-            _this.pointerLockControls = new THREE.PointerLockControls(_this.pointerLockCamera);
+            _this.pointerLockControls = new PointerLockControls(_this.pointerLockCamera);
             addLightsToCamera(_this.pointerLockCamera);
         }
 
@@ -212,14 +222,14 @@ define([
             _this.orbitCamera = new THREE.PerspectiveCamera(45, _this.$container.width() / _this.$container.height(), App.SceneOptions.cameraNear, App.SceneOptions.cameraFar);
             _this.orbitCamera.position.copy(App.SceneOptions.defaultCameraPosition);
             addLightsToCamera(_this.orbitCamera);
-            _this.orbitControls = new THREE.OrbitControls(_this.orbitCamera, _this.$container[0]);
+            _this.orbitControls = new OrbitControls(_this.orbitCamera, _this.$container[0]);
         }
 
         function createTrackBallControls() {
             _this.trackBallCamera = new THREE.PerspectiveCamera(45, _this.$container.width() / _this.$container.height(), App.SceneOptions.cameraNear, App.SceneOptions.cameraFar);
             _this.trackBallCamera.position.copy(App.SceneOptions.defaultCameraPosition);
             addLightsToCamera(_this.trackBallCamera);
-            _this.trackBallControls = new THREE.TrackballControls(_this.trackBallCamera, _this.$container[0]);
+            _this.trackBallControls = new TrackballControls(_this.trackBallCamera, _this.$container[0]);
             _this.trackBallControls.keys = [65 /*A*/, 83 /*S*/, 68 /*D*/];
         }
 
@@ -230,7 +240,7 @@ define([
         }
 
         function createTransformControls() {
-            transformControls = new THREE.TransformControls(_this.$container[0]);
+            transformControls = new TransformControls(_this.$container[0]);
             transformControls.addEventListener('change', _this.reDraw);
         }
 
@@ -310,7 +320,7 @@ define([
                 mesh.geometry.computeBoundingBox();
                 mesh.geometry.computeBoundingSphere();
                 var instance = App.instancesManager.getInstance(object.uuid);
-                object.absoluteCentroid = mesh.geometry.boundingBox.center().clone().applyMatrix4(instance.matrix);
+                object.absoluteCentroid = mesh.geometry.boundingBox.getCenter().clone().applyMatrix4(instance.matrix);
             }
 
             // Replace before translating
@@ -390,7 +400,7 @@ define([
                     -((e.clientY - _this.$container.offset().top) / _this.$container[0].offsetHeight ) * 2 + 1,
                     0.5
                 );
-                projector.unprojectVector(vector, _this.cameraObject);
+                vector.unproject(_this.cameraObject);
                 measureTool.setVirtualPoint(vector);
                 _this.reDraw();
             }
@@ -421,20 +431,12 @@ define([
                 return false;
             }
 
-            // RayCaster to get the clicked mesh
-            var vector = new THREE.Vector3(
-                ((event.clientX - _this.$container.offset().left) / _this.$container[0].offsetWidth ) * 2 - 1,
-                -((event.clientY - _this.$container.offset().top) / _this.$container[0].offsetHeight ) * 2 + 1,
-                0.5
-            );
+            mouse.x = ((event.clientX - _this.$container.offset().left) / _this.$container[0].offsetWidth ) * 2 - 1;
+            mouse.y = -((event.clientY - _this.$container.offset().top) / _this.$container[0].offsetHeight ) * 2 + 1;
 
-            var cameraPosition = controlsObject.getObject().position;
+            raycaster.setFromCamera(mouse, controlsObject.getObject());
 
-            var object = _this.cameraObject;
-            projector.unprojectVector(vector, object);
-
-            var ray = new THREE.Raycaster(cameraPosition, vector.sub(cameraPosition).normalize());
-            var intersects = ray.intersectObjects(getMeshes(), false);
+            var intersects = raycaster.intersectObjects(getMeshes(), false);
 
             if (intersects.length > 0) {
 
@@ -654,7 +656,7 @@ define([
 
             // Not working with pointer lock controls, pointer lock doesn't have a target
             // TODO : We must reset it an other way
-            if (controlsObject instanceof THREE.PointerLockControls) {
+            if (controlsObject instanceof PointerLockControls) {
                 return;
             }
 
@@ -812,8 +814,8 @@ define([
             }
 
             var boundingBox = mesh.geometry.boundingBox;
-            var cog = boundingBox.center().clone().applyMatrix4(object.matrix);
-            var size = boundingBox.size();
+            var cog = boundingBox.getCenter().clone().applyMatrix4(object.matrix);
+            var size = boundingBox.getSize();
             var radius = Math.max(size.x, size.y, size.z);
             var camera = _this.cameraObject;
             var dir = new THREE.Vector3().copy(cog).sub(camera.position).normalize();
@@ -826,7 +828,7 @@ define([
         this.lookAt = function (object) {
             var mesh = object.children[0];
             var boundingBox = mesh.geometry.boundingBox;
-            var cog = boundingBox.center().clone().applyMatrix4(object.matrix);
+            var cog = boundingBox.getCenter().clone().applyMatrix4(object.matrix);
             cameraAnimation(cog, 2000);
         };
 
@@ -932,22 +934,32 @@ define([
 
             var size = dist / 100 + 10;
 
-            var textGeo = new THREE.TextGeometry(distText, {size: size, height: 2, font: 'helvetiker'});
-            var textMaterial = new THREE.MeshBasicMaterial({color: 0xf47922});
-            var text = new THREE.Mesh(textGeo, textMaterial);
+            var loader = new THREE.FontLoader();
 
-            text.position.copy(new THREE.Vector3().addVectors(points[0], points[1]).multiplyScalar(0.5));
-            text.rotation.copy(_this.cameraObject.rotation);
+            loader.load(App.config.contextPath + 'js/lib/helvetiker_regular.typeface.json', function (font) {
+                var textGeo = new THREE.TextGeometry(distText, {
+                    font: font,
+                    size: size,
+                    height: 2
+                });
+                var textMaterial = new THREE.MeshBasicMaterial({color: 0xf47922});
+                var text = new THREE.Mesh(textGeo, textMaterial);
 
-            measures.push(line);
-            measureTexts.push(text);
-            _this.scene.add(line);
-            _this.scene.add(text);
+                text.position.copy(new THREE.Vector3().addVectors(points[0], points[1]).multiplyScalar(0.5));
+                text.rotation.copy(_this.cameraObject.rotation);
 
-            measuresPoints.push(points);
-            App.collaborativeController.sendMeasure();
-            Backbone.Events.trigger('measure:drawn');
-            _this.reDraw();
+                measures.push(line);
+                measureTexts.push(text);
+                _this.scene.add(line);
+                _this.scene.add(text);
+
+                measuresPoints.push(points);
+                App.collaborativeController.sendMeasure();
+                Backbone.Events.trigger('measure:drawn');
+                _this.reDraw();
+            });
+
+
         };
 
         this.clearMeasures = function () {
@@ -1235,19 +1247,17 @@ define([
         this.bestFitView = function () {
 
             var box = App.instancesManager.computeGlobalBBox();
-            var size = box.size();
+            var size = box.getSize();
 
             if (size.length()) {
-                var cog = box.center().clone();
+                var cog = box.getCenter().clone();
                 var radius = Math.max(size.x, size.y, size.z);
                 var camera = _this.cameraObject;
                 var dir = new THREE.Vector3().copy(cog).sub(camera.position).normalize();
-                var distance = radius ? radius / 2 : 1000;
+                var distance = radius ? radius * 2 : 1000;
                 distance = distance < App.SceneOptions.cameraNear ? App.SceneOptions.cameraNear + 100 : distance;
                 var endCamPos = new THREE.Vector3().copy(cog).sub(dir.multiplyScalar(distance));
                 cameraAnimation(cog, 2000, endCamPos);
-                _this.cameraObject.far = radius * 2;
-
                 _this.cameraObject.updateProjectionMatrix();
             }
 

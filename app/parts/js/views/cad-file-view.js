@@ -1,32 +1,42 @@
-/*global define,App,THREE,requestAnimationFrame,_*/
+/*global define,App,requestAnimationFrame*/
 define([
+    'threecore',
+    'reflector',
+    'orbitcontrols',
+    'objloader',
+    'mtlloader',
     'backbone',
     'mustache',
     'text!templates/cad-file.html'
-], function (Backbone, Mustache, template) {
+], function (THREE, Reflector, Controls, OBJLoader, MTLLoader, Backbone, Mustache, template) {
+
     'use strict';
+
+    var width, height, control;
+    var camera, scene, renderer, dirLight, hemiLight;
+    var clock = new THREE.Clock();
+    var $container;
 
     var CADFileView = Backbone.View.extend({
 
         id: 'cad-file-view',
 
         resize: function () {
-            setTimeout(this.handleResize.bind(this), 50);
+            // setTimeout(this.handleResize.bind(this), 50);
         },
 
         render: function (nativeCADFile, fileName, uuid, resourceToken) {
 
-            var extension = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
-            var texturePath = fileName.substring(0, fileName.lastIndexOf('/'));
-            var width, height;
-
             var options = [];
+
             if (uuid) {
                 options.push('uuid=' + uuid);
             }
+
             if (resourceToken) {
                 options.push('token=' + resourceToken);
             }
+
             if (options.length) {
                 fileName += '?' + options.join('&');
                 nativeCADFile += '?' + options.join('&');
@@ -38,7 +48,7 @@ define([
                 nativeCADFile: nativeCADFile
             }));
 
-            var $container = this.$('#cad-file');
+            $container = this.$('#cad-file');
 
             function calculateWith() {
                 var max = $container.innerWidth() - 20;
@@ -54,120 +64,6 @@ define([
                 return fit < max ? fit : max;
             }
 
-            width = calculateWith();
-            height = calculateHeight();
-
-            var scene = new THREE.Scene();
-            var camera = new THREE.PerspectiveCamera(45, width / height, App.SceneOptions.cameraNear, App.SceneOptions.cameraFar);
-            var control;
-            var renderer = new THREE.WebGLRenderer({alpha: true});
-
-            function addLightsToCamera(camera) {
-                var dirLight1 = new THREE.DirectionalLight(App.SceneOptions.cameraLight1Color);
-                dirLight1.position.set(200, 200, 1000).normalize();
-                dirLight1.name = 'CameraLight1';
-                camera.add(dirLight1);
-                camera.add(dirLight1.target);
-
-                var dirLight2 = new THREE.DirectionalLight(App.SceneOptions.cameraLight2Color, 1);
-                dirLight2.color.setHSL(0.1, 1, 0.95);
-                dirLight2.position.set(-1, 1.75, 1);
-                dirLight2.position.multiplyScalar(50);
-                dirLight2.name = 'CameraLight2';
-                camera.add(dirLight2);
-
-                dirLight2.castShadow = true;
-
-                dirLight2.shadowMapWidth = 2048;
-                dirLight2.shadowMapHeight = 2048;
-
-                var d = 50;
-
-                dirLight2.shadowCameraLeft = -d;
-                dirLight2.shadowCameraRight = d;
-                dirLight2.shadowCameraTop = d;
-                dirLight2.shadowCameraBottom = -d;
-
-                dirLight2.shadowCameraFar = 3500;
-                dirLight2.shadowBias = -0.0001;
-                dirLight2.shadowDarkness = 0.35;
-
-                var hemiLight = new THREE.HemisphereLight(App.SceneOptions.ambientLightColor, App.SceneOptions.ambientLightColor, 0.6);
-                hemiLight.color.setHSL(0.6, 1, 0.6);
-                hemiLight.groundColor.setHSL(0.095, 1, 0.75);
-                hemiLight.position.set(0, 0, 500);
-                hemiLight.name = 'AmbientLight';
-                camera.add(hemiLight);
-
-            }
-
-            camera.position.copy(App.SceneOptions.defaultCameraPosition);
-            addLightsToCamera(camera);
-
-            renderer.setSize(width, height);
-            $container.append(renderer.domElement);
-            scene.add(camera);
-            scene.updateMatrixWorld();
-            control = new THREE.TrackballControls(camera, $container[0]);
-
-            function centerOn(mesh) {
-                mesh.geometry.computeBoundingBox();
-                var boundingBox = mesh.geometry.boundingBox;
-                var cog = new THREE.Vector3().copy(boundingBox.center());
-                var size = boundingBox.size();
-                var radius = Math.max(size.x, size.y, size.z);
-                var distance = radius ? radius * 2 : 1000;
-                distance = (distance < App.SceneOptions.cameraNear) ? App.SceneOptions.cameraNear + 100 : distance;
-                camera.position.set(cog.x + distance, cog.y, cog.z + distance);
-                control.target.copy(cog);
-            }
-
-            function render() {
-                scene.updateMatrixWorld();
-                renderer.render(scene, camera);
-            }
-
-            function animate() {
-                requestAnimationFrame(animate);
-                control.update();
-                render();
-            }
-
-            function getMeshGeometries(collada, geometries) {
-                if (collada) {
-                    _.each(collada.children, function (child) {
-                        if (child instanceof THREE.Mesh && child.geometry) {
-                            geometries.push(child.geometry);
-                        }
-                        getMeshGeometries(child, geometries);
-                    });
-                }
-            }
-
-            var defaultMaterial = new THREE.MeshLambertMaterial({color: new THREE.Color(0x62697B)});
-
-            function setShadows(object) {
-                object.traverse(function (o) {
-                    if (o instanceof THREE.Mesh) {
-                        o.castShadow = true;
-                        o.receiveShadow = true;
-                    }
-                });
-            }
-
-            function updateMaterial(object) {
-                object.traverse(function (o) {
-                    if (o instanceof THREE.Mesh && !o.material.name) {
-                        o.material = defaultMaterial;
-                    }
-                });
-            }
-
-            function onParseSuccess(object) {
-                scene.add(object);
-                centerOn(object.children[0]);
-            }
-
             function handleResize() {
                 width = calculateWith();
                 height = calculateHeight();
@@ -177,109 +73,204 @@ define([
                 control.handleResize();
             }
 
-            window.addEventListener('resize', handleResize, false);
-
-            switch (extension) {
-
-                case 'dae':
-
-                    var colladaLoader = new THREE.ColladaLoader();
-
-                    colladaLoader.load(fileName, function (collada) {
-
-                        var geometries = [], combined = new THREE.Geometry();
-                        getMeshGeometries(collada.scene, geometries);
-
-                        // Merge all sub meshes into one
-                        _.each(geometries, function (geometry) {
-                            THREE.GeometryUtils.merge(combined, geometry);
-                        });
-
-                        combined.dynamic = false;
-                        combined.mergeVertices();
-
-                        combined.computeBoundingSphere();
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(combined));
-                        setShadows(object);
-                        updateMaterial(object);
-                        onParseSuccess(object);
-
-                    });
-
-                    break;
-
-                case 'stl':
-                    var stlLoader = new THREE.STLLoader();
-
-                    stlLoader.load(fileName, function (geometry) {
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry));
-                        setShadows(object);
-                        updateMaterial(object);
-                        onParseSuccess(object);
-                    });
-
-                    break;
-
-                // Used for json files only (no referenced buffers)
-                case 'json':
-                    var jsonLoader = new THREE.JSONLoader();
-
-                    jsonLoader.load(fileName, function (geometry, materials) {
-                        geometry.dynamic = false;
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials)));
-                        setShadows(object);
-                        onParseSuccess(object);
-                    }, texturePath + '/attachedfiles/');
-
-                    break;
-
-                // Used for binary json files only (referenced buffers - bin file)
-                case 'js':
-                    var binaryLoader = new THREE.BinaryLoader();
-
-                    binaryLoader.load(fileName, function (geometry, materials) {
-                        var _material = new THREE.MeshPhongMaterial({color: materials[0].color, overdraw: true});
-                        geometry.dynamic = false;
-                        var object = new THREE.Object3D();
-                        object.add(new THREE.Mesh(geometry, _material));
-                        setShadows(object);
-                        onParseSuccess(object);
-                    }, texturePath);
-
-                    break;
-
-                case 'obj' :
-
-                    var OBJLoader = new THREE.OBJLoader();
-
-                    OBJLoader.load(fileName, texturePath + '/attachedfiles/', function (object) {
-                        setShadows(object);
-                        updateMaterial(object);
-                        onParseSuccess(object);
-                    });
-
-                    break;
-
-                default:
-                    break;
-
+            function render() {
+                scene.updateMatrixWorld();
+                renderer.render(scene, camera);
             }
 
-            control.addEventListener('change', function () {
+            function animate() {
+                requestAnimationFrame(animate);
+                control.update(clock.getDelta());
                 render();
-            });
+            }
+
+            function initScene(size, position) {
+
+                var far = size * 20;
+                var fogFar = size * 10;
+                var boxSize = size * 8;
+
+                camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, far);
+                camera.position.set(0, 0, 250);
+
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color().setHSL(0.6, 0, 1);
+                scene.fog = new THREE.Fog(scene.background, 1, fogFar);
+
+
+                // CONTROLS
+
+                control = new Controls(camera, $container[0]);
+                control.enabled = true;
+                control.bindEvents();
+                control.maxPolarAngle = Math.PI / 2;
+                control.minDistance = 1;
+
+
+                // LIGHTS
+
+                hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+                hemiLight.color.setHSL(0.6, 1, 0.6);
+                hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+                hemiLight.position.set(0, 50, 0);
+                scene.add(hemiLight);
+
+                dirLight = new THREE.DirectionalLight(0xffffff, 1);
+                dirLight.color.setHSL(0.1, 1, 0.95);
+                dirLight.position.set(-1, 1.75, 1);
+                dirLight.position.multiplyScalar(30);
+                scene.add(dirLight);
+                dirLight.castShadow = true;
+                dirLight.shadow.mapSize.width = 2048;
+                dirLight.shadow.mapSize.height = 2048;
+                var d = 50;
+                dirLight.shadow.camera.left = -d;
+                dirLight.shadow.camera.right = d;
+                dirLight.shadow.camera.top = d;
+                dirLight.shadow.camera.bottom = -d;
+                dirLight.shadow.camera.far = far;
+                dirLight.shadow.bias = -0.0001;
+
+                var loader = new THREE.TextureLoader();
+                var texture = loader.load(App.config.contextPath + 'images/floor.jpg');
+                var container = new THREE.Object3D();
+                var geometry = new THREE.CircleBufferGeometry(boxSize, 32);
+                var groundMirror = new Reflector(geometry, {
+                    clipBias: 0.003,
+                    textureWidth: 2048,
+                    textureHeight: 2048,
+                    color: 0x777777,
+                    recursion: 1
+                });
+                var material = new THREE.MeshPhongMaterial({opacity: 0.75, transparent: true, map: texture});
+                var groundSurface = new THREE.Mesh(geometry, material);
+
+                groundSurface.rotateX(-Math.PI / 2);
+                groundMirror.rotateX(-Math.PI / 2);
+
+                groundMirror.position.y -= 0.2;
+
+                container.add(groundMirror);
+                container.add(groundSurface);
+
+                scene.add(container);
+                container.position.copy(position);
+
+                // SKYDOME
+                var vertexShader = 'varying vec3 vWorldPosition;\n' +
+                    'void main() {\n' +
+                    '    vec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n' +
+                    '    vWorldPosition = worldPosition.xyz;\n' +
+                    '    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n' +
+                    '}';
+
+                var fragmentShader = 'uniform vec3 topColor;\n' +
+                    'uniform vec3 bottomColor;\n' +
+                    'uniform float offset;\n' +
+                    'uniform float exponent;\n' +
+                    'varying vec3 vWorldPosition;\n' +
+                    'void main() {\n' +
+                    '      float h = normalize( vWorldPosition + offset ).y;\n' +
+                    '      gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );\n' +
+                    '}\n';
+
+                var uniforms = {
+                    topColor: {value: new THREE.Color(0x0077ff)},
+                    bottomColor: {value: new THREE.Color(0xffffff)},
+                    offset: {value: 33},
+                    exponent: {value: 0.6}
+                };
+
+                uniforms.topColor.value.copy(hemiLight.color);
+
+                scene.fog.color.copy(uniforms.bottomColor.value);
+
+                var skyGeo = new THREE.SphereGeometry(boxSize, 32, 15);
+                var skyMat = new THREE.ShaderMaterial({
+                    vertexShader: vertexShader,
+                    fragmentShader: fragmentShader,
+                    uniforms: uniforms,
+                    side: THREE.BackSide
+                });
+                var sky = new THREE.Mesh(skyGeo, skyMat);
+                sky.position.copy(position);
+                scene.add(sky);
+
+                // RENDERER
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(width, height);
+                $container.append(renderer.domElement);
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.shadowMap.enabled = true;
+
+                window.addEventListener('resize', handleResize, false);
+                handleResize();
+                animate();
+            }
+
+
+            width = calculateWith();
+            height = calculateHeight();
+
 
             this.handleResize = handleResize;
 
-            animate();
-            handleResize();
+
+            function centerOn(point, distance) {
+                camera.position.set(point.x + distance, point.y, point.z + distance);
+                control.target.copy(point);
+            }
+
+            function onMaterials(materials) {
+
+                var objLoader = new OBJLoader();
+
+                if (materials && typeof materials.preload === 'function') {
+                    materials.preload();
+                    objLoader.setMaterials(materials);
+                }
+
+                objLoader.load(fileName, function (object) {
+
+                    var bBoxHelper = new THREE.BoundingBoxHelper(object, 0xff0000);
+                    bBoxHelper.update();
+                    bBoxHelper.geometry.computeBoundingBox();
+                    var radius = bBoxHelper.geometry.boundingSphere.radius;
+                    var size = radius * 3;
+                    var box = bBoxHelper.geometry.boundingBox;
+                    var center = box.getCenter().clone();
+                    var centerBottom = center.clone();
+                    centerBottom.y = box.min.y;
+                    initScene(size, centerBottom);
+                    control.maxDistance = size * 2;
+                    camera.updateProjectionMatrix();
+                    centerBottom.y = box.min.y;
+                    scene.add(object);
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+                    centerOn(center, size * 0.75);
+
+                }, null, null);
+
+
+            }
+
+            var texturePath = fileName.substring(0, fileName.lastIndexOf('/') + 1);
+            var split = fileName.split('?');
+            var fileShortName = split[0].substr(texturePath.length, split[0].length);
+            var mtlFile = fileShortName.substr(0, fileShortName.lastIndexOf('.')) + '.mtl';
+
+            var mtlLoader = new MTLLoader(resourceToken);
+            mtlLoader.setPath(texturePath + 'attachedfiles/');
+            mtlLoader.load(mtlFile, onMaterials, null, onMaterials);
 
             return this;
         }
+
     });
 
     return CADFileView;
 });
+
