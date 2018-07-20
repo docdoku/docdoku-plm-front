@@ -5,9 +5,10 @@ var LIVERELOAD_PORT = 35730;
 var SERVER_HOSTNAME = 'localhost';
 var SERVER_PORT = 9001;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var serveStatic = require('serve-static');
 
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
+var mountFolder = function (dir) {
+    return serveStatic(require('path').resolve(dir));
 };
 
 module.exports = {
@@ -46,29 +47,29 @@ module.exports = {
 
             livereload: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
                             lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'app')
+                            mountFolder('.tmp'),
+                            mountFolder('app')
                         ];
                     }
                 }
             },
             dist: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
-                            mountFolder(connect, 'dist')
+                            mountFolder('dist')
                         ];
                     }
                 }
             },
             app: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
-                            mountFolder(connect, 'app')
+                            mountFolder('app')
                         ];
                     }
                 }
