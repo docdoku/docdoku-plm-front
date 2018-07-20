@@ -27,7 +27,7 @@ define([
         },
 
         url: function () {
-            return this.urlBase + this.query;
+            return this.urlBase + '?' + this.query;
         }
 
     });
