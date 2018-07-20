@@ -16,6 +16,7 @@ define([
     var camera, scene, renderer, dirLight, hemiLight;
     var clock = new THREE.Clock();
     var $container;
+    var needsRedraw = false;
 
     var CADFileView = Backbone.View.extend({
 
@@ -51,17 +52,11 @@ define([
             $container = this.$('#cad-file');
 
             function calculateWith() {
-                var max = $container.innerWidth() - 20;
-                return max > 10 ? max : 10;
+               return $container.innerWidth();
             }
 
             function calculateHeight() {
-                var fit = width / 16 * 9;
-                var max = window.innerHeight - 340;
-                if (max <= 10) {
-                    max = 10;
-                }
-                return fit < max ? fit : max;
+                return Math.round(window.innerHeight * 0.6);
             }
 
             function handleResize() {
@@ -71,6 +66,7 @@ define([
                 camera.updateProjectionMatrix();
                 renderer.setSize(width, height);
                 control.handleResize();
+                needsRedraw = true;
             }
 
             function render() {
@@ -80,8 +76,15 @@ define([
 
             function animate() {
                 requestAnimationFrame(animate);
-                control.update(clock.getDelta());
-                render();
+                if (needsRedraw) {
+                    control.update(clock.getDelta());
+                    render();
+                    needsRedraw = false;
+                }
+            }
+
+            function onControlChange(){
+                needsRedraw = true;
             }
 
             function initScene(size, position) {
@@ -105,6 +108,7 @@ define([
                 control.bindEvents();
                 control.maxPolarAngle = Math.PI / 2;
                 control.minDistance = 1;
+                control.addEventListener('change', onControlChange);
 
 
                 // LIGHTS
@@ -214,13 +218,13 @@ define([
             width = calculateWith();
             height = calculateHeight();
 
-
             this.handleResize = handleResize;
 
 
             function centerOn(point, distance) {
                 camera.position.set(point.x + distance, point.y, point.z + distance);
                 control.target.copy(point);
+                needsRedraw = true;
             }
 
             function onMaterials(materials) {
@@ -234,7 +238,7 @@ define([
 
                 objLoader.load(fileName, function (object) {
 
-                    var bBoxHelper = new THREE.BoundingBoxHelper(object, 0xff0000);
+                    var bBoxHelper = new THREE.BoxHelper(object, 0xff0000);
                     bBoxHelper.update();
                     bBoxHelper.geometry.computeBoundingBox();
                     var radius = bBoxHelper.geometry.boundingSphere.radius;
@@ -251,6 +255,7 @@ define([
                     object.castShadow = true;
                     object.receiveShadow = true;
                     centerOn(center, size * 0.75);
+                    handleResize();
 
                 }, null, null);
 

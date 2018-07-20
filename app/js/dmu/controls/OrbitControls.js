@@ -266,6 +266,7 @@ define(['threecore'], function (THREE) {
                 scope.dollyIn();
 
             }
+            scope.dispatchEvent(changeEvent);
 
         }
 
