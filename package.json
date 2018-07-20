@@ -33,7 +33,6 @@
     "jit-grunt": "~0.10.0",
     "jshint-stylish": "~0.1.5",
     "load-grunt-tasks": "~0.3.0",
-    "mocha": "^3.2.0",
     "serve-static": "^1.13.2",
     "time-grunt": "~0.2.10",
     "underscore": "~1.7.0",
