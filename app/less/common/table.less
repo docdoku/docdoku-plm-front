@@ -30,7 +30,8 @@
                 height: 35px;
                 td {
                     border-top: @table-row-border;
-
+                    word-break: keep-all;
+                    white-space: nowrap;
                     padding: 0 .5em;
                     vertical-align: middle;
                     &.reference, &.part_number, &.product_id, &.configuration_id, &.author_login {
@@ -44,6 +45,7 @@
                             width: 14px;
                         }
                     }
+
                     &.reference:hover, &.part_number:hover, &.product_id:hover {
                         color: @text-color;
                     }
