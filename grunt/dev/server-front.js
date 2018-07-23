@@ -42,7 +42,8 @@ module.exports = {
         config.connect = {
             options: {
                 port: SERVER_PORT,
-                hostname: SERVER_HOSTNAME
+                hostname: SERVER_HOSTNAME,
+                open: true
             },
 
             livereload: {
@@ -76,15 +77,6 @@ module.exports = {
             }
         };
 
-        config.open = {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
-            },
-            dev: {
-                path: 'http://localhost:9001'
-            }
-        };
-
         config.clean.server = '.tmp';
     },
 
@@ -93,11 +85,11 @@ module.exports = {
         grunt.registerTask('serve', function (target) {
 
             if (target === 'dist') {
-                return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
+                return grunt.task.run(['build', 'connect:dist:keepalive']);
             }
 
             if (target === 'dist-no-build') {
-                return grunt.task.run(['open:server', 'connect:dist:keepalive']);
+                return grunt.task.run(['connect:dist:keepalive']);
             }
 
             if (target === 'less') {
@@ -112,8 +104,7 @@ module.exports = {
                 return grunt.task.run([
                     'clean:server',
                     'less',
-                    'connect:app',
-                    'open:dev'
+                    'connect:app'
                 ]);
             }
 
@@ -123,7 +114,6 @@ module.exports = {
                 'clean:server',
                 'less',
                 'connect:livereload',
-                'open:dev',
                 'watch:dev'
             ]);
 
