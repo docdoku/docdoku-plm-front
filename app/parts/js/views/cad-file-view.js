@@ -92,8 +92,9 @@ define([
                 var far = size * 20;
                 var fogFar = size * 10;
                 var boxSize = size * 8;
+                var near = size * 0.0001;
 
-                camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, far);
+                camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, near, far);
                 camera.position.set(0, 0, 250);
 
                 scene = new THREE.Scene();
