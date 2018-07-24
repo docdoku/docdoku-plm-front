@@ -36,6 +36,7 @@ var casperCommand = casperJsBinary + ' test' +
     ' --contextPath=' + conf.contextPath +
     ' --requestTimeOut=' + conf.requestTimeOut +
     ' --globalTimeout=' + conf.globalTimeout +
+    ' --showWebConsole=' + conf.showWebConsole +
     (conf.debug ? ' --debug=true' : '') +
     (conf.debugRequests ? ' --debugRequests=true' : '') +
     (conf.waitOnRequest ? ' --waitOnRequest=true' : '') +

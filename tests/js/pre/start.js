@@ -1,20 +1,7 @@
 /*global casper,homeUrl*/
 
 'use strict';
-/*
- var extend = function (destination, source) {
- for (var property in source) {
- if (destination[property] && (typeof(destination[property]) === 'object') &&
- (destination[property].toString() === '[object Object]') && source[property]) {
- extend(destination[property], source[property]);
- }
- else {
- destination[property] = source[property];
- }
- }
- return destination;
- };
- */
+
 var conf = casper.cli.options;
 
 // This is the first file in the tests suite : use casper.start()
@@ -24,7 +11,6 @@ casper.options.viewportSize = {
 };
 
 // add AJAX waiting logic to onResourceRequested
-
 casper.options.onResourceRequested = function (casper, requestData) {
     if (conf.debugRequests) {
         if (requestData.url.match('/api/')) {
@@ -75,17 +61,14 @@ casper.on('remote.alert', function (msg) {
     return true;
 });
 
-casper.on('remote.message', function remoteMessage(message) {
-    if(conf.showWebConsole){
-        this.log('[WebConsole] ' + message, 'info');
-    }
-});
-
-casper.on('page.error', function pageError(message) {
-    if(conf.showWebConsole){
+if(conf.showWebConsole) {
+    casper.on('remote.message', function remoteMessage(message) {
         this.log('[WebConsole] ' + message, 'warning');
-    }
-});
+    });
+    casper.on('page.error', function pageError(message) {
+        this.log('[WebConsole] ' + message, 'warning');
+    });
+}
 
 casper.start();
 
