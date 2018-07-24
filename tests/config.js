@@ -46,7 +46,6 @@ var config = {
 
         // Login and workspace initialization
         baseDir + 'js/auth/login.js',
-], _paths:[
         // Content Type check
         baseDir + 'js/content-type/contentTypeCheck.js',
 
