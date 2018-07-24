@@ -23,7 +23,7 @@ var config = {
     debug: false,
     verbose: true,
     failFast: true,
-    showWebConsole: false,
+    showWebConsole: true,
     xunit: 'results.xml',
     waitOnRequest: false,
     debugResponses: false,

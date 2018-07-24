@@ -107,7 +107,7 @@ casper.test.begin('Part creation tests suite', 8, function partCreationTestsSuit
      * send value to input attributes
      */
     casper.then(function fillAttributes() {
-        this.waitForSelector(' #attributes-list .list-item', function openTab() {
+        return this.waitForSelector('#attributes-list .list-item', function openTab() {
             this.sendKeys('#attributes-list input[required].value', products.part1.attributeValue);
             this.click('#part_creation_modal .btn-primary');
         }, function fail() {
@@ -120,11 +120,7 @@ casper.test.begin('Part creation tests suite', 8, function partCreationTestsSuit
      * Wait for the part to be created, will appears in the list
      */
     casper.then(function waitForPartToBeCreated() {
-        return this.waitFor(function check() {
-            return this.evaluate(function () {
-                return $('#part_table tbody tr:first-child td.part_number span').text() === '000-AAA-CasperJsTestPart';
-            });
-        }, function partHasBeenCreated() {
+        return this.waitForSelector('#part_table tbody tr:first-child td.part_number span', function partHasBeenCreated() {
             this.test.assertSelectorHasText('#part_table tbody tr:first-child td.part_number span', products.part1.number);
             this.test.assertSelectorHasText('#part_table tbody tr:first-child td:nth-child(8)', products.part1.name);
         }, function fail() {

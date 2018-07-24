@@ -63,10 +63,14 @@ casper.on('remote.alert', function (msg) {
 
 if(conf.showWebConsole) {
     casper.on('remote.message', function remoteMessage(message) {
-        this.log('[WebConsole] ' + message, 'warning');
+        if(!message.match('InvalidStateError: DOM Exception')){
+            this.log('[WebConsole log] ' + message, 'warning');
+        }
     });
     casper.on('page.error', function pageError(message) {
-        this.log('[WebConsole] ' + message, 'warning');
+        if(!message.match('InvalidStateError: DOM Exception')){
+            this.log('[WebConsole error] ' + message, 'warning');
+        }
     });
 }
 
