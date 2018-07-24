@@ -45,10 +45,12 @@
     "preclean": "npm install",
     "prebuild": "npm install",
     "predev": "npm install",
+    "prevalidate": "npm install",
     "postinstall": "bower install",
     "clean": "grunt clean",
     "build": "grunt build",
     "dist": "grunt serve:dist",
-    "dev": "grunt serve"
+    "dev": "grunt serve",
+    "validate": "grunt jshint"
   }
 }
