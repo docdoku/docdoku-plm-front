@@ -84,7 +84,7 @@ casper.test.begin('Parts multiple checkout tests suite', 3, function partsMultip
      * Assert checked out badge has been updated
      */
     casper.then(function assertBadgeUpdated(){
-        this.waitUntilVisible('.nav-checkedOut-number-item.badge-success',function(){
+        this.waitUntilVisible('.nav-checkedOut-number-item.badge-custom',function(){
             var nbPart = this.evaluate(function () {
                 return document.querySelectorAll('#part_table tbody tr td i.fa.fa-pencil').length;
             });
