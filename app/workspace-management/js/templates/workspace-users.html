@@ -42,17 +42,18 @@
         <i class="fa "></i> {{i18n.ENABLE_USER}}
     </button>
     {{#groupMemberships.length}}
-    <button class="btn btn-default move-users-container hide show-if-users" data-toggle="dropdown" title="{{i18n.MOVE_TO_GROUP}}">
-        <span data-toggle="dropdown">
-            <i class="fa fa-group"></i> {{i18n.MOVE_TO_GROUP}}
-        </span>
-        <span data-toggle="dropdown" class="caret"></span>
-        <ul class="dropdown-menu">
+    <span class="dropdown move-users-container hide show-if-users">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <i class="fa fa-group"></i>
+            {{i18n.MOVE_TO_GROUP}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
             {{#groupMemberships}}
-                <li><a class="move-users" data-group-id="{{memberId}}" href="#">{{memberId}}</a></li>
+            <li><a class="move-users" data-group-id="{{memberId}}">{{memberId}}</a></li>
             {{/groupMemberships}}
         </ul>
-    </button>
+    </span>
     {{/groupMemberships.length}}
     <button class="btn btn-default remove-users-from-group hide show-if-group-users" title="{{i18n.REMOVE_FROM_GROUP}}">
         <i class="fa fa-minus"></i> {{i18n.REMOVE_FROM_GROUP}}
