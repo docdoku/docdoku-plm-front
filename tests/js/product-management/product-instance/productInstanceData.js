@@ -45,7 +45,7 @@ casper.test.begin('Product instance data path tests suite', 22, function product
      * Wait for the Deliverable Data button
      */
     casper.then(function waitForDeliverableButton() {
-        return this.waitForSelector('#path_data_btn', function clickOnDeliverableButton() {
+        return this.waitUntilVisible('#path_data_btn', function clickOnDeliverableButton() {
             this.test.assert(true, 'deliverable data button present');
             this.click('#path_data_btn');
         }, function fail() {

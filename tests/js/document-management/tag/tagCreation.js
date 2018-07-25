@@ -124,20 +124,22 @@ casper.test.begin('Document tag creation tests suite', 8, function documentTagCr
         this.test.assertElementCount('.modal.tag-management ul.existing-tags-list li', 2, 'Should add an other tag');
     });
 
+    casper.then(function () {
+        return this.waitUntilVisible('.modal.tag-management .modal-footer .btn-primary', function () {
+            this.click('.modal.tag-management .modal-footer .btn-primary');
+        });
+    });
+
     /**
      *
      * Save the tags
-     * TODO : remove wait(100), use wait selector instead
      * */
     casper.then(function saveTags() {
-        return this.wait(100, function () {
-            this.click('.modal.tag-management .modal-footer .btn-primary');
-            this.waitWhileSelector('.modal.tag-management', function modalClosed() {
-                this.test.assert(true, 'Tag modal has been closed');
-            }, function fail() {
-                this.capture('screenshot/documentTagCreation/saveTags-error.png');
-                this.test.assert(false, 'Tag modal can not be closed');
-            });
+        return this.waitWhileSelector('.modal.tag-management', function modalClosed() {
+            this.test.assert(true, 'Tag modal has been closed');
+        }, function fail() {
+            this.capture('screenshot/documentTagCreation/saveTags-error.png');
+            this.test.assert(false, 'Tag modal can not be closed');
         });
     });
 

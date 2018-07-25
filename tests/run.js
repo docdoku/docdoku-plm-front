@@ -20,7 +20,7 @@ del.sync(['screenshot/**']);
 
 var conf = _.extend(config, argv);
 var uuidV4 = require('uuid/v4');
-var workspace = uuidV4();
+var workspace = 'wks-' + uuidV4().substr(0, 8);
 
 var casperJsBinary = conf.casperjs || __dirname + '/../node_modules/.bin/casperjs';
 
@@ -37,6 +37,7 @@ var casperCommand = casperJsBinary + ' test' +
     ' --requestTimeOut=' + conf.requestTimeOut +
     ' --globalTimeout=' + conf.globalTimeout +
     ' --showWebConsole=' + conf.showWebConsole +
+    ' --waitTimeout=' + conf.waitTimeout +
     (conf.debug ? ' --debug=true' : '') +
     (conf.debugRequests ? ' --debugRequests=true' : '') +
     (conf.waitOnRequest ? ' --waitOnRequest=true' : '') +
@@ -50,7 +51,7 @@ var casperCommand = casperJsBinary + ' test' +
     ' --log-level=' + conf.logLevel +
     ' ' + conf.paths.join(' ');
 
-if(conf.debug){
+if (conf.debug) {
     console.log('Running DocdokuPLM tests. Command : \n ' + casperCommand + '\n\n');
 }
 
@@ -71,13 +72,13 @@ var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
         });
     }
 
-    if(error){
+    if (error) {
         process.exit(1);
     }
 });
 
 child.stdout.on('data', console.log);
 
-if(conf.debug){
+if (conf.debug) {
     child.stderr.on('data', console.error);
 }

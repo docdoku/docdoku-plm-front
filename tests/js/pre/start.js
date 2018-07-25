@@ -41,7 +41,7 @@ if (conf.debugResponses) {
     };
 }
 // Wait actions
-casper.options.waitTimeout = 10 * 1000; // 10 sec
+casper.options.waitTimeout = conf.waitTimeout * 1000;
 // Global test duration
 casper.options.timeout = conf.globalTimeout * 60 * 1000;
 

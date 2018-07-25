@@ -14,7 +14,6 @@ casper.test.begin('Folder deletion tests suite', 1, function folderDeletionTests
     /**
      * Click on delete folder link
      */
-
     casper.then(function waitForDeleteFolderLink() {
         return this.waitForSelector('#folder-nav .items a[title="' + documents.folder1 + '"] + .btn-group .delete a', function clickFolderDeleteLink() {
             this.evaluate(function () {
@@ -30,7 +29,6 @@ casper.test.begin('Folder deletion tests suite', 1, function folderDeletionTests
     /**
      * Confirm folder deletion
      */
-
     casper.then(function confirmFolderDeletion() {
         return this.waitForSelector('.bootbox', function confirmBoxAppeared() {
             this.click('.bootbox .modal-footer .btn-primary');
@@ -43,7 +41,6 @@ casper.test.begin('Folder deletion tests suite', 1, function folderDeletionTests
     /**
      * Test if folder has been deleted
      */
-
     casper.then(function waitForFolderDisappear() {
         return this.waitWhileSelector('#folder-nav .items a[title=' + documents.folder1 + ']', function folderHasBEenDeleted() {
             this.test.assert(true, 'Folder deleted');

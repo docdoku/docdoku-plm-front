@@ -89,7 +89,7 @@ casper.test.begin('Path to path link check tests suite', 26, function pathToPath
          * Wait for tree to be ready
          */
         casper.then(function treeReRendered() {
-            this.waitForSelector('#product_nav_list > ul > li > a > label', function treeReRendered() {
+            return this.waitForSelector('#product_nav_list > ul > li > a > label', function treeReRendered() {
                 this.test.assert(true, 'Tree should be ready to be tested');
             });
         });
@@ -98,7 +98,7 @@ casper.test.begin('Path to path link check tests suite', 26, function pathToPath
          * Check that we can change structure mode
          */
         casper.then(function checkIfStructureCanBeChangedToType() {
-            this.waitForSelector('#path_to_path_link_selector_list', function checkIfStructureCanBeChangedToType() {
+            return this.waitForSelector('#path_to_path_link_selector_list', function checkIfStructureCanBeChangedToType() {
                 this.test.assert(true, 'Select link type should be present');
                 this.test.assertSelectorHasText('#path_to_path_link_selector_list option:nth-child(2)', p2pLinks.type, 'Type selector should have "' + p2pLinks.type + '" present');
 
@@ -115,7 +115,7 @@ casper.test.begin('Path to path link check tests suite', 26, function pathToPath
          * Wait for tree to be re-render, then check first node name
          */
         casper.then(function treeReRendered() {
-            this.waitForSelector('#product_nav_list > ul > li > a > label', function treeReRendered() {
+            return this.waitForSelector('#product_nav_list > ul > li > a > label', function treeReRendered() {
                 this.test.assertSelectorHasText('#product_nav_list > ul > li > a > label', p2pLinks.type, 'First Node of tree should be named "' + p2pLinks.type + '"');
             }, function fail() {
                 this.capture('screenshot/pathToPathLinkCheck/TreeNotRenderedError.png');
@@ -131,13 +131,13 @@ casper.test.begin('Path to path link check tests suite', 26, function pathToPath
         });
 
         casper.then(function expandSecondNode() {
-            this.waitForSelector('#product_nav_list > ul > li > ul > li > .hitarea', function expandFirstNode() {
+            return this.waitForSelector('#product_nav_list > ul > li > ul > li > .hitarea', function expandFirstNode() {
                 this.click('#product_nav_list > ul > li > ul > li > .hitarea');
             });
         });
 
         casper.then(function checkExpandedNodes() {
-            this.waitForSelector('#product_nav_list > ul > li > ul > li > ul > li > .hitarea', function checkExpandedNodes() {
+            return this.waitForSelector('#product_nav_list > ul > li > ul > li > ul > li > .hitarea', function checkExpandedNodes() {
                 this.test.assert(true, 'Nodes should be expanded');
                 this.test.assertSelectorHasText('#product_nav_list > ul > li > ul > li > a > label', '  < 100-AAA-CasperJsAssemblyP1-A-2 > (1)  ', 'Second node should be named "  < 100-AAA-CasperJsAssemblyP1-A-2 > (1)  "');
                 this.test.assertSelectorHasText('#product_nav_list > ul > li > ul > li > ul > li > a > label', '  < 200-AAA-CasperJsAssemblyP2-A-2 > (1)  ', 'Second node should be named "  < 200-AAA-CasperJsAssemblyP2-A-2 > (1)  "');

@@ -62,7 +62,7 @@ casper.test.begin('LOV deletion tests suite', 3, function documentLOVDeletionTes
      * Re-open the modal to check
      */
     casper.then(function reopenModal() {
-        this.waitForSelector('.actions .list-lov', function clickOnLOVCreationLink() {
+        return this.waitForSelector('.actions .list-lov', function clickOnLOVCreationLink() {
             this.click('.actions .list-lov');
         });
     });
@@ -70,7 +70,6 @@ casper.test.begin('LOV deletion tests suite', 3, function documentLOVDeletionTes
     /**
      * Check the number of item
      */
-
     casper.then(function waitForLOVCreationModal() {
         return this.waitForSelector('.modal.list_lov .list_of_lov', function checkDeletion() {
             this.test.assertDoesntExist('.lovItem', 'LOV should be deleted');

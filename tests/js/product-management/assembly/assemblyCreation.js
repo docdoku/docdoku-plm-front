@@ -180,7 +180,7 @@ casper.test.begin('Assembly creation tests suite', 10, function assemblyCreation
             });
 
         }, {partNumbers: partNumbers, workspace: workspace});
-
+        //todo: find alternative to wait
         return casper.wait(200);
     });
 

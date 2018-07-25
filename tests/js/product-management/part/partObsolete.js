@@ -75,7 +75,7 @@ casper.test.begin('Part obsolete tests suite', 3, function partObsoleteTestsSuit
      * Check part has been marked as obsolete
      */
     casper.then(function waitForObsoleteIconDisplayed() {
-        this.waitForSelector('#part_table i.fa.fa-frown-o', function partIsObsolete() {
+        return this.waitForSelector('#part_table i.fa.fa-frown-o', function partIsObsolete() {
             this.test.assertElementCount('#part_table i.fa.fa-frown-o', 1, 'Part has been marked as obsolete');
         }, function fail() {
             this.capture('screenshot/partObsolete/waitForObsoleteIconDisplayed-error.png');

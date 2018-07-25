@@ -14,7 +14,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Open folder nav
      */
-
     casper.then(function waitForFolderNavLink() {
         return this.waitForSelector('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]', function () {
             this.click('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]');
@@ -26,17 +25,10 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
 
     /**
      * Open folder creation modal
-     */
-
-    casper.then(function clickOnDocumentCreationLink() {
-        this.click('.actions .new-document');
-    });
-
-    /**
      * Wait for modal
      */
-
     casper.then(function waitForDocumentCreationModal() {
+        this.click('.actions .new-document');
         return this.waitForSelector('.modal.document-modal.new-document', function () {
             this.click('.modal.document-modal.new-document .btn.btn-primary');
             this.test.assertExists('.modal.document-modal.new-document input.reference:invalid', 'Should not create document without a reference');
@@ -49,7 +41,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Fill the form and create document
      */
-
     casper.then(function fillAndSubmitDocumentCreationModal() {
         return this.waitForSelector('.modal.document-modal.new-document input.reference', function () {
             this.sendKeys('.modal.document-modal.new-document input.reference', documents.document2.number);
@@ -63,7 +54,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Check if document has been created
      */
-
     casper.then(function checkForDocumentCreation() {
         return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document2.number + '"] td.reference a', function documentHasBeenCreated() {
             this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="' + documents.document2.number + '"] td.reference a', documents.document2.number);
@@ -76,7 +66,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Open folder nav
      */
-
     casper.then(function waitForFolderNavLink() {
         return this.waitForSelector('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]', function () {
             this.click('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]');
@@ -88,17 +77,10 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
 
     /**
      * Open folder creation modal
-     */
-
-    casper.then(function clickOnDocumentCreationLink() {
-        this.click('.actions .new-document');
-    });
-
-    /**
      * Wait for modal
      */
-
     casper.then(function waitForDocumentCreationModal() {
+        this.click('.actions .new-document');
         return this.waitForSelector('.modal.document-modal.new-document', function () {
             this.click('.modal.document-modal.new-document .btn.btn-primary');
             this.test.assertExists('.modal.document-modal.new-document input.reference:invalid', 'Should not create document without a reference');
@@ -111,7 +93,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Fill the form and create document
      */
-
     casper.then(function fillAndSubmitDocumentCreationModal() {
         return this.waitForSelector('.modal.document-modal.new-document input.reference', function () {
             this.sendKeys('.modal.document-modal.new-document input.reference', documents.document3.number);
@@ -125,7 +106,6 @@ casper.test.begin('Documents creation tests suite', 4, function documentsCreatio
     /**
      * Check if document has been created
      */
-
     casper.then(function checkForDocumentCreation() {
         return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document3.number + '"] td.reference a', function documentHasBeenCreated() {
             this.test.assertSelectorHasText('#document-management-content table.dataTable tr[title="' + documents.document3.number + '"] td.reference a', documents.document3.number);

@@ -42,7 +42,7 @@ casper.test.begin('Change issue creation tests suite', 3, function changeIssueCr
      * Try to create an issue without a name
      */
     casper.then(function waitForChangeIssueCreationModal() {
-        return this.waitForSelector('#issue_creation_modal .modal-footer .btn-primary', function createIssueWithoutName() {
+        return this.waitUntilVisible('#issue_creation_modal .modal-footer .btn-primary', function createIssueWithoutName() {
             this.click('#issue_creation_modal .modal-footer .btn-primary');
             this.test.assertExists('#issue_creation_modal #inputIssueName:invalid', 'Should not create an issue without a name');
         }, function fail() {
@@ -55,7 +55,7 @@ casper.test.begin('Change issue creation tests suite', 3, function changeIssueCr
      * Fill the form and create the issue
      */
     casper.then(function fillAndSubmitChangeIssueCreationModal() {
-        this.waitForSelector('#issue_creation_modal input#inputIssueName', function fillForm() {
+        return this.waitForSelector('#issue_creation_modal input#inputIssueName', function fillForm() {
             this.sendKeys('#issue_creation_modal input#inputIssueName', changeItems.changeIssue1.number, {reset: true});
             this.click('#issue_creation_modal .modal-footer .btn-primary');
         }, function fail() {

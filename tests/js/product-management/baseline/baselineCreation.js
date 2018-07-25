@@ -24,11 +24,11 @@ casper.test.begin('Baseline creation tests suite', 2, function baselineCreationT
     });
 
     var productToggle = '#product_table > tbody > tr > td > .product-toggle';
+
     /**
      * Select the first product with checkbox
      */
     casper.then(function waitForProductTable() {
-
         return this.waitForSelector(productToggle, function clickOnProductCheckbox() {
             this.click(productToggle);
         }, function fail() {

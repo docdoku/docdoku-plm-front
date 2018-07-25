@@ -76,7 +76,7 @@ casper.test.begin('Document release tests suite', 3, function documentReleaseTes
      * Check document has been released
      */
     casper.then(function waitForReleaseIconDisplayed() {
-        this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-check', function documentIsReleased() {
+        return this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-check', function documentIsReleased() {
             this.test.assertElementCount('#document-management-content table.dataTable tbody i.fa.fa-check', 1, 'Document has been released');
         }, function fail() {
             this.capture('screenshot/documentRelease/waitForReleaseIconDisplayed-error.png');

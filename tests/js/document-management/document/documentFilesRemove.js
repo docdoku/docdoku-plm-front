@@ -174,15 +174,10 @@ casper.test.begin('Document Files Remove tests suite', 14, function documentUplo
 
     /**
      * Save all
-     */
-    casper.then(function saveChanged() {
-        this.click('#save-iteration');
-    });
-
-    /**
      * Wait for the modal to close
      */
     casper.then(function waitForClosingModal() {
+        this.click('#save-iteration');
         return this.waitWhileSelector('div.document-modal', function then() {
             this.test.assert(true, 'Modal closed');
         }, function fail() {

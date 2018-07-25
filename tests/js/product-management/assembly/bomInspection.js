@@ -68,7 +68,6 @@ casper.test.begin('Bom inspection tests suite', 13, function bomInspectionTestsS
      * Assert rows count is 4
      *
      * */
-
     casper.then(function countBomTableRows() {
         return this.waitForSelector('#bom_table > tbody > tr:nth-child(4)', function rowsAvailable() {
             this.test.assert(true, '4 entries in the bom list');
@@ -121,12 +120,8 @@ casper.test.begin('Bom inspection tests suite', 13, function bomInspectionTestsS
 
     /**
      * Wait for 3D box display
-     * */
-
-    /**
      * Check the root node
      */
-
     casper.then(function checkRootNode() {
         this.test.assertExists(treeSelector + ' > .load-3D:not(:checked)', 'Checkbox is unchecked');
         this.evaluate(function () {

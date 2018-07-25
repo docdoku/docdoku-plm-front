@@ -14,7 +14,6 @@ casper.test.begin('Documents multiple undocheckout tests suite', 1, function doc
     /**
      * Open folder nav
      */
-
     casper.then(function waitForFolderNavLink() {
         return this.waitForSelector('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]', function () {
             this.click('a[href="#' + workspace + '/folders/' + documents.folder1 + '"]');

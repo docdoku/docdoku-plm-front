@@ -1,5 +1,6 @@
 /*global $,casper,urls,documents*/
 /*jshint -W040*/
+// TODO : rewrite some parts
 casper.test.begin('LOV creation and use in template', 5, function LOVTemplateCreationTestsSuite() {
     'use strict';
 
@@ -18,10 +19,10 @@ casper.test.begin('LOV creation and use in template', 5, function LOVTemplateCre
      * Open template nav
      */
     casper.then(function () {
-        var templateMenuItemSelecor = '#template-nav > .nav-list-entry > a';
-        return this.waitForSelector(templateMenuItemSelecor, function clickTemplateNavLink() {
-            this.click(templateMenuItemSelecor);
-        }, cantFindElement.bind(this, templateMenuItemSelecor));
+        var templateMenuItemSelector = '#template-nav > .nav-list-entry > a';
+        return this.waitForSelector(templateMenuItemSelector, function clickTemplateNavLink() {
+            this.click(templateMenuItemSelector);
+        }, cantFindElement.bind(this, templateMenuItemSelector));
     });
 
     /**
@@ -148,14 +149,14 @@ casper.test.begin('LOV creation and use in template', 5, function LOVTemplateCre
             var attributViewSelector = '.tab-pane.attributes.attributes-edit.active';
             this.waitForSelector(attributViewSelector, function () {
                 var attributeNameSelector = '.tab-pane.attributes.attributes-edit.active .list-item input.name[value="' + documents.lov.template.attributeName + '"]';
-                this.test.assertExist(attributeNameSelector, 'Attribut name should be ' + documents.lov.template.attributeName);
+                this.test.assertExist(attributeNameSelector, 'Attribute name should be ' + documents.lov.template.attributeName);
                 var selectSelector = '.tab-pane.attributes.attributes-edit.active .list-item select.type';
                 var expectedValue = documents.lov.color.itemName;
                 var isValueOk = this.evaluate(function (selector, expectedValueForSelect) {
                     var selectValue = $(selector).val();
                     return selectValue === expectedValueForSelect;
                 }, selectSelector, expectedValue);
-                this.test.assertTrue(isValueOk, 'Value of the type of the attribut should be ' + expectedValue);
+                this.test.assertTrue(isValueOk, 'Value of the type of the attribute should be ' + expectedValue);
             }, cantFindElement.bind(this, attributViewSelector));
         }, cantFindElement.bind(this, templateAttributTabSelector));
     });

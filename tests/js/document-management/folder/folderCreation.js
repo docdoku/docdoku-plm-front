@@ -26,7 +26,6 @@ casper.test.begin('Folder creation tests suite', 1, function folderCreationTests
      * Open folder creation modal
      */
     casper.then(function clickOnFolderCreationLink() {
-
         return this.waitForSelector('#new-folder-form', function openFolderCreationModal() {
             this.sendKeys('#new-folder-form input', documents.folder1, {reset: true});
             this.click('button[form=new-folder-form]');

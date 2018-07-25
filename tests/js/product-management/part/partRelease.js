@@ -75,7 +75,7 @@ casper.test.begin('Part release tests suite', 3, function partReleaseTestsSuite(
      * Check part has been released
      */
     casper.then(function waitForReleaseIconDisplayed() {
-        this.waitForSelector('#part_table i.fa.fa-check', function partIsReleased() {
+        return this.waitForSelector('#part_table i.fa.fa-check', function partIsReleased() {
             this.test.assertElementCount('#part_table i.fa.fa-check', 1, 'Part has been released');
         }, function fail() {
             this.capture('screenshot/partRelease/waitForReleaseIconDisplayed-error.png');
