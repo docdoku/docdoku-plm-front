@@ -88,7 +88,7 @@ casper.test.begin('Part upload native cad file tests suite', 3, function partUpl
 
     casper.then(function checkCADFileIconsSet() {
         return this.waitForSelector('#part_table .fa.fa-paperclip', function check() {
-            this.test.assertElementCount('#part_table .fa.fa-paperclip', 1, 'found 1 part with CAD file');
+            this.test.assertElementCount('#part_table .fa.fa-paperclip', 2, 'found 1 part with CAD file');
         });
     });
 

@@ -35,9 +35,12 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
         });
     });
 
-    casper.then(function(){
-        this.waitUntilVisible('.nav-checkedOut-number-item.badge-success',function(){
-            this.test.assertSelectorHasText('.nav-checkedOut-number-item.badge-success', 1, 'checkout number at 1 in nav');
+   casper.then(function(){
+        return this.waitUntilVisible('.nav-checkedOut-number-item.badge-custom',function(){
+            this.test.assertSelectorHasText('.nav-checkedOut-number-item.badge-custom', 1, 'checkout number at 1 in nav');
+        }, function fail() {
+            this.capture('screenshot/partCheckin/waitBadge-error.png');
+            this.test.assert(false, 'Badge is not visible');
         });
     });
 
@@ -70,7 +73,7 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
      * Wait for the checkin button to be disabled
      */
     casper.then(function waitForCheckinButtonDisabled() {
-        this.waitForSelector('.actions .checkin:disabled', function partIsCheckin() {
+        return this.waitForSelector('.actions .checkin:disabled', function partIsCheckin() {
             this.test.assert(true, 'Part has been checkin');
         }, function fail() {
             this.capture('screenshot/partCheckin/waitForCheckinButtonDisabled-error.png');
@@ -82,7 +85,7 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
      * Wait for the badge info button
      */
     casper.then(function waitForBadgeDisplayed() {
-        this.waitForSelector('.badge.nav-checkedOut-number-item.badge-info', function badgeDisplayed() {
+        return this.waitForSelector('.badge.nav-checkedOut-number-item.badge-primary', function badgeDisplayed() {
             this.test.assertSelectorHasText('.nav-checkedOut-number-item', 0, 'Checkout number updated in nav');
         }, function fail() {
             this.capture('screenshot/partCheckin/waitForBadgeDisplayed-error.png');
