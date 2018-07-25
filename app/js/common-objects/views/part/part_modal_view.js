@@ -230,6 +230,11 @@ define([
             }, {
                 success: function () {
                     that.model.fetch();
+
+                    if (that.model.collection && that.partAssemblyView.hasNewParts()) {
+                        that.model.collection.fetch();
+                    }
+
                     that.hide();
                     that.model.trigger('change');
                     Backbone.Events.trigger('part:saved');

@@ -161,6 +161,12 @@ define([
                 });
                 process(partNumbers);
             });
+        },
+
+        hasNewParts: function () {
+            return this.collection.filter(function (item) {
+                    return typeof item.get('fullId') === 'undefined';
+                }).length > 0;
         }
 
     });
