@@ -79,7 +79,8 @@ define([
                 }
             }
 
-            this.$memo.text(this.memo);
+            var displayedResult = parseFloat(parseFloat(this.memo).toPrecision(15));
+            this.$memo.text(displayedResult);
             this.$assembliesVisited.text(this.visitedAssemblies);
             this.$instancesVisited.text(this.visitedInstances);
             this.$result.show();
