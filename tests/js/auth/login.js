@@ -1,4 +1,4 @@
-/*global casper,homeUrl,login,pass,workspace*/
+/*global casper,homeUrl,login,pass*/
 casper.test.begin('Login tests suite', 2, function loginTestsSuite() {
 
     'use strict';
