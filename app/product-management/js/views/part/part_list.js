@@ -420,11 +420,14 @@ define([
 
             var excludeFromSort = [0, 1, 2, totalColumns - 3, totalColumns - 2, totalColumns - 1];
             var dateColumns = [];
+            var numberColumns = [];
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].startsWith('attr-DATE') || PartTableColumns.dateFields.indexOf(columns[i]) !== -1) {
                     // the array is reversed
                     // offset 3 + index from the end
                     dateColumns.push(3 + columns.length - 1 - i);
+                } else if (columns[i].startsWith('attr-NUMBER') || PartTableColumns.numberFields.indexOf(columns[i]) !== -1) {
+                    numberColumns.push(3 + columns.length - 1 - i);
                 }
             }
 
@@ -443,6 +446,7 @@ define([
                 aoColumnDefs: [
                     {'bSortable': false, 'aTargets': excludeFromSort},
                     {'sType': App.config.i18n.DATE_SORT, 'aTargets': dateColumns},
+                    {'sType': 'numeric_sort', aTargets: numberColumns},
                     {'sType': 'strip_html', 'aTargets': stripHTMLColumns}
                 ]
             });
