@@ -462,6 +462,7 @@ define({
     PRODUCT_MANAGEMENT: 'Gestion des produits',
     PRODUCTS: 'Produits',
     PRODUCT_STRUCTURE: 'Structure du produit',
+    PRODUCT_STRUCTURE_NOT_RESOLVED: 'Imposible de résoudre la structure produit avec cette configuration',
     PROTECTED_RESOURCE: 'Cette resource est protégée par mot de passe',
     PUBLIC_ACCESS_TITLE: 'Accès public au permalien',
     PUBLIC_SHARE: 'Partage public',

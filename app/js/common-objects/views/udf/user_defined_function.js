@@ -33,6 +33,7 @@ define([
             this.$valueList = this.$('.user-defined-value-select');
             this.$runButton = this.$('.run-udf');
             this.$calculations = this.$('.calculations');
+            this.$notifications = this.$('.notifications');
             this.fetchProducts();
             return this;
         },
@@ -131,6 +132,8 @@ define([
 
         run: function(e){
 
+            this.$notifications.empty();
+
             _.each(this.calculationViews,function(view){
                 view.resetCalculation();
             });
@@ -215,13 +218,20 @@ define([
 
             };
 
-            visit(pRootComponent.first().attributes);
+            if(pRootComponent.length){
 
-            _.each(calculationViews,function(view){
-                view.onEnd();
-            });
+                visit(pRootComponent.first().attributes);
+
+                _.each(calculationViews,function(view){
+                    view.onEnd();
+                });
+
+            }else{
+                this.$notifications.text(App.config.i18n.PRODUCT_STRUCTURE_NOT_RESOLVED);
+            }
 
             this.$runButton.html(App.config.i18n.RUN).prop('disabled',false);
+
         }
 
     });

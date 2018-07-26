@@ -455,6 +455,7 @@ define({
     PRODUCT_MANAGEMENT: 'Управление изделиями',
     PRODUCTS: 'Изделия',
     PRODUCT_STRUCTURE: 'Структура изделия',
+    PRODUCT_STRUCTURE_NOT_RESOLVED: 'Cannot resolve product structure with given config spec',
     PROTECTED_RESOURCE: 'Этот ресурс защищен паролем',
     PUBLIC_ACCESS_TITLE: 'Отркытый доступ по постоянной ссылке',
     PUBLIC_SHARE: 'Папка с общим доступом',

@@ -466,6 +466,7 @@ define({
         PRODUCT_MANAGEMENT: 'Product management',
         PRODUCTS: 'Products',
         PRODUCT_STRUCTURE: 'Product structure',
+        PRODUCT_STRUCTURE_NOT_RESOLVED: 'Cannot resolve product structure with given config spec',
         PROTECTED_RESOURCE: 'This resource is password protected',
         PUBLIC_ACCESS_TITLE: 'Public access to permalink',
         PUBLIC_SHARE: 'Public share',
