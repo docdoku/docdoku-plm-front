@@ -170,6 +170,7 @@ define([
                     type: 'success',
                     message: App.config.i18n.CREATE_NEW_EFFECTIVITY_SUCCESS
                 }).render().$el);
+                self.$('#part_creation_effectivity_form')[0].reset();
             }, function (error) {
                 self.$notifications.append(new AlertView({
                     type: 'error',
