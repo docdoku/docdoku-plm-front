@@ -17,6 +17,7 @@ define(['common-objects/utils/date'], function (date) {
     };
 
     var dateFields = ['pr.modificationDate'];
+    var numberFields = ['pr.iteration'];
 
     var optgroups = [
         {id: 'pr', name: App.config.i18n.QUERY_GROUP_PART_REVISION},
@@ -137,6 +138,7 @@ define(['common-objects/utils/date'], function (date) {
         cellsFactory: cellsFactory,
         optgroups: optgroups,
         dateFields: dateFields,
+        numberFields: numberFields,
         mock: defaultColumns.map(function (column) {
             return column.value;
         }).reverse()

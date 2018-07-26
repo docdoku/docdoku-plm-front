@@ -185,6 +185,8 @@ define([
                 sDom: 'ft',
                 aoColumnDefs: [
                     {'bSortable': false, 'aTargets': [0, 5]},
+                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': [2]},
+                    {'sType': 'numeric_sort', aTargets: [3, 4]},
                     {'sType': 'strip_html', 'aTargets': [1]}
                 ]
             });

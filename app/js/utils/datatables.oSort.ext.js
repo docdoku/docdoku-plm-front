@@ -34,4 +34,12 @@ define(['datatables','moment'], function (DT,moment) {
         return stripTags(x).trim() <= stripTags(y).trim() ? 1:-1;
     };
 
+    $.fn.dataTableExt.oSort['numeric_sort-asc'] = function (x, y) {
+        return stripTags(x).trim() - stripTags(y).trim();
+    };
+
+    $.fn.dataTableExt.oSort['numeric_sort-desc'] = function (x, y) {
+        return stripTags(y).trim() - stripTags(x).trim();
+    };
+
 });
