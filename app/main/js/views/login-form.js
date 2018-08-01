@@ -57,7 +57,8 @@ define([
                     password: this.$('#login_form-password').val()
                 }),
                 contentType: 'application/json; charset=utf-8'
-            }).then(function () {
+            }).then(function (account) {
+                window.localStorage.locale = account && account.language ? account.language : null;
                 var originURL = UrlUtils.getParameterByName('originURL');
                 window.location.href = originURL ? decodeURIComponent(originURL) : App.config.contextPath + 'workspace-management/index.html';
             }, this.onLoginFailed.bind(this));
