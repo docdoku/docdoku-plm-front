@@ -40,6 +40,10 @@ define([
             return moment(value, 'YYYY-MM-DD').toDate();
         },
 
+        getISODate: function (value) {
+            return moment(value, 'YYYY-MM-DD').toISOString();
+        },
+
         formatShort: function (input) {
             return input ? moment(input).format('YYYY-MM-DD') : null;
         },

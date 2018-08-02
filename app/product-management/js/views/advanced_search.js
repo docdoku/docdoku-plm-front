@@ -152,10 +152,10 @@ define([
                 author: this.$author.val(),
                 tags: this.$tags.val().replace(/ /g, ''),
                 content: this.$content.val(),
-                createdFrom: this.$createdFrom.val() ? date.getDateFromDateInput(this.$createdFrom.val()) : null,
-                createdTo: this.$createdTo.val() ? date.getDateFromDateInput(this.$createdTo.val()) : null,
-                modifiedFrom: this.$modifiedFrom.val() ? date.getDateFromDateInput(this.$modifiedFrom.val()) : null,
-                modifiedTo: this.$modifiedTo.val() ? date.getDateFromDateInput(this.$modifiedTo.val()) : null,
+                createdFrom: this.$createdFrom.val() ? date.getISODate(this.$createdFrom.val()) : null,
+                createdTo: this.$createdTo.val() ? date.getISODate(this.$createdTo.val()) : null,
+                modifiedFrom: this.$modifiedFrom.val() ? date.getISODate(this.$modifiedFrom.val()) : null,
+                modifiedTo: this.$modifiedTo.val() ? date.getISODate(this.$modifiedTo.val()) : null,
                 standardPart: this.$standardPart.filter(':checked').val() === 'all' ? null : this.$standardPart.filter(':checked').val()
             };
             return query.constructSearchQuery(data, this.attributes);
