@@ -1,0 +1,12 @@
+<h3><i class="fa fa-lock"></i>{{i18n.CONNECTION}}</h3>
+<div class="notifications"></div>
+<hr/>
+<div class="form-zone">
+    <h4>{{i18n.CHOOSE_PROVIDER}}</h4>
+    {{#providers}}
+    <p>
+        <button class=" btn btn-custom oidc-provider" data-id="{{id}}">{{i18n.LOGIN_WITH}} {{name}}</button>
+    </p>
+    {{/providers}}
+</div>
+<p><a href="#">{{i18n.LOGIN_AN_OTHER_WAY}}</a></p>

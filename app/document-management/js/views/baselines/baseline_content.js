@@ -32,7 +32,6 @@ define([
             this.bindDomElements();
             this.createBaselineButton.show();
 
-            this.bindEvent();
             this.createBaselineView();
             return this;
         },
@@ -41,12 +40,6 @@ define([
             this.$notifications = this.$el.find('.notifications').first();
             this.deleteButton = this.$('.delete-baseline');
             this.createBaselineButton = this.$('.new-baseline');
-        },
-
-
-        // TODO: determine if this is still useful
-        bindEvent: function(){
-            this.delegateEvents();
         },
 
         createBaseline: function () {

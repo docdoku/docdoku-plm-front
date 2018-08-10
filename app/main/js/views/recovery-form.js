@@ -9,16 +9,16 @@ define([
 
     var RecoveryFormView = Backbone.View.extend({
 
-        tagName:'form',
-        id:'recovery_form',
-        events:{
-            'submit':'onRecoveryFormSubmit'
+        tagName: 'form',
+        id: 'recovery_form',
+        events: {
+            'submit': 'onRecoveryFormSubmit'
         },
 
         render: function () {
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
-                contextPath:App.config.contextPath
+                contextPath: App.config.contextPath
             }));
             this.$notifications = this.$('.notifications');
             this.$('#recovery_form-login').prop('disabled', false);
@@ -27,17 +27,20 @@ define([
         },
 
 
-        onRecoveryFormSubmit:function(e){
+        onRecoveryFormSubmit: function (e) {
             this.$notifications.empty();
             var $loginInput = this.$('#recovery_form-login');
             var login = $loginInput.val();
             $loginInput.prop('disabled', true);
             this.$('.form_button_container').hide();
+
+            delete localStorage.jwt;
+
             $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/auth/recovery',
+                url: App.config.apiEndPoint + '/auth/recovery',
                 data: JSON.stringify({
-                    login:login
+                    login: login
                 }),
                 contentType: 'application/json; charset=utf-8'
             }).then(this.onRecoverySent.bind(this), this.onError.bind(this));
@@ -45,14 +48,14 @@ define([
             return false;
         },
 
-        onRecoverySent:function(){
+        onRecoverySent: function () {
             this.$notifications.append(new AlertView({
                 type: 'success',
                 message: App.config.i18n.RECOVERY_REQUEST_SENT
             }).render().$el);
         },
 
-        onError:function(err){
+        onError: function (err) {
             this.$notifications.append(new AlertView({
                 type: 'error',
                 message: err.responseText

@@ -4,15 +4,13 @@ casper.test.begin('Workflow Deletion tests suite', 2, function workflowDeletionT
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change workflow nav

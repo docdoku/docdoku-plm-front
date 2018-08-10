@@ -5,7 +5,7 @@ define([
     'common-objects/views/documents/checkbox_list_item',
     'text!templates/workflows/workflow_list_item.html'
 ], function (require, date, CheckboxListItemView, template) {
-	'use strict';
+    'use strict';
     var WorkflowListItemView = CheckboxListItemView.extend({
 
         template: template,
@@ -42,8 +42,7 @@ define([
         },
 
         actionEdit: function () {
-            var url = encodeURI(App.config.workspaceId + '/workflow-model-editor/' + this.model.id);
-            App.router.navigate(url, {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/workflow-model-editor/' + encodeURIComponent(this.model.id), {trigger: true});
         },
         unCheck: function () {
             this.$checkbox.prop('checked', false);

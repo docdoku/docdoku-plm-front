@@ -6,7 +6,7 @@ define([
     'views/baselines/baseline_choice_list_item',
     'models/path_choice'
 ], function (Backbone, Mustache, template, BaselineChoiceItemView, PathChoice) {
-	'use strict';
+    'use strict';
     var BaselineChoicesView = Backbone.View.extend({
 
         tagName: 'div',
@@ -19,13 +19,13 @@ define([
             this.choicesViews = [];
         },
 
-        getChoices:function(){
+        getChoices: function () {
             var choices = [];
-            _.each(this.choicesViews,function(view){
-                if(view.model.retained){
+            _.each(this.choicesViews, function (view) {
+                if (view.model.retained) {
                     choices.push(view.getChoice());
                 }
-            },this);
+            }, this);
             return choices;
         },
 
@@ -35,27 +35,27 @@ define([
             return this;
         },
 
-        renderList:function(choices){
+        renderList: function (choices) {
             this.clear();
 
-            this.choices  = choices.map(function(choice){
+            this.choices = choices.map(function (choice) {
                 return new PathChoice(choice);
             });
 
-            this.choices.sort(function(a,b){
-                return a.getKey() < b.getKey() ? -1:1;
+            this.choices.sort(function (a, b) {
+                return a.getKey() < b.getKey() ? -1 : 1;
             });
 
-            _.each(this.choices,this.addChoiceItemView,this);
+            _.each(this.choices, this.addChoiceItemView, this);
         },
 
-        addChoiceItemView:function(choice){
-            var view = new BaselineChoiceItemView({model:choice, removable:this.options.removableItems}).render();
+        addChoiceItemView: function (choice) {
+            var view = new BaselineChoiceItemView({model: choice, removable: this.options.removableItems}).render();
             this.choicesViews.push(view);
             this.$list.append(view.$el);
         },
 
-        clear:function(){
+        clear: function () {
             this.choices = [];
             this.choicesViews = [];
             this.removeSubviews();
@@ -66,16 +66,16 @@ define([
             _(this.choicesViews).invoke('remove');
         },
 
-        updateFromConfiguration:function(configuration){
-            _.invoke(this.choicesViews,'resetNominal');
-            if(configuration){
-                _.each(configuration.substituteLinks,this.checkLink);
-                _.each(configuration.optionalUsageLinks,this.checkLink);
+        updateFromConfiguration: function (configuration) {
+            _.invoke(this.choicesViews, 'resetNominal');
+            if (configuration) {
+                _.each(configuration.substituteLinks, this.checkLink);
+                _.each(configuration.optionalUsageLinks, this.checkLink);
             }
         },
 
-        checkLink:function(link){
-            this.$('[data-path="'+link+'"]').click();
+        checkLink: function (link) {
+            this.$('[data-path="' + link + '"]').click();
         }
 
     });

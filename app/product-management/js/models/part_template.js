@@ -4,7 +4,7 @@ define([
     'common-objects/collections/file/attached_file_collection',
     'common-objects/utils/date',
     'common-objects/utils/acl-checker'
-], function (Backbone, AttachedFileCollection, Date,ACLChecker) {
+], function (Backbone, AttachedFileCollection, date, ACLChecker) {
     'use strict';
     var Template = Backbone.Model.extend({
         className: 'PartTemplate',
@@ -40,7 +40,7 @@ define([
         },
 
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.get('workspaceId') + '/part-templates/' + this.get('id') + '/';
+            return App.config.apiEndPoint + '/files/' + this.get('workspaceId') + '/part-templates/' + this.get('id') + '/';
         },
 
         getId: function () {
@@ -75,14 +75,14 @@ define([
             return this._attachedFile.length;
         },
         getFormattedCreationDate: function () {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getCreationDate()
             );
         },
 
         getFormattedModificationDate: function () {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getModificationDate()
             );
@@ -94,14 +94,14 @@ define([
 
         url: function () {
             if (this.get('id')) {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id');
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id');
             } else {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates';
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates';
             }
         },
 
         generateIdUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id') + '/generate_id';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/part-templates/' + this.get('id') + '/generate_id';
         },
 
         getBaseName: function () {

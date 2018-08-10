@@ -4,14 +4,15 @@ var App = {};
 
 require.config({
 
+    urlArgs: '__BUST_CACHE__',
+
     baseUrl: 'main/js',
 
     shim: {
-        jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
-        bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
-        backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        trackballcontrols:{deps:['threecore'],exports:'THREE'},
-        binaryloader:{deps:['threecore'],exports:'THREE'}
+        jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
+        bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
+        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'},
+        oidcClient: {exports: 'Oidc'}
     },
 
     paths: {
@@ -25,12 +26,15 @@ require.config({
         bootstrap: '../../bower_components/bootstrap/docs/assets/js/bootstrap',
         'common-objects': '../../js/common-objects',
         localization: '../../js/localization',
-        threecore:'../../bower_components/threejs/build/three',
-        tween:'../../bower_components/tweenjs/src/Tween',
-        trackballcontrols:'../../js/dmu/controls/TrackballControls',
-        binaryloader:'../../js/dmu/loaders/BinaryLoader',
-        urlUtils:'../../js/utils/url-utils'
-
+        threecore: '../../bower_components/threejs/index',
+        tween: '../../bower_components/tweenjs/src/Tween',
+        trackballcontrols: '../../js/dmu/controls/TrackballControls',
+        binaryloader: '../../js/dmu/loaders/BinaryLoader',
+        urlUtils: '../../js/utils/url-utils',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
+        oidcClient: '../../bower_components/oidc-client/dist/oidc-client'
     },
 
     deps: [
@@ -38,18 +42,15 @@ require.config({
         'underscore',
         'bootstrap',
         'jqueryUI',
-        'threecore',
-        'tween',
-        'trackballcontrols',
-        'binaryloader'
+        'oidcClient'
     ],
     config: {
         i18n: {
-            locale: (function(){
+            locale: (function () {
                 'use strict';
-                try{
+                try {
                     return window.localStorage.getItem('locale') || 'en';
-                }catch(ex){
+                } catch (ex) {
                     return 'en';
                 }
             })()
@@ -57,42 +58,44 @@ require.config({
     }
 });
 
-require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!localization/nls/index', 'common-objects/views/error'],
+require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n!localization/nls/index', 'common-objects/views/error'],
     function (ContextResolver, commonStrings, indexStrings, ErrorView) {
         'use strict';
 
-        App.config.needAuthentication = false;
         App.config.i18n = _.extend(commonStrings, indexStrings);
 
-        App.SceneOptions =  {
+        App.SceneOptions = {
             zoomSpeed: 3,
             rotateSpeed: 3.0,
             panSpeed: 0.3,
             cameraNear: 1,
             cameraFar: 5E4,
-            defaultCameraPosition: {x: 0, y:0, z:0},
+            defaultCameraPosition: {x: 0, y: 0, z: 0},
             startCameraPosition: {x: 100, y: 2500, z: 2500},
             endCameraPosition: {x: 0, y: 250, z: 250},
             defaultTargetPosition: {x: 0, y: 0, z: 0}
         };
 
-        ContextResolver.resolveServerProperties()
-
+        ContextResolver.resolveServerProperties('.')
+            .then(ContextResolver.resolveProviders)
             .then(ContextResolver.resolveAccount)
-            .then(function(){
-                window.location.href = App.config.contextPath + '/workspace-management/';
-            }, function buildView(xhr){
-                if(xhr.status === 401){
-                    require(['backbone','app','router','common-objects/views/header'],function(Backbone, AppView, Router,HeaderView){
+            .then(function () {
+                window.location.href = App.config.contextPath + 'workspace-management/index.html';
+            }, function buildView(xhr) {
+                if (xhr.status === 401) {
+                    require(['backbone', 'app', 'router', 'common-objects/views/header'], function (Backbone, AppView, Router, HeaderView) {
                         App.appView = new AppView();
                         App.headerView = new HeaderView();
                         App.appView.render();
                         App.headerView.render();
                         App.router = Router.getInstance();
+                        if (App.config.preferLoginWith && !window.location.hash && App.config.providers.length) {
+                            window.location.hash = 'login-with';
+                        }
                         Backbone.history.start();
                     });
                 } else {
-                    new ErrorView({el:'#content'}).renderError(xhr);
+                    new ErrorView({el: '#content'}).renderError(xhr);
                 }
 
             });

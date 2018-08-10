@@ -64,7 +64,7 @@ define([
                 App.mainChannel.sendJSON({
                     type: ChannelMessagesType.COLLABORATIVE_INVITE,
                     key: this.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         url: '#' + App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec,
                         context: App.config.workspaceId
                     },
@@ -92,7 +92,7 @@ define([
                 type: ChannelMessagesType.COLLABORATIVE_WITHDRAW_INVITATION,
                 key: this.roomKey,
                 remoteUser: name,
-                messageBroadcast: {
+                broadcastMessage: {
                     context: App.config.workspaceId
                 }
             });

@@ -5,6 +5,14 @@
 
     <div class="notifications"></div>
 
+    <div class="control-group">
+        <label class="control-label" for="import-type">{{i18n.TYPE}}</label>
+        <select id="import-type">
+            <option value="attributes">{{i18n.ATTRIBUTES}}</option>
+            <option value="bom">{{i18n.BOM}}</option>
+        </select>
+    </div>
+
     <div class="attachedFiles idle">
 
         <div id="file-selected">
@@ -13,12 +21,13 @@
 
         <form enctype="multipart/form-data" class="upload-form">
             <div class="droppable filedroparea">
-                <input name="upload" type="file" class="input-xlarge droppable upload-btn" />
-                <button class="btn btn-success droppable">{{i18n.SELECT_FILE}}</button>
+                <input name="upload" type="file" class="input-xlarge droppable upload-btn"/>
+                <button class="btn btn-custom droppable">{{i18n.SELECT_FILE}}</button>
                 <span class="droppable">{{i18n.DROP_FILE_HERE}}</span>
+
                 <p class="upload-file-shortname"></p>
             </div>
-            <button type="button" class="btn cancel cancel-upload-btn">{{i18n.CANCEL}}</button>
+            <button type="button" class="btn btn-default cancel cancel-upload-btn">{{i18n.CANCEL}}</button>
         </form>
 
     </div>
@@ -32,10 +41,12 @@
 
         <div class="control-group">
             <label class="control-label" for="revision_text_part">{{i18n.ADD_REVISION_NOTE}}</label>
+
             <div class="controls">
                 <textarea type="text" rows="1" id="revision_text_part"></textarea>
             </div>
         </div>
+
 
         <div class="control-group">
             <label class="checkbox">{{i18n.AUTO_CHECKOUT}} <input type="checkbox" id="auto_checkout_part"/></label>
@@ -50,58 +61,83 @@
             <label class="checkbox">{{i18n.PERMISSIVE_UPDATE_PART}} <input type="checkbox"
                                                                            id="permissive_update_part"/></label>
         </div>
+        <div class="control-group">
+            <label class="checkbox">{{i18n.DRY_RUN}} <input type="checkbox" id="dry_run"/></label>
+        </div>
     </div>
 
     {{/importForm}}
 
-    {{#importPreview}}
 
-    {{#options}}
-    <h5>{{i18n.CONFIRM_IMPORT_WITH_OPTION}}</h5>
-    {{/options}}
-    {{^options}}
+    {{#importPreviewMode}}
+
     <h5>{{i18n.CONFIRM_IMPORT}}</h5>
-    {{/options}}
+
+    {{#revisionNote}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.REVISION_NOTE}}</label>
+
+        <div class="controls">
+            {{revisionNote}}
+        </div>
+    </div>
+    {{/revisionNote}}
 
     {{#checkout}}
-    <p>{{i18n.AUTO_CHECKOUT}}</p>
-
-    {{#partList.length}}
-    <p>{{i18n.CHECKOUT_PART_LIST}}</p><ul>
-    {{#partList}}
-    <li>{{partNumber}}</li>
-    {{/partList}}
-    </ul>
-    {{/partList.length}}
-    {{#searchingForPartList}}
-    <p>{{i18n.SEARCHING_FOR_PARTS}} <i class="fa fa-spin fa-refresh loader"></i></p>
-    {{/searchingForPartList}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.AUTO_CHECKOUT}}</label>
+    </div>
     {{/checkout}}
 
     {{#checkin}}
-    <p>{{i18n.AUTO_CHECKIN}}</p>
+    <div class="control-group">
+        <label class="control-label">{{i18n.AUTO_CHECKIN}}</label>
+    </div>
     {{/checkin}}
-    {{#permissive}}
-    <p>{{i18n.PERMISSIVE_UPDATE_PART}}</p>
-    {{/permissive}}
-    {{#revisionNote}}
-    <p>{{i18n.REVISION_NOTE}}: {{revisionNote}}</p>
-    {{/revisionNote}}
 
-    {{/importPreview}}
+    {{#permissive}}
+    <div class="control-group">
+        <label class="control-label">{{i18n.PERMISSIVE_UPDATE_PART}}</label>
+    </div>
+    {{/permissive}}
+
+    {{#partCheckoutList.length}}
+    <h6>{{i18n.CHECKOUT_PART_LIST}}</h6>
+    <ul>
+        {{#partCheckoutList}}
+        <li>{{partNumber}}</li>
+        {{/partCheckoutList}}
+    </ul>
+    {{/partCheckoutList.length}}
+
+    {{#partsToCreate.length}}
+    <h6>{{i18n.CREATE_PART_LIST}}</h6>
+    <ul>
+        {{#partsToCreate}}
+        <li>{{number}}</li>
+        {{/partsToCreate}}
+    </ul>
+    {{/partsToCreate.length}}
+
+    {{#searchingForPartList}}
+    <p>{{i18n.SEARCHING_FOR_PARTS}} <i class="fa fa-spin fa-refresh loader"></i></p>
+    {{/searchingForPartList}}
+
+    {{/importPreviewMode}}
 
 </div>
+
 <div class="modal-footer">
     {{#importForm}}
     <button class="btn" data-dismiss="modal" aria-hidden="true">{{i18n.CLOSE}}</button>
-    <button type="button" disabled class="btn btn-primary import-preview-button">
+    <button type="button" disabled class="btn btn-primary import-button">
         {{i18n.START_IMPORT}}
     </button>
     {{/importForm}}
-    {{#importPreview}}
+    {{#importPreviewMode}}
     <button type="button" class="btn btn-default back-button">{{i18n.CANCEL}}</button>
     <button type="button" disabled class="btn btn-primary import-button">
         {{i18n.OK}}
     </button>
-    {{/importPreview}}
+    {{/importPreviewMode}}
 </div>

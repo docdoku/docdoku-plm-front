@@ -51,7 +51,7 @@ define([
                 source: function (query, process) {
                     var partNumbers = [];
 
-                    $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
+                    $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
                         _(data).each(function (d) {
                             var label = d.partName + ' < ' + d.partNumber + ' >';
                             partNumbers.push(label);

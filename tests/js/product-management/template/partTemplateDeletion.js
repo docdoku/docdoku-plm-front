@@ -3,15 +3,13 @@
 casper.test.begin('Part template deletion tests suite', 2, function partTemplateDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part template nav

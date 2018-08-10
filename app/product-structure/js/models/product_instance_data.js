@@ -56,14 +56,14 @@ define(['backbone'], function (Backbone) {
         },
 
         getUploadBaseUrl: function (serialNumber) {
-            return App.config.contextPath + '/api/files/' +
+            return App.config.apiEndPoint + '/files/' +
                 App.config.workspaceId + '/product-instances/' +
                 serialNumber + '/' + App.config.productId +
                 '/pathdata/' + this.getId() + '/';
         },
 
         getDeleteBaseUrl: function (serialNumber) {
-            return App.config.contextPath + '/api/files/' +
+            return App.config.apiEndPoint + '/files/' +
                 App.config.workspaceId + '/product-instances/' +
                 serialNumber + '/' + App.config.productId +
                 '/pathdata/' + this.getId() + '/';

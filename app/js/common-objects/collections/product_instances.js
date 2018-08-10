@@ -13,11 +13,11 @@ define(['backbone', 'common-objects/models/product_instance'],
 
             url: function () {
                 if (this.productId) {
-                    return App.config.contextPath + '/api/workspaces/' +
+                    return App.config.apiEndPoint + '/workspaces/' +
                         App.config.workspaceId + '/product-instances/' +
                         this.productId + '/instances';
                 }
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances';
             }
 

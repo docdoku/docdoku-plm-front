@@ -3,15 +3,13 @@
 casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -37,11 +35,19 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
         });
     });
 
+   casper.then(function(){
+        return this.waitUntilVisible('.nav-checkedOut-number-item.badge-custom',function(){
+            this.test.assertSelectorHasText('.nav-checkedOut-number-item.badge-custom', 1, 'checkout number at 1 in nav');
+        }, function fail() {
+            this.capture('screenshot/partCheckin/waitBadge-error.png');
+            this.test.assert(false, 'Badge is not visible');
+        });
+    });
+
     /**
      * Click on checkin button
      */
     casper.then(function waitForCheckinButton() {
-        this.test.assertSelectorHasText('.nav-checkedOut-number-item', 1, 'checkout number at 1 in nav');
         return this.waitForSelector('.actions .checkin:not([disabled])', function clickOnCheckinButton() {
             this.click('.actions .checkin');
         }, function fail() {
@@ -67,7 +73,7 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
      * Wait for the checkin button to be disabled
      */
     casper.then(function waitForCheckinButtonDisabled() {
-        this.waitForSelector('.actions .checkin:disabled', function partIsCheckin() {
+        return this.waitForSelector('.actions .checkin:disabled', function partIsCheckin() {
             this.test.assert(true, 'Part has been checkin');
         }, function fail() {
             this.capture('screenshot/partCheckin/waitForCheckinButtonDisabled-error.png');
@@ -79,7 +85,7 @@ casper.test.begin('Part checkin tests suite', 3, function partCheckinTestsSuite(
      * Wait for the badge info button
      */
     casper.then(function waitForBadgeDisplayed() {
-        this.waitForSelector('.badge.nav-checkedOut-number-item.badge-info', function badgeDisplayed() {
+        return this.waitForSelector('.badge.nav-checkedOut-number-item.badge-primary', function badgeDisplayed() {
             this.test.assertSelectorHasText('.nav-checkedOut-number-item', 0, 'Checkout number updated in nav');
         }, function fail() {
             this.capture('screenshot/partCheckin/waitForBadgeDisplayed-error.png');

@@ -14,24 +14,24 @@ define([
 
         function onJoinMessage(message) {
             App.collaborativeView.setRoomKey(message.key);
-            App.appView.setConfigSpec(message.messageBroadcast.configSpec);
-            App.appView.updateTreeView(message.messageBroadcast.smartPath);
-            App.sceneManager.setControlsContext(message.messageBroadcast.cameraInfos);
-            App.sceneManager.setEditedObjects(message.messageBroadcast.editedObjects);
-            App.sceneManager.setEditedObjectsColor(message.messageBroadcast.colourEditedObjects);
-            App.$ControlsContainer.find('#slider-explode').val(message.messageBroadcast.explode);
-            App.sceneManager.explodeScene(message.messageBroadcast.explode);
+            App.appView.setConfigSpec(message.broadcastMessage.configSpec);
+            App.appView.updateTreeView(message.broadcastMessage.smartPath);
+            App.sceneManager.setControlsContext(message.broadcastMessage.cameraInfos);
+            App.sceneManager.setEditedObjects(message.broadcastMessage.editedObjects);
+            App.sceneManager.setEditedObjectsColor(message.broadcastMessage.colourEditedObjects);
+            App.$ControlsContainer.find('#slider-explode').val(message.broadcastMessage.explode);
+            App.sceneManager.explodeScene(message.broadcastMessage.explode);
         }
 
         function onContextMessage(message) {
             if (App.collaborativeView.roomKey === message.key) {
-                if (message.messageBroadcast.master === '') {
-                    App.collaborativeView.setLastMaster(message.messageBroadcast.lastMaster);
+                if (message.broadcastMessage.master === '') {
+                    App.collaborativeView.setLastMaster(message.broadcastMessage.lastMaster);
                 } else {
-                    App.collaborativeView.setMaster(message.messageBroadcast.master);
+                    App.collaborativeView.setMaster(message.broadcastMessage.master);
                 }
-                App.collaborativeView.setUsers(message.messageBroadcast.users);
-                App.collaborativeView.setPendingUsers(message.messageBroadcast.pendingUsers);
+                App.collaborativeView.setUsers(message.broadcastMessage.users);
+                App.collaborativeView.setPendingUsers(message.broadcastMessage.pendingUsers);
             }
         }
 
@@ -53,34 +53,34 @@ define([
 
         function onCollaborativeMessage(message) {
             if (App.collaborativeView.roomKey === message.key) {
-                if (message.messageBroadcast.cameraInfos) {
-                    App.sceneManager.setControlsContext(message.messageBroadcast.cameraInfos);
-                } else if (message.messageBroadcast.smartPath) {
-                    App.appView.updateTreeView(message.messageBroadcast.smartPath);
-                } else if (message.messageBroadcast.editedObjects) {
-                    App.sceneManager.setEditedObjects(message.messageBroadcast.editedObjects);
-                } else if (message.messageBroadcast.configSpec) {
-                    App.appView.setConfigSpec(message.messageBroadcast.configSpec);
+                if (message.broadcastMessage.cameraInfos) {
+                    App.sceneManager.setControlsContext(message.broadcastMessage.cameraInfos);
+                } else if (message.broadcastMessage.smartPath) {
+                    App.appView.updateTreeView(message.broadcastMessage.smartPath);
+                } else if (message.broadcastMessage.editedObjects) {
+                    App.sceneManager.setEditedObjects(message.broadcastMessage.editedObjects);
+                } else if (message.broadcastMessage.configSpec) {
+                    App.appView.setConfigSpec(message.broadcastMessage.configSpec);
                     App.baselineSelectView.refresh();
-                } else if (message.messageBroadcast.colourEditedObjects !== undefined) {
-                    App.sceneManager.setEditedObjectsColor(message.messageBroadcast.colourEditedObjects);
-                } else if (message.messageBroadcast.explode) {
-                    App.$ControlsContainer.find('#slider-explode').val(message.messageBroadcast.explode);
-                    App.sceneManager.explodeScene(message.messageBroadcast.explode);
-                } else if (message.messageBroadcast.clipping) {
-                    _this.setClippingValue(message.messageBroadcast.clipping);
-                } else if (message.messageBroadcast.layers) {
-                    if (message.messageBroadcast.layers === 'layer:remove') {
+                } else if (message.broadcastMessage.colourEditedObjects !== undefined) {
+                    App.sceneManager.setEditedObjectsColor(message.broadcastMessage.colourEditedObjects);
+                } else if (message.broadcastMessage.explode) {
+                    App.$ControlsContainer.find('#slider-explode').val(message.broadcastMessage.explode);
+                    App.sceneManager.explodeScene(message.broadcastMessage.explode);
+                } else if (message.broadcastMessage.clipping) {
+                    _this.setClippingValue(message.broadcastMessage.clipping);
+                } else if (message.broadcastMessage.layers) {
+                    if (message.broadcastMessage.layers === 'layer:remove') {
                         App.sceneManager.layerManager.removeAllMeshesFromMarkers();
                     }
                     App.layersListView.refreshLayers();
-                } else if (message.messageBroadcast.markers) {
-                    if (message.messageBroadcast.markers === 'remove marker') {
+                } else if (message.broadcastMessage.markers) {
+                    if (message.broadcastMessage.markers === 'remove marker') {
                         App.sceneManager.layerManager.removeAllMeshesFromMarkers();
                     }
                     App.layersListView.refreshLayers();
-                } else if (message.messageBroadcast.measures) {
-                    App.sceneManager.setMeasures(message.messageBroadcast.measures);
+                } else if (message.broadcastMessage.measures) {
+                    App.sceneManager.setMeasures(message.broadcastMessage.measures);
                 }
             }
         }
@@ -143,7 +143,7 @@ define([
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
                     remoteUser: '',
-                    messageBroadcast: {
+                    broadcastMessage: {
                         smartPath: value
                     }
                 });
@@ -156,7 +156,7 @@ define([
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
                     remoteUser: '',
-                    messageBroadcast: {
+                    broadcastMessage: {
                         configSpec: value
                     }
                 });
@@ -167,7 +167,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         layers: subject
                     },
                     remoteUser: ''
@@ -180,7 +180,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         markers: subject
                     },
                     remoteUser: ''
@@ -193,7 +193,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         cameraInfos: App.sceneManager.getControlsContext()
                     },
                     remoteUser: ''
@@ -206,7 +206,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         clipping: value
                     },
                     remoteUser: ''
@@ -229,7 +229,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         editedObjects: editedObjects
                     },
                     remoteUser: ''
@@ -242,7 +242,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         colourEditedObjects: App.sceneManager.getEditedObjectsColoured()
                     },
                     remoteUser: ''
@@ -255,7 +255,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         explode: value
                     },
                     remoteUser: ''
@@ -268,7 +268,7 @@ define([
                 var message = {
                     type: ChannelMessagesType.COLLABORATIVE_COMMANDS,
                     key: App.collaborativeView.roomKey,
-                    messageBroadcast: {
+                    broadcastMessage: {
                         measures: App.sceneManager.getMeasures()
                     },
                     remoteUser: ''

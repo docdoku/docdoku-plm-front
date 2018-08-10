@@ -25,7 +25,7 @@ define([
 
         editAccount:function(){
             var view = new EditAccountView();
-            this.$('#account-management-content').html(view.render().el);
+            this.$('#account-management-content').html(view.renderAuthView().el);
         }
 
     });

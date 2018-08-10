@@ -7,7 +7,7 @@ define([
     var UserGroups = Backbone.Collection.extend({
         model: UserGroup,
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/user-group';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/user-group';
         }
     });
 

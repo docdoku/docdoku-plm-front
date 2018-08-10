@@ -13,10 +13,13 @@ function (Backbone, singletonDecorator) {
             'admin/dashboard':'adminDashboard',
             'admin/options':'adminOptions',
             'admin/accounts':'adminAccounts',
+            'admin/oauth':'adminOAuth',
             'workspace/:workspaceId/users':   'workspaceUsers',
             'workspace/:workspaceId/notifications':   'workspaceNotifications',
             'workspace/:workspaceId/edit':   'workspaceEdit',
             'workspace/:workspaceId/dashboard':   'workspaceDashboard',
+            'workspace/:workspaceId/customizations':   'workspaceCustomizations',
+            'workspace/:workspaceId/admin/new': 'workspaceAdminNew',
             'workspace/:workspaceId/*path':   'workspaceUsers'
         },
 
@@ -64,6 +67,14 @@ function (Backbone, singletonDecorator) {
             }
         },
 
+        workspaceCustomizations:function(workspaceId){
+            if(this.checkWorkspaceAdmin(workspaceId)){
+                App.config.workspaceId = workspaceId;
+                this.refresh();
+                App.appView.workspaceCustomizations();
+            }
+        },
+
         workspaceNotifications:function(workspaceId){
             if(this.checkWorkspaceAdmin(workspaceId)){
                 App.config.workspaceId = workspaceId;
@@ -88,6 +99,14 @@ function (Backbone, singletonDecorator) {
             }
         },
 
+        workspaceAdminNew:function(workspaceId){
+            if(this.checkWorkspaceAdmin(workspaceId)){
+                App.config.workspaceId = workspaceId;
+                this.refresh();
+                App.appView.workspaceAdminNew();
+            }
+        },
+
         adminDashboard:function(){
             if(this.checkRootAdmin()){
                 this.refresh();
@@ -106,6 +125,13 @@ function (Backbone, singletonDecorator) {
             if(this.checkRootAdmin()){
                 this.refresh();
                 App.appView.adminAccounts();
+            }
+        },
+
+        adminOAuth:function(){
+            if(this.checkRootAdmin()){
+                this.refresh();
+                App.appView.adminOAuth();
             }
         }
 

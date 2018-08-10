@@ -4,15 +4,13 @@ casper.test.begin('Document tag deletion tests suite', 5, function documentTagDe
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Click on the tag button

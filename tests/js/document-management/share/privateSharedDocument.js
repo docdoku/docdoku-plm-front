@@ -6,15 +6,13 @@ casper.test.begin('Private shared document tests suite', 3, function privateShar
 
     var titleSelector = '#content > .document-revision > div >  h3';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.privateDocumentPermalink);
-    });
+    casper.open(urls.privateDocumentPermalink);
 
     /**
      * We should be prompted for password

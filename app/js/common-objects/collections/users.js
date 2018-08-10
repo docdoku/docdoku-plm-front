@@ -7,7 +7,7 @@ define([
     var Users = Backbone.Collection.extend({
         model: User,
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/users';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/users';
         }
     });
 

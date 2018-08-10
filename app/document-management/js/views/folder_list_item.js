@@ -5,7 +5,7 @@ define([
     'require',
     'common-objects/models/document/document_revision',
     'models/folder',
-    'collections/folder',
+    'collections/folders',
     'common-objects/views/components/list_item',
     'views/folder_list',
     'views/folder_document_list',
@@ -131,7 +131,7 @@ define([
         },
         navigate: function () {
             var path = this.modelPath ? '/' + encodeURIComponent(this.modelPath) : '';
-            App.router.navigate(App.config.workspaceId + '/folders' + path, {trigger: false});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/folders/' + path, {trigger: false});
         },
 
         toggle: function () {
@@ -261,7 +261,7 @@ define([
             e.dataTransfer.setData('folder:text/plain', data);
 
             var img = document.createElement('img');
-            img.src = App.config.contextPath + '/images/icon-nav-folder-opened.png';
+            img.src = App.config.contextPath + 'images/icon-nav-folder-opened.png';
             e.dataTransfer.setDragImage(img, 0, 0);
 
 

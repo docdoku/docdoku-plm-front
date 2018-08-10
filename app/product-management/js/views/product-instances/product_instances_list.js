@@ -198,7 +198,9 @@ define([
                 },
                 sDom: 'ft',
                 aoColumnDefs: [
-                    {'bSortable': false, 'aTargets': [0, 6, 7, 8, 9, 10, 11, 12]}
+                    {'bSortable': false, 'aTargets': [0, 6, 7, 8, 9, 10, 11, 12]},
+                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': [5]},
+                    {'sType': 'numeric_sort', aTargets: [2]},
                 ]
             });
             this.$el.find('.dataTables_filter input').attr('placeholder', App.config.i18n.FILTER);
@@ -227,7 +229,7 @@ define([
                 var acl = aclEditView.toList();
 
                 templateSelected.updateACL({
-                    acl: acl || {userEntries: {}, groupEntries: {}},
+                    acl: acl || {userEntries: [], groupEntries: []},
                     success: function () {
                         templateSelected.set('acl', acl);
                         aclEditView.closeModal();

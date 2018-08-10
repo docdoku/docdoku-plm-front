@@ -80,7 +80,7 @@ define([
 
         actionNew: function () {
             this.$notifications.html('');
-            App.router.navigate(App.config.workspaceId + '/workflow-model-editor', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/workflow-model-editor', {trigger: true});
             return false;
         },
         actionDelete: function () {
@@ -177,7 +177,7 @@ define([
                 var acl = aclEditView.toList();
 
                 workflowSelected.updateWorkflowACL({
-                    acl: acl || {userEntries: {}, groupEntries: {}},
+                    acl: acl || {userEntries: [], groupEntries: []},
                     success: function () {
                         workflowSelected.set('acl', acl);
                         aclEditView.closeModal();

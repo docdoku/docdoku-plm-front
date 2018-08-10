@@ -2,15 +2,13 @@
 casper.test.begin('Part add link tests suite', 3, function partAddLinkTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -95,7 +93,7 @@ casper.test.begin('Part add link tests suite', 3, function partAddLinkTestsSuite
      * Save and wait for the modal to be closed
      */
 
-    casper.then(function savePartIteration(){
+    casper.then(function savePartIteration() {
         this.click('#part-modal .btn.btn-primary');
         return this.waitWhileSelector('#part-modal', function modalClosed() {
             this.test.assert(true, 'Part modal has been closed');

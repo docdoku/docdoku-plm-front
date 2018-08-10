@@ -3,15 +3,13 @@
 casper.test.begin('Part template attributes tests suite', 14, function partTemplateCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     casper.then(function waitForPartTemplateNavLink() {
         return this.waitForSelector('#part-template-nav > .nav-list-entry > a', function clickPartTemplateNavLink() {
@@ -253,7 +251,7 @@ casper.test.begin('Part template attributes tests suite', 14, function partTempl
 
         return this.waitForSelector('#attribute-product-instance-list .list-item.well', function () {
             this.test.assertElementCount('.list-item.well', 3, '3 elements should have been created, 2 attributes and' +
-            ' 1 instance attribute');
+                ' 1 instance attribute');
             this.sendKeys('#attributes-list .list-item:nth-child(1) input.name', products.part2.attributeName1, {reset: true});
             this.sendKeys('#attributes-list .list-item:nth-child(2) input.name', products.part2.attributeName2, {reset: true});
             this.sendKeys('#attribute-product-instance-list .list-item input.name', products.template2.attrInstance, {reset: true});

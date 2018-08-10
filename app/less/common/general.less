@@ -39,11 +39,11 @@ a.is-connected-user {
 .fa-user.user-online,
 .fa-globe.participant-online,
 .fa-graduation-cap.master {
-    color: @input-state-success;
+    color: @online-state;
 }
 
 .fa-user.user-offline {
-    color: @input-state-disabled;
+    color: @offline-state;
 }
 
 .fa-graduation-cap.no-master,
@@ -82,4 +82,17 @@ a.is-connected-user {
 #header .offline-menu a {
     color: @text-invert-color;
     text-shadow: none;
+}
+
+.before-fetch-loader {
+    display: none;
+}
+
+.before-fetch {
+    .before-fetch-loader {
+        display: block;
+    }
+    .after-fetch-display {
+        display: none;
+    }
 }

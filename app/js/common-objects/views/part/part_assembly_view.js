@@ -152,7 +152,7 @@ define([
 
         source: function (query, process) {
             var model = this.model;
-            $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/numbers?q=' + query, function (data) {
                 var partNumbers = [];
                 _(data).each(function (d) {
                     if ((!model.getNumber()) || (model.getNumber() !== d.partNumber)) {
@@ -161,6 +161,12 @@ define([
                 });
                 process(partNumbers);
             });
+        },
+
+        hasNewParts: function () {
+            return this.collection.filter(function (item) {
+                    return typeof item.get('fullId') === 'undefined';
+                }).length > 0;
         }
 
     });

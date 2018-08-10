@@ -1,6 +1,6 @@
 /*global _,define,WebSocket*/
-define(['common-objects/websocket/channelStatus','common-objects/log'], function (ChannelStatus,Logger) {
-	'use strict';
+define(['common-objects/websocket/channelStatus', 'common-objects/log'], function (ChannelStatus, Logger) {
+    'use strict';
     function Channel() {
         this.status = ChannelStatus.CLOSED;
         this.listeners = [];
@@ -19,7 +19,13 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
             this.ws = new WebSocket(this.url);
 
             this.ws.onopen = function (event) {
-                Logger.log('%c Websocket created','WS');
+                Logger.log('WS', 'Websocket created');
+
+                self.send(JSON.stringify({
+                    type: 'AUTH',
+                    jwt: localStorage.jwt
+                }));
+
                 self.onopen(event);
             };
 
@@ -40,7 +46,7 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
         // send string
         send: function (message) {
 
-            Logger.log('C->S: %c' + message,'WS');
+            Logger.log('WS', 'C->S: ' + message);
             this.ws.send(message);
 
         },
@@ -64,7 +70,7 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
         },
 
         onmessage: function (message) {
-            Logger.log('S->C: %c' + message.data,'WS');
+            Logger.log('WS', 'S->C: ' + message.data);
 
             var jsonMessage = JSON.parse(message.data);
             if (jsonMessage.type) {
@@ -80,7 +86,7 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
         onclose: function (event) {
             this.status = ChannelStatus.CLOSED;
 
-            Logger.log('%c Websocket closed\n\t'+event,'WS');
+            Logger.log('WS', 'Websocket closed\n\t' + event);
 
             _.each(this.listeners, function (listener) {
                 listener.handlers.onStatusChanged(ChannelStatus.CLOSED);
@@ -89,7 +95,7 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
         },
 
         onerror: function (event) {
-            Logger.log('%c Websocket error\n\t'+event,'WS');
+            Logger.log('WS', 'Websocket error\n\t' + event);
         },
 
         addChannelListener: function (listener) {
@@ -97,7 +103,7 @@ define(['common-objects/websocket/channelStatus','common-objects/log'], function
         },
 
         isReady: function () {
-            return  this.status === ChannelStatus.OPENED;
+            return this.status === ChannelStatus.OPENED;
         }
 
     };

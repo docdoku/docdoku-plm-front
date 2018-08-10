@@ -3,7 +3,7 @@ define([
     'backbone',
     'common-objects/models/document/document_revision'
 ], function (Backbone, DocumentRevision) {
-	'use strict';
+    'use strict';
     var CheckedoutDocumentList = Backbone.Collection.extend({
 
         model: DocumentRevision,
@@ -11,7 +11,7 @@ define([
         className: 'CheckedoutDocumentList',
 
         url: function () {
-            return  App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/documents/checkedout';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/documents/checkedout';
         }
 
     });

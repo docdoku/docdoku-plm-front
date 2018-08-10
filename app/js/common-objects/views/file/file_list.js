@@ -10,7 +10,30 @@ define([
 
 ], function (Backbone, Mustache, unorm, template, AttachedFile, FileView, AlertView) {
     'use strict';
-	var FileListView = Backbone.View.extend({
+
+    function traverseFileTree(item, path, callback, onError) {
+
+        onError = typeof onError === 'function' ? onError : function () {
+            console.log('Error while discovering files');
+            console.log(arguments);
+        };
+
+        path = path || '';
+
+        if (item.isFile) {
+            item.file(function (file) {
+                callback(file);
+            }, onError);
+        } else if (item.isDirectory) {
+            item.createReader().readEntries(function (entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    traverseFileTree(entries[i], path + item.name + '/', callback);
+                }
+            }, onError);
+        }
+    }
+
+    var FileListView = Backbone.View.extend({
 
         tagName: 'div',
         className: 'attachedFiles idle',
@@ -23,7 +46,7 @@ define([
             'dragover .droppable': 'fileDragHover',
             'dragleave .droppable': 'fileDragHover',
             'drop .droppable': 'fileDropHandler',
-            'submit form':'formSubmit',
+            'submit form': 'formSubmit',
             'click a.toggle-checkAll': 'toggleCheckAll'
         },
 
@@ -73,13 +96,22 @@ define([
         },
 
         fileDropHandler: function (e) {
+
             this.fileDragHover(e);
+
             if (this.options.singleFile && e.dataTransfer.files.length > 1) {
                 this.printNotifications('error', App.config.i18n.SINGLE_FILE_RESTRICTION);
                 return;
             }
 
-            _.each(e.dataTransfer.files, this.uploadNewFile.bind(this));
+            var items = e.dataTransfer.items;
+
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i].webkitGetAsEntry();
+                if (item) {
+                    traverseFileTree(item, null, this.uploadNewFile.bind(this));
+                }
+            }
         },
 
         fileSelectHandler: function (e) {
@@ -100,20 +132,20 @@ define([
                 uploadBaseUrl: self.options.uploadBaseUrl,
                 editMode: self.editMode
             });
-            this.listenTo(fileView,'notification',this.printNotifications);
-            this.listenTo(fileView,'clear', this.clearNotifications);
+            this.listenTo(fileView, 'notification', this.printNotifications);
+            this.listenTo(fileView, 'clear', this.clearNotifications);
             fileView.render();
             self.filesUL.append(fileView.el);
         },
 
-        printNotifications: function(type,message) {
+        printNotifications: function (type, message) {
             this.notifications.append(new AlertView({
                 type: type,
                 message: message
             }).render().$el);
         },
 
-        clearNotifications: function() {
+        clearNotifications: function () {
             this.notifications.text('');
         },
 
@@ -121,12 +153,11 @@ define([
             this.filesUL.empty();
             this.filesToDelete.reset();
             this.addOneFile(attachedFile);
-            this.$el.trigger('file:uploaded');
         },
 
-        toggleCheckAll: function() {
-            this.$('input.file-check').prop('checked',this.checkAll).change();
-            this.checkAll = ! this.checkAll;
+        toggleCheckAll: function () {
+            this.$('input.file-check').prop('checked', this.checkAll).change();
+            this.checkAll = !this.checkAll;
             var text = this.checkAll ? App.config.i18n.CHECK_ALL : App.config.i18n.UNCHECK_ALL;
             this.$toggleCheckAll.text(text);
         },
@@ -136,7 +167,7 @@ define([
             var self = this;
 
             var fileName = unorm.nfc(file.name);
-            var progressBar = $('<div class="progress progress-striped"><div class="bar">'+fileName+'</div></div>');
+            var progressBar = $('<div class="progress progress-striped"><div class="bar">' + fileName + '</div></div>');
             var bar = progressBar.find('.bar');
             this.progressBars.append(progressBar);
 
@@ -164,26 +195,27 @@ define([
                     return false;
                 }
 
+                self.$el.trigger('file:uploaded', fileName);
+
                 self.xhrFinishedWithSuccess(xhr);
                 progressBar.remove();
                 newFile.isNew = function () {
                     return false;
                 };
-                var existingFile = self.filesToDelete.findWhere({fullName:newFile.getFullName()});
-                if(existingFile){
+                var existingFile = self.filesToDelete.findWhere({fullName: newFile.getFullName()});
+                if (existingFile) {
                     self.filesToDelete.remove(existingFile);
-                    var checkbox = self.$('[data-fullname="'+existingFile.getShortName()+'"]');
-                    if(checkbox && checkbox.is(':checked')){
+                    var checkbox = self.$('[data-fullname="' + existingFile.getShortName() + '"]');
+                    if (checkbox && checkbox.is(':checked')) {
                         checkbox.click();
                     }
-                }else{
+                } else {
                     self.collection.add(newFile);
                     self.newItems.add(newFile);
                 }
             }, false);
 
             xhr.open('POST', this.options.uploadBaseUrl);
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
 
             var fd = new window.FormData();
             fd.append('upload', file);
@@ -193,18 +225,17 @@ define([
             this.xhrs.push(xhr);
         },
 
-        xhrFinishedWithSuccess: function(xhr) {
+        xhrFinishedWithSuccess: function (xhr) {
             this.xhrs.splice(this.xhrs.indexOf(xhr), 1);
             if (!this.xhrs.length) {
                 this.gotoIdleState();
                 var message = this.options.singleFile ? App.config.i18n.FILE_UPLOADED : App.config.i18n.FILES_UPLOADED;
-                this.printNotifications('info',message);
+                this.printNotifications('info', message);
             }
-
         },
 
-        xhrFinishedWithError: function(xhr, error) {
-            this.printNotifications('error',error);
+        xhrFinishedWithError: function (xhr, error) {
+            this.printNotifications('error', error);
 
             this.xhrs.splice(this.xhrs.indexOf(xhr), 1);
             if (!this.xhrs.length) {
@@ -218,7 +249,7 @@ define([
         },
 
         cancelButtonClicked: function () {
-            _.invoke(this.xhrs,'abort');
+            _.invoke(this.xhrs, 'abort');
             //empty the array
             this.xhrs.length = 0;
             this.finished();
@@ -228,31 +259,31 @@ define([
             /*we need to reverse read because model.destroy() remove elements from collection*/
             while (this.filesToDelete.length !== 0) {
                 var file = this.filesToDelete.pop();
-	            this.deleteAFile(file);
+                this.deleteAFile(file);
             }
         },
 
         deleteNewFiles: function () {
             //Abort file upload if there is one
-            _.invoke(this.xhrs,'abort');
+            _.invoke(this.xhrs, 'abort');
 
             //deleting unwanted files that have been added by upload
             //we need to reverse read because model.destroy() remove elements from collection
             while (this.newItems.length !== 0) {
                 var file = this.newItems.pop();
-	            this.deleteAFile(file);
+                this.deleteAFile(file);
             }
         },
 
-		deleteAFile: function(file){
+        deleteAFile: function (file) {
             var self = this;
-			file.destroy({
-				dataType: 'text', // server doesn't send a json hash in the response body
-				error: function () {
-                    self.printNotifications('error', App.config.i18n.FILE_DELETION_ERROR.replace('%{id}',file.id));
-				}
-			});
-		},
+            file.destroy({
+                dataType: 'text', // server doesn't send a json hash in the response body
+                error: function () {
+                    self.printNotifications('error', App.config.i18n.FILE_DELETION_ERROR.replace('%{id}', file.id));
+                }
+            });
+        },
 
         gotoIdleState: function () {
             this.$el.removeClass('uploading');
@@ -266,7 +297,12 @@ define([
         },
 
         render: function () {
-            this.$el.html(Mustache.render(template, {i18n: App.config.i18n, title:this.title, editMode: this.editMode, multiple:!this.options.singleFile}));
+            this.$el.html(Mustache.render(template, {
+                i18n: App.config.i18n,
+                title: this.title,
+                editMode: this.editMode,
+                multiple: !this.options.singleFile
+            }));
 
             this.bindDomElements();
 
@@ -275,7 +311,7 @@ define([
             return this;
         },
 
-        formSubmit:function(){
+        formSubmit: function () {
             return false;
         },
 

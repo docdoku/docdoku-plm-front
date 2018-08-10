@@ -19,6 +19,11 @@
                 {{i18n.USERS}}
             </a>
         </li>
+        <li  class="header nav-list-entry {{#isCustomizations}}active{{/isCustomizations}}">
+            <a href="#/workspace/{{workspaceId}}/customizations">
+                {{i18n.CUSTOMIZATIONS}}
+            </a>
+        </li>
         <li  class="header nav-list-entry {{#isNotifications}}active{{/isNotifications}}">
             <a href="#/workspace/{{workspaceId}}/notifications">
                 {{i18n.NOTIFICATIONS}}
@@ -34,7 +39,7 @@
         {{^workspaceId}}
             {{^isAdmin}}
             <li  class="header nav-list-entry {{#isCreation}}active{{/isCreation}}">
-                <a href="#/create">
+                <a class="new-workspace" href="#/create">
                     <i class="fa fa-plus"></i>
                     {{i18n.CREATE_WORKSPACE}}
                 </a>

@@ -3,15 +3,13 @@
 casper.test.begin('Parts multiple checkout tests suite', 3, function partsMultipleCheckoutTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -74,10 +72,7 @@ casper.test.begin('Parts multiple checkout tests suite', 3, function partsMultip
     casper.then(function waitForCheckoutButtonDisabled() {
         return this.waitForSelector('.actions .checkout:disabled', function partIsCheckout() {
             this.test.assert(true, 'Parts have been checkout');
-            var nbPart = this.evaluate(function () {
-                return document.querySelectorAll('i.fa.fa-pencil').length;
-            });
-            this.test.assertSelectorHasText('.nav-checkedOut-number-item', nbPart, 'checkout number updated (' + nbPart + ' in nav)');
+
 
         }, function fail() {
             this.capture('screenshot/baselineCreation/waitForCheckoutButtonDisabled-error.png');
@@ -85,6 +80,17 @@ casper.test.begin('Parts multiple checkout tests suite', 3, function partsMultip
         });
     });
 
+    /**
+     * Assert checked out badge has been updated
+     */
+    casper.then(function assertBadgeUpdated(){
+        return this.waitUntilVisible('.nav-checkedOut-number-item.badge-custom',function(){
+            var nbPart = this.evaluate(function () {
+                return document.querySelectorAll('#part_table tbody tr td i.fa.fa-pencil').length;
+            });
+            this.test.assertSelectorHasText('.nav-checkedOut-number-item', nbPart, 'checkout number updated (' + nbPart + ' in nav)');
+        });
+    });
 
     casper.run(function allDone() {
         return this.test.done();

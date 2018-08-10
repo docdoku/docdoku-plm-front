@@ -108,7 +108,7 @@ define([
 
         onDelete : function (callback) {
             var self = this;
-            var urlToDelete = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links/' + this.model.pathToPath.id;
+            var urlToDelete = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links/' + this.model.pathToPath.id;
 
             $.ajax({
                 type: 'DELETE',
@@ -126,7 +126,7 @@ define([
 
         onPost: function (callback) {
             var self = this;
-            var urlToPost = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links';
+            var urlToPost = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links';
 
             this.model.pathToPath.description = this.$('.path-to-path-description').val();
 
@@ -163,7 +163,7 @@ define([
             if (description !== this.model.pathToPath.description) {
                 this.model.pathToPath.description = description;
                 var self = this;
-                var urlToPut = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links/' + this.model.pathToPath.id;
+                var urlToPut = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.model.productId + '/path-to-path-links/' + this.model.pathToPath.id;
 
                 var data = {
                     sourcePath : this.model.pathToPath.source,

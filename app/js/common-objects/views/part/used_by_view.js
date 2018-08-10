@@ -29,7 +29,7 @@ define([
                 var self = this;
                 $.ajax({
                     type:'GET',
-                    url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.linkedPart.getPartKey() + '/used-by-as-component',
+                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.linkedPart.getEncodedPartKey() + '/used-by-as-component',
                     contentType:'application/json',
                     success:function(parts){
                         _.each(parts, function(part){
@@ -53,7 +53,7 @@ define([
 
                 $.ajax({
                     type:'GET',
-                    url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' + this.linkedPart.getPartKey() + '/used-by-as-substitute',
+                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' + this.linkedPart.getEncodedPartKey() + '/used-by-as-substitute',
                     contentType:'application/json',
                     success:function(parts){
                         _.each(parts, function(part){

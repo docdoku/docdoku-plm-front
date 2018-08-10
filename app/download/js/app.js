@@ -4,7 +4,7 @@ define([
     'mustache',
     'text!templates/content.html'
 ], function (Backbone, Mustache, template) {
-	'use strict';
+    'use strict';
     var AppView = Backbone.View.extend({
 
         el: '#content',
@@ -12,7 +12,7 @@ define([
         render: function () {
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
-                contextPath:App.config.contextPath
+                contextPath: App.config.contextPath
             })).show();
             return this;
         }

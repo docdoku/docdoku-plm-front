@@ -127,6 +127,9 @@ define([
             _.each(this.choiceView.getChoices(),function(choice){
                 if(choice && choice.optional){
                     optionalUsageLinks.push(choice.path);
+                    if (choice.substitute) {
+                        substituteLinks.push(choice.substitute);
+                    }
                 } else if(choice && choice.path){
                     substituteLinks.push(choice.path);
                 }

@@ -4,7 +4,7 @@
     {{/pending}}
     {{^pending}}
         {{#succeed}}
-            <i class="fa fa-recycle success" title="{{i18n.IMPORT_SUCCEED}}"></i> <b>{{i18n.IMPORT_SUCCEED}}</b>
+            <i class="fa fa-recycle success" title="{{i18n.IMPORT_SUCCEEDED}}"></i> <b>{{i18n.IMPORT_SUCCEEDED}}</b>
         {{/succeed}}
         {{^succeed}}
             <i class="fa fa-recycle fail" title="{{i18n.IMPORT_FAILED}}"></i><b>{{i18n.IMPORT_FAILED}}</b>
@@ -14,7 +14,7 @@
             {{i18n.FILE}}:  {{fileName}}
         </p>
         <p class="start-date">
-            {{i18n.DATE}}: {{startDate}}
+            {{i18n.DATE}}: <a>{{displayedDate}}</a>
         </p>
 
 

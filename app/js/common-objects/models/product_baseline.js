@@ -6,10 +6,10 @@ define(['common-objects/models/baseline'],
             urlRoot: function () {
                 var ciId = this.getConfigurationItemId();
                 if (ciId) {
-                    return App.config.contextPath + '/api/workspaces/' +
+                    return App.config.apiEndPoint + '/workspaces/' +
                         App.config.workspaceId + '/product-baselines/' + ciId + '/baselines';
                 }
-                return App.config.contextPath + '/api/workspaces/' +
+                return App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-baselines';
             },
             getBaselinedParts: function () {
@@ -38,17 +38,17 @@ define(['common-objects/models/baseline'],
             },
 
             getBomUrl: function () {
-                return App.config.contextPath + '/product-structure/#' + App.config.workspaceId +
+                return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                     '/' + encodeURIComponent(this.getConfigurationItemId()) + '/config-spec/' + this.getId() + '/bom';
             },
 
             getSceneUrl: function () {
-                return App.config.contextPath + '/product-structure/#' + App.config.workspaceId +
+                return App.config.contextPath + 'product-structure/index.html#' + App.config.workspaceId +
                     '/' + encodeURIComponent(this.getConfigurationItemId()) + '/config-spec/' + this.getId() + '/scene';
             },
 
             getZipUrl: function () {
-                return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId +
+                return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId +
                     '/products/' + encodeURIComponent(this.getConfigurationItemId()) +
                     '/export-files?configSpecType=' + encodeURIComponent(this.getId());
             },

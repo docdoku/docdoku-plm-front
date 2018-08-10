@@ -194,9 +194,9 @@
                         {{^isObsolete}}
                         {{^isLocked}}
                         <div class="action-checkin-checkout" >
-                            {{^isCheckout}}<button type="button" class="btn btn-small btn-warning action-checkout"> <i class="fa fa-pencil"></i> {{i18n.CHECKOUT}}</button>{{/isCheckout}}
-                            {{#isCheckout}}<button type="button" class="btn btn-small btn-success action-checkin"> <i class="fa fa-eye"></i> {{i18n.CHECKIN}}</button>
-                            <button type="button" class="btn btn-small btn-info action-undocheckout"> <i class="fa fa-reply"></i>{{i18n.UNDO_CHECKOUT}}</button>{{/isCheckout}}
+                            {{^isCheckout}}<button type="button" class="btn btn-small btn-custom action-checkout"> <i class="fa fa-pencil"></i> {{i18n.CHECKOUT}}</button>{{/isCheckout}}
+                            {{#isCheckout}}<button type="button" class="btn btn-small btn-custom action-checkin"> <i class="fa fa-eye"></i> {{i18n.CHECKIN}}</button>
+                            <button type="button" class="btn btn-small btn-default action-undocheckout"> <i class="fa fa-reply"></i>{{i18n.UNDO_CHECKOUT}}</button>{{/isCheckout}}
 
                         </div>
                         {{/isLocked}}
@@ -289,7 +289,7 @@
         {{/iteration}}
 
         {{#editMode}}
-        <a id="cancel-iteration" class="btn cancel" data-dismiss="modal">{{i18n.CANCEL}}</a>
+        <a id="cancel-iteration" class="btn btn-default cancel" data-dismiss="modal">{{i18n.CANCEL}}</a>
         <button id="save-part" class="btn btn-primary" form="form-part">{{i18n.SAVE}}</button>
         {{/editMode}}
         {{^editMode}}

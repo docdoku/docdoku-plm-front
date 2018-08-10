@@ -3,15 +3,12 @@
 casper.test.begin('Document deletion tests suite', 1, function documentDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -31,8 +28,8 @@ casper.test.begin('Document deletion tests suite', 1, function documentDeletionT
      */
 
     casper.then(function waitForDocumentDisplayed() {
-        return this.waitForSelector('#document-management-content table.dataTable tbody tr[title="'+documents.document1.number+'"] td.reference', function documentIsDisplayed() {
-            this.click('#document-management-content table.dataTable tbody tr[title="'+documents.document1.number+'"] td input[type=checkbox]');
+        return this.waitForSelector('#document-management-content table.dataTable tbody tr[title="' + documents.document1.number + '"] td.reference', function documentIsDisplayed() {
+            this.click('#document-management-content table.dataTable tbody tr[title="' + documents.document1.number + '"] td input[type=checkbox]');
         }, function fail() {
             this.capture('screenshot/documentDeletion/waitForDocumentDisplayed-error.png');
             this.test.assert(false, 'Document to delete rows can not be found');
@@ -71,7 +68,7 @@ casper.test.begin('Document deletion tests suite', 1, function documentDeletionT
      */
 
     casper.then(function waitForDocumentDeletion() {
-        return this.waitWhileSelector('#document-management-content table.dataTable tbody tr[title="'+documents.document1.number+'"]', function documentDeleted() {
+        return this.waitWhileSelector('#document-management-content table.dataTable tbody tr[title="' + documents.document1.number + '"]', function documentDeleted() {
             this.test.assert(true, 'Document has been deleted');
         }, function fail() {
             this.capture('screenshot/documentDeletion/waitForDocumentDeletion-error.png');

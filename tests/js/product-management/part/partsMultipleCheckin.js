@@ -3,15 +3,13 @@
 casper.test.begin('Part multiple checkin tests suite', 5, function partsMultipleCheckinTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -73,7 +71,7 @@ casper.test.begin('Part multiple checkin tests suite', 5, function partsMultiple
      * Send keys for an iteration note
      */
     casper.then(function waitForIterationNotePrompt() {
-        return  this.waitForSelector('#prompt_modal #prompt_input.ready', function promptIterationNoteModal() {
+        return this.waitForSelector('#prompt_modal #prompt_input.ready', function promptIterationNoteModal() {
             this.sendKeys('#prompt_modal #prompt_input', products.part1.iterationNote, {reset: true});
         }, function fail() {
             this.capture('screenshot/MultiplePartsCheckin/waitForIterationNotePrompt-error.png');

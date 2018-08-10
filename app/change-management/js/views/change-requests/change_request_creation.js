@@ -1,4 +1,4 @@
-/*global _,define,App,window*/
+/*global _,define,App*/
 define([
     'backbone',
     'mustache',
@@ -11,22 +11,23 @@ define([
     'common-objects/views/linked/linked_parts',
     'common-objects/collections/linked/linked_part_collection',
     'common-objects/views/linked/linked_issues',
-    'common-objects/collections/linked/linked_change_item_collection'
-], function (Backbone, Mustache, template, ChangeRequestModel, UserList, MilestoneList, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedIssuesView, LinkedChangeItemCollection) {
+    'common-objects/collections/linked/linked_change_item_collection',
+    'common-objects/views/alert'
+], function (Backbone, Mustache, template, ChangeRequestModel, UserList, MilestoneList, LinkedDocumentsView, LinkedDocumentCollection, LinkedPartsView, LinkedPartCollection, LinkedIssuesView, LinkedChangeItemCollection, AlertView) {
     'use strict';
     var ChangeRequestCreationView = Backbone.View.extend({
         events: {
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #request_creation_form': 'onSubmitForm',
             'hidden #request_creation_modal': 'onHidden',
-            'close-modal-request':'closeModal'
+            'close-modal-request': 'closeModal'
         },
 
         initialize: function () {
             this._subViews = [];
             this.model = new ChangeRequestModel();
             _.bindAll(this);
-            this.$el.on('remove', this.removeSubviews);                                                                  // Remove cascade
+            this.$el.on('remove', this.removeSubviews);
         },
 
         removeSubviews: function () {
@@ -64,13 +65,13 @@ define([
         },
         fillPriorityList: function () {
             var self = this;
-            _.each(this.model.priorities, function(priority){
+            _.each(this.model.priorities, function (priority) {
                 self.$inputRequestPriority.append('<option value="' + priority + '" ' + '>' + priority + '</option>');
             });
         },
         fillCategoryList: function () {
             var self = this;
-            _.each(this.model.categories, function(category){
+            _.each(this.model.categories, function (category) {
                 self.$inputRequestCategory.append('<option value="' + category + '" ' + '>' + category + '</option>');
             });
         },
@@ -82,7 +83,7 @@ define([
             that._affectedDocumentsCollection = new LinkedDocumentCollection();
             that._linkedDocumentsView = new LinkedDocumentsView({
                 editMode: true,
-                commentEditable:false,
+                commentEditable: false,
                 collection: that._affectedDocumentsCollection
             }).render();
 
@@ -123,15 +124,16 @@ define([
             this.$inputRequestPriority = this.$('#inputRequestPriority');
             this.$inputRequestAssignee = this.$('#inputRequestAssignee');
             this.$inputRequestCategory = this.$('#inputRequestCategory');
+            this.$notifications = this.$('.notifications');
         },
 
-        interceptSubmit : function(){
-            this.isValid = ! this.$('.tabs').invalidFormTabSwitcher();
+        interceptSubmit: function () {
+            this.isValid = !this.$('.tabs').invalidFormTabSwitcher();
         },
 
         onSubmitForm: function (e) {
 
-            if(this.isValid){
+            if (this.isValid) {
                 var data = {
                     name: this.$inputRequestName.val(),
                     description: this.$inputRequestDescription.val(),
@@ -144,7 +146,7 @@ define([
 
                 this.model.save(data, {
                     success: this.onRequestCreated,
-                    error: this.error,
+                    error: this.onError,
                     wait: true
                 });
             }
@@ -163,7 +165,10 @@ define([
         },
 
         onError: function (model, error) {
-            window.alert(App.config.i18n.CREATION_ERROR + ' : ' + error.responseText);
+            this.$notifications.append(new AlertView({
+                type: 'error',
+                message: error.responseText
+            }).render().$el);
         },
 
         openModal: function () {

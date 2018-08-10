@@ -1,16 +1,14 @@
-/*global casper,homeUrl,login,pass,apiUrls*/
-casper.test.begin('Login tests suite', 3, function loginTestsSuite() {
+/*global casper,homeUrl,login,pass*/
+casper.test.begin('Login tests suite', 2, function loginTestsSuite() {
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open app home page
      */
-    casper.then(function () {
-        return this.open(homeUrl);
-    });
+    casper.open(homeUrl);
 
     /**
      * Test to find the login form
@@ -25,19 +23,13 @@ casper.test.begin('Login tests suite', 3, function loginTestsSuite() {
     });
 
     /**
-     * Fill the login form
+     * Fill and submit the login form
      */
     casper.then(function fillLoginForm() {
         this.fill('form[id="login_form"]', {
             'login_form-login': login,
             'login_form-password': pass
         }, false);
-    });
-
-    /**
-     * Submit the login form
-     */
-    casper.then(function submitLoginForm() {
         this.click('#login_form-login_button');
     });
 
@@ -45,20 +37,11 @@ casper.test.begin('Login tests suite', 3, function loginTestsSuite() {
      * We should be redirected on workspace menu
      */
     casper.then(function waitForLogoutButton() {
-        return this.waitForSelector('#logout_link',function(){
-            this.test.assert(true,'Logout link should be displayed');
-        },function(){
-            this.capture('screenshot/auth/login.png');
-            this.test.assert(true,'Logout link should be displayed');
-        });
-    });
-
-    /**
-     * Check if we are connected to the api
-     */
-    casper.then(function checkSessionState() {
-        return this.open(apiUrls.userInfo).then(function(response){
-            this.test.assertEqual(response.status, 200, 'User "' + login + '" should log in');
+        return this.waitForSelector('#logout_link', function () {
+            this.test.assert(true, 'Logout link should be displayed');
+        }, function () {
+            this.capture('screenshot/auth/waitForLogoutButton-error.png');
+            this.test.assert(true, 'Logout link should be displayed');
         });
     });
 

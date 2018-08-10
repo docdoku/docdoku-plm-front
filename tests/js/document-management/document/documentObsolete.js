@@ -3,14 +3,12 @@
 casper.test.begin('Document obsolete tests suite', 3, function documentObsoleteTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -41,8 +39,8 @@ casper.test.begin('Document obsolete tests suite', 3, function documentObsoleteT
      * Check and click on Mark as obsolete button
      */
     casper.then(function waitForMarkAsObsoleteButton() {
-        return this.waitForSelector('.actions .mark-as-obsolete', function checkVisible() {
-            this.test.assertVisible('.actions .mark-as-obsolete', 'Mark as obsolete button visible');
+        return this.waitUntilVisible('.actions .mark-as-obsolete', function checkVisible() {
+            this.test.assertTrue(true, 'Mark as obsolete button visible');
             this.click('.actions .mark-as-obsolete');
         }, function fail() {
             this.capture('screenshot/documentObsolete/waitForMarkAsObsoleteButton-error.png');
@@ -66,8 +64,8 @@ casper.test.begin('Document obsolete tests suite', 3, function documentObsoleteT
      * Wait for the Mark as obsolete button to be disabled
      */
     casper.then(function waitForMarkAsObsoleteButtonDisabled() {
-        return this.waitForSelector('.actions .mark-as-obsolete', function checkHidden() {
-            this.test.assertNotVisible('.actions .mark-as-obsolete', 'Mark as obsolete button hidden');
+        return this.waitWhileVisible('.actions .mark-as-obsolete', function checkHidden() {
+            this.test.assertTrue(true, 'Mark as obsolete button hidden');
         }, function fail() {
             this.capture('screenshot/documentObsolete/waitForMarkAsObsoleteButtonDisabled-error.png');
             this.test.assert(false, 'Mark as obsolete button not hidden');
@@ -78,7 +76,7 @@ casper.test.begin('Document obsolete tests suite', 3, function documentObsoleteT
      * Check document has been marked as obsolete
      */
     casper.then(function waitForObsoleteIconDisplayed() {
-        this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-frown-o', function documentIsObsolete() {
+        return this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-frown-o', function documentIsObsolete() {
             this.test.assertElementCount('#document-management-content table.dataTable tbody i.fa.fa-frown-o', 1, 'Document has been marked as obsolete');
         }, function fail() {
             this.capture('screenshot/documentObsolete/waitForObsoleteIconDisplayed-error.png');

@@ -4,15 +4,13 @@ casper.test.begin('Assembly check tests suite', 29, function assemblyCheckTestsS
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav

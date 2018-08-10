@@ -31,11 +31,14 @@ define([
 
         showContent: function () {
             this.setActive();
-            this.cleanView();
-            if(!this.contentView){
-                this.contentView = new BaselineContentView();
+
+            if (this.contentView) {
+                this.contentView.remove();
             }
+
+            this.contentView = new BaselineContentView();
             this.contentView.render();
+
             App.$documentManagementContent.html(this.contentView.el);
         },
 

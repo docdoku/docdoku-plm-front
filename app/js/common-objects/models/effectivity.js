@@ -61,13 +61,13 @@ define([
             },
 
             getEffectivity: function (effectivityId) {
-                return $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/effectivities/' + effectivityId);
+                return $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/effectivities/' + effectivityId);
             },
 
             updateEffectivity: function (effectivityId, effectivity) {
                 return $.ajax({
                     type: 'PUT',
-                    url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/effectivities/' + effectivityId,
+                    url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/effectivities/' + effectivityId,
                     data: JSON.stringify(effectivity),
                     contentType: 'application/json; charset=utf-8'
                 });

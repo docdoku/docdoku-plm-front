@@ -9,62 +9,64 @@ define(function () {
      */
 
 
-    $.fn.queryBuilder.defaults({ lang: {
-        'add_rule': '',
-        'add_group': '',
-        'delete_rule': '',
-        'delete_group': '',
-        'conditions': {
-            'AND': App.config.i18n.QUERY_BUILDER_CONDITION_AND,
-            'OR': App.config.i18n.QUERY_BUILDER_CONDITION_OR
-        },
-        'operators': {
-            'equal': App.config.i18n.QUERY_BUILDER_OPERATORS_EQUALS,
-            'not_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_EQUALS,
-            'in': App.config.i18n.QUERY_BUILDER_OPERATORS_IN,
-            'not_in': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_IN,
-            'less': App.config.i18n.QUERY_BUILDER_OPERATORS_LESS,
-            'less_or_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_LESS_OR_EQUAL,
-            'greater': App.config.i18n.QUERY_BUILDER_OPERATORS_GREATER,
-            'greater_or_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_GREATER_OR_EQUAL,
-            'between': App.config.i18n.QUERY_BUILDER_OPERATORS_BETWEEN,
-            'begins_with': App.config.i18n.QUERY_BUILDER_OPERATORS_BEGIN_WITH,
-            'not_begins_with': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_BEGIN_WITH,
-            'contains': App.config.i18n.QUERY_BUILDER_OPERATORS_CONTAINS,
-            'not_contains': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_CONTAINS,
-            'ends_with': App.config.i18n.QUERY_BUILDER_OPERATORS_ENDS_WITH,
-            'not_ends_with': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_ENDS_WITH,
-            'is_empty': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_EMPTY,
-            'is_not_empty': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NOT_EMPTY,
-            'is_null': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NULL,
-            'is_not_null': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NOT_NULL
-        },
-        'errors': {
-            'no_filter': App.config.i18n.QUERY_BUILDER_ERRORS_NO_FILTER,
-            'empty_group': App.config.i18n.QUERY_BUILDER_ERRORS_EMPTY_GROUP,
-            'radio_empty': App.config.i18n.QUERY_BUILDER_ERRORS_RADIO_EMPTY,
-            'checkbox_empty': App.config.i18n.QUERY_BUILDER_ERRORS_CHECKBOX_EMPTY,
-            'select_empty': App.config.i18n.QUERY_BUILDER_ERRORS_SELECT_EMPTY,
-            'string_empty': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EMPTY,
-            'string_exceed_min_length': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EXCEED_MIN_LENGTH,
-            'string_exceed_max_length': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EXCEED_MAX_LENGTH,
-            'string_invalid_format': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_INVALID_FORMAT,
-            'number_nan': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NAN,
-            'number_not_integer': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NOT_INTEGER,
-            'number_not_double': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NOT_DOUBLE,
-            'number_exceed_min': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_EXCEED_MIN,
-            'number_exceed_max': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_EXCEED_MAX,
-            'number_wrong_step': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_WRONG_STEP,
-            'datetime_empty': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EMPTY,
-            'datetime_invalid': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_INVALID,
-            'datetime_exceed_min': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EXCEED_MIN,
-            'datetime_exceed_max': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EXCEED_MAX,
-            'boolean_not_valid': App.config.i18n.QUERY_BUILDER_ERRORS_BOOLEAN_NOT_VALID,
-            'operator_not_multiple': App.config.i18n.QUERY_BUILDER_ERRORS_OPERATOR_NOT_MULTIPLE
+    $.fn.queryBuilder.defaults({
+        lang: {
+            'add_rule': '',
+            'add_group': '',
+            'delete_rule': '',
+            'delete_group': '',
+            'conditions': {
+                'AND': App.config.i18n.QUERY_BUILDER_CONDITION_AND,
+                'OR': App.config.i18n.QUERY_BUILDER_CONDITION_OR
+            },
+            'operators': {
+                'equal': App.config.i18n.QUERY_BUILDER_OPERATORS_EQUALS,
+                'not_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_EQUALS,
+                'in': App.config.i18n.QUERY_BUILDER_OPERATORS_IN,
+                'not_in': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_IN,
+                'less': App.config.i18n.QUERY_BUILDER_OPERATORS_LESS,
+                'less_or_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_LESS_OR_EQUAL,
+                'greater': App.config.i18n.QUERY_BUILDER_OPERATORS_GREATER,
+                'greater_or_equal': App.config.i18n.QUERY_BUILDER_OPERATORS_GREATER_OR_EQUAL,
+                'between': App.config.i18n.QUERY_BUILDER_OPERATORS_BETWEEN,
+                'begins_with': App.config.i18n.QUERY_BUILDER_OPERATORS_BEGIN_WITH,
+                'not_begins_with': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_BEGIN_WITH,
+                'contains': App.config.i18n.QUERY_BUILDER_OPERATORS_CONTAINS,
+                'not_contains': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_CONTAINS,
+                'ends_with': App.config.i18n.QUERY_BUILDER_OPERATORS_ENDS_WITH,
+                'not_ends_with': App.config.i18n.QUERY_BUILDER_OPERATORS_NOT_ENDS_WITH,
+                'is_empty': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_EMPTY,
+                'is_not_empty': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NOT_EMPTY,
+                'is_null': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NULL,
+                'is_not_null': App.config.i18n.QUERY_BUILDER_OPERATORS_IS_NOT_NULL
+            },
+            'errors': {
+                'no_filter': App.config.i18n.QUERY_BUILDER_ERRORS_NO_FILTER,
+                'empty_group': App.config.i18n.QUERY_BUILDER_ERRORS_EMPTY_GROUP,
+                'radio_empty': App.config.i18n.QUERY_BUILDER_ERRORS_RADIO_EMPTY,
+                'checkbox_empty': App.config.i18n.QUERY_BUILDER_ERRORS_CHECKBOX_EMPTY,
+                'select_empty': App.config.i18n.QUERY_BUILDER_ERRORS_SELECT_EMPTY,
+                'string_empty': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EMPTY,
+                'string_exceed_min_length': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EXCEED_MIN_LENGTH,
+                'string_exceed_max_length': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_EXCEED_MAX_LENGTH,
+                'string_invalid_format': App.config.i18n.QUERY_BUILDER_ERRORS_STRING_INVALID_FORMAT,
+                'number_nan': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NAN,
+                'number_not_integer': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NOT_INTEGER,
+                'number_not_double': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_NOT_DOUBLE,
+                'number_exceed_min': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_EXCEED_MIN,
+                'number_exceed_max': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_EXCEED_MAX,
+                'number_wrong_step': App.config.i18n.QUERY_BUILDER_ERRORS_NUMBER_WRONG_STEP,
+                'datetime_empty': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EMPTY,
+                'datetime_invalid': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_INVALID,
+                'datetime_exceed_min': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EXCEED_MIN,
+                'datetime_exceed_max': App.config.i18n.QUERY_BUILDER_ERRORS_DATETIME_EXCEED_MAX,
+                'boolean_not_valid': App.config.i18n.QUERY_BUILDER_ERRORS_BOOLEAN_NOT_VALID,
+                'operator_not_multiple': App.config.i18n.QUERY_BUILDER_ERRORS_OPERATOR_NOT_MULTIPLE
+            }
         }
-    }});
+    });
 
-    var dateInput = function(rule,inputName){
+    var dateInput = function (rule, inputName) {
         return '<input type="text" name="' + inputName + '" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-language="' + App.config.locale + '" data-date-today-highlight="true" />';
     };
 
@@ -76,7 +78,7 @@ define(function () {
     var tagOperators = ['equal'];
     var numberOperators = ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between'];
 
-    var filters = [];
+    var filters = [], pathDataFilters = [];
 
     // Part Master
     filters.push({
@@ -84,8 +86,8 @@ define(function () {
         label: App.config.i18n.PART_NAME,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_MASTER,
-        realType:'string'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_MASTER,
+        realType: 'string'
     });
 
     filters.push({
@@ -93,8 +95,8 @@ define(function () {
         label: App.config.i18n.PART_NUMBER,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_MASTER,
-        realType:'partNumber'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_MASTER,
+        realType: 'partNumber'
     });
 
     filters.push({
@@ -102,8 +104,8 @@ define(function () {
         label: App.config.i18n.TYPE,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_MASTER,
-        realType:'string'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_MASTER,
+        realType: 'string'
     });
 
     filters.push({
@@ -111,12 +113,12 @@ define(function () {
         label: App.config.i18n.QUERY_STANDARD,
         type: 'string',
         operators: booleanOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_MASTER,
-        realType:'boolean',
-        input : 'select',
-        values : [
-            {'true' : App.config.i18n.TRUE},
-            {'false' : App.config.i18n.FALSE}
+        optgroup: App.config.i18n.QUERY_GROUP_PART_MASTER,
+        realType: 'boolean',
+        input: 'select',
+        values: [
+            {'true': App.config.i18n.TRUE},
+            {'false': App.config.i18n.FALSE}
         ]
     });
 
@@ -125,8 +127,8 @@ define(function () {
         label: App.config.i18n.AUTHOR_LOGIN,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_AUTHOR,
-        realType:'string'
+        optgroup: App.config.i18n.QUERY_GROUP_AUTHOR,
+        realType: 'string'
     });
 
     filters.push({
@@ -134,8 +136,8 @@ define(function () {
         label: App.config.i18n.AUTHOR_NAME,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_AUTHOR,
-        realType:'string'
+        optgroup: App.config.i18n.QUERY_GROUP_AUTHOR,
+        realType: 'string'
     });
 
     // Part Revision
@@ -145,82 +147,84 @@ define(function () {
         label: App.config.i18n.VERSION,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'string'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'string'
     });
 
     filters.push({
         id: 'pr.modificationDate',
         label: App.config.i18n.MODIFICATION_DATE,
         type: 'date',
-        input:dateInput,
+        input: dateInput,
         operators: dateOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'date'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'date'
     });
 
     filters.push({
         id: 'pr.creationDate',
         label: App.config.i18n.CREATION_DATE,
         type: 'date',
-        input:dateInput,
+        input: dateInput,
         operators: dateOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'date'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'date'
     });
 
     filters.push({
         id: 'pr.checkOutDate',
         label: App.config.i18n.CHECKOUT_DATE,
         type: 'date',
-        input:dateInput,
+        input: dateInput,
         operators: dateOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'date'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'date'
     });
 
     filters.push({
         id: 'pr.checkInDate',
         label: App.config.i18n.CHECKIN_DATE,
         type: 'date',
-        input:dateInput,
+        input: dateInput,
         operators: dateOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'date'
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'date'
     });
 
-    filters.push({
+    // Non working filter, should be implemented server side. Uncomment when fixed
+    /*filters.push({
         id: 'pr.lifeCycleState',
         label: App.config.i18n.LIFECYCLE_STATE,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'string'
-    });
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'string'
+    });*/
 
     filters.push({
         id: 'pr.status',
         label: App.config.i18n.STATUS,
         type: 'string',
         operators: statusOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'string',
-        input : 'select',
-        values : [
-            {'WIP':App.config.i18n.QUERY_FILTER_STATUS_WIP},
-            {'RELEASED':App.config.i18n.QUERY_FILTER_STATUS_RELEASED},
-            {'OBSOLETE':App.config.i18n.QUERY_FILTER_STATUS_OBSOLETE}
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'string',
+        input: 'select',
+        values: [
+            {'WIP': App.config.i18n.QUERY_FILTER_STATUS_WIP},
+            {'RELEASED': App.config.i18n.QUERY_FILTER_STATUS_RELEASED},
+            {'OBSOLETE': App.config.i18n.QUERY_FILTER_STATUS_OBSOLETE}
         ]
     });
 
-    filters.push({
+    // Non working filter, should be implemented server side. Uncomment when fixed
+   /* filters.push({
         id: 'pr.linkedDocuments',
         label: App.config.i18n.LINKED_DOCUMENTS,
         type: 'string',
         operators: stringOperators,
-        optgroup:App.config.i18n.QUERY_GROUP_PART_REVISION,
-        realType:'linkedDocuments'
-    });
+        optgroup: App.config.i18n.QUERY_GROUP_PART_REVISION,
+        realType: 'linkedDocuments'
+    });*/
 
     var fields = [];
 
@@ -252,20 +256,34 @@ define(function () {
         {id: 'ctx', name: App.config.i18n.QUERY_GROUP_CONTEXT}
     ];
 
-    filters.map(function(filter){
+    filters.map(function (filter) {
         fields.push({
-            name:filter.label,
-            value:filter.id,
-            group:filter.id.substring(0,filter.id.indexOf('.'))
+            name: filter.label,
+            value: filter.id,
+            group: filter.id.substring(0, filter.id.indexOf('.'))
         });
+    });
+
+    // Should be removed when filter implemented
+    fields.push({
+        name: App.config.i18n.LIFECYCLE_STATE,
+        value: 'pr.lifeCycleState',
+        group: 'pr'
+    });
+
+    // Should be removed when filter implemented
+    fields.push({
+        name: App.config.i18n.LINKED_DOCUMENTS,
+        value: 'pr.linkedDocuments',
+        group: 'pr'
     });
 
     var contextFields = [];
 
     contextFields.push({
-        name:App.config.i18n.QUERY_DEPTH,
-        value:'ctx.depth',
-        group:'ctx'
+        name: App.config.i18n.QUERY_DEPTH,
+        value: 'ctx.depth',
+        group: 'ctx'
     });
 
     contextFields.push({
@@ -276,7 +294,7 @@ define(function () {
 
     contextFields.push({
         value: 'ctx.productId',
-        name: App.config.i18n.PRODUCT_NAME,
+        name: App.config.i18n.PRODUCT_ID,
         group: 'ctx'
     });
 
@@ -298,20 +316,58 @@ define(function () {
         group: 'ctx'
     });
 
-    return {
-        dateInput: dateInput,
-        filters : filters,
-        fields : fields,
-        groups : groups,
-        types : types,
-        contextFields : contextFields,
+    var opts = {
 
+        fields: fields, // Displayed as selectable fields in the SELECT clause group
+        contextFields: contextFields, // Additional selectable fields in the SELECT clause group
+
+        filters: filters, // Available criteria input fields for "Filters" group
+        pathDataFilters: pathDataFilters, // Available criteria input fields for "Context filters" group
+        groups: groups, // Criteria group mapping
+        types: types, // Type names array
+
+        // Operators available for criteria building
         stringOperators: stringOperators,
-        dateOperators : dateOperators,
-        lovOperators : lovOperators,
-        booleanOperators : booleanOperators,
+        dateOperators: dateOperators,
+        lovOperators: lovOperators,
+        booleanOperators: booleanOperators,
         tagOperators: tagOperators,
-        numberOperators: numberOperators
+        numberOperators: numberOperators,
+
+        // HTML Date input constructor
+        dateInput: dateInput,
+
+        icons: {
+            'add_group': 'fa fa-plus-circle',
+            'remove_group': 'fa fa-times-circle',
+            'error': 'fa fa-exclamation',
+            'remove_rule': 'fa fa-remove',
+            'add_rule': 'fa fa-plus'
+        },
+
+        selectizeOptions: {
+            plugins: ['remove_button', 'drag_drop', 'optgroup_columns'],
+            persist: true,
+            delimiter: ',',
+            optgroupField: 'group',
+            optgroupLabelField: 'name',
+            optgroupValueField: 'id',
+            optgroups: _.clone(groups),
+
+            valueField: 'value',
+            searchField: ['name'],
+            options: null,
+            render: {
+                item: function (item, escape) {
+                    return '<div><span class="name">' + escape(item.name) + '</span></div>';
+                },
+                option: function (item, escape) {
+                    return '<div><span class="label">' + escape(item.name) + '</span></div>';
+                }
+            }
+        }
     };
+
+    return opts;
 
 });

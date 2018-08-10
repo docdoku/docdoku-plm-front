@@ -4,7 +4,7 @@ define([
     'common-objects/collections/file/attached_file_collection',
     'common-objects/utils/acl-checker',
     'common-objects/utils/date',
-], function (Backbone, AttachedFileCollection, ACLChecker, Date) {
+], function (Backbone, AttachedFileCollection, ACLChecker, date) {
     'use strict';
     var Template = Backbone.Model.extend({
         initialize: function () {
@@ -45,7 +45,7 @@ define([
             return this.get('attachedFiles');
         },
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' + this.get('workspaceId') + '/document-templates/' + this.get('id') + '/';
+            return App.config.apiEndPoint + '/files/' + this.get('workspaceId') + '/document-templates/' + this.get('id') + '/';
         },
 
         isAttributesLocked: function () {
@@ -86,7 +86,7 @@ define([
         },
 
         getFormattedModificationDate: function () {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getModificationDate()
             );

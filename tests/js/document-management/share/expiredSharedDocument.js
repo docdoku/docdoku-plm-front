@@ -4,15 +4,13 @@ casper.test.begin('Expired private shared document tests suite', 1, function exp
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.privateDocumentPermalinkExpired);
-    });
+    casper.open(urls.privateDocumentPermalinkExpired);
 
     /**
      * Check we have the expired resource page

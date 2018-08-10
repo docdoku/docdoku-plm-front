@@ -8,13 +8,13 @@ define(['backbone'], function (Backbone) {
     });
 
     Organization.getOrganization = function() {
-        return $.getJSON(App.config.contextPath + '/api/organizations');
+        return $.getJSON(App.config.apiEndPoint + '/organizations');
     };
 
     Organization.createOrganization = function(organization) {
         return $.ajax({
             type: 'POST',
-            url: App.config.contextPath + '/api/organizations',
+            url: App.config.apiEndPoint + '/organizations',
             data: JSON.stringify(organization),
             contentType: 'application/json; charset=utf-8'
         });
@@ -23,7 +23,7 @@ define(['backbone'], function (Backbone) {
     Organization.updateOrganization = function(organization) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/organizations',
+            url: App.config.apiEndPoint + '/organizations',
             data: JSON.stringify(organization),
             contentType: 'application/json; charset=utf-8'
         });
@@ -32,19 +32,19 @@ define(['backbone'], function (Backbone) {
     Organization.deleteOrganization = function() {
         return $.ajax({
             type: 'DELETE',
-            url: App.config.contextPath + '/api/organizations',
+            url: App.config.apiEndPoint + '/organizations',
             contentType: 'application/json; charset=utf-8'
         });
     };
 
     Organization.getMembers = function() {
-        return $.getJSON(App.config.contextPath + '/api/organizations/members');
+        return $.getJSON(App.config.apiEndPoint + '/organizations/members');
     };
 
     Organization.addMember = function(user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/organizations/add-member',
+            url: App.config.apiEndPoint + '/organizations/add-member',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -53,7 +53,7 @@ define(['backbone'], function (Backbone) {
     Organization.removeMember = function(user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/organizations/remove-member',
+            url: App.config.apiEndPoint + '/organizations/remove-member',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -70,7 +70,7 @@ define(['backbone'], function (Backbone) {
     Organization.moveMemberUp = function(user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/organizations/move-member?direction=up',
+            url: App.config.apiEndPoint + '/organizations/move-member?direction=up',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });
@@ -79,7 +79,7 @@ define(['backbone'], function (Backbone) {
     Organization.moveMemberDown = function(user) {
         return $.ajax({
             type: 'PUT',
-            url: App.config.contextPath + '/api/organizations/move-member?direction=down',
+            url: App.config.apiEndPoint + '/organizations/move-member?direction=down',
             data: JSON.stringify(user),
             contentType: 'application/json; charset=utf-8'
         });

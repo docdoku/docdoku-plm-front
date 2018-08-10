@@ -1,6 +1,9 @@
 /*global _,define,App*/
-define(['backbone', 'common-objects/utils/date'], function (Backbone, Date) {
-	'use strict';
+define([
+    'backbone',
+    'common-objects/utils/date'
+], function (Backbone, date) {
+    'use strict';
     var Baseline = Backbone.Model.extend({
 
         initialize: function () {
@@ -11,19 +14,19 @@ define(['backbone', 'common-objects/utils/date'], function (Backbone, Date) {
             return this.get('id');
         },
 
-        getType:function(){
+        getType: function () {
             return this.get('type');
         },
 
-        isReleased:function(){
-            return this.get('type')==='RELEASED';
+        isReleased: function () {
+            return this.get('type') === 'RELEASED';
         },
 
         getName: function () {
             return this.get('name');
         },
 
-        getDescription:function(){
+        getDescription: function () {
             return this.get('description');
         },
 
@@ -32,13 +35,13 @@ define(['backbone', 'common-objects/utils/date'], function (Backbone, Date) {
         },
 
         getFormattedCreationDate: function () {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getCreationDate()
             );
         },
 
-        getAuthor:function(){
+        getAuthor: function () {
             return this.get('author').name;
         },
 

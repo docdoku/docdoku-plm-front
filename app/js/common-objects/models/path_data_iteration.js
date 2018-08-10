@@ -11,7 +11,7 @@ define(['backbone'], function (Backbone) {
         },
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId + '/product-instances/' + this.getSerialNumber() + '/pathdata/' + this.getId() + '/' + this.getIteration();
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + App.config.productId + '/product-instances/' + this.getSerialNumber() + '/pathdata/' + this.getId() + '/' + this.getIteration();
         },
 
         getId: function () {
@@ -88,7 +88,7 @@ define(['backbone'], function (Backbone) {
         },
 
         getUploadBaseUrl: function () {
-            return App.config.contextPath + '/api/files/' +
+            return App.config.apiEndPoint + '/files/' +
                 App.config.workspaceId + '/product-instances/' +
                 this.getSerialNumber() + '/' + App.config.productId +
                 '/pathdata/' + this.getId() +
@@ -96,7 +96,7 @@ define(['backbone'], function (Backbone) {
         },
 
         getDeleteBaseUrl: function () {
-            return App.config.contextPath + '/api/workspaces/' +
+            return App.config.apiEndPoint + '/workspaces/' +
                 App.config.workspaceId + '/product-instances/' +
                 App.config.productId + '/instances/' +
                 this.getSerialNumber() + '/pathdata/' +

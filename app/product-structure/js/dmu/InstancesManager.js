@@ -1,6 +1,6 @@
-/*global _,$,define,App,THREE,Worker*/
-define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
-    function (LoaderManager, async, Backbone, Logger) {
+/*global _,$,define,App,Worker*/
+define(['threecore', 'dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
+    function (THREE, LoaderManager, async, Backbone, Logger) {
 
         'use strict';
 
@@ -42,7 +42,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             var timer = null;
             var evalRunning = false;
 
-            var worker = new Worker(App.config.contextPath + '/product-structure/js/workers/InstancesWorker.js');
+            var worker = new Worker(App.config.contextPath + 'product-structure/js/workers/InstancesWorker.js');
 
             var workerMessages = {
                 stats: function (stats) {
@@ -79,7 +79,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 if (typeof  workerMessages[message.data.fn] === 'function') {
                     workerMessages[message.data.fn](message.data.obj);
                 } else {
-                    Logger.log('%c Unrecognized command  : \n\t' + message.data, 'IM');
+                    Logger.log('IM', 'Unrecognized command  : \n\t' + message.data);
                 }
             }, false);
 
@@ -117,9 +117,10 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 }
 
                 // Load the instance
-                var quality = App.config.contextPath + '/' + instance.files[directive.quality].fullName;
+                var quality = App.config.serverBasePath + instance.files[directive.quality].fullName;
 
                 var texturePath = quality.substring(0, quality.lastIndexOf('/'));
+
                 loaderManager.parseFile(quality, texturePath, {
                     success: function (object3d) {
 
@@ -142,10 +143,12 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             }
 
             function adaptMatrix(matrix) {
-                return new THREE.Matrix4(matrix[0], matrix[1], matrix[2], matrix[3],
+                var mat = new THREE.Matrix4();
+                mat.set(matrix[0], matrix[1], matrix[2], matrix[3],
                     matrix[4], matrix[5], matrix[6], matrix[7],
                     matrix[8], matrix[9], matrix[10], matrix[11],
                     matrix[12], matrix[13], matrix[14], matrix[15]);
+                return mat;
             }
 
             function updateWorker() {
@@ -154,7 +157,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                 }
                 evalRunning = true;
                 var sceneContext = App.sceneManager.getControlsContext();
-                Logger.log('%c Updating worker', 'IM');
+                Logger.log('IM', 'Updating worker');
                 worker.postMessage({
                     fn: 'context',
                     obj: {
@@ -183,10 +186,10 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
                         var max = new THREE.Vector3(instance.xMax, instance.yMax, instance.zMax);
                         var box = new THREE.Box3(min, max).applyMatrix4(instance.matrix);
 
-                        var cog = box.center();
+                        var cog = box.getCenter();
 
                         // Allow parts that don't have box to be displayed
-                        var radius = box.size().length() || 0.01;
+                        var radius = box.getSize().length() || 0.01;
 
 
                         worker.postMessage({
@@ -214,7 +217,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function loadPath(path, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + path + '&timestamp=' + getTimestamp();
 
@@ -236,7 +239,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function loadPaths(paths, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances';
 
                 if (App.config.diverge) {
@@ -264,7 +267,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             function unLoadPath(path, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + path + '&timestamp=' + getTimestamp();
 
@@ -296,26 +299,26 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             }, 1);
 
             this.loadQueue.drain = function () {
-                Logger.log('Load Queue %c All paths have been processed', 'IM');
+                Logger.log('IM', 'Load Queue  All paths have been processed');
             };
             this.loadQueue.empty = function () {
-                Logger.log('Load Queue %c  Empty Queue', 'IM');
+                Logger.log('IM', 'Load Queue   Empty Queue');
             };
             this.loadQueue.saturated = function () {
-                Logger.log('Load Queue %c Saturated Queue', 'IM');
+                Logger.log('IM', 'Load Queue  Saturated Queue');
             };
 
 
             this.xhrQueue = async.queue(loadProcess, 4);
 
             this.xhrQueue.drain = function () {
-                Logger.log('XHR Queue %c All items have been processed', 'IM');
+                Logger.log('IM', 'XHR Queue  All items have been processed');
             };
             this.xhrQueue.empty = function () {
-                Logger.log('XHR Queue %c Empty Queue', 'IM');
+                Logger.log('IM', 'XHR Queue  Empty Queue');
             };
             this.xhrQueue.saturated = function () {
-                Logger.log('XHR Queue %c Saturated Queue', 'IM');
+                Logger.log('IM', 'XHR Queue  Saturated Queue');
             };
 
             this.getLoadedGeometries = function (n) {
@@ -356,7 +359,7 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             this.clear = function () {
-                Logger.log('%c Clearing Scene', 'IM');
+                Logger.log('IM', ' Clearing Scene');
 
                 _this.xhrQueue.kill();
                 _this.loadQueue.kill();
@@ -383,9 +386,9 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             // Method called from product visualization iframe
-            this.loadProduct = function(pathToLoad, callback){
+            this.loadProduct = function (pathToLoad, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' +
                     App.config.productId + '/instances' +
                     '?configSpec=' + App.config.productConfigSpec + '&path=' + pathToLoad + '&timestamp=' + getTimestamp();
 
@@ -401,9 +404,9 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
             };
 
             // Method called from assembly visualization iframe
-            this.loadAssembly = function(partRevisionKey, callback){
+            this.loadAssembly = function (partRevisionKey, callback) {
 
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/' +
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/' +
                     partRevisionKey + '/instances';
 
                 $.ajax({
@@ -418,9 +421,9 @@ define(['dmu/LoaderManager', 'async', 'backbone', 'common-objects/log'],
 
             };
 
-            this.computeGlobalBBox = function(){
+            this.computeGlobalBBox = function () {
 
-                var box = new THREE.Box3(new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0));
+                var box = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0));
 
                 _.each(instancesIndexed, function (instance) {
                     var min = new THREE.Vector3(instance.xMin, instance.yMin, instance.zMin);

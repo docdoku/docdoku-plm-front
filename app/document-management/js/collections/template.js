@@ -7,7 +7,7 @@ define([
     'use strict';
     var TemplateList = Backbone.Collection.extend({
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/document-templates';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/document-templates';
         },
         model: Template
     });

@@ -4,15 +4,12 @@ casper.test.begin('Document creation from template tests suite', 2, function doc
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -32,7 +29,9 @@ casper.test.begin('Document creation from template tests suite', 2, function doc
      */
 
     casper.then(function clickOnDocumentCreationLink() {
-        this.click('.actions .new-document');
+        return this.waitForSelector('.actions .new-document', function () {
+            this.click('.actions .new-document');
+        });
     });
 
     /**

@@ -4,82 +4,103 @@ define([
     'mustache',
     'text!common-objects/templates/error.html'
 ], function (Backbone, Mustache, template) {
-	'use strict';
+    'use strict';
     var ErrorView = Backbone.View.extend({
 
         events: {
             'click .disconnect': 'disconnect',
-            'click .workspace-management': 'toWorkspaceManagement',
-            'click .back': 'back'
+            'click .back': 'back',
+            'click .reload': 'reload',
+            'click .navigate': 'navigate'
         },
 
         initialize: function () {
             _.bindAll(this);
         },
 
-        renderError:function(xhr){
+        renderError: function (xhr) {
 
-            if(xhr.status === 502){
-                return this.renderServerUnavailable();
-            }
-
-            if(xhr.status === 404){
-                return this.render404();
-            }
-
-            if(xhr.status === 403){
+            if (xhr.status === 502 || xhr.status === 503 || xhr.status === 0) {
                 return this.render({
-                    title:xhr.statusText,
-                    content:xhr.responseText
+                    title: App.config.i18n.SORRY,
+                    content: App.config.i18n.SERVER_NOT_AVAILABLE,
+                    xhr: xhr,
+                    showReloadButton: true,
+                    showBackButton: true,
                 });
             }
 
-            return this.renderUnexpectedError(xhr);
+            if (xhr.status === 404) {
+                return this.render({
+                    title: App.config.i18n.SORRY,
+                    content: App.config.i18n.NOTHING_HERE,
+                    showReloadButton: true,
+                    showBackButton: true,
+                    workspaces: App.config.workspaces,
+                    xhr: xhr
+                });
+            }
+
+            if (xhr.status === 403) {
+                return this.render({
+                    title: App.config.i18n.SORRY,
+                    content: App.config.i18n.FORBIDDEN_MESSAGE,
+                    showReloadButton: true,
+                    showBackButton: true,
+                    showDisconnectButton: true,
+                    xhr: xhr
+                });
+            }
+
+            return this.render({
+                title: App.config.i18n.SORRY,
+                content: App.config.i18n.UNEXPECTED_ERROR,
+                showReloadButton: true,
+                showBackButton: true,
+                xhr: xhr
+            });
 
         },
-        render404:function(){
-            return this.render({
-                title:App.config.i18n.SORRY,
-                content:App.config.i18n.NOTHING_HERE
+
+        renderWorkspaceSelection: function (resolver) {
+            var self = this;
+            resolver.then(function (workspaces) {
+                self.render({
+                    title: App.config.i18n.SORRY,
+                    content: App.config.i18n.NOTHING_HERE,
+                    showBackButton: true,
+                    workspaces: workspaces.allWorkspaces
+                });
             });
         },
-        renderServerUnavailable:function(){
-            return this.render({
-                title:App.config.i18n.SORRY,
-                content:App.config.i18n.SERVER_NOT_AVAILABLE
-            });
-        },
-        renderUnexpectedError:function(xhr){
-            return this.render({
-                title:App.config.i18n.SORRY,
-                content:App.config.i18n.UNEXPECTED_ERROR,
-                xhr:xhr
-            });
-        },
+
         render: function (opts) {
-            this.$el.html(Mustache.render(template, {
-                title: opts.title,
-                content: opts.content,
-                i18n: App.config.i18n,
-                xhr: opts.xhr
-            }));
+            opts.i18n = App.config.i18n;
+            this.$el.html(Mustache.render(template, opts));
             this.$el.addClass('error-page');
             return this;
         },
 
-        toWorkspaceManagement:function(){
-            window.location.href = App.config.contextPath + '/workspace-management/';
+        navigate: function (e) {
+            window.location.href = e.target.href;
+            window.location.reload();
+            return false;
         },
 
-        back:function(){
+        back: function () {
             window.history.back();
+            setTimeout(location.reload.bind(location),50);
         },
 
-        disconnect:function(){
+        disconnect: function () {
             delete localStorage.jwt;
-            $.get(App.config.contextPath + '/api/auth/logout').complete(function () {
+            $.get(App.config.apiEndPoint + '/auth/logout').complete(function () {
                 location.reload();
             });
+        },
+
+        reload: function () {
+            location.reload();
         }
 
     });

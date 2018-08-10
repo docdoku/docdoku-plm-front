@@ -56,7 +56,7 @@ define([
 
             this.$inputProductId.typeahead({
                 source: function (query, process) {
-                    $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products', function (data) {
+                    $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products', function (data) {
                         var ids = [];
                         _(data).each(function (d) {
                             ids.push(d.id);

@@ -29,9 +29,8 @@ define([
             'click .import-button': 'formSubmit',
             'click #auto_checkout_part': 'changeAutoCheckout',
             'hidden .importer-view': 'onHidden',
-            'click .import-preview-button': 'showPreview',
             'click .back-button': 'backToForm',
-            'hidden.bs.modal .modal.importer-view':'deleteImportStatus'
+            'hidden.bs.modal .modal.importer-view': 'deleteImportStatus'
         },
 
         initialize: function () {
@@ -51,7 +50,7 @@ define([
             this.$el.on('remove', this.removeSubviews);
 
             this.importForm = true;
-            this.importPreview = false;
+            this.importPreviewMode = false;
         },
 
         // cancel event and hover styling
@@ -87,15 +86,15 @@ define([
         },
 
         render: function () {
-
             this.$el.html(Mustache.render(modalTemplate, {i18n: App.config.i18n}));
             this.$el.find('#import-contain').append(Mustache.render(template, {
                 importForm: this.importForm,
-                importPreview: this.importPreview,
+                importPreviewMode: this.importPreviewMode,
                 checkout: this.autocheckout,
                 checkin: this.autocheckin,
                 permissive: this.permissive,
                 revisionNote: this.revisionNote,
+                importType: this.importType,
                 i18n: App.config.i18n
             }));
             this.bindDomElements();
@@ -121,49 +120,53 @@ define([
         rerender: function () {
             this.$el.find('#import-contain').html(Mustache.render(template, {
                 importForm: this.importForm,
-                importPreview: this.importPreview,
+                importPreviewMode: this.importPreviewMode,
                 checkout: this.autocheckout,
                 checkin: this.autocheckin,
                 permissive: this.permissive,
                 revisionNote: this.revisionNote,
-                partList:this.partCheckoutList,
-                searchingForPartList:this.searchingForPartList,
+                partCheckoutList: this.partCheckoutList,
+                partsToCreate: this.partsToCreate,
+                searchingForPartList: this.searchingForPartList,
+                importType: this.importType,
                 i18n: App.config.i18n,
-                options:this.options
+                options: this.options
             }));
 
             //this.delegateEvents();
             this.bindDomElements();
 
-            if (!this.searchingForPartList) {
-                this.$('.import-button').removeAttr('disabled');
-            }
 
-            if(this.autocheckout) {
+            this.$('.import-button').removeAttr('disabled');
+
+
+            if (this.autocheckout) {
                 this.checkboxAutoCheckout.prop('checked', true);
             }
 
             this.$('#revision_text_part').val(this.revisionNote);
 
-            if(this.autocheckout){
+            if (this.autocheckout) {
                 this.checkboxAutoCheckout.prop('checked', true);
                 this.checkboxAutoCheckin.prop('disabled', false);
             } else {
                 this.checkboxAutoCheckin.prop('disabled', true);
             }
 
-            if(this.autocheckin){
+            if (this.autocheckin) {
                 this.checkboxAutoCheckin.prop('checked', true);
             }
 
-            if(this.permissive){
-                this.$('#permissive_update_part').prop('checked',true);
+            if (this.permissive) {
+                this.$('#permissive_update_part').prop('checked', true);
             }
+
+            this.$('#import-type').val(this.importType);
         },
 
         addOneFile: function (attachedFile) {
             this.filedisplay.html('<li>' + attachedFile.getShortName() + '</li>');
-            this.$('.import-preview-button').removeAttr('disabled');
+            this.$('.import-button').removeAttr('disabled');
         },
 
         bindDomElements: function () {
@@ -191,92 +194,115 @@ define([
 
         showPreview: function () {
 
+            if (!this.file) {
+                this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
+                return;
+            }
+
             this.clearNotifications();
 
-            this.autocheckin = this.checkboxAutoCheckin.is(':checked');
-            this.autocheckout = this.checkboxAutoCheckout.is(':checked');
-            this.permissive = this.$('#permissive_update_part').is(':checked');
-            this.revisionNote = this.$('#revision_text_part').val().trim();
+            var params = {
+                autoCheckout: this.autocheckout,
+                autoCheckin: this.autocheckin,
+                permissiveUpdate: this.permissive,
+                importType: this.importType
+            };
 
-            this.options = this.autocheckin || this.autocheckout || this.permissive || this.revisionNote!== '';
+            this.searchingForPartList = true;
+            this.importForm = false;
+            this.importPreviewMode = true;
 
-            if (this.file) {
+            var previewBaseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/importPreview';
+            var previewUrl = previewBaseUrl + '?' + $.param(params);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', previewUrl, true);
 
-                if (this.autocheckout) {
-
-                    var params = {
-                        autoCheckout: this.autocheckout,
-                        autoCheckin: this.autocheckin,
-                        permissiveUpdate: this.permissive
-                    };
-
-                    this.searchingForPartList = true;
-                    var previewBaseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/importPreview';
-                    var previewUrl = previewBaseUrl + '?' + $.param(params);
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', previewUrl, true);
-
-                    if(localStorage.jwt){
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-                    }
-
-                    var formData = new window.FormData();
-                    var _this = this;
-                    xhr.onreadystatechange = function() {
-                        if(xhr.readyState === 4 && xhr.status === 200){
-                            _this.partCheckoutList = jQuery.parseJSON(xhr.response);
-                            _this.searchingForPartList = false;
-                            _this.importForm = false;
-                            _this.importPreview = true;
-                            _this.rerender();
-                        }
-                    };
-                    formData.append('upload', this.file);
-                    xhr.send(formData);
-                } else {
-                    this.partCheckoutList = null;
-                    this.partCheckoutList = false;
+            var formData = new window.FormData();
+            var _this = this;
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    _this.importPreview = $.parseJSON(xhr.response);
+                    _this.partCheckoutList = _this.importPreview.partRevsToCheckout;
+                    _this.partsToCreate = _this.importPreview.partsToCreate;
+                    _this.searchingForPartList = false;
+                    _this.importForm = false;
+                    _this.importPreviewMode = true;
+                    _this.rerender();
                 }
+            };
+            formData.append('upload', this.file);
+            xhr.send(formData);
 
-                this.importForm = false;
-                this.importPreview = true;
-                this.rerender();
+            this.rerender();
 
-            }
         },
+
         formSubmit: function () {
 
-            var baseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/import';
+            var checkinCheckBox = this.$('#auto_checkin_part');
+            var checkoutCheckBox = this.$('#auto_checkout_part');
+            var permissiveCheckBox = this.$('#permissive_update_part');
+            var importTypeSelect = this.$('#import-type');
 
-            if (this.file) {
-
-                var params = {
-                    autoCheckout: this.autocheckout,
-                    autoCheckin: this.autocheckin,
-                    permissiveUpdate: this.permissive,
-                    revisionNote: this.revisionNote
-                };
-
-                this.deleteImportStatus();
-
-                var importUrl = baseUrl + '?' + $.param(params);
-
-                var xhr = new XMLHttpRequest();
-                xhr.onload = this.fetchImports.bind(this);
-                xhr.open('POST', importUrl, true);
-
-                if(localStorage.jwt){
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-                }
-
-                var formData = new window.FormData();
-                formData.append('upload', this.file);
-                xhr.send(formData);
-
-            } else if (!this.file) {
-                this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
+            if (checkinCheckBox.length) {
+                this.autocheckin = checkinCheckBox.is(':checked');
             }
 
+            if (checkoutCheckBox.length) {
+                this.autocheckout = checkoutCheckBox.is(':checked');
+            }
+
+            if (permissiveCheckBox.length) {
+                this.permissive = permissiveCheckBox.is(':checked');
+            }
+
+            var revisionText = this.$('#revision_text_part');
+
+            if (revisionText.length) {
+                this.revisionNote = (revisionText.val() || '' ).trim();
+            }
+
+            if (importTypeSelect.length) {
+                this.importType = this.$('#import-type').val();
+            }
+
+            var dryRunCheckBox = this.$('#dry_run');
+            this.dryRun = dryRunCheckBox.length && dryRunCheckBox.is(':checked');
+
+            if (this.importForm && this.dryRun) {
+                this.showPreview();
+            } else {
+                this.startImport();
+            }
+        },
+
+        startImport: function () {
+
+            var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/import';
+
+            if (!this.file) {
+                this.printNotifications('error', App.config.i18n.NO_FILE_TO_IMPORT);
+                return;
+            }
+            var params = {
+                autoCheckout: this.autocheckout,
+                autoCheckin: this.autocheckin,
+                permissiveUpdate: this.permissive,
+                revisionNote: this.revisionNote,
+                importType: this.importType
+            };
+
+            this.deleteImportStatus();
+
+            var importUrl = baseUrl + '?' + $.param(params);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onload = this.fetchImports.bind(this);
+            xhr.open('POST', importUrl, true);
+
+            var formData = new window.FormData();
+            formData.append('upload', this.file);
+            xhr.send(formData);
             this.backToForm();
             return false;
         },
@@ -287,7 +313,7 @@ define([
             _this.$('.import-status-views').empty();
 
             if (this.file) {
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
                 $.get(url).then(function (imports) {
                     _.each(imports, function (pImport) {
                         var view = new ImportStatusView({model: pImport}).render();
@@ -324,19 +350,21 @@ define([
 
         onHidden: function () {
             this.remove();
+            Backbone.Events.trigger('import:success');
         },
 
         backToForm: function () {
-            this.importPreview = false;
+            this.importPreviewMode = false;
             this.importForm = true;
             this.partCheckoutList = null;
+            this.partsToCreate = null;
             this.searchingForPartList = false;
             this.rerender();
             this.loadNewFile(this.file);
         },
 
-        deleteImportStatus: function (){
-            _.each(this.importStatusViews, function(importSV){
+        deleteImportStatus: function () {
+            _.each(this.importStatusViews, function (importSV) {
                 importSV.deleteImport();
             });
         }

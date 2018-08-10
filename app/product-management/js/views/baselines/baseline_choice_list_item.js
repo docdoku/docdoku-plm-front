@@ -17,7 +17,7 @@ define([
             'change input[type=radio]': 'changeChoice',
             'change .baseline-choice-optional': 'changeOptional',
             'change .choice-retain': 'toggleRetain',
-            'click [data-part-key]':'openPartView'
+            'click [data-part-key]': 'openPartView'
         },
 
         template: Mustache.parse(template),
@@ -31,11 +31,11 @@ define([
             this.$el.html(Mustache.render(template, {
                 model: this.model,
                 i18n: App.config.i18n,
-                removable:this.options.removable
+                removable: this.options.removable
             }));
 
             this.$nominalLink = this.$('.nominal-link');
-            this.$nominalLink.prop('checked',true);
+            this.$nominalLink.prop('checked', true);
 
             this.optional = false;
             this.choice = this.$nominalLink.val();
@@ -43,59 +43,65 @@ define([
 
             this.$('.fa-long-arrow-right').last().remove();
 
-            if(this.options.removable){
+            if (this.options.removable) {
                 this.$el.toggleClass('not-retained', !this.model.retained);
             }
 
             return this;
         },
-        getChoice:function(){
-            if(this.choice === this.defaultChoice){
-                return null;
+        getChoice: function () {
+            if (this.model.attributes.partUsageLink.optional && this.choice) {
+                var substitute = this.choice === this.defaultChoice ? null : this.model.getResolvedPathAsString() + '-' + this.choice;
+                return {
+                    optional: true,
+                    path: this.model.getResolvedPathAsString() + '-' + this.defaultChoice,
+                    substitute: substitute
+                };
             }
-            if(this.optional){
-                return {optional:true,path:this.model.getResolvedPathAsString()+'-'+this.defaultChoice};
+            if (this.choice) {
+                return {
+                    path: this.model.getResolvedPathAsString() + '-' + this.choice
+                };
             }
-            return {path:this.model.getResolvedPathAsString()+'-'+this.choice};
+            return null;
         },
-        changeChoice:function(e){
+        changeChoice: function (e) {
             this.choice = e.target.value;
 
-            if(this.options.removable){
-                this.model.retained = this.choice!==this.defaultChoice;
+            if (this.options.removable) {
+                this.model.retained = this.choice !== null;
                 this.$el.toggleClass('not-retained', !this.model.retained);
             }
         },
-        changeOptional:function(e){
+        changeOptional: function (e) {
             this.optional = e.target.checked;
-            this.$el.toggleClass('optional',e.target.checked);
+            this.$el.toggleClass('optional', e.target.checked);
             var radios = this.$('input[type=radio]');
-            if(e.target.checked){
-                radios.prop('disabled',true);
-                radios.prop('checked',false);
+            if (e.target.checked) {
+                radios.prop('disabled', true);
+                radios.prop('checked', false);
                 this.choice = null;
-            }else{
-                radios.prop('disabled',false);
-                radios.first().prop('checked',true);
+            } else {
+                radios.prop('disabled', false);
+                radios.first().prop('checked', true);
                 this.choice = radios.first().val();
             }
-
-            if(this.options.removable){
-                this.model.retained = this.choice!==this.defaultChoice;
+            if (this.options.removable) {
+                this.model.retained = this.choice !== null;
                 this.$el.toggleClass('not-retained', !this.model.retained);
             }
         },
-        resetNominal:function(){
+        resetNominal: function () {
             var optionalCheckbox = this.$('.baseline-choice-optional');
-            if(optionalCheckbox.is(':checked')){
+            if (optionalCheckbox.is(':checked')) {
                 optionalCheckbox.click();
             }
             this.$nominalLink.click();
         },
 
-        openPartView:function(e){
+        openPartView: function (e) {
             this.$el.trigger('close-modal-request');
-            setTimeout(function(){
+            setTimeout(function () {
                 var part = new Part({partKey: e.target.dataset.partKey});
                 part.fetch().success(function () {
                     var partModalView = new PartModalView({
@@ -103,7 +109,7 @@ define([
                     });
                     partModalView.show();
                 });
-            },500);
+            }, 500);
         }
     });
 

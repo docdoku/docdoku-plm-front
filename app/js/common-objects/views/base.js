@@ -136,6 +136,7 @@ define([
             var data = {};
             data.i18n = App.config.i18n;
             data.workspaceId = App.config.workspaceId;
+            data.contextPath = App.config.contextPath;
             data.view = this.viewToJSON();
             if (this.model) {
                 data.model = this.modelToJSON();

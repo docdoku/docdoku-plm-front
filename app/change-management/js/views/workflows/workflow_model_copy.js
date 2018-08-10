@@ -98,7 +98,7 @@ define([
         },
 
 	    goToWorkflows: function () {
-            App.router.navigate(App.config.workspaceId + '/workflows', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/workflows', {trigger: true});
         }
 
     });

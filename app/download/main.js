@@ -4,12 +4,14 @@ var App = {};
 
 require.config({
 
+    urlArgs: '__BUST_CACHE__',
+
     baseUrl: 'js',
 
     shim: {
-        jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
-        bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
-        backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'}
+        jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
+        bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
+        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'}
     },
 
     paths: {
@@ -22,7 +24,10 @@ require.config({
         i18n: '../../bower_components/requirejs-i18n/i18n',
         bootstrap: '../../bower_components/bootstrap/docs/assets/js/bootstrap',
         'common-objects': '../../js/common-objects',
-        localization: '../../js/localization'
+        localization: '../../js/localization',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode',
+        moment: '../../bower_components/moment/min/moment-with-locales',
+        momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data'
     },
 
     deps: [
@@ -33,11 +38,11 @@ require.config({
     ],
     config: {
         i18n: {
-            locale: (function(){
-	            'use strict';
-                try{
+            locale: (function () {
+                'use strict';
+                try {
                     return window.localStorage.locale || 'en';
-                }catch(ex){
+                } catch (ex) {
                     return 'en';
                 }
             })()
@@ -45,29 +50,23 @@ require.config({
     }
 });
 
-require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!localization/nls/download'],
+require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n!localization/nls/download'],
     function (ContextResolver, commonStrings, downloadStrings) {
 
         'use strict';
 
         App.config.i18n = _.extend(commonStrings, downloadStrings);
 
-        var load = function(){
-            require(['backbone','app','common-objects/views/header'],function(Backbone, AppView, HeaderView){
+        var load = function () {
+            require(['backbone', 'app', 'common-objects/views/header'], function (Backbone, AppView, HeaderView) {
                 App.appView = new AppView().render();
                 App.headerView = new HeaderView().render();
             });
         };
 
-        ContextResolver.resolveServerProperties()
-            .then(ContextResolver.resolveAccount)
-            .then(function(){
-                App.config.connected = true;
-                return  ContextResolver.resolveWorkspaces();
-            },function(response){
-                App.config.connected = response.status !== 401;
-                load();
-            }).then(load);
+        ContextResolver.resolveServerProperties('..')
+            //.then(ContextResolver.resolveAccount)
+            .then(load);
 
     });
 

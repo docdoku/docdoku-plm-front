@@ -68,7 +68,7 @@ define([
         },
 
         refreshTitle: function () {
-            this.$('.chat_session_title').html('<i class="fa fa-envelope"></i> ' + this.remoteUser + ' | ' + this.context);
+            this.$('.chat_session_title').html('<i class="fa fa-envelope"></i> ' + this.remoteUser +  (this.context ? ' | ' + this.context : ''));
             return this;
         },
 

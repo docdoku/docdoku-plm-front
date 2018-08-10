@@ -72,7 +72,7 @@
                         <div class="controls">
                             <select id="selectNewIterationBaseline" class="rebase-baseline-select">
                             </select>
-                            <button type="button" class="btn btn-warning btn-rebase">{{i18n.REBASE}}</button>
+                            <button type="button" class="btn btn-custom btn-rebase">{{i18n.REBASE}}</button>
                         </div>
                     </div>
 
@@ -137,7 +137,7 @@
         {{/iteration}}
 
         {{#editMode}}
-        <a id="cancel-iteration" class="btn cancel" data-dismiss="modal">{{i18n.CANCEL}}</a>
+        <a id="cancel-iteration" class="btn btn-default cancel" data-dismiss="modal">{{i18n.CANCEL}}</a>
         <button id="save-instance" class="btn btn-primary" form="product_instance_edit_form">
             {{i18n.SAVE}}
         </button>

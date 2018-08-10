@@ -11,7 +11,7 @@
                 </li>
             </ul>
 
-            <ul class="nav well">
+            <ul class="well product-structure-container">
                 <li class="nav-header">{{i18n.PRODUCT_STRUCTURE}}</li>
                 <li>
                 <li>
@@ -21,16 +21,19 @@
                         <a class="toggle_substitutes">{{i18n.SHOW_SUBSTITUTES}}</a>
                     </div>
 
-                    <nav class="nav nav-list treeview" id="product_nav_list">
+                    <nav class="treeview" id="product_nav_list">
                         <div id='product_title'>
-                            <span class="product_title">{{productId}}</span>
+                            <span class="product_title">
+                                {{productId}}
+                            </span>
                             <a>
                                 <i title="{{i18n.REFRESH_TREE}}" class="fa fa-refresh"></i>
                             </a>
                             <a>
                                 <i title="{{i18n.DISPLAY_COMMENTS}}" class="fa fa-quote-right"></i>
                             </a>
-                            <img class="loader" src="{{contextPath}}/images/product-loader.gif"/>
+
+                            <img class="loader" src="{{contextPath}}images/product-loader.gif"/>
                         </div>
                     </nav>
                 </li>

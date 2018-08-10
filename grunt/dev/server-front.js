@@ -4,12 +4,11 @@ var moduleName = 'serverFront';
 var LIVERELOAD_PORT = 35730;
 var SERVER_HOSTNAME = 'localhost';
 var SERVER_PORT = 9001;
-var DEV_HOSTNAME = 'localhost';
-var DEV_PORT = 8989;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var serveStatic = require('serve-static');
 
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
+var mountFolder = function (dir) {
+    return serveStatic(require('path').resolve(dir));
 };
 
 module.exports = {
@@ -43,46 +42,38 @@ module.exports = {
         config.connect = {
             options: {
                 port: SERVER_PORT,
-                hostname: SERVER_HOSTNAME
+                hostname: SERVER_HOSTNAME,
+                open: true
             },
 
             livereload: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
                             lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'app')
+                            mountFolder('.tmp'),
+                            mountFolder('app')
                         ];
                     }
                 }
             },
             dist: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
-                            mountFolder(connect, 'dist')
+                            mountFolder('dist')
                         ];
                     }
                 }
             },
             app: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function () {
                         return [
-                            mountFolder(connect, 'app')
+                            mountFolder('app')
                         ];
                     }
                 }
-            }
-        };
-
-        config.open = {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
-            },
-            dev: {
-                path: 'http://' + DEV_HOSTNAME + ':' + DEV_PORT
             }
         };
 
@@ -94,11 +85,11 @@ module.exports = {
         grunt.registerTask('serve', function (target) {
 
             if (target === 'dist') {
-                return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
+                return grunt.task.run(['build', 'connect:dist:keepalive']);
             }
 
             if (target === 'dist-no-build') {
-                return grunt.task.run(['open:server', 'connect:dist:keepalive']);
+                return grunt.task.run(['connect:dist:keepalive']);
             }
 
             if (target === 'less') {
@@ -113,8 +104,7 @@ module.exports = {
                 return grunt.task.run([
                     'clean:server',
                     'less',
-                    'connect:app',
-                    'open:dev'
+                    'connect:app'
                 ]);
             }
 
@@ -124,7 +114,6 @@ module.exports = {
                 'clean:server',
                 'less',
                 'connect:livereload',
-                'open:dev',
                 'watch:dev'
             ]);
 

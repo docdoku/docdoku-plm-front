@@ -2,15 +2,13 @@
 casper.test.begin('Part click link tests suite', 3, function partClickLinkTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -81,7 +79,7 @@ casper.test.begin('Part click link tests suite', 3, function partClickLinkTestsS
      * Wait for part modal closed
      */
     casper.then(function waitForPartModalClosed() {
-        var modalTitle = '#part-modal > .modal-header > h3 > a[href="' + contextPath + '/documents/#' + workspace + '/' + products.part1.documentLink +'/A"]';
+        var modalTitle = '#part-modal > .modal-header > h3 > a[href="' + contextPath + '/documents/#' + workspace + '/' + products.part1.documentLink + '/A"]';
 
         return this.waitWhileVisible(modalTitle, function partModalClosed() {
             this.test.assert(true, 'Part modal closed');
@@ -97,7 +95,7 @@ casper.test.begin('Part click link tests suite', 3, function partClickLinkTestsS
     casper.then(function waitForLinkedDocumentModal() {
         var modalTitle = '.document-modal > .modal-header > h3 > a';
         return this.waitForSelector(modalTitle, function linkedDocumentModal() {
-            this.test.assertSelectorHasText('.document-modal > .modal-header > h3 > a', products.part1.documentLink , 'Linked document modal opened');
+            this.test.assertSelectorHasText('.document-modal > .modal-header > h3 > a', products.part1.documentLink, 'Linked document modal opened');
         }, function fail() {
             this.capture('screenshot/partClickLink/waitForLinkedDocumentModal-error.png');
             this.test.assert(false, 'Linked document modal can not be found');

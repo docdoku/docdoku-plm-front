@@ -12,6 +12,7 @@ define([
 
         events: {
             'click .delete-workspace':'deleteWorkspace',
+            'click .set-new-admin':'setNewAdmin',
             'submit #workspace_update_form':'onSubmit'
         },
 
@@ -80,6 +81,10 @@ define([
                 i18n: App.config.i18n,
                 deleting: true
             }));
+        },
+
+        setNewAdmin:function(){
+            window.location.hash = '#/workspace/' + App.config.workspaceId + '/admin/new';
         }
     });
 

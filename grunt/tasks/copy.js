@@ -2,11 +2,11 @@ var moduleName = 'copy';
 
 module.exports = {
 
-    name:moduleName,
+    name: moduleName,
 
-    loadConf:function(config,grunt){
+    loadConf: function (config, grunt) {
 
-        config.copy.libs =  {
+        config.copy.libs = {
             files: [
                 {
                     expand: true,
@@ -18,10 +18,12 @@ module.exports = {
                         'bower_components/modernizr/modernizr.js',
                         'bower_components/jquery/jquery.min.*',
                         'bower_components/underscore/underscore-min.js',
-                        'bower_components/threejs/build/three.min.js',
+                        'bower_components/threejs/index.js',
                         'bower_components/tweenjs/src/Tween.js',
                         'bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
-                        'bower_components/backbone/backbone-min.js'
+                        'bower_components/backbone/backbone-min.js',
+                        'bower_components/oidc-client/dist/oidc-client.min.js',
+                        'bower_components/fontawesome/fonts/*'
                     ]
                 }
             ]
@@ -49,15 +51,16 @@ module.exports = {
                     cwd: 'app',
                     dest: 'dist',
                     src: [
+                        'callback.html',
                         'css/**',
                         'images/**',
                         'sounds/**',
-                        'fonts/**',
                         'js/home/main.js',
                         'js/lib/plugin-detect.js',
-                        'js/lib/empty.pdf'
+                        'js/lib/empty.pdf',
+                        'js/lib/helvetiker_regular.typeface.json'
                     ]
-                },{
+                }, {
                     expand: true,
                     dot: false,
                     cwd: 'app/bower_components/bootstrap/',
@@ -78,13 +81,13 @@ module.exports = {
                     dest: 'dist',
                     src: [
                         'product-structure/js/workers/*',
-                        'js/dmu/*'
+                        'js/dmu/**'
                     ]
                 }
             ]
         };
 
-        config.copy.i18n ={
+        config.copy.i18n = {
             files: [
                 {
                     expand: true,
@@ -101,7 +104,7 @@ module.exports = {
         };
     },
 
-    loadTasks:function(grunt){
+    loadTasks: function (grunt) {
     }
 
 };

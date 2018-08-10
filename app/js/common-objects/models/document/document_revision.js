@@ -4,7 +4,7 @@ define([
     'common-objects/utils/date',
     'common-objects/collections/document_iteration',
     'common-objects/utils/acl-checker'
-], function (Backbone, Date, DocumentIterationList, ACLChecker) {
+], function (Backbone, date, DocumentIterationList, ACLChecker) {
 	'use strict';
 	var DocumentRevision = Backbone.Model.extend({
 
@@ -12,7 +12,7 @@ define([
 			if (this.isNew()) {
 				return this.collection.url();
 			}
-			return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/documents';
+			return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/documents';
 		},
 
         initialize: function () {
@@ -80,7 +80,7 @@ define([
         },
 
         getObsoleteDate: function() {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.get('obsoleteDate')
             );
@@ -105,7 +105,7 @@ define([
         },
 
         getReleaseDate: function() {
-            return Date.formatTimestamp(
+            return date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.get('releaseDate')
             );
@@ -269,10 +269,10 @@ define([
 			return encodeURI(
 					window.location.origin +
 					App.config.contextPath +
-					'/documents/#' +
+					'documents/index.html#' +
 					this.getWorkspace() +
 					'/' +
-					this.getReference() +
+                    encodeURIComponent(this.getReference()) +
 					'/' +
 					this.getVersion()
 			);

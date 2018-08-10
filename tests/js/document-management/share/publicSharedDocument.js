@@ -4,15 +4,13 @@ casper.test.begin('Public shared document tests suite', 2, function publicShared
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentPermalink);
-    });
+    casper.open(urls.documentPermalink);
 
     /**
      * Check for document title

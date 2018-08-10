@@ -1,3 +1,11 @@
 {
-    "contextRoot":""
+    "server": {
+        "ssl": false,
+        "domain": "localhost",
+        "port": 8080,
+        "contextPath": "/eplmp-server-rest",
+        "wsDomain": "localhost"
+    },
+    "contextPath": "/",
+    "preferLoginWith": false
 }

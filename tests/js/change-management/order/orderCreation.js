@@ -4,15 +4,13 @@ casper.test.begin('Change order creation tests suite', 3, function changeOrderCr
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change orders nav

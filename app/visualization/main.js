@@ -2,20 +2,15 @@
 var App = {};
 
 require.config({
+
+    urlArgs:'__BUST_CACHE__',
+
     baseUrl: '../product-structure/js',
+
     shim: {
         jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
         bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
-        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        pointerlockcontrols: {deps: ['threecore'], exports: 'THREE'},
-        trackballcontrols: {deps: ['threecore'], exports: 'THREE'},
-        orbitcontrols: {deps: ['threecore'], exports: 'THREE'},
-        binaryloader: {deps: ['threecore'], exports: 'THREE'},
-        colladaloader: {deps: ['threecore'], exports: 'THREE'},
-        stlloader: {deps: ['threecore'], exports: 'THREE'},
-        objloader: {deps: ['threecore'], exports: 'THREE'},
-        mtlloader:{deps:['threecore'],exports:'THREE'},
-        buffergeometryutils: {deps: ['threecore'], exports: 'THREE'}
+        backbone: {deps: ['underscore', 'jquery'], exports: 'Backbone'}
     },
     paths: {
         jquery: '../../bower_components/jquery/jquery',
@@ -26,7 +21,7 @@ require.config({
         mustache: '../../bower_components/mustache/mustache',
         text: '../../bower_components/requirejs-text/text',
         i18n: '../../bower_components/requirejs-i18n/i18n',
-        threecore: '../../bower_components/threejs/build/three',
+        threecore: '../../bower_components/threejs/index',
         async: '../../bower_components/async/lib/async',
         tween:'../../bower_components/tweenjs/src/Tween',
         date:'../../bower_components/date.format/date.format',
@@ -35,33 +30,21 @@ require.config({
         moment:'../../bower_components/moment/min/moment-with-locales',
         momentTimeZone:'../../bower_components/moment-timezone/builds/moment-timezone-with-data',
         'common-objects': '../../js/common-objects',
+        transformcontrols: '../../js/dmu/controls/TransformControls',
         pointerlockcontrols: '../../js/dmu/controls/PointerLockControls',
         trackballcontrols: '../../js/dmu/controls/TrackballControls',
         orbitcontrols: '../../js/dmu/controls/OrbitControls',
-        binaryloader: '../../js/dmu/loaders/BinaryLoader',
-        colladaloader: '../../js/dmu/loaders/ColladaLoader',
         buffergeometryutils: '../../js/dmu/utils/BufferGeometryUtils',
-        stlloader: '../../js/dmu/loaders/STLLoader',
         objloader: '../../js/dmu/loaders/OBJLoader',
         mtlloader: '../../js/dmu/loaders/MTLLoader',
         stats:'../../js/dmu/utils/Stats',
-        utilsprototype:'../../js/utils/utils.prototype'
+        utilsprototype:'../../js/utils/utils.prototype',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [
-        'threecore',
-        'pointerlockcontrols',
-        'trackballcontrols',
-        'orbitcontrols',
-        'binaryloader',
-        'colladaloader',
-        'stlloader',
-        'objloader',
-        'mtlloader',
-        'buffergeometryutils',
         'stats',
         'dat',
-        'tween',
         'utilsprototype',
         'bootstrap'
     ],
@@ -87,10 +70,11 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
 
     App.config.workspaceId = decodeURIComponent(/^#(product|assembly)\/([^\/]+)/.exec(window.location.hash)[2]).trim() || null;
     App.config.productId = decodeURIComponent(window.location.hash.split('/')[2]).trim() || null;
-    App.config.needAuthentication = true;
 
-    if(!App.config.workspaceId){
-        new ErrorView({el:'#content'}).render404();
+    if (!App.config.workspaceId) {
+        new ErrorView({el: '#content'})
+            .renderWorkspaceSelection(ContextResolver.resolveServerProperties('..')
+                .then(ContextResolver.resolveWorkspaces));
         return;
     }
 
@@ -119,7 +103,7 @@ function (ContextResolver,  commonStrings, productStructureStrings, ErrorView) {
         transformControls:false
     };
 
-    ContextResolver.resolveServerProperties()
+    ContextResolver.resolveServerProperties('..')
         .then(ContextResolver.resolveAccount)
         .then(ContextResolver.resolveWorkspaces)
         .then(ContextResolver.resolveGroups)

@@ -3,15 +3,14 @@
 casper.test.begin('Part upload native cad file tests suite', 3, function partUploadCadTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
+
 
     /**
      * Go to part nav
@@ -77,6 +76,7 @@ casper.test.begin('Part upload native cad file tests suite', 3, function partUpl
             });
         }, function then() {
             this.test.assert(true, 'File has been uploaded to part');
+            this.click('#part-modal #save-part');
         }, function fail() {
             this.capture('screenshot/partUpload/setFileAndUpload-error.png');
             this.test.assert(false, 'Cannot upload the file');
@@ -88,8 +88,8 @@ casper.test.begin('Part upload native cad file tests suite', 3, function partUpl
      */
 
     casper.then(function checkCADFileIconsSet() {
-        return this.waitForSelector('#part_table .fa.fa-paperclip', function check() {
-            this.test.assertElementCount('#part_table .fa.fa-paperclip', 1, 'found 1 part with CAD file');
+        return this.waitForSelector('#part_table tbody .fa.fa-paperclip', function check() {
+            this.test.assertElementCount('#part_table tbody .fa.fa-paperclip', 1, 'found 1 part with CAD file');
         });
     });
 

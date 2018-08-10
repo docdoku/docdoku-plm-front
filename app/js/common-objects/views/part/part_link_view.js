@@ -38,7 +38,8 @@ define([
 
             var disabled = this.options.editMode ? '' : 'disabled';
             var optionalChecked = this.model.get('optional') ? 'checked' : '';
-            var componentDisabled = this.component.number ? 'disabled' : '';
+            var partNumberOptions = this.component.number ? 'disabled' : 'required';
+            var partNameOptions = this.component.number ? 'disabled' : '';
 
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
@@ -48,7 +49,8 @@ define([
                 handleSubstitutes: this.handleSubstitutes,
                 model: this.model.attributes,
                 component: this.component,
-                componentDisabled: componentDisabled
+                partNumberOptions: partNumberOptions,
+                partNameOptions: partNameOptions
             }));
 
             this.$cadInstances = this.$('.cad-instances');

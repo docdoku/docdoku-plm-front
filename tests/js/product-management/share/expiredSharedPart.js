@@ -4,15 +4,13 @@ casper.test.begin('Expired private shared part tests suite', 1, function expired
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open part management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.privatePartPermalinkExpired);
-    });
+    casper.open(urls.privatePartPermalinkExpired);
 
     /**
      * Check we have the expired resource page

@@ -79,7 +79,7 @@
                     <td>{{lastIteration.revisionNote}}</td>
                 </tr>
                 <tr>
-                    <th scope="row"><a class="date-popover">{{i18n.REVISION_DATE}}</a></th>
+                    <th scope="row">{{i18n.REVISION_DATE}}</th>
                     <td>
                     {{#document.checkOutUser}}
                         <a class="date-popover">{{lastIteration.creationDate}}</a>
@@ -133,7 +133,7 @@
                 <ul>
                     {{#lastIteration.linkedDocuments}}
                     <li>
-                        <a href="{{contextPath}}/documents/#{{workspaceId}}/{{documentMasterId}}/{{version}}">{{documentMasterId}}-{{version}}</a>
+                        <a href="{{contextPath}}documents/index.html#{{workspaceId}}/{{documentMasterId}}/{{version}}">{{documentMasterId}}-{{version}}</a>
                     </li>
                     {{/lastIteration.linkedDocuments}}
                 </ul>
@@ -143,4 +143,4 @@
 
 </div>
 
-<a href="{{contextPath}}/document-management/#{{document.workspaceId}}/folders{{#document.encodedRoutePath}}/{{document.encodedRoutePath}}{{/document.encodedRoutePath}}">{{i18n.SEE_IN_DOCUMENT_MANAGEMENT}}</a>
+<a href="{{contextPath}}document-management/index.html#{{document.workspaceId}}/folders{{#document.encodedRoutePath}}/{{document.encodedRoutePath}}{{/document.encodedRoutePath}}">{{i18n.SEE_IN_DOCUMENT_MANAGEMENT}}</a>

@@ -3,14 +3,12 @@
 casper.test.begin('Documents multiple release tests suite', 3, function documentMultipleReleaseTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -85,7 +83,7 @@ casper.test.begin('Documents multiple release tests suite', 3, function document
      * Check document has been released
      */
     casper.then(function waitForReleaseIconDisplayed() {
-        this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-check', function documentIsReleased() {
+        return this.waitForSelector('#document-management-content table.dataTable tbody i.fa.fa-check', function documentIsReleased() {
             this.test.assertElementCount('#document-management-content table.dataTable tbody i.fa.fa-check', 2, 'Documents have been released');
         }, function fail() {
             this.capture('screenshot/MultipleDocumentsRelease/waitForReleaseIconDisplayed-error.png');

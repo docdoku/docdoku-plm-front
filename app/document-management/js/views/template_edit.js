@@ -120,6 +120,7 @@ define([
             this.activateTab(3);
         },
         success: function () {
+            this.model.fetch();
             this.hide();
         },
 

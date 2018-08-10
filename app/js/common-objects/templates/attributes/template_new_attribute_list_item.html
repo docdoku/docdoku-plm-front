@@ -23,10 +23,10 @@
     </select>
 </div>
 <label class="checkbox attribute-mandatory">
-    <input type="checkbox" {{#model.mandatory}}checked=checked{{/model.mandatory}}" {{^editMode}}disabled{{/editMode}}> {{i18n.MANDATORY}}
+    <input type="checkbox" {{#model.mandatory}}checked=checked{{/model.mandatory}} {{^editMode}}disabled{{/editMode}}> {{i18n.MANDATORY}}
 </label>
 {{^attributesLocked}}
 <label class="checkbox attribute-locked">
-    <input type="checkbox" {{#model.locked}}checked=checked{{/model.locked}}" {{^editMode}}disabled{{/editMode}}> {{i18n.LOCK}}
+    <input type="checkbox" {{#model.locked}}checked=checked{{/model.locked}} {{^editMode}}disabled{{/editMode}}> {{i18n.LOCK}}
 </label>
 {{/attributesLocked}}

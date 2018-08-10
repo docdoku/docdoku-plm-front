@@ -312,7 +312,7 @@ define([
         clearDeleteTags: function (callbackSuccess) {
             if (this._tagsToDeleteCollection && this._tagsToDeleteCollection.length) {
                 var that = this;
-                var baseUrl = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/tags/';
+                var baseUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tags/';
                 var total = this._tagsToDeleteCollection.length;
                 var count = 0;
                 _(this._tagsToDeleteCollection).each(function (tag) {

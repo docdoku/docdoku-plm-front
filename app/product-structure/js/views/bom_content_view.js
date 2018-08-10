@@ -178,7 +178,7 @@ define([
                 var acl = aclEditView.toList();
 
                 selectedPart.updateACL({
-                    acl: acl || {userEntries: {}, groupEntries: {}},
+                    acl: acl || {userEntries: [], groupEntries: []},
                     success: function () {
                         selectedPart.set('acl', acl);
                         aclEditView.closeModal();

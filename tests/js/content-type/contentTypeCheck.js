@@ -15,11 +15,11 @@ casper.test.begin('Content type check tests suite', 6, function contentTypeCheck
 
     var expectedContentType = 'text/html;charset=utf-8';
 
-    urlsToTest.map(function(url){
+    urlsToTest.forEach(function (url) {
         casper.thenOpen(url, function homePageLoaded() {
             var contentType = '';
-            this.currentResponse.headers.forEach(function(header){
-                if(header.name === 'Content-Type'){
+            this.currentResponse.headers.forEach(function (header) {
+                if (header.name === 'Content-Type') {
                     contentType = header.value;
                 }
             });

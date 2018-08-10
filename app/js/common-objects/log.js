@@ -1,30 +1,36 @@
 /*global App*/
 define(function () {
     'use strict';
+
+    var colorCodes = {};
+
+    var contrast = function (rgb) {
+        var o = Math.round(((parseInt(rgb[0]) * 299) + (parseInt(rgb[1]) * 587) + (parseInt(rgb[2]) * 114)) / 1000);
+        return (o < 125) ? '#d4edf9' : '#14191f';
+    };
+
+    var generateColors = function (tag) {
+        if (colorCodes[tag]) {
+            return colorCodes[tag];
+        }
+
+        var num = Math.round(0xffffff * Math.random());
+        var r = num >> 16;
+        var g = num >> 8 & 255;
+        var b = num & 255;
+        colorCodes[tag] = 'background: rgb(' + r + ', ' + g + ', ' + b + '); color:' + contrast([r, g, b]);
+        return colorCodes[tag];
+    };
+
     return {
-        log: function (message, colorType) {
+        log: function (tag, message) {
             if (App.debug) {
-                if (colorType) {
-                    switch (colorType) {
-                        case 'WS' :
-                            window.console.log('%c [WS] ' + message, 'background: #222; color: #bada55', 'background: none; color:inherit');
-                            break;
-                        case 'IM' :
-                            window.console.log('%c [InstancesManager] ' + message, 'background: #206963; color: #bada55', 'background: none; color:inherit');
-                            break;
-                        case 'SM' :
-                            window.console.log('%c [SceneManager] ' + message, 'background: #275217; color: #bada55', 'background: none; color:inherit');
-                            break;
-                        case 'PTV' :
-                            window.console.log('%c [PartsTreeView] ' + message, 'background: #3C4C52; color: #bada55', 'background: none; color:inherit');
-                            break;
-                        default :
-                            window.console.log(message, 'background: #888; color: #bada55', 'background: none; color:inherit');
-                            break;
-                    }
-                } else {
-                    window.console.log(message);
+                if (!message) {
+                    message = tag;
+                    tag = 'Logger';
                 }
+
+                window.console.log('%c [' + tag + '] ' + message, generateColors(tag));
             }
         }
     };

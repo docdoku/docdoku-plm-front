@@ -4,15 +4,13 @@ casper.test.begin('Change order deletion tests suite', 2, function changeOrderDe
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open change orders nav
@@ -55,7 +53,7 @@ casper.test.begin('Change order deletion tests suite', 2, function changeOrderDe
      * Wait for the confirmation modal
      */
     casper.then(function waitForConfirmationModal() {
-        this.waitForSelector('.bootbox', function confirmDeletion() {
+        return this.waitForSelector('.bootbox', function confirmDeletion() {
             this.click('.bootbox .modal-footer .btn-primary');
         }, function fail() {
             this.capture('screenshot/orderDeletion/waitForConfirmationModal-error.png');

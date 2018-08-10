@@ -18,7 +18,7 @@ define([
             this.pageCount = 0;
             this.resultsPerPage = 20;
 
-            this.urlBase = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts?start=';
+            this.urlBase = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts?start=';
 
             if (start) {
                 this.currentPage = start;
@@ -33,7 +33,7 @@ define([
         fetchPageCount: function () {
             var self = this;
             $.ajax({
-                url: App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/count',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/count',
                 success: function (data) {
                     self.pageCount = Math.ceil(data.count / self.resultsPerPage);
                     self.trigger('page-count:fetch');

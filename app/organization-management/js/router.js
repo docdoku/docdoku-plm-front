@@ -29,13 +29,21 @@ function (Backbone, singletonDecorator) {
         },
 
         organizationEdit:function() {
-            this.refresh();
-            App.appView.organizationEdit();
+            if(App.config.organization.owner !== App.config.login) {
+                Backbone.history.navigate('', { trigger : true });
+            } else {
+                this.refresh();
+                App.appView.organizationEdit();
+            }
         },
 
         organizationMembers:function() {
-            this.refresh();
-            App.appView.organizationMembers();
+            if(Object.keys(App.config.organization).length > 0) {
+                this.refresh();
+                App.appView.organizationMembers();
+            } else {
+                Backbone.history.navigate('', { trigger : true });
+            }
         }
     });
 

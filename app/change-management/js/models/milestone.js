@@ -3,12 +3,12 @@ define([
     'backbone',
     'common-objects/utils/date',
     'common-objects/utils/acl-checker'
-], function (Backbone, Date, ACLChecker) {
-	'use strict';
+], function (Backbone, date, ACLChecker) {
+    'use strict';
     var MilestoneModel = Backbone.Model.extend({
 
         urlRoot: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/changes/milestones';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/changes/milestones';
         },
 
         initialize: function () {
@@ -27,14 +27,14 @@ define([
         },
 
         getDueDateToPrint: function () {
-            return (this.getDueDate()) ? Date.formatTimestamp(
+            return (this.getDueDate()) ? date.formatTimestamp(
                 App.config.i18n._DATE_FORMAT,
                 this.getDueDate()
             ) : null;
         },
 
         getDueDateDatePicker: function () {
-            return (this.getDueDate()) ? Date.formatTimestamp(
+            return (this.getDueDate()) ? date.formatTimestamp(
                 App.config.i18n._DATE_PICKER_DATE_FORMAT,
                 this.getDueDate()
             ) : null;

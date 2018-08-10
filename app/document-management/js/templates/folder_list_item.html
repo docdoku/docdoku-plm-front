@@ -1,7 +1,10 @@
 <div class="header nav-list-entry FolderNavListItem-entry FolderNavEntry">
-    <a href="#{{workspaceId}}/folders/{{model.path}}" class="FolderNavEntry-tab" title="{{model.name}}" data-target="#items-{{view.cid}}">
+    <a href="#{{workspaceId}}/folders/{{model.path}}" class="FolderNavEntry-tab" title="{{model.name}}"
+       data-target="#items-{{view.cid}}">
         <span class="status FolderNavEntry-status"></span>
-        <span class="icon FolderNavEntry-icon"></span>
+        <i class="icon icon-home fa fa-home"></i>
+        <i class="icon icon-folder-closed fa fa-folder-o"></i>
+        <i class="icon icon-folder-opened fa fa-folder-open-o"></i>
         <span class="FolderNavEntry-name">{{model.name}}</span>
     </a>
 
@@ -11,13 +14,17 @@
         </a>
         <ul class="dropdown-menu large-entries NavToggle-entries">
             <li class="new-folder NavToggle-entry">
-                <a><span class="icon"></span>{{i18n.NEW_FOLDER}}</a>
+                <a>
+                    <i class="fa fa-folder"></i>
+                    {{i18n.NEW_FOLDER}}</a>
             </li>
             <li class="edit NavToggle-entry">
-                <a><span class="icon"></span>{{i18n.RENAME}}</a>
+                <a>
+                    <i class="fa fa-pencil"></i>
+                    {{i18n.RENAME}}</a>
             </li>
             <li class="delete NavToggle-entry">
-                <a><span class="icon"></span>{{i18n.DELETE}}</a>
+                <a> <i class="fa fa-times"></i> {{i18n.DELETE}}</a>
             </li>
         </ul>
     </div>

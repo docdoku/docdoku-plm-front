@@ -13,7 +13,7 @@ define([
             this.part = part;
         },
         initialize: function () {
-            this.urlBase = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/checkedout';
+            this.urlBase = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/checkedout';
         },
 
         fetchPageCount: function () {

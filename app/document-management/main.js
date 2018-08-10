@@ -10,6 +10,7 @@ require.config({
         jqueryUI: {deps: ['jquery'], exports: 'jQuery'},
         effects: {deps: ['jquery'], exports: 'jQuery'},
         popoverUtils: {deps: ['jquery'], exports: 'jQuery'},
+        fileDownload: {deps: ['jquery'], exports: 'jQuery'},
         inputValidity: {deps: ['jquery'], exports: 'jQuery'},
         bootstrap: {deps: ['jquery', 'jqueryUI'], exports: 'jQuery'},
         bootbox: {deps: ['jquery'], exports: 'jQuery'},
@@ -48,13 +49,15 @@ require.config({
         'common-objects': '../../js/common-objects',
         effects: '../../js/utils/effects',
         popoverUtils: '../../js/utils/popover.utils',
+        fileDownload: '../../js/utils/file-download',
         inputValidity: '../../js/utils/input-validity',
         datatablesOsortExt: '../../js/utils/datatables.oSort.ext',
         utilsprototype: '../../js/utils/utils.prototype',
         userPopover: '../../js/modules/user-popover-module/app',
         async: '../../bower_components/async/lib/async',
         datePickerLang: '../../bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr',
-        selectize: '../../bower_components/selectize/dist/js/standalone/selectize'
+        selectize: '../../bower_components/selectize/dist/js/standalone/selectize',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [
@@ -67,6 +70,7 @@ require.config({
         'jqueryUI',
         'effects',
         'popoverUtils',
+        'fileDownload',
         'inputValidity',
         'datatables',
         'datatablesOsortExt',
@@ -94,18 +98,19 @@ require(['common-objects/contextResolver', 'i18n!localization/nls/common', 'i18n
     function (ContextResolver, commonStrings, documentManagementStrings, ErrorView) {
         'use strict';
 
-        App.config.needAuthentication = true;
         App.config.i18n = _.extend(commonStrings, documentManagementStrings);
 
         var match = /^#([^\/]+)/.exec(window.location.hash) || ['',''];
         App.config.workspaceId = decodeURIComponent(match[1] || '').trim();
 
-        if(!App.config.workspaceId){
-            new ErrorView({el:'#content'}).render404();
+        if (!App.config.workspaceId) {
+            new ErrorView({el: '#content'})
+                .renderWorkspaceSelection(ContextResolver.resolveServerProperties('..')
+                    .then(ContextResolver.resolveWorkspaces));
             return;
         }
 
-        ContextResolver.resolveServerProperties()
+        ContextResolver.resolveServerProperties('..')
             .then(ContextResolver.resolveAccount)
             .then(ContextResolver.resolveWorkspaces)
             .then(ContextResolver.resolveGroups)

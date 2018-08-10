@@ -147,7 +147,7 @@
 
         {{#lastIteration.components.length}}
         <div id="tab-part-assembly" class="tab-pane">
-            <iframe id="assembly-frame" src="{{contextPath}}/visualization/#assembly/{{part.workspaceId}}/{{part.partKey}}/0/0/0"></iframe>
+            <iframe id="assembly-frame" src="{{contextPath}}visualization/index.html#assembly/{{part.workspaceId}}/{{part.partKey}}/0/0/0"></iframe>
         </div>
         {{/lastIteration.components.length}}
 
@@ -156,7 +156,7 @@
                 <ul>
                     {{#lastIteration.linkedDocuments}}
                     <li>
-                        <a href="{{contextPath}}/documents/#{{workspaceId}}/{{documentMasterId}}/{{version}}">{{documentMasterId}}-{{version}}</a>
+                        <a href="{{contextPath}}documents/index.html#{{workspaceId}}/{{documentMasterId}}/{{version}}">{{documentMasterId}}-{{version}}</a>
                     </li>
                     {{/lastIteration.linkedDocuments}}
                 </ul>
@@ -166,4 +166,4 @@
 
 </div>
 
-<a href="{{contextPath}}/product-management/#{{part.workspaceId}}/parts">{{i18n.SEE_IN_PRODUCT_MANAGEMENT}}</a>
+<a href="{{contextPath}}product-management/index.html#{{part.workspaceId}}/parts">{{i18n.SEE_IN_PRODUCT_MANAGEMENT}}</a>

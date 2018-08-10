@@ -1,0 +1,10 @@
+<div class="accordion-heading">
+    <a class="download" data-file-download="{{ downloadUrl }}"><i class="fa fa-cloud-download"></i></a>
+    {{ #downloadAsPDF }}<a class="download-pdf" data-file-download="{{ downloadAsPDF }}" data-file-download-output=".pdf"><i
+    class="fa fa-file-pdf-o"></i></a>{{ /downloadAsPDF }}
+    <a class="accordion-toggle" data-toggle="collapse" href="#{{ id }}">{{ fileName }}</a>
+</div>
+<div id="{{ id }}" class="accordion-body collapse">
+    <div class="accordion-inner">
+    </div>
+</div>

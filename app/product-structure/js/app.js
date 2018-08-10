@@ -94,7 +94,7 @@ define([
                 this.bindDatGUIControls();
             } catch (ex) {
                 console.error('Got exception in dmu');
-                Logger.log(ex);
+                Logger.log('DMU', ex);
                 this.onNoWebGLSupport();
             }
 
@@ -253,11 +253,11 @@ define([
         },
 
         sceneButton: function () {
-            App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/scene', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/scene', {trigger: true});
         },
 
         bomButton: function () {
-            App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/bom', {trigger: true});
+            App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/bom', {trigger: true});
         },
 
         setSpectatorView: function () {
@@ -295,7 +295,7 @@ define([
             var splitUrl = window.location.href.split('/');
             var urlRoot = splitUrl[0] + '//' + splitUrl[2];
 
-            var iframeSrc = urlRoot + '/visualization/#product/' + App.config.workspaceId + '/' + App.config.productId +
+            var iframeSrc = urlRoot + '/visualization/index.html#product/' + App.config.workspaceId + '/' + App.config.productId +
                 '/' + App.sceneManager.cameraObject.position.x +
                 '/' + App.sceneManager.cameraObject.position.y +
                 '/' + App.sceneManager.cameraObject.position.z;
@@ -356,9 +356,9 @@ define([
             App.config.productConfigSpec = configSpec || App.config.productConfigSpec;
 
             if (App.collaborativeView.roomKey) {
-                App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/room/' + App.collaborativeView.roomKey, {trigger: false});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/room/' + App.collaborativeView.roomKey, {trigger: false});
             } else {
-                App.router.navigate(App.config.workspaceId + '/' + App.config.productId + '/config-spec/' + App.config.productConfigSpec + '/bom', {trigger: false});
+                App.router.navigate(encodeURIComponent(App.config.workspaceId) + '/' + encodeURIComponent(App.config.productId) + '/config-spec/' + encodeURIComponent(App.config.productConfigSpec) + '/bom', {trigger: false});
             }
 
             App.sceneManager.clear();

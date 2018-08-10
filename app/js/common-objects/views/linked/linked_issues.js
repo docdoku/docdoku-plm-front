@@ -16,7 +16,7 @@ define([
 
             this.referenceInput.typeahead({
                 source: function (query, process) {
-                    $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/changes/issues/link/?q=' + query, function (data) {
+                    $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/changes/issues/link/?q=' + query, function (data) {
 
                         self.searchResults = new LinkedChangeItemCollection(data);
                         process(self.searchResults.map(function (issue) {

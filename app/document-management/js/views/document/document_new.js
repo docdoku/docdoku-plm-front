@@ -126,6 +126,7 @@ define([
                     message: error.responseText
                 });
             } else {
+                // TODO : handle and display
                 console.error(error);
             }
         }

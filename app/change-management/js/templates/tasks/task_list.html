@@ -3,8 +3,7 @@
         <tr>
             <th><input type="checkbox" class="toggle-all"/></th>
             <th>{{i18n.TITLE}}</th>
-            <th>{{i18n.HOLDER}}</th>
-            <th>{{i18n.AUTHOR}}</th>
+            <th>{{i18n.NAME}}</th>
             <th>{{i18n.STATUS}}</th>
         </tr>
         </thead>
@@ -13,9 +12,8 @@
         {{#tasks}}
         <tr class="{{status}}">
             <td><input type="checkbox" class="toggle-item"/></td>
-            <td><a href="{{contextPath}}/change-management/#{{workspaceId}}/tasks/{{workflowId}}-{{activityStep}}-{{num}}"class="taskTitle">{{title}}</a></td>
+            <td><a href="#{{workspaceId}}/tasks/{{workflowId}}-{{activityStep}}-{{num}}"class="taskTitle">{{title}}</a></td>
             <td>{{holderReference}}-{{holderVersion}}-{{targetIteration}}</td>
-            <td>{{worker.name}}</td>
             <td>{{status}}</td>
         </tr>
         {{/tasks}}

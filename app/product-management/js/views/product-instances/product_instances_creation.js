@@ -103,16 +103,9 @@ define([
 
             if (data.serialNumber && data.configurationItemId && data.baselineId) {
                 this.model.createInstance(data,{
-                    success: this.onProductInstanceCreated,
-                    error: this.onError
+                    success: this.onProductInstanceCreated.bind(this),
+                    error: this.onError.bind(this)
                 });
-                /*this.model.unset('identifier');
-                this.model.unset('serialNumber');
-                this.model.save(data, {
-                    success: this.onProductInstanceCreated,
-                    error: this.onError,
-                    wait: true
-                });*/
             }
 
             e.preventDefault();
@@ -129,12 +122,10 @@ define([
             this.closeModal();
         },
 
-        onError: function (model, error) {
-            var errorMessage = error ? error.responseText : model;
-
+        onError: function (xhr) {
             this.$notifications.append(new AlertView({
                 type: 'error',
-                message: errorMessage
+                message: xhr.responseText
             }).render().$el);
         },
 

@@ -3,8 +3,9 @@ define([
     'backbone',
     'mustache',
     'text!templates/part/part_list.html',
-    'views/part/part_list_item'
-], function (Backbone, Mustache, template, PartListItemView) {
+    'views/part/part_list_item',
+    'common-objects/customizations/part-table-columns'
+], function (Backbone, Mustache, template, PartListItemView, PartTableColumns) {
     'use strict';
     var PartListView = Backbone.View.extend({
 
@@ -13,7 +14,8 @@ define([
         },
 
         removeSubviews: function () {
-            _(this.listItemViews).invoke('remove');                                                                     // Invoke remove for each views in listItemViews
+            // Invoke remove for each views in listItemViews
+            _(this.listItemViews).invoke('remove');
             this.listItemViews = [];
         },
 
@@ -24,13 +26,36 @@ define([
             this.listItemViews = [];
             this.selectedPartIndexes = [];
             this.$el.on('remove', this.removeSubviews);
+            Backbone.Events.on('import:success', this.collection.fetch, this.collection);
+        },
+
+        getColumns: function () {
+            var $deferred = $.Deferred();
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/front-options')
+                .success(function (workspaceCustomizations) {
+                    if (workspaceCustomizations.partTableColumns && workspaceCustomizations.partTableColumns.length) {
+                        $deferred.resolve(workspaceCustomizations.partTableColumns);
+                    } else {
+                        $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
+                    }
+                })
+                .error(function () {
+                    $deferred.resolve(_.clone(PartTableColumns.defaultColumns));
+                });
+            return $deferred;
         },
 
         render: function () {
             var that = this;
-            this.collection.fetch({reset: true}).error(function (err) {
-                that.trigger('error', null, err);
-            });
+            this.getColumns()
+                .then(function (partTableColumns) {
+                    that.columns = partTableColumns.reverse();
+                })
+                .then(function () {
+                    that.collection.fetch({reset: true}).error(function (err) {
+                        that.trigger('error', null, err);
+                    });
+                });
             return this;
         },
 
@@ -42,11 +67,13 @@ define([
             this.removeSubviews();
 
             this.$el.html(Mustache.render(template, {i18n: App.config.i18n}));
+            this.addCustomColumns();
             this.bindDomElements();
 
             this.collection.each(function (model) {
                 _this.addPart(model);
             });
+
             this.dataTable();
             this.onSelectionChanged();
         },
@@ -84,7 +111,7 @@ define([
         },
 
         addPartView: function (model) {
-            var view = new PartListItemView({model: model}).render();
+            var view = new PartListItemView({model: model, columns: this.columns}).render();
             this.listItemViews.push(view);
             this.$('.items').append(view.$el);
             view.on('selectionChanged', this.onSelectionChanged);
@@ -386,6 +413,26 @@ define([
                 }
                 this.oTable.fnDestroy();
             }
+
+            var columns = this.columns;
+            // Before - Columns - After
+            var totalColumns = 3 + columns.length + 3;
+
+            var excludeFromSort = [0, 1, 2, totalColumns - 3, totalColumns - 2, totalColumns - 1];
+            var dateColumns = [];
+            var numberColumns = [];
+            for (var i = 0; i < columns.length; i++) {
+                if (columns[i].startsWith('attr-DATE') || PartTableColumns.dateFields.indexOf(columns[i]) !== -1) {
+                    // the array is reversed
+                    // offset 3 + index from the end
+                    dateColumns.push(3 + columns.length - 1 - i);
+                } else if (columns[i].startsWith('attr-NUMBER') || PartTableColumns.numberFields.indexOf(columns[i]) !== -1) {
+                    numberColumns.push(3 + columns.length - 1 - i);
+                }
+            }
+
+            var stripHTMLColumns = [3];
+
             this.oTable = this.$el.dataTable({
                 aaSorting: oldSort,
                 bDestroy: true,
@@ -397,12 +444,31 @@ define([
                 },
                 sDom: 'ft',
                 aoColumnDefs: [
-                    {'bSortable': false, 'aTargets': [0, 1, 2, 12, 13, 14, 15]},
-                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': [9]},
-                    {'sType': 'strip_html', 'aTargets': [3]}
+                    {'bSortable': false, 'aTargets': excludeFromSort},
+                    {'sType': App.config.i18n.DATE_SORT, 'aTargets': dateColumns},
+                    {'sType': 'numeric_sort', aTargets: numberColumns},
+                    {'sType': 'strip_html', 'aTargets': stripHTMLColumns}
                 ]
             });
+
             this.$el.parent().find('.dataTables_filter input').attr('placeholder', App.config.i18n.FILTER);
+        },
+
+        addCustomColumns: function () {
+            var columns = this.columns;
+            var thirdCol = this.$('th:nth-child(3)');
+            var _this = this;
+            _.each(columns, function (column) {
+                thirdCol.after('<th>' + _this.getColumnHeaderValue(column) + '</th>');
+            });
+        },
+
+        getColumnHeaderValue: function (column) {
+            if (column.startsWith('attr-')) {
+                return column.split('.')[1];
+            }
+            var columnName = PartTableColumns.columnNameMapping[column];
+            return columnName ? columnName : '?';
         }
 
     });

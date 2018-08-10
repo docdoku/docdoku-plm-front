@@ -14,25 +14,25 @@ define([
 
         renderTask: function (taskId) {
             var _this = this;
-            $.getJSON(App.config.contextPath+'/api/workspaces/'+App.config.workspaceId+'/tasks/'+taskId)
-                .then(function(task){
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tasks/' + taskId)
+                .then(function (task) {
                     _this.task = task;
                     _this.renderWorkflow(task.workflowId);
                 });
             return this;
         },
 
-        renderWorkflow:function(workflowId){
+        renderWorkflow: function (workflowId) {
             var _this = this;
-            $.getJSON(App.config.contextPath+'/api/workspaces/'+App.config.workspaceId+'/workflow-instances/'+workflowId)
-                .then(function(workflow){
+            $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/workflow-instances/' + workflowId)
+                .then(function (workflow) {
                     _this.workflow = workflow;
                     _this.render();
                 });
         },
 
-        render:function(){
-            this.$el.html(Mustache.render(template, {task:this.task, workflow:this.workflow, i18n: App.config.i18n}));
+        render: function () {
+            this.$el.html(Mustache.render(template, {task: this.task, workflow: this.workflow, i18n: App.config.i18n}));
 
             this.lifecycleView = new LifecycleView()
                 .setWorkflow(this.workflow)

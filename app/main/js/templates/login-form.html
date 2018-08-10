@@ -1,5 +1,3 @@
-
-
 <h3><i class="fa fa-lock"></i>{{i18n.CONNECTION}}</h3>
 <div class="notifications"></div>
 <p>
@@ -9,7 +7,7 @@
            name="login_form-login"
            maxlength="50"
            size="20"
-           required />
+           required/>
 </p>
 
 <p>
@@ -20,8 +18,16 @@
            value=""
            maxlength="50"
            size="20"
-           required />
+           required/>
 </p>
+
+<ul>
+    {{#providers.length}}
+    <li><a href="#login-with"> {{i18n.LOGIN_WITH}} </a></li>
+    {{/providers.length}}
+    <li><a href="#recovery">{{i18n.RECOVERY}}</a></li>
+</ul>
+
 
 <p class="form_button_container">
     <input id="login_form-login_button"
@@ -29,8 +35,5 @@
            name="login_form-login_button"
            value="{{i18n.CONNECTION}}"
            alt="{{i18n.CONNECTION}}"
-           class="btn btn-custom" />
+           class="btn btn-custom"/>
 </p>
-
-<p><a href="#recovery">{{i18n.RECOVERY}}</a> </p>
-

@@ -16,7 +16,7 @@
     z-index: 1;
 
     .nav {
-        margin: 10px 0 5% 6px;
+        margin: 10px 0 0 6px;
         padding: 0;
         height: 95%;
         overflow: auto;
@@ -30,21 +30,21 @@
 
     .nav-header {
         font-size: 12px;
-        padding: 3px 10px;
+        padding: 3px 6px;
         display: block;
         font-weight: bold;
         line-height: 18px;
         color: @nav-header-color;
         text-transform: uppercase;
 
-        &.nav-header-bigger{
+        &.nav-header-bigger {
             font-size: 16px;
         }
     }
 
     .nav-list-entry {
         position: relative;
-        padding: 0 40px 0 6px;
+        padding: 0 6px 0 6px;
         height: 26px;
         display: block;
 
@@ -53,6 +53,10 @@
         }
 
         > a {
+            color: @plm-primary-color;
+            &:hover {
+                color: @plm-primary-hover-color;
+            }
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 26px;
@@ -85,7 +89,7 @@
         }
 
         .dropdown-toggle:hover {
-            background: @menu-color-hover;
+            background: @table-row-even-hover;
             .caret {
                 opacity: 1;
             }
@@ -106,7 +110,7 @@
 
                 > a {
                     font-size: 13px;
-                    padding: 0;
+                    padding: 0 0 0 8px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -125,7 +129,7 @@
         > a {
             text-decoration: none;
         }
-        background-color: @background-color;
+        background-color: @table-row-even-hover;
         .dropdown-toggle {
             display: block;
         }

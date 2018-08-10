@@ -66,7 +66,7 @@ define([
                 items: itemsLimit,
 
                 source: function (query, process) {
-                    $.getJSON(App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/documents/doc_revs?q=' + query + '&l=' + itemsLimit, function (data) {
+                    $.getJSON(App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/documents/doc_revs?q=' + query + '&l=' + itemsLimit, function (data) {
 
                         self.searchResults = new LinkedDocumentCollection(data);
 

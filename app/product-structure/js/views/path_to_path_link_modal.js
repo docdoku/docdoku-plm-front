@@ -65,7 +65,7 @@ define([
         },
 
         getUrlForComponents : function(path){
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/decode-path/' + path;
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/decode-path/' + path;
         },
 
         getUrlForAvailableType: function(){
@@ -73,13 +73,13 @@ define([
             var url = '';
 
             if(this.serialNumber) {
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-instances/' + this.productId + '/instances/' + this.serialNumber + '/path-to-path-links-types';
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-instances/' + this.productId + '/instances/' + this.serialNumber + '/path-to-path-links-types';
             }
             else if(this.baselineId){
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.productId + '/baselines/' + this.baselineId + '/path-to-path-links-types';
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.productId + '/baselines/' + this.baselineId + '/path-to-path-links-types';
             }
             else{
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/path-to-path-links-types';
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/path-to-path-links-types';
             }
 
             return url;
@@ -89,13 +89,13 @@ define([
             var url = '';
 
             if(this.serialNumber){
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-instances/' + this.productId + '/instances/' + this.serialNumber + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-instances/' + this.productId + '/instances/' + this.serialNumber + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
             }
             else if(this.baselineId){
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.productId + '/baselines/' + this.baselineId + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines/' + this.productId + '/baselines/' + this.baselineId + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
             }
             else{
-                url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
+                url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/products/' + this.productId + '/path-to-path-links/source/' + this.pathSelected[0].getEncodedPath() + '/target/' + this.pathSelected[1].getEncodedPath();
             }
 
             return url;

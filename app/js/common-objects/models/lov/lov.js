@@ -54,7 +54,7 @@ define(['backbone'], function (Backbone) {
             if(this.getLOVName()){
                 endUrl = this.isNew()?'':'/'+ encodeURIComponent(this.getLOVName());
             }
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/lov'+ endUrl;
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/lov'+ endUrl;
         }
 
     });

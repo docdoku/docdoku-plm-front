@@ -96,11 +96,11 @@ define([
 		 * @returns string
 		 */
 		getUploadBaseUrl: function () {
-			return App.config.contextPath + '/api/files/' + this.getBaseName() + '/';
+			return App.config.apiEndPoint + '/files/' + this.getBaseName() + '/';
 		},
 
 		getBaseName: function () {
-			return this.getWorkspace() + '/documents/' + this.getDocumentMasterId() + '/' + this.getVersion() + '/' + this.getIteration();
+			return this.getWorkspace() + '/documents/' + encodeURIComponent(this.getDocumentMasterId()) + '/' + this.getVersion() + '/' + this.getIteration();
 		},
 
         getUsedByDocuments: function () {

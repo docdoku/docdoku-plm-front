@@ -7,8 +7,8 @@ define([
     'common-objects/views/alert',
     'text!common-objects/templates/workflow/lifecycle.html'
 
-], function (Backbone, Mustache, LifecycleActivityView, Date, AlertView, template) {
-	'use strict';
+], function (Backbone, Mustache, LifecycleActivityView, date, AlertView, template) {
+    'use strict';
     var LifecycleView = Backbone.View.extend({
 
         tagName: 'div',
@@ -24,7 +24,7 @@ define([
         },
         setWorkflow: function (workflow) {
             this.workflow = workflow;
-            this.abortedWorkflowsUrl = App.config.contextPath+'/api/workspaces/'+App.config.workspaceId+'/workflow-instances/'+workflow.id+'/aborted';
+            this.abortedWorkflowsUrl = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/workflow-instances/' + workflow.id + '/aborted';
             return this;
         },
 
@@ -41,7 +41,7 @@ define([
                 success: function (abortedWorkflows) {
                     _.each(abortedWorkflows, function (workflow) {
 
-                        workflow.abortedFormattedDate = Date.formatTimestamp(
+                        workflow.abortedFormattedDate = date.formatTimestamp(
                             App.config.i18n._DATE_FORMAT,
                             workflow.abortedDate
                         );
@@ -67,7 +67,11 @@ define([
                     }
 
                     that.abortedWorkflows = abortedWorkflows;
-                    that.$el.html(Mustache.render(template, {i18n: App.config.i18n, workflow: that.workflow, abortedWorkflows: abortedWorkflows}));
+                    that.$el.html(Mustache.render(template, {
+                        i18n: App.config.i18n,
+                        workflow: that.workflow,
+                        abortedWorkflows: abortedWorkflows
+                    }));
                     that.bindDomElements();
                     that.displayWorkflow(that.workflow);
                 }
@@ -93,7 +97,7 @@ define([
 
         abortedWorkflow: function (e) {
             var that = this;
-            var workflowId = parseInt(e.target.dataset.id,10);
+            var workflowId = parseInt(e.target.dataset.id, 10);
             var workflow = _.select(that.abortedWorkflows, function (workflow) {
                 return workflow.id === workflowId;
             })[0];
@@ -110,7 +114,7 @@ define([
             _.each(workflow.activities, function (activity) {
                 if (activity && activity.toDo) {
                     activity.parentWorkflowId = that.workflow.id;
-                    activity.relaunchActivityState = activity.relaunchStep >= 0 ? workflow.activities[activity.relaunchStep].lifeCycleState:null;
+                    activity.relaunchActivityState = activity.relaunchStep >= 0 ? workflow.activities[activity.relaunchStep].lifeCycleState : null;
                     var lifecycleActivityView = new LifecycleActivityView().setActivity(activity).setEntityType(that.entityType).render();
                     that.$lifecycleActivities.append(lifecycleActivityView.$el);
                     lifecycleActivityView.on('activity:change', function () {

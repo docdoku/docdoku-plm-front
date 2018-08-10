@@ -92,7 +92,7 @@ define([
                 if (data) {
                     elId.val(data.id);
                 }
-            }, 'html'); // TODO: fix the webservice return type (actualy: json)
+            });
         }
 
     });

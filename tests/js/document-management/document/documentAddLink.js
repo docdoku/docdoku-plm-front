@@ -2,15 +2,13 @@
 casper.test.begin('Document add link tests suite', 3, function documentAddLinkTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open document management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.documentManagement);
-    });
+    casper.open(urls.documentManagement);
 
     /**
      * Open folder nav
@@ -30,8 +28,8 @@ casper.test.begin('Document add link tests suite', 3, function documentAddLinkTe
      */
 
     casper.then(function waitForDocumentDisplayed() {
-        return this.waitForSelector('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference', function documentIsDisplayed() {
-            this.click('#document-management-content table.dataTable tr[title="'+documents.document1.number+'"] td.reference');
+        return this.waitForSelector('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference', function documentIsDisplayed() {
+            this.click('#document-management-content table.dataTable tr[title="' + documents.document1.number + '"] td.reference');
         }, function fail() {
             this.capture('screenshot/documentAddLink/waitForDocumentDisplayed-error.png');
             this.test.assert(false, 'Document can not be found');
@@ -71,7 +69,7 @@ casper.test.begin('Document add link tests suite', 3, function documentAddLinkTe
     casper.then(function waitForDocumentsSelectList() {
         this.sendKeys('.document-modal .linked-items-reference-typehead', documents.document1.documentLink, {reset: true});
 
-        return this.waitForSelector('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a', function documentsSelectListDisplayed() {
+        return this.waitUntilVisible('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a', function documentsSelectListDisplayed() {
             this.click('#iteration-links > div > ul.typeahead.dropdown-menu > li:first-child > a');
         }, function fail() {
             this.capture('screenshot/documentAddLink/waitForDocumentsSelectList-error.png');
@@ -95,14 +93,14 @@ casper.test.begin('Document add link tests suite', 3, function documentAddLinkTe
      * Set a comment
      */
 
-    casper.then(function openLinkComment(){
+    casper.then(function openLinkComment() {
         var descriptionButton = '.document-modal .linked-items-view > ul.linked-items > li:first-child > a.edit-linked-item-comment';
         var descriptionInput = '.document-modal .linked-items-view > ul.linked-items > li:first-child .commentInput';
         this.click(descriptionButton);
-        return this.waitForSelector(descriptionInput,function openDescription(){
-            this.sendKeys(descriptionInput,documents.document1.documentLinkComment,{reset:true});
+        return this.waitForSelector(descriptionInput, function openDescription() {
+            this.sendKeys(descriptionInput, documents.document1.documentLinkComment, {reset: true});
             this.click('.document-modal .linked-items-view > ul.linked-items > li:first-child .validate-comment');
-        },function fail(){
+        }, function fail() {
             this.capture('screenshot/documentAddLink/addLinkComment-error.png');
             this.test.assert(false, 'Cannot edit document link comment');
         });
@@ -112,7 +110,7 @@ casper.test.begin('Document add link tests suite', 3, function documentAddLinkTe
      * Save and wait for the modal to be closed
      */
 
-    casper.then(function savePartIteration(){
+    casper.then(function savePartIteration() {
         this.click('#save-iteration');
         return this.waitWhileSelector('.document-modal', function modalClosed() {
             this.test.assert(true, 'Document modal has been closed');

@@ -3,15 +3,13 @@
 casper.test.begin('Milestone creation tests suite', 5, function milestoneCreationTestsSuite() {
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open change management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.changeManagement);
-    });
+    casper.open(urls.changeManagement);
 
     /**
      * Open milestones nav

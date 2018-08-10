@@ -117,11 +117,18 @@ function (Backbone, Mustache, template) {
                 if(!this.hasSelectedGroups() && !this.hasSelectedUsers()){
                     this.isValid = false;
                     this.$el.addClass('invalid');
-                    this.$('select').prop('required',true);
+                    this.$('select, input').prop('required',true);
                 }else{
                     this.isValid = true;
                     this.$el.removeClass('invalid');
-                    this.$('select').prop('required',false);
+                    this.$('select, input').removeAttr('required');
+                }
+
+                if(this.$groupsSelect[0].selectize) {
+                    this.$groupsSelect[0].selectize.isRequired = !this.hasSelectedUsers();
+                }
+                if(this.$usersSelect[0].selectize) {
+                    this.$usersSelect[0].selectize.isRequired = !this.hasSelectedGroups();
                 }
             }
         },

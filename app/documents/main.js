@@ -10,8 +10,8 @@ require.config({
         jqueryUI: { deps: ['jquery'], exports: 'jQuery' },
         bootstrap: { deps: ['jquery', 'jqueryUI'], exports: 'jQuery' },
         backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone'},
-        popoverUtils: {deps: ['jquery'], exports: 'jQuery'}
-
+        popoverUtils: {deps: ['jquery'], exports: 'jQuery'},
+        fileDownload: {deps: ['jquery'], exports: 'jQuery'}
     },
 
     paths: {
@@ -28,7 +28,9 @@ require.config({
         pluginDetect:'../../js/lib/plugin-detect',
         moment: '../../bower_components/moment/min/moment-with-locales',
         momentTimeZone: '../../bower_components/moment-timezone/builds/moment-timezone-with-data',
-        popoverUtils: '../../js/utils/popover.utils'
+        popoverUtils: '../../js/utils/popover.utils',
+        fileDownload: '../../js/utils/file-download',
+        jwt_decode: '../../bower_components/jwt-decode/build/jwt-decode'
     },
 
     deps: [
@@ -37,7 +39,8 @@ require.config({
         'bootstrap',
         'jqueryUI',
         'pluginDetect',
-        'popoverUtils'
+        'popoverUtils',
+        'fileDownload'
     ],
     config: {
         i18n: {
@@ -59,7 +62,7 @@ require(['common-objects/contextResolver','i18n!localization/nls/common','i18n!l
 
         App.config.i18n = _.extend(commonStrings, indexStrings);
 
-        ContextResolver.resolveServerProperties()
+        ContextResolver.resolveServerProperties('..')
             .then(function buildView(){
                 require(['backbone','app','router','common-objects/views/header'],function(Backbone, AppView, Router, HeaderView){
                     App.appView = new AppView();

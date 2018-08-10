@@ -14,6 +14,7 @@ define([
         initialize: function () {
             this.render();
             Backbone.Events.on('part:iterationChange', this.refreshCount, this);
+            Backbone.Events.on('import:success', this.refreshCount, this);
         },
 
         render: function () {
@@ -26,18 +27,18 @@ define([
             $.ajax({
                 context :this,
                 type:'GET',
-                url:App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/countCheckedOut'
+                url:App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/countCheckedOut'
             }).success(function(data){
                 var numberOfItem = data.count;
                 var badge = that.$('.badge.nav-checkedOut-number-item');
-                badge.addClass('badge-info');
+                badge.addClass('badge-custom');
                 badge.html(numberOfItem);
                 if(numberOfItem > 0){
-                    badge.addClass('badge-success');
-                    badge.removeClass('badge-info');
+                    badge.addClass('badge-custom');
+                    badge.removeClass('badge-primary');
                 } else{
-                    badge.addClass('badge-info');
-                    badge.removeClass('badge-success');
+                    badge.addClass('badge-primary');
+                    badge.removeClass('badge-custom');
                 }
             });
         },

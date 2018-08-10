@@ -3,7 +3,6 @@
 casper.test.begin('Part deletion tests suite', 3, function partDeletionTestsSuite() {
     'use strict';
 
-    casper.open('');
 
     /**
      * Open product management URL
@@ -49,7 +48,7 @@ casper.test.begin('Part deletion tests suite', 3, function partDeletionTestsSuit
     });
 
     casper.then(function waitForDeletionConfirmationModal() {
-        this.waitForSelector('.bootbox', function confirmPartDeletion() {
+        return this.waitForSelector('.bootbox', function confirmPartDeletion() {
             this.click('.bootbox .modal-footer .btn-primary');
         }, function fail() {
             this.capture('screenshot/partDeletion/waitForDeletionConfirmationModal-error.png');
@@ -58,7 +57,7 @@ casper.test.begin('Part deletion tests suite', 3, function partDeletionTestsSuit
     });
 
     casper.then(function waitForDeletionConfirmationModalDisappear() {
-        this.waitWhileSelector('.bootbox', function confirmPartDeletion() {
+        return this.waitWhileSelector('.bootbox', function confirmPartDeletion() {
             this.test.assert(true, 'Deletion confirmation modal has disappeared');
         }, function fail() {
             this.capture('screenshot/partDeletion/waitForDeletionConfirmationModalDisappear-error.png');

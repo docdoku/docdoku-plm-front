@@ -17,6 +17,25 @@ define(function () {
         });
     }
 
+    attachMediaStream = function (element, stream) {
+        if (typeof element.srcObject !== 'undefined') {
+            element.srcObject = stream;
+        } else {
+            if (typeof element.mozSrcObject !== 'undefined') {
+                element.mozSrcObject = stream;
+            } else {
+                if (typeof element.src !== 'undefined') {
+                    element.src = window.URL.createObjectURL(stream);
+                } else {
+                    console.error('Error attaching stream to element.');
+                }
+            }
+        }
+    };
+
+    reattachMediaStream = function (to, from) {
+        to.src = from.src;
+    };
 
     if (navigator.mozGetUserMedia) {
         webrtcDetectedBrowser = 'firefox';
@@ -109,12 +128,6 @@ define(function () {
                 });
             };
         }
-        attachMediaStream = function (element, stream) {
-            element.mozSrcObject = stream;
-        };
-        reattachMediaStream = function (to, from) {
-            to.mozSrcObject = from.mozSrcObject;
-        };
     } else {
         if (navigator.webkitGetUserMedia) {
             webrtcDetectedBrowser = 'chrome';
@@ -179,24 +192,6 @@ define(function () {
                 return navigator.webkitGetUserMedia(c, onSuccess, onError);
             };
             navigator.getUserMedia = getUserMedia;
-            attachMediaStream = function (element, stream) {
-                if (typeof element.srcObject !== 'undefined') {
-                    element.srcObject = stream;
-                } else {
-                    if (typeof element.mozSrcObject !== 'undefined') {
-                        element.mozSrcObject = stream;
-                    } else {
-                        if (typeof element.src !== 'undefined') {
-                            element.src = window.URL.createObjectURL(stream);
-                        } else {
-                            console.error('Error attaching stream to element.');
-                        }
-                    }
-                }
-            };
-            reattachMediaStream = function (to, from) {
-                to.src = from.src;
-            };
             if (!navigator.mediaDevices) {
                 navigator.mediaDevices = {
                     getUserMedia: requestUserMedia,

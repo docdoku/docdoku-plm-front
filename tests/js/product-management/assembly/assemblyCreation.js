@@ -1,18 +1,16 @@
-/*global casper,urls,products,apiUrls*/
+/*global casper,urls,products,workspace*/
 
-casper.test.begin('Assembly creation tests suite', 14, function assemblyCreationTestsSuite() {
+casper.test.begin('Assembly creation tests suite', 10, function assemblyCreationTestsSuite() {
 
     'use strict';
 
-    casper.open('');
+    casper.clear();
 
     /**
      * Open product management URL
      * */
 
-    casper.then(function () {
-        return this.open(urls.productManagement);
-    });
+    casper.open(urls.productManagement);
 
     /**
      * Go to part nav
@@ -153,17 +151,39 @@ casper.test.begin('Assembly creation tests suite', 14, function assemblyCreation
      * Checkin all parts
      */
 
-    partNumbers.forEach(function(partNumber) {
-        casper.then(function checkinPart() {
-            // Run xhrs, more convenient here.
-            return this.open(apiUrls.getParts + '/' + partNumber + '-A/checkin', {method: 'PUT'}).then(function (response) {
-                this.test.assertEquals(response.status, 200, 'Part ' + partNumber + ' is checked in');
-            }, function () {
-                this.test.assert(false, 'Part ' + partNumber + ' has not been checked in');
-                this.capture('screenshot/assemblyCreation/checkinPart-'+partNumber+'-error.png');
+
+    casper.then(function checkinPart() {
+        // run XHRs on ui thread
+        this.evaluate(function (args) {
+
+            function endsWith(str, suffix) {
+                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+            }
+
+            $.getJSON('../webapp.properties.json').then(function (properties) {
+
+                var isSSL = properties.server.ssl;
+                var base = '://' + properties.server.domain + ':' + properties.server.port + properties.server.contextPath;
+
+                if (!endsWith(base, '/')) {
+                    base += '/';
+                }
+
+                var apiEndPoint = (isSSL ? 'https' : 'http') + base + 'api';
+
+                args.partNumbers.forEach(function (n) {
+                    $.ajax({
+                        url: apiEndPoint + '/workspaces/' + args.workspace + '/parts/' + n + '-A/checkin',
+                        type: 'PUT'
+                    });
+                });
             });
-        });
+
+        }, {partNumbers: partNumbers, workspace: workspace});
+        //todo: find alternative to wait
+        return casper.wait(200);
     });
+
 
     casper.run(function allDone() {
         return this.test.done();

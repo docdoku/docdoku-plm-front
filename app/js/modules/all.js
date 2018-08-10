@@ -15,12 +15,6 @@ define([
         return {};
     }
 
-    var pageUnload = function () {
-        App.mainChannel.ws.onclose = function () {
-        };
-        App.mainChannel.ws.close();
-    };
-
     var userStatusListener = new ChannelListener({
 
         isApplicable: function (messageType) {
@@ -37,14 +31,11 @@ define([
 
     });
 
-    window.addEventListener('beforeunload', pageUnload, false);
-
     App.mainChannel = new Channel();
     App.mainChannel.addChannelListener(userStatusListener);
     App.mainChannel.addChannelListener(webRTCInvitationListener);
     App.mainChannel.addChannelListener(chatListener);
-    var wsProtocol = window.location.protocol === 'https:' ? 'wss://':'ws://';
-    App.mainChannel.init(wsProtocol + window.location.host + App.config.contextPath + '/ws');
+    App.mainChannel.init(App.config.webSocketEndPoint);
 
     return {
         CoWorkersAccessModuleView: CoWorkersAccessModuleView

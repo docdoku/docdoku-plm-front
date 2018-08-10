@@ -1,33 +1,23 @@
 #document-management-menu {
     // Custom menu code
 
-    .nav-list-entry {
-
-        &.move-doc-into {
-            border: 1px dashed @menu-drop-item;
-            height: 25px;
-            margin-top: -1px;
-            padding-left: 5px;
-        }
-
-        .dropdown-menu {
-            li.new-folder .icon {
-                .plm-icon-menu-folder-new;
-                margin: 4px 6px 4px 6px;
-            }
-            li.edit .icon {
-                .plm-icon-menu-edit;
-                margin: 4px 6px 4px 6px;
-            }
-            li.delete .icon {
-                .plm-icon-menu-delete;
-                margin: 4px 6px 4px 6px;
-            }
-        }
-
+   a .fa{
+       font-size: 14px;
     }
 
     #folder-nav {
+
+        .nav-list-entry {
+
+            &.move-doc-into {
+                border: 1px dashed @menu-drop-item;
+                height: 25px;
+                margin-top: -1px;
+                padding-left: 5px;
+            }
+
+        }
+
         *zoom: 1;
         &:before,
         &:after {
@@ -41,16 +31,24 @@
             clear: both;
         }
 
-        .folder {
+        .folder > div > a {
+            > .icon {
+                margin: 6px 6px 0 0;
+            }
+            > .icon.icon-home, .icon.icon-folder-opened {
+                display: none;
+            }
+            > .icon.icon-folder-closed {
+                display: inline-block;
+            }
+
             .status {
                 .plm-icon-nav-folder-status-closed;
                 &:hover {
                     opacity: 1;
                 }
             }
-            .icon {
-                .plm-icon-nav-folder;
-            }
+
         }
 
         .folder.open > div > a {
@@ -61,13 +59,22 @@
                 }
             }
 
-            > .icon {
-                .plm-icon-nav-folder-opened;
+            > .icon.icon-home, .icon.icon-folder-closed {
+                display: none;
+            }
+            > .icon.icon-folder-opened {
+                display: inline-block;
             }
         }
 
-        .folder.home > .header > a .icon {
-            .plm-icon-nav-folder-home;
+        .folder.home > div > a {
+
+            > .icon.icon-folder-opened, .icon.icon-folder-closed {
+                display: none;
+            }
+            > .icon.icon-home {
+                display: inline-block;
+            }
         }
 
         .items {

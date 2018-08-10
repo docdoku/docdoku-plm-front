@@ -43,7 +43,7 @@ define([
 
             $.ajax({
                 type: 'POST',
-                url: App.config.contextPath + '/api/auth/recover',
+                url: App.config.apiEndPoint + '/auth/recover',
                 data: JSON.stringify({
                     uuid:this.uuid,
                     newPassword:this.$password.val()

@@ -11,7 +11,7 @@ define([
         className: 'TagDocumentList',
 
         url: function () {
-            return App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/tags/' + encodeURIComponent(this.parent.get('label')) + '/documents';
+            return App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tags/' + encodeURIComponent(this.parent.get('label')) + '/documents';
         },
 
         comparator: function (documentRevision) {

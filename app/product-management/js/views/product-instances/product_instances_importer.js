@@ -172,7 +172,7 @@ define([
 
             if (this.file) {
 
-                var baseUrl = App.config.contextPath + '/api/workspaces/' +
+                var baseUrl = App.config.apiEndPoint + '/workspaces/' +
                     App.config.workspaceId + '/product-instances/import';
 
                 var params = {
@@ -188,10 +188,6 @@ define([
                 var xhr = new XMLHttpRequest();
                 xhr.onload = this.fetchImports.bind(this);
                 xhr.open('POST', importUrl);
-
-                if(localStorage.jwt){
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-                }
 
                 var formdata = new window.FormData();
                 formdata.append('upload', this.file);
@@ -211,7 +207,7 @@ define([
             _this.$('.import-status-views').empty();
 
             if (this.file) {
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/imports/' + unorm.nfc(this.file.name);
                 $.get(url).then(function (imports) {
                     _.each(imports, function (pImport) {
                         var view = new ImportStatusView({model: pImport}).render();

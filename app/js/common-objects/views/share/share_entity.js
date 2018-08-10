@@ -6,7 +6,7 @@ define([
     'text!common-objects/templates/share/shared_entity.html',
     'common-objects/utils/date'
 ], function (Backbone, Mustache, template, templateShared, date) {
-	'use strict';
+    'use strict';
     var ShareView = Backbone.View.extend({
         tagName: 'div',
 
@@ -34,8 +34,8 @@ define([
             }
 
             this.$el.html(Mustache.render(template, {
-                timeZone:App.config.timeZone,
-                language : App.config.locale,
+                timeZone: App.config.timeZone,
+                language: App.config.locale,
                 i18n: App.config.i18n,
                 title: title,
                 permalink: this.model.getPermalink()
@@ -49,14 +49,18 @@ define([
 
             this.$publicSharedSwitch.on('switch-change', function () {
                 if (that.model.get('publicShared')) {
-                    that.model.unpublish({success: function () {
-                        that.model.fetch();
-                    }});
+                    that.model.unpublish({
+                        success: function () {
+                            that.model.fetch();
+                        }
+                    });
                 }
                 else {
-                    that.model.publish({success: function () {
-                        that.model.fetch();
-                    }});
+                    that.model.publish({
+                        success: function () {
+                            that.model.fetch();
+                        }
+                    });
                 }
             });
 
@@ -92,7 +96,10 @@ define([
             var data = {};
             switch (this.options.entityType) {
                 case 'documents' :
-                    data = {documentMasterId: this.model.getReference(), documentMasterVersion: this.model.getVersion()};
+                    data = {
+                        documentMasterId: this.model.getReference(),
+                        documentMasterVersion: this.model.getVersion()
+                    };
                     break;
                 case 'parts' :
                     data = {partMasterNumber: this.model.getNumber(), partMasterVersion: this.model.getVersion()};
@@ -106,17 +113,22 @@ define([
                 this.$badPasswordLabel.show();
             } else {
                 data.password = this.$password.val() ? this.$password.val() : null;
-                data.expireDate = this.$expireDate.val() ? date.toUTCWithTimeZoneOffset(this.$expireDate.val()) : null;
-                this.model.createShare({data: data, success: function (pData) {
-                    that.$privateShare.empty();
-                    that.$privateShare.html(Mustache.render(templateShared,{i18n: App.config.i18n, generatedUrl: that.generateUrlFromUUID(pData.uuid)}));
-                }});
+                data.expireDate = this.$expireDate.val() ? date.getDateFromDateInput(this.$expireDate.val()) : null;
+                this.model.createShare({
+                    data: data, success: function (pData) {
+                        that.$privateShare.empty();
+                        that.$privateShare.html(Mustache.render(templateShared, {
+                            i18n: App.config.i18n,
+                            generatedUrl: that.generateUrlFromUUID(pData.uuid)
+                        }));
+                    }
+                });
             }
 
         },
 
         generateUrlFromUUID: function (uuid) {
-            return window.location.origin + App.config.contextPath + '/'+this.options.entityType+'/#' + uuid;
+            return window.location.origin + App.config.contextPath + this.options.entityType + '/#' + uuid;
         }
 
     });

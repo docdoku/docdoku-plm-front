@@ -8,8 +8,9 @@ define([
     'common-objects/views/alert',
     'collections/configuration_items',
     'common-objects/collections/product_instances',
-    'common-objects/views/prompt'
-], function (Backbone, Mustache, template, selectize, queryBuilderOptions, AlertView, ConfigurationItemCollection, ProductInstances, PromptView) {
+    'common-objects/views/prompt',
+    'fileDownload'
+], function (Backbone, Mustache, template, selectize, queryBuilderOptions, AlertView, ConfigurationItemCollection, ProductInstances, PromptView, FileDownload) {
     'use strict';
     var QueryBuilderView = Backbone.View.extend({
 
@@ -21,6 +22,7 @@ define([
             'click .reset-button': 'onReset',
             'click .clear-select-badge': 'onClearSelect',
             'click .clear-where-badge': 'onClearWhere',
+            'click .clear-path-data-where-badge': 'onClearPathDataWhere',
             'click .clear-order-by-badge': 'onClearOrderBy',
             'click .clear-group-by-badge': 'onClearGroupBy',
             'click .clear-context-badge': 'onClearContext',
@@ -30,52 +32,36 @@ define([
 
         delimiter: ',',
 
-        init: function () {
-
-            this.selectizeAvailableOptions = _.clone(queryBuilderOptions.fields);
-
-            this.queryBuilderFilters = _.clone(queryBuilderOptions.filters);
-
-            this.selectizeOptions = {
-                plugins: ['remove_button', 'drag_drop', 'optgroup_columns'],
-                persist: true,
-                delimiter: this.delimiter,
-                optgroupField: 'group',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                optgroups: _.clone(queryBuilderOptions.groups),
-
-                valueField: 'value',
-                searchField: ['name'],
-                options: null,
-                render: {
-                    item: function (item, escape) {
-                        return '<div><span class="name">' + escape(item.name) + '</span></div>';
-                    },
-                    option: function (item, escape) {
-                        return '<div><span class="label">' + escape(item.name) + '</span></div>';
-                    }
-                }
-            };
-
-        },
-
         render: function () {
-            this.init();
+
+            this.initStaticOptionsAndFilters();
+
             this.$el.html(Mustache.render(template, {i18n: App.config.i18n}));
             this.bindDomElements();
+            this.$pathDataWhereContainer.hide();
+
             this.fetchPartIterationsAttributes()
                 .then(this.fetchPathDataAttributes.bind(this))
                 .then(this.fetchTags.bind(this))
                 .then(this.fetchQueries.bind(this))
                 .then(this.fillSelectizes.bind(this))
                 .then(this.initWhere.bind(this));
+
             return this;
+        },
+
+        initStaticOptionsAndFilters: function () {
+            this.selectizeAvailableOptions = _.clone(queryBuilderOptions.fields);
+            this.partIterationFilters = _.clone(queryBuilderOptions.filters);
+            this.pathDataIterationFilters = _.clone(queryBuilderOptions.pathDataFilters);
+            this.selectizeOptions = queryBuilderOptions.selectizeOptions;
         },
 
         bindDomElements: function () {
             this.$modal = this.$('#query-builder-modal');
             this.$where = this.$('#where');
+            this.$pathDataWhere = this.$('#path-data-where');
+            this.$pathDataWhereContainer = this.$pathDataWhere.parent().first();
             this.$select = this.$('#select');
             this.$orderBy = this.$('#orderBy');
             this.$groupBy = this.$('#groupBy');
@@ -91,7 +77,7 @@ define([
             this.queries = [];
             var queries = this.queries;
 
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries';
 
             var $select = this.$selectQuery;
             var $existingQueriesArea = this.$existingQueriesArea;
@@ -158,24 +144,31 @@ define([
             var groupBySelectize = this.$groupBy[0].selectize;
             var contextSelectize = this.$context[0].selectize;
 
+            this.$where.queryBuilder('reset');
+
+            if (this.pathDataIterationFilters.length) {
+                this.$pathDataWhere.queryBuilder('reset');
+            }
+
             if (e.target.value) {
-                var query = _.findWhere(this.queries, {id: parseInt(e.target.value, 10)});
+
+                var originalQuery = _.findWhere(this.queries, {id: parseInt(e.target.value, 10)});
+                // Deep clone query to not alter original one
+                var query = JSON.parse(JSON.stringify(originalQuery));
+
                 if (query.queryRule) {
-                    if (query.queryRule.rules.length === 0) {
-                        this.$where.queryBuilder('reset');
+                    this.extractArrayValues(query.queryRule);
+                    this.$where.queryBuilder('setRules', query.queryRule);
+                } else {
+                    this.$where.queryBuilder('setRules', {rules: []});
+                }
+
+                if (this.pathDataIterationFilters.length) {
+                    if (query.pathDataQueryRule) {
+                        this.extractArrayValues(query.pathDataQueryRule);
+                        this.$pathDataWhere.queryBuilder('setRules', query.pathDataQueryRule);
                     } else {
-                        if (query.queryRule && query.queryRule.rules) {
-                            var rules = query.queryRule.rules;
-                            for (var i = 0; i < rules.length; i++) {
-                                if (rules[i].values && rules[i].values.length === 1) {
-                                    rules[i].value = rules[i].values[0];
-                                } else {
-                                    rules[i].value = rules[i].values;
-                                }
-                                rules[i].values = undefined;
-                            }
-                        }
-                        this.$where.queryBuilder('setRules', query.queryRule);
+                        this.$pathDataWhere.queryBuilder('setRules', {rules: []});
                     }
                 }
 
@@ -201,9 +194,32 @@ define([
 
             } else {
                 this.$where.queryBuilder('reset');
+                if (this.pathDataIterationFilters.length) {
+                    this.$pathDataWhere.queryBuilder('reset');
+                }
             }
+
             this.$deleteQueryButton.toggle(e.target.value !== '');
             this.$exportExistingQueryButton.toggle(e.target.value !== '');
+        },
+
+        hasProductInstanceInSelectedContext: function () {
+            var contextValue = this.$context[0].selectize.getValue();
+            var context = contextValue.length ? contextValue.split(this.delimiter) : [];
+            return context.filter(function (ctx) {
+                return ctx.split('/').length === 2;
+            }).length;
+        },
+
+        onContextChange: function () {
+            if (this.pathDataIterationFilters.length) {
+                if (!this.hasProductInstanceInSelectedContext()) {
+                    this.$pathDataWhere.queryBuilder('reset');
+                    this.$pathDataWhereContainer.hide();
+                } else {
+                    this.$pathDataWhereContainer.show();
+                }
+            }
         },
 
         deleteSelectedQuery: function () {
@@ -217,7 +233,7 @@ define([
                     function (result) {
                         if (result) {
 
-                            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries/' + id;
+                            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries/' + id;
                             $.ajax({
                                 type: 'DELETE',
                                 url: url,
@@ -240,14 +256,14 @@ define([
 
         fetchPartIterationsAttributes: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/attributes/part-iterations';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/part-iterations';
 
             return $.ajax({
                 type: 'GET',
                 url: url,
                 success: function (data) {
                     _.each(data, function (attribute) {
-                        self.addFilter(attribute, '');
+                        self.addFilter(attribute, '', self.partIterationFilters);
                         self.selectizeAvailableOptions.push({
                             name: attribute.name,
                             value: 'attr-' + attribute.type + '.' + attribute.name,
@@ -264,14 +280,14 @@ define([
 
         fetchPathDataAttributes: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/attributes/path-data';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/attributes/path-data';
 
             return $.ajax({
                 type: 'GET',
                 url: url,
                 success: function (data) {
                     _.each(data, function (attribute) {
-                        self.addFilter(attribute, 'pd-');
+                        self.addFilter(attribute, 'pd-', self.pathDataIterationFilters);
                         self.selectizeAvailableOptions.push({
                             name: attribute.name,
                             value: 'pd-attr-' + attribute.type + '.' + attribute.name,
@@ -285,7 +301,7 @@ define([
             });
         },
 
-        addFilter: function (attribute, prefix) {
+        addFilter: function (attribute, prefix, filters) {
             var attributeType = queryBuilderOptions.types[attribute.type];
             var group = _.findWhere(queryBuilderOptions.groups, {id: 'attr-' + attribute.type});
             var filter = {
@@ -325,12 +341,12 @@ define([
                 filter.operators = queryBuilderOptions.numberOperators;
             }
 
-            this.queryBuilderFilters.push(filter);
+            filters.push(filter);
         },
 
         fetchTags: function () {
             var self = this;
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/tags';
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/tags';
 
             return $.ajax({
                 type: 'GET',
@@ -355,7 +371,7 @@ define([
                     filter.operators = queryBuilderOptions.tagOperators;
                     filter.input = 'select';
                     filter.values = values;
-                    self.queryBuilderFilters.push(filter);
+                    self.partIterationFilters.push(filter);
                 },
                 error: function () {
 
@@ -371,15 +387,20 @@ define([
 
         initWhere: function () {
             this.$where.queryBuilder({
-                filters: this.queryBuilderFilters,
-                icons: {
-                    'add_group': 'fa fa-plus-circle',
-                    'remove_group': 'fa fa-times-circle',
-                    'error': 'fa fa-exclamation',
-                    'remove_rule': 'fa fa-remove',
-                    'add_rule': 'fa fa-plus'
-                }
+                filters: this.partIterationFilters,
+                icons: queryBuilderOptions.icons,
+                'allow_empty': true
             });
+
+            if (this.pathDataIterationFilters.length) {
+                this.$pathDataWhere.queryBuilder({
+                    filters: this.pathDataIterationFilters,
+                    icons: queryBuilderOptions.icons,
+                    'allow_empty': true
+                });
+            }
+
+            this.$pathDataWhereContainer.hide();
         },
 
         fillSelectizes: function () {
@@ -437,6 +458,7 @@ define([
             });
 
             contextSelectize.on('item_add', function () {
+                self.onContextChange();
                 self.$select[0].selectize.addOption(queryBuilderOptions.contextFields);
                 self.$select[0].selectize.refreshOptions(false);
 
@@ -448,7 +470,7 @@ define([
             });
 
             contextSelectize.on('item_remove', function () {
-
+                self.onContextChange();
                 if (contextSelectize.items.length === 0) {
                     _.each(queryBuilderOptions.contextFields, function (field) {
                         self.$select[0].selectize.removeOption(field.value);
@@ -495,6 +517,12 @@ define([
             this.$where.queryBuilder('reset');
         },
 
+        onClearPathDataWhere: function () {
+            if (this.pathDataIterationFilters.length) {
+                this.$pathDataWhere.queryBuilder('reset');
+            }
+        },
+
         onClearOrderBy: function () {
             var orderBySelectize = this.$orderBy[0].selectize;
             orderBySelectize.clear();
@@ -506,6 +534,11 @@ define([
         },
 
         onClearContext: function () {
+            if (this.pathDataIterationFilters.length) {
+                this.$pathDataWhere.queryBuilder('reset');
+            }
+            this.$pathDataWhereContainer.hide();
+
             var contextSelectize = this.$context[0].selectize;
             contextSelectize.clear();
 
@@ -520,27 +553,40 @@ define([
                 self.$orderBy[0].selectize.removeOption(field.value);
                 self.$orderBy[0].selectize.refreshOptions(false);
             });
+
         },
 
         onReset: function () {
             this.clear();
             this.$where.queryBuilder('reset');
+            if (this.pathDataIterationFilters.length) {
+                this.$pathDataWhere.queryBuilder('reset');
+            }
             this.$selectQuery.val('');
         },
 
         doExportExistingQuery: function () {
             var queryId = this.$selectQuery.val();
             var query = _.findWhere(this.queries, {id: parseInt(queryId, 10)});
-            var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries/' + query.id + '/format/XLS';
-            var link = document.createElement('a');
-            link.href = url;
+            var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries/' + query.id + '/format/XLS';
 
-            var event = document.createEvent('MouseEvents');
-            event.initMouseEvent(
-                'click', true, false, window, 0, 0, 0, 0, 0,
-                false, false, false, false, 0, null
-            );
-            link.dispatchEvent(event);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                var a;
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(xhr.response);
+                    a.download = 'export.xls';
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                }
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            FileDownload.bindXhr(xhr, this.$exportExistingQueryButton.parent());
+            xhr.send();
+
         },
 
         onSave: function () {
@@ -562,13 +608,33 @@ define([
         getQueryData: function (save) {
 
             var isValid = this.$where.queryBuilder('validate');
+
+            var sendPathDataRules = this.hasProductInstanceInSelectedContext();
+            var pathDataRules = null;
+
+            if (sendPathDataRules) {
+                isValid = isValid && this.$pathDataWhere.queryBuilder('validate');
+                pathDataRules = this.$pathDataWhere.queryBuilder('getRules');
+                if (pathDataRules.rules && pathDataRules.rules.length > 0) {
+                    this.sendValuesInArray(pathDataRules.rules);
+                } else {
+                    pathDataRules = null;
+                }
+            }
+
             var rules = this.$where.queryBuilder('getRules');
-            this.sendValuesInArray(rules.rules);
+
+            if (rules.rules && rules.rules.length > 0) {
+                this.sendValuesInArray(rules.rules);
+            } else {
+                rules = null;
+            }
 
             var selectsSize = this.$select[0].selectize.items.length;
 
-            if (selectsSize && (isValid || !rules.condition && !rules.rules)) {
+            isValid = isValid && selectsSize > 0;
 
+            if (isValid) {
                 var context = this.$context[0].selectize.getValue().length ? this.$context[0].selectize.getValue().split(this.delimiter) : [];
 
                 var contextToSend = [];
@@ -591,6 +657,7 @@ define([
                     orderByList: orderByList,
                     groupedByList: groupByList,
                     queryRule: rules,
+                    pathDataQueryRule: pathDataRules,
                     name: save || ''
                 };
 
@@ -602,7 +669,7 @@ define([
             var queryData = this.getQueryData(false);
 
             if (queryData) {
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/query-export?export=XLS';
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/query-export?export=XLS';
 
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
@@ -618,12 +685,8 @@ define([
                 };
                 xhr.open('POST', url);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-
-                if(localStorage.jwt){
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt);
-                }
-
                 xhr.responseType = 'blob';
+                FileDownload.bindXhr(xhr, this.$('.query-actions-block'));
                 xhr.send(JSON.stringify(queryData));
             }
 
@@ -641,7 +704,7 @@ define([
             if (queryData) {
 
                 this.$searchButton.button('loading');
-                var url = App.config.contextPath + '/api/workspaces/' + App.config.workspaceId + '/parts/queries';
+                var url = App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/parts/queries';
 
                 if (save) {
                     url += '?save=true';
@@ -653,8 +716,9 @@ define([
                     data: JSON.stringify(queryData),
                     contentType: 'application/json',
                     success: function (data) {
+                        var filters = _.clone(self.partIterationFilters).concat(self.pathDataIterationFilters);
                         var dataToTransmit = {
-                            queryFilters: self.queryBuilderFilters,
+                            queryFilters: filters,
                             queryData: queryData,
                             queryResponse: data,
                             queryColumnNameMapping: self.selectizeAvailableOptions
@@ -673,6 +737,24 @@ define([
                 });
             }
 
+        },
+
+        extractArrayValues: function (rule) {
+            if (rule && rule.rules) {
+                var rules = rule.rules;
+                for (var i = 0; i < rules.length; i++) {
+                    if (rules[i].values && rules[i].values.length === 1) {
+                        rules[i].value = rules[i].values[0];
+                    } else {
+                        rules[i].value = rules[i].values;
+                    }
+                    if (rules[i].rules && rules[i].rules.length) {
+                        for (var j = 0; j < rules[i].rules.length; j++) {
+                            this.extractArrayValues(rules[i]);
+                        }
+                    }
+                }
+            }
         },
 
         sendValuesInArray: function (rules) {
