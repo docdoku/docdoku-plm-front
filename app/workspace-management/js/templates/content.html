@@ -19,6 +19,7 @@
                 {{i18n.USERS}}
             </a>
         </li>
+        {{^isAdmin}}
         <li  class="header nav-list-entry {{#isCustomizations}}active{{/isCustomizations}}">
             <a href="#/workspace/{{workspaceId}}/customizations">
                 {{i18n.CUSTOMIZATIONS}}
@@ -29,6 +30,7 @@
                 {{i18n.NOTIFICATIONS}}
             </a>
         </li>
+        {{/isAdmin}}
         <li  class="header nav-list-entry {{#isDashboard}}active{{/isDashboard}}">
             <a href="#/workspace/{{workspaceId}}/dashboard">
                 {{i18n.DASHBOARD}}

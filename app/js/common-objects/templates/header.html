@@ -178,11 +178,13 @@
                             {{i18n.MY_ACCOUNT}}
                         </a>
                         </li>
+                        {{^isAdmin}}
                         <li><a href="{{contextPath}}organization-management/index.html">
                             <i class="fa fa-building-o"></i>
                             {{i18n.MY_ORGANIZATION}}
                         </a>
                         </li>
+                        {{/isAdmin}}
                         <li><a href="{{contextPath}}workspace-management/index.html">
                             <i class="fa fa-cog"></i>
                             {{i18n.WORKSPACES_ADMINISTRATION}}
