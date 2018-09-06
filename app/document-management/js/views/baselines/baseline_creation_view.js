@@ -155,6 +155,7 @@ define([
 
 		closeModal: function () {
 			this.$modal.modal('hide');
+            Backbone.Events.trigger('document-collection-created');
 		},
 
 		onHidden: function () {

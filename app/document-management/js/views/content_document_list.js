@@ -33,6 +33,7 @@ define([
             Backbone.Events.on('folder-delete:error', this.onError);
             Backbone.Events.on('document-error-moved', this.onError);
             Backbone.Events.on('folder-error-moved', this.onError);
+            Backbone.Events.on('document-collection-created', this.hideSnapshotButton);
         },
 
         rendered: function () {
@@ -75,6 +76,10 @@ define([
                 this.snapInProgressGroupButtons.toggle(true);
                 this.refreshBaselineDocumentsCount();
             }
+        },
+
+        hideSnapshotButton : function(){
+            this.snapInProgressGroupButtons.toggle(false);
         },
 
         onStateChange: function () {
