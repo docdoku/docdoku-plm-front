@@ -138,6 +138,7 @@ define([
 
             App.config.documentBaselineInProgress = undefined;
             this.closeModal();
+            Backbone.Events.trigger('document-collection-created');
 		},
 
 		onError: function (model, error) {
@@ -155,7 +156,6 @@ define([
 
 		closeModal: function () {
 			this.$modal.modal('hide');
-            Backbone.Events.trigger('document-collection-created');
 		},
 
 		onHidden: function () {
