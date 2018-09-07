@@ -613,9 +613,11 @@ define([
             var pathDataRules = null;
 
             if (sendPathDataRules) {
-                isValid = isValid && this.$pathDataWhere.queryBuilder('validate');
-                pathDataRules = this.$pathDataWhere.queryBuilder('getRules');
-                if (pathDataRules.rules && pathDataRules.rules.length > 0) {
+                if(this.$pathDataWhere.filters){
+                    isValid = isValid && this.$pathDataWhere.queryBuilder('validate');
+                    pathDataRules = this.$pathDataWhere.queryBuilder('getRules');
+                }
+                if (pathDataRules && pathDataRules.rules && pathDataRules.rules.length > 0) {
                     this.sendValuesInArray(pathDataRules.rules);
                 } else {
                     pathDataRules = null;
