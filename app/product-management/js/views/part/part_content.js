@@ -56,7 +56,8 @@ define([
             'click .display-query-builder-button': 'toggleQueryBuilder',
             'click .import': 'showImporter',
             'click button[value="all"]': 'showAllWithTask',
-            'click button[value="in_progress"]': 'showTaskInProgress'
+            'click button[value="in_progress"]': 'showTaskInProgress',
+            'click .reset-button':'onReset'
         },
 
         partials: {
@@ -173,6 +174,10 @@ define([
             this.partListView.on('new-product-button:display', this.changeNewProductButtonDisplay);
             this.queryBuilder.on('query:search', this.onQueryBuilderSearch);
             this.delegateEvents();
+        },
+
+        onReset:function(){
+            this.$queryTableContainer.empty();
         },
 
         onQueryBuilderSearch: function (data) {
@@ -563,6 +568,7 @@ define([
             this.$el.toggleClass('displayQueryBuilder', this.isQueryBuilderDisplayed);
             this.$displayQueryBuilderButton.toggleClass('fa-angle-double-down', !this.isQueryBuilderDisplayed);
             this.$displayQueryBuilderButton.toggleClass('fa-angle-double-up', this.isQueryBuilderDisplayed);
+            this.$queryTableContainer.empty();
             this.$queryTableContainer.toggle(this.isQueryBuilderDisplayed);
             this.$partTableContainer.toggle(!this.isQueryBuilderDisplayed);
             this.pageControls.toggle(!this.isQueryBuilderDisplayed);
