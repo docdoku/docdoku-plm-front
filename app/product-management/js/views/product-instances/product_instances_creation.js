@@ -20,11 +20,12 @@ define([
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #product_instance_creation_form': 'onSubmitForm',
             'hidden #product_instance_creation_modal': 'onHidden',
-            'change #baseline-type' : 'onBaselineTypeChange'
+            'change #baseline-type': 'onBaselineTypeChange'
         },
 
         initialize: function () {
             this._subViews = [];
+            this.mode = 'BASELINE';
             _.bindAll(this);
             this.$el.on('remove', this.removeSubviews);
         },
@@ -86,6 +87,9 @@ define([
             this.$inputConfigurationItem = this.$('#inputConfigurationItem');
             this.$inputBaseline = this.$('#inputBaseline');
             this.$baselineType = this.$('#baseline-type');
+            this.$effectiveDate = this.$('#effectiveDate');
+            this.$effectiveSerialNumber = this.$('#effectiveSerialNumber');
+            this.$effectiveLotId = this.$('#effectiveLotId');
         },
         bindAttributesView: function () {
             this.attributesView = new AttributesView({
@@ -98,30 +102,47 @@ define([
         },
 
         onSubmitForm: function (e) {
+
             var data = {
                 serialNumber: this.$inputSerialNumber.val(),
                 configurationItemId: this.$inputConfigurationItem.val(),
-                baselineId: this.$inputBaseline.val(),
                 instanceAttributes: this.attributesView.collection.toJSON(),
                 acl: this.workspaceMembershipsView.toList()
             };
 
-            if (data.serialNumber && data.configurationItemId && data.baselineId) {
-                this.model.createInstance(data,{
-                    success: this.onProductInstanceCreated.bind(this),
-                    error: this.onError.bind(this)
-                });
+            if (this.mode === 'BASELINE') {
+                data.baselineId = this.$inputBaseline.val();
+                if (data.serialNumber && data.configurationItemId && data.baselineId) {
+                    this.model.createInstance(data, {
+                        success: this.onProductInstanceCreated.bind(this),
+                        error: this.onError.bind(this)
+                    });
+                }
             }
+            else if (this.mode === 'EFFECTIVITY_DATE') {
+                data.effectiveDate = this.$effectiveDate.val();
+            }
+            else if (this.mode === 'EFFECTIVITY_SERIAL_NUMBER') {
+                data.effectiveSerialNumber = this.$effectiveSerialNumber.val();
+            }
+            else if (this.mode === 'EFFECTIVITY_LOT_ID') {
+                data.effectiveLotId = this.$effectiveLotId.val();
+            }
+            else {
+                // show an error ?
+            }
+
+            console.log(data);
 
             e.preventDefault();
             e.stopPropagation();
             return false;
         },
 
-        onBaselineTypeChange: function(){
+        onBaselineTypeChange: function () {
             this.mode = this.$baselineType.val();
             this.$('[show-mode]').hide();
-            this.$('[show-mode=' + this.mode + ']' ).show();
+            this.$('[show-mode=' + this.mode + ']').show();
         },
 
         onProductInstanceCreated: function () {
