@@ -19,7 +19,8 @@ define([
         events: {
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #product_instance_creation_form': 'onSubmitForm',
-            'hidden #product_instance_creation_modal': 'onHidden'
+            'hidden #product_instance_creation_modal': 'onHidden',
+            'change #baseline-type' : 'onBaselineTypeChange'
         },
 
         initialize: function () {
@@ -48,6 +49,9 @@ define([
             } else {
                 new ConfigurationItemCollection().fetch({success: this.fillConfigurationItemList});
             }
+
+            this.onBaselineTypeChange();
+
             return this;
         },
 
@@ -81,6 +85,7 @@ define([
             this.$inputSerialNumber = this.$('#inputSerialNumber');
             this.$inputConfigurationItem = this.$('#inputConfigurationItem');
             this.$inputBaseline = this.$('#inputBaseline');
+            this.$baselineType = this.$('#baseline-type');
         },
         bindAttributesView: function () {
             this.attributesView = new AttributesView({
@@ -111,6 +116,12 @@ define([
             e.preventDefault();
             e.stopPropagation();
             return false;
+        },
+
+        onBaselineTypeChange: function(){
+            this.mode = this.$baselineType.val();
+            this.$('[show-mode]').hide();
+            this.$('[show-mode=' + this.mode + ']' ).show();
         },
 
         onProductInstanceCreated: function () {

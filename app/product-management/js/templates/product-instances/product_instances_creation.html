@@ -33,13 +33,47 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="inputBaseline">{{i18n.BASELINE}}</label>
+                        <label class="control-label" for="baseline-type">{{i18n.MODE}}</label>
+                        <div class="controls">
+                            <select id="baseline-type" required>
+                                <option value="BASELINE">{{i18n.BASELINE}}</option>
+                                <option value="EFFECTIVITY_DATE">{{i18n.EFFECTIVITY_DATE}}</option>
+                                <option value="EFFECTIVITY_SERIAL_NUMBER">{{i18n.EFFECTIVITY_SERIAL_NUMBER}}</option>
+                                <option value="EFFECTIVITY_LOT">{{i18n.EFFECTIVITY_LOT}}</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="control-group" show-mode="BASELINE">
+                        <label class="control-label" for="inputBaseline">{{i18n.BASELINE}}</label>
                         <div class="controls">
                             <select id="inputBaseline" required disabled></select>
                         </div>
                     </div>
+
+                    <div class="control-group" show-mode="EFFECTIVITY_DATE">
+                        <label class="control-label" for="date">{{i18n.EFFECTIVITY_DATE}}</label>
+                        <div class="controls">
+                            <input type="date" id="date" />
+                        </div>
+                    </div>
+
+                    <div class="control-group" show-mode="EFFECTIVITY_SERIAL_NUMBER">
+                        <label class="control-label" for="inputBaseline">{{i18n.EFFECTIVITY_SERIAL_NUMBER}}</label>
+                        <div class="controls">
+                            <input type="text" id ="serial_number" />
+                        </div>
+                    </div>
+
+                    <div class="control-group" show-mode="EFFECTIVITY_LOT">
+                        <label class="control-label" for="lot">{{i18n.EFFECTIVITY_LOT}}</label>
+                        <div class="controls">
+                            <input type="text" id ="lot" />
+                        </div>
+                    </div>
+
                 </div>
+
                 <div id="tab-products-instances-attributes" class="tab-pane attributes attributes-edit">
                 </div>
                 <div id="tab-products-instances-acl" class="tab-pane">

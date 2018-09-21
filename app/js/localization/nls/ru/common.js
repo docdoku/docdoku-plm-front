@@ -326,6 +326,7 @@ define({
     METER: 'м',
     MILESTONE: 'Веха',
     MILESTONES: 'Вехи',
+    MODE: 'Режим',
     MODIFICATION_DATE: 'Изменная дата',
     MODIFICATION_NOTIFICATION_LIST_DESCRIPTION: 'История изменений подсборок/деталей',
     MOUSE_CONTROLS: 'Управление мышью',

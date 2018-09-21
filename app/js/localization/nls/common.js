@@ -339,6 +339,7 @@ define({
         METER: 'm',
         MILESTONE: 'Milestone',
         MILESTONES: 'Milestones',
+        MODE: 'Mode',
         MODIFICATION_DATE: 'Modification date',
         MODIFICATION_NOTIFICATION_LIST_DESCRIPTION: 'Subcomponent changelog',
         MOUSE_CONTROLS: 'Mouse controls',
