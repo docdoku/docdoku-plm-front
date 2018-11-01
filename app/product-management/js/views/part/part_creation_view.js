@@ -134,7 +134,7 @@ define([
                     workspaceId: App.config.workspaceId,
                     description: this.$inputPartDescription.val(),
                     name: this.$inputPartName.val(),
-                    standardPart: this.$inputPartStandard.is(':checked') ? 1 : 0
+                    standardPart: this.$inputPartStandard.is(':checked') ? true : false
                 });
 
                 var templateId = this.$inputPartTemplate.val();
