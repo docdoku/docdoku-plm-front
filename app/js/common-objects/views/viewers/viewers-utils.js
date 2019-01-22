@@ -25,7 +25,7 @@ define([], function () {
     }
 
     function getFileName(url) {
-        return url.substr(url.lastIndexOf('/') + 1).toLowerCase();
+        return url.substr(url.lastIndexOf('/') + 1);
     }
 
     function getExtension(url) {
