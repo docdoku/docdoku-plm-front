@@ -33,45 +33,12 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="baseline-type">{{i18n.MODE}}</label>
-                        <div class="controls">
-                            <select id="baseline-type" required>
-                                <option value="BASELINE">{{i18n.BASELINE}}</option>
-                                <option value="EFFECTIVE_DATE">{{i18n.EFFECTIVITY_DATE}}</option>
-                                <option value="EFFECTIVE_SERIAL_NUMBER">{{i18n.EFFECTIVITY_SERIAL_NUMBER}}</option>
-                                <option value="EFFECTIVE_LOT_ID">{{i18n.EFFECTIVITY_LOT}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="control-group" show-mode="BASELINE">
                         <label class="control-label" for="inputBaseline">{{i18n.BASELINE}}</label>
+
                         <div class="controls">
                             <select id="inputBaseline" required disabled></select>
                         </div>
                     </div>
-
-                    <div class="control-group" show-mode="EFFECTIVE_DATE">
-                        <label class="control-label" for="effectiveDate">{{i18n.EFFECTIVITY_DATE}}</label>
-                        <div class="controls">
-                            <input type="date" id="effectiveDate" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" show-mode="EFFECTIVE_SERIAL_NUMBER">
-                        <label class="control-label" for="effectiveSerialNumber">{{i18n.EFFECTIVITY_SERIAL_NUMBER}}</label>
-                        <div class="controls">
-                            <input type="text" id ="effectiveSerialNumber" />
-                        </div>
-                    </div>
-
-                    <div class="control-group" show-mode="EFFECTIVE_LOT_ID">
-                        <label class="control-label" for="effectiveLotId">{{i18n.EFFECTIVITY_LOT}}</label>
-                        <div class="controls">
-                            <input type="text" id ="effectiveLotId" />
-                        </div>
-                    </div>
-
                 </div>
 
                 <div id="tab-products-instances-attributes" class="tab-pane attributes attributes-edit">
