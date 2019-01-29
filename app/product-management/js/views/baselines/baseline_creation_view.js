@@ -10,8 +10,9 @@ define([
     'common-objects/views/alert',
     'views/baselines/baseline_choice_list',
     'views/baselines/baselined_part_list',
-    'views/baselines/baseline_configuration_list'
-], function (Backbone, Mustache, ConfigurationItem, ProductBaseline, ConfigurationItemCollection, ConfigurationCollection, template, AlertView, BaselineChoiceListView, BaselinedPartsView, BaselineConfigurationsView) {
+    'views/baselines/baseline_configuration_list',
+    'common-objects/utils/date'
+], function (Backbone, Mustache, ConfigurationItem, ProductBaseline, ConfigurationItemCollection, ConfigurationCollection, template, AlertView, BaselineChoiceListView, BaselinedPartsView, BaselineConfigurationsView, date) {
 
     'use strict';
 
@@ -23,6 +24,7 @@ define([
             'click button[form=baseline_creation_form]': 'interceptSubmit',
             'hidden #baseline_creation_modal': 'onHidden',
             'change select#inputBaselineType': 'changeBaselineType',
+            'change #baseline-type': 'onBaselineTypeChange',
             'close-modal-request': 'closeModal'
         },
 
@@ -38,10 +40,11 @@ define([
 
             this.baselineConfigurationsView = new BaselineConfigurationsView().render();
             this.baselineConfigurationsView.on('configuration:changed', this.updateChoicesView);
+            this.type = 'LATEST';
+            this.mode = 'EFFECTIVE_DATE';
         },
 
         render: function () {
-
             this.$el.html(Mustache.render(template, {
                 i18n: App.config.i18n,
                 model: this.model
@@ -65,7 +68,6 @@ define([
             this.model.set('id', this.$inputConfigurationItem.val());
             this.$inputBaselineType.val('LATEST').trigger('change');
             this.$inputBaselineType.prop('disabled', !this.model.getId());
-
         },
 
         bindDomElements: function () {
@@ -75,6 +77,10 @@ define([
             this.$inputBaselineDescription = this.$('#inputBaselineDescription');
             this.$submitButton = this.$('button.btn-primary').first();
             this.$inputBaselineType = this.$('#inputBaselineType');
+            this.$baselineType = this.$('#baseline-type');
+            this.$effectiveDate = this.$('#effectiveDate');
+            this.$effectiveSerialNumber = this.$('#effectiveSerialNumber');
+            this.$effectiveLotId = this.$('#effectiveLotId');
             this.$inputConfigurationItem = this.$('#inputConfigurationItem');
             this.$baselinedPartListArea = this.$('.baselinedPartListArea');
             this.$baselineChoicesListArea = this.$('.baselineChoicesListArea');
@@ -96,9 +102,21 @@ define([
         },
 
         changeBaselineType: function () {
-            var type = this.$inputBaselineType.val();
+            this.type = this.$inputBaselineType.val();
             this.resetViews();
-            this.fetchChoices(type);
+            this.fetchChoices(this.type);
+            if (this.type === 'EFFECTIVITY') {
+                this.onBaselineTypeChange();
+            } else {
+                this.$('[show-mode]').hide();
+            }
+        },
+
+        onBaselineTypeChange: function () {
+            this.mode = this.$baselineType.val();
+            this.$('[show-mode]').hide();
+            this.$('[show-mode=' + this.type + ']').show();
+            this.$('[show-mode=' + this.mode + ']').show();
         },
 
         resetViews: function () {
@@ -191,6 +209,15 @@ define([
                     optionalUsageLinks: optionalUsageLinks,
                     configurationItemId: this.model.get('id')
                 };
+                if (this.mode === 'EFFECTIVE_DATE') {
+                    data.effectiveDate = date.getDateFromDateInput(this.$effectiveDate.val());
+                }
+                else if (this.mode === 'EFFECTIVE_SERIAL_NUMBER') {
+                    data.effectiveSerialNumber = this.$effectiveSerialNumber.val();
+                }
+                else if (this.mode === 'EFFECTIVE_LOT_ID') {
+                    data.effectiveLotId = this.$effectiveLotId.val();
+                }
 
                 if (data.name.trim()) {
                     var _this = this;
@@ -202,7 +229,11 @@ define([
                         }
                     };
 
-                    data.type = this.$inputBaselineType.val();
+                    if (this.type === 'EFFECTIVITY') {
+                        data.type = this.mode;
+                    } else {
+                        data.type = this.type;
+                    }
 
                     this.model.createBaseline(data, callbacks);
 

@@ -5,13 +5,11 @@ define([
     'text!templates/product-instances/product_instances_creation.html',
     'common-objects/models/product_instance',
     'collections/configuration_items',
-    'models/configuration_item',
     'common-objects/collections/product_baselines',
     'common-objects/views/attributes/attributes',
     'common-objects/views/security/acl',
-    'common-objects/views/alert',
-    'common-objects/utils/date'
-], function (Backbone, Mustache, template, ProductInstanceModel, ConfigurationItemCollection, ConfigurationItem, ProductBaselines, AttributesView, ACLView, AlertView, date) {
+    'common-objects/views/alert'
+], function (Backbone, Mustache, template, ProductInstanceModel, ConfigurationItemCollection, ProductBaselines, AttributesView, ACLView, AlertView) {
     'use strict';
 
     var ProductInstanceCreationView = Backbone.View.extend({
@@ -21,13 +19,11 @@ define([
         events: {
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #product_instance_creation_form': 'onSubmitForm',
-            'hidden #product_instance_creation_modal': 'onHidden',
-            'change #baseline-type': 'onBaselineTypeChange'
+            'hidden #product_instance_creation_modal': 'onHidden'
         },
 
         initialize: function () {
             this._subViews = [];
-            this.mode = 'BASELINE';
             _.bindAll(this);
             this.$el.on('remove', this.removeSubviews);
         },
@@ -53,8 +49,6 @@ define([
                 new ConfigurationItemCollection().fetch({success: this.fillConfigurationItemList});
             }
 
-            this.onBaselineTypeChange();
-
             return this;
         },
 
@@ -68,6 +62,7 @@ define([
                 self.fillBaselineList();
             });
         },
+
         fillBaselineList: function () {
             var self = this;
             this.$inputBaseline.empty();
@@ -88,10 +83,6 @@ define([
             this.$inputSerialNumber = this.$('#inputSerialNumber');
             this.$inputConfigurationItem = this.$('#inputConfigurationItem');
             this.$inputBaseline = this.$('#inputBaseline');
-            this.$baselineType = this.$('#baseline-type');
-            this.$effectiveDate = this.$('#effectiveDate');
-            this.$effectiveSerialNumber = this.$('#effectiveSerialNumber');
-            this.$effectiveLotId = this.$('#effectiveLotId');
         },
         bindAttributesView: function () {
             this.attributesView = new AttributesView({
@@ -104,75 +95,25 @@ define([
         },
 
         onSubmitForm: function (e) {
-
             var data = {
                 serialNumber: this.$inputSerialNumber.val(),
                 configurationItemId: this.$inputConfigurationItem.val()
             };
+            data.baselineId = this.$inputBaseline.val();
+            data.instanceAttributes = this.attributesView.collection.toJSON();
+            data.acl = this.workspaceMembershipsView.toList();
 
-            if (this.mode === 'BASELINE') {
-                data.baselineId = this.$inputBaseline.val();
-                data.instanceAttributes = this.attributesView.collection.toJSON();
-                data.acl = this.workspaceMembershipsView.toList();
-
-                if (data.serialNumber && data.configurationItemId && data.baselineId) {
-                    this.model.createInstance(data, {
-                        success: this.onProductInstanceCreated.bind(this),
-                        error: this.onError.bind(this)
-                    });
-                }else {
-                    // show an error ?
-                }
-
-            }
-            else if (this.mode === 'EFFECTIVE_DATE') {
-                data.effectiveDate = date.getDateFromDateInput(this.$effectiveDate.val());
-                this.previewBaseline(data);
-            }
-            else if (this.mode === 'EFFECTIVE_SERIAL_NUMBER') {
-                data.effectiveSerialNumber = this.$effectiveSerialNumber.val();
-                this.previewBaseline(data);
-            }
-            else if (this.mode === 'EFFECTIVE_LOT_ID') {
-                data.effectiveLotId = this.$effectiveLotId.val();
-                this.previewBaseline(data);
-            }
-            else {
+            if (data.serialNumber && data.configurationItemId && data.baselineId) {
+                this.model.createInstance(data, {
+                    success: this.onProductInstanceCreated.bind(this),
+                    error: this.onError.bind(this)
+                });
+            } else {
                 // show an error ?
             }
-
-            console.log(data);
-
             e.preventDefault();
             e.stopPropagation();
             return false;
-        },
-
-        previewBaseline: function (data) {
-            data.name = 'temp';
-            data.type = this.mode;
-            data.substituteLinks = [];
-            data.optionalUsageLinks = [];
-            data.baselinedParts = [];
-
-            var ci = new ConfigurationItem({id: this.$inputConfigurationItem.val()});
-
-            ci.createBaseline(data, {
-                success: function () {
-                    // todo : show preview
-                    console.log(arguments);
-                },
-                error: function () {
-                    // todo : show error
-                    console.error(arguments);
-                }
-            }, true);
-        },
-
-        onBaselineTypeChange: function () {
-            this.mode = this.$baselineType.val();
-            this.$('[show-mode]').hide();
-            this.$('[show-mode=' + this.mode + ']').show();
         },
 
         onProductInstanceCreated: function () {
