@@ -263,7 +263,7 @@ define([
         },
 
         isStandardPart: function () {
-            return this.get('standardPart') ? 1 : 0;
+            return this.get('standardPart');
         },
 
         isStandardPartReadable: function () {
