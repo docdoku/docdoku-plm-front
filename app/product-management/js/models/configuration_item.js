@@ -72,10 +72,10 @@ define(['backbone'], function (Backbone) {
             return this.get('pathToPathLinks');
         },
 
-        createBaseline: function (baselineArgs, callbacks) {
+        createBaseline: function (baselineArgs, callbacks, dryRun) {
             return $.ajax({
                 type: 'POST',
-                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines',
+                url: App.config.apiEndPoint + '/workspaces/' + App.config.workspaceId + '/product-baselines?dryRun='+(!!dryRun),
                 data: JSON.stringify(baselineArgs),
                 contentType: 'application/json; charset=utf-8',
                 success: callbacks.success,

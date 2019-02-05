@@ -48,6 +48,7 @@ define([
             } else {
                 new ConfigurationItemCollection().fetch({success: this.fillConfigurationItemList});
             }
+
             return this;
         },
 
@@ -61,6 +62,7 @@ define([
                 self.fillBaselineList();
             });
         },
+
         fillBaselineList: function () {
             var self = this;
             this.$inputBaseline.empty();
@@ -95,19 +97,20 @@ define([
         onSubmitForm: function (e) {
             var data = {
                 serialNumber: this.$inputSerialNumber.val(),
-                configurationItemId: this.$inputConfigurationItem.val(),
-                baselineId: this.$inputBaseline.val(),
-                instanceAttributes: this.attributesView.collection.toJSON(),
-                acl: this.workspaceMembershipsView.toList()
+                configurationItemId: this.$inputConfigurationItem.val()
             };
+            data.baselineId = this.$inputBaseline.val();
+            data.instanceAttributes = this.attributesView.collection.toJSON();
+            data.acl = this.workspaceMembershipsView.toList();
 
             if (data.serialNumber && data.configurationItemId && data.baselineId) {
-                this.model.createInstance(data,{
+                this.model.createInstance(data, {
                     success: this.onProductInstanceCreated.bind(this),
                     error: this.onError.bind(this)
                 });
+            } else {
+                // show an error ?
             }
-
             e.preventDefault();
             e.stopPropagation();
             return false;
