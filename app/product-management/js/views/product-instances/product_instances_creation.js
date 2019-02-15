@@ -5,11 +5,13 @@ define([
     'text!templates/product-instances/product_instances_creation.html',
     'common-objects/models/product_instance',
     'collections/configuration_items',
+    'models/configuration_item',
     'common-objects/collections/product_baselines',
     'common-objects/views/attributes/attributes',
     'common-objects/views/security/acl',
-    'common-objects/views/alert'
-], function (Backbone, Mustache, template, ProductInstanceModel, ConfigurationItemCollection, ProductBaselines, AttributesView, ACLView, AlertView) {
+    'common-objects/views/alert',
+    'common-objects/utils/date'
+], function (Backbone, Mustache, template, ProductInstanceModel, ConfigurationItemCollection, ConfigurationItem, ProductBaselines, AttributesView, ACLView, AlertView, date) {
     'use strict';
 
     var ProductInstanceCreationView = Backbone.View.extend({
@@ -19,11 +21,13 @@ define([
         events: {
             'click .modal-footer .btn-primary': 'interceptSubmit',
             'submit #product_instance_creation_form': 'onSubmitForm',
-            'hidden #product_instance_creation_modal': 'onHidden'
+            'hidden #product_instance_creation_modal': 'onHidden',
+            'change #baseline-type': 'onBaselineTypeChange'
         },
 
         initialize: function () {
             this._subViews = [];
+            this.mode = 'BASELINE';
             _.bindAll(this);
             this.$el.on('remove', this.removeSubviews);
         },
@@ -48,7 +52,7 @@ define([
             } else {
                 new ConfigurationItemCollection().fetch({success: this.fillConfigurationItemList});
             }
-
+            this.onBaselineTypeChange();
             return this;
         },
 
@@ -83,6 +87,10 @@ define([
             this.$inputSerialNumber = this.$('#inputSerialNumber');
             this.$inputConfigurationItem = this.$('#inputConfigurationItem');
             this.$inputBaseline = this.$('#inputBaseline');
+            this.$baselineType = this.$('#baseline-type');
+            this.$effectiveDate = this.$('#effectiveDate');
+            this.$effectiveSerialNumber = this.$('#effectiveSerialNumber');
+            this.$effectiveLotId = this.$('#effectiveLotId');
         },
         bindAttributesView: function () {
             this.attributesView = new AttributesView({
@@ -99,21 +107,64 @@ define([
                 serialNumber: this.$inputSerialNumber.val(),
                 configurationItemId: this.$inputConfigurationItem.val()
             };
-            data.baselineId = this.$inputBaseline.val();
-            data.instanceAttributes = this.attributesView.collection.toJSON();
-            data.acl = this.workspaceMembershipsView.toList();
 
-            if (data.serialNumber && data.configurationItemId && data.baselineId) {
-                this.model.createInstance(data, {
-                    success: this.onProductInstanceCreated.bind(this),
-                    error: this.onError.bind(this)
-                });
-            } else {
+            if (this.mode === 'BASELINE') {
+                data.baselineId = this.$inputBaseline.val();
+                data.instanceAttributes = this.attributesView.collection.toJSON();
+                data.acl = this.workspaceMembershipsView.toList();
+
+                if (data.serialNumber && data.configurationItemId && data.baselineId) {
+                    this.model.createInstance(data, {
+                        success: this.onProductInstanceCreated.bind(this),
+                        error: this.onError.bind(this)
+                    });
+                } else {
+                    // show an error ?
+                }
+
+            }
+            else if (this.mode === 'EFFECTIVE_DATE') {
+                data.effectiveDate = date.getDateFromDateInput(this.$effectiveDate.val());
+                data.type = this.mode;
+                if (data.effectiveDate && data.configurationItemId) {
+                    this.model.createInstance(data, {
+                        success: this.onProductInstanceCreated.bind(this),
+                        error: this.onError.bind(this)
+                    });
+                }
+            }
+            else if (this.mode === 'EFFECTIVE_SERIAL_NUMBER') {
+                data.effectiveSerialNumber = this.$effectiveSerialNumber.val();
+                data.type = this.mode;
+                if (data.effectiveSerialNumber && data.configurationItemId) {
+                    this.model.createInstance(data, {
+                        success: this.onProductInstanceCreated.bind(this),
+                        error: this.onError.bind(this)
+                    });
+                }
+            }
+            else if (this.mode === 'EFFECTIVE_LOT_ID') {
+                data.effectiveLotId = this.$effectiveLotId.val();
+                data.type = this.mode;
+                if (data.effectiveLotId && data.configurationItemId) {
+                    this.model.createInstance(data, {
+                        success: this.onProductInstanceCreated.bind(this),
+                        error: this.onError.bind(this)
+                    });
+                }
+            }
+            else {
                 // show an error ?
             }
             e.preventDefault();
             e.stopPropagation();
             return false;
+        },
+
+        onBaselineTypeChange: function () {
+            this.mode = this.$baselineType.val();
+            this.$('[show-mode]').hide();
+            this.$('[show-mode=' + this.mode + ']').show();
         },
 
         onProductInstanceCreated: function () {

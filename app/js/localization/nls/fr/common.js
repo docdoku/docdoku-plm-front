@@ -205,6 +205,7 @@ define({
     EDIT_REQUEST: 'Editer la demande de modification',
     EDITION_ERROR: 'Une erreur est survenue pendant l\'édition',
     EFFECTIVITY: 'Effectivité',
+    EFFECTIVITY_BASED: 'Basé sur une effectivité',
     EFFECTIVITY_DATE: 'Date',
     EFFECTIVITY_DESCRIPTION: 'Description de l\'effectivité',
     EFFECTIVITY_END_DATE: 'Date de fin',

@@ -51,10 +51,18 @@ define(['backbone'
             return this.get('configurationItemId');
         },
         getBasedOnName: function () {
-            return this.get('basedOn').name;
+            var basedOn = this.get('basedOn');
+            if (basedOn)
+                return basedOn.name;
+            else
+                return undefined;
         },
         getBasedOnId: function () {
-            return this.get('basedOn').id;
+            var basedOn = this.get('basedOn');
+            if (basedOn)
+                return basedOn.id;
+            else
+                return undefined;
         },
         getUpdateAuthor: function () {
             return this.get('updateAuthor');
