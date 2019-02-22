@@ -53,6 +53,111 @@ define([
             return this;
         },
 
+        hierarchy: function () {
+            var partList = this;
+            var parentId= this.$('.list_child');
+            this.changeClassTr(partList.$el[0]);
+            var partKey = this.model.attributes.partKey;
+            var workspace = this.model.attributes.workspaceId;
+            this.getChild(workspace, partKey).success(function(data) {
+                partList.appendChild(data, parentId);      
+            });
+            this.hideAndDisplayLine();
+        },
+
+        hideAndDisplayLine: function() {
+            var arrayLine = document.getElementById('part_table').children[1].children;
+            $.each(arrayLine, function(index) {
+                var arrayCell = arrayLine[index].children[3];
+                var listChildren = $(arrayCell.children[2]);
+                $(listChildren).empty();
+                $('.less').css({'display':'none'});
+                $('.part').css({'display':'inline'});
+            });
+            this.$('.part').css({'display':'none'});
+            this.$('.less').css({'display':'inline'});
+        },
+
+        appendChild: function(data, parentId) {
+            var partList = this;
+            var arrayChilds = new Array();
+            var lastIteration = data.lastIterationNumber - 1;
+            var assemblyArray = data.partIterations[lastIteration].components;
+            var count = $(assemblyArray).length;
+            $.each(assemblyArray, function(index) {
+
+                arrayChilds.push(assemblyArray[index].component.number);
+                if(index + 1 === count) {
+                    $.each(arrayChilds, function(index) {
+                        partList.getChildLatestVersion(data.workspaceId, arrayChilds[index]).success(function(childsLatestVersion) {
+                            $(
+                            `<ul class="child" id="${ arrayChilds[index] }">
+                            <li id="${ arrayChilds[index] }"><p> ${ childsLatestVersion.partKey }</p></li>
+                            </ul>`).appendTo(parentId);
+                            var child = new Array();
+                            child = partList.$(`#${ arrayChilds[index] }`);
+                            partList.listenerClick(data.workspaceId, arrayChilds[index]);
+                            var grandChild= childsLatestVersion.partIterations[0].components;
+                            var grandChildTest = grandChild.length > 0 ? true : false ;
+
+                            if (grandChildTest === true)
+                            {        
+                                $(child).append(`<div class="fa fa-plus treechild">`);                                                            
+                            }
+                        });
+                    });
+                }
+            });
+        },
+    
+        hideLine: function() {
+            this.$('.less').css({'display':'none'});
+            this.$('.part').css({'display':'inline'});
+             var arrayLine = document.getElementById('part_table').children[1].children;
+             $.each(arrayLine, function(index) {
+                var arrayCell = arrayLine[index].children[3];
+            var listChildren = $(arrayCell.children[2]);
+                $(listChildren).empty();
+            });
+        },
+
+        listenerClick: function(workspace, childs) {
+            var partList = this;
+            $(`#${childs}`).one('click', function(event) {
+                event.stopPropagation();
+                var newPartNumber = this.id;
+                partList.getChildLatestVersion(workspace, newPartNumber).success(function(data) {
+                    
+                    
+                    var parentId = `#${data.number}`;
+                    partList.appendChild(data, parentId);
+                });
+            });
+        },
+
+        getChildLatestVersion: function(workspace, partNumber) {
+            return  $.ajax({
+                method: 'GET',
+                url: App.config.apiEndPoint + `/workspaces/${workspace}/parts/${partNumber}/latest-revision`
+            });
+        },
+
+        changeClassTr: function( lineSelected ) {
+            $(lineSelected).find('td').each( function(cell) {
+                $(this).css({
+                    'vertical-align': 'unset',
+                    'padding-top': '0.5rem'
+                });
+            });
+        },
+
+        getChild: function(workspace, partNumber) {
+            return  $.ajax({
+                method: 'GET',
+                url: App.config.apiEndPoint + `/workspaces/${workspace}/parts/${partNumber}`
+            });
+        },
+
         selectionChanged: function () {
             this._isChecked = this.$checkbox.prop('checked');
             this.trigger('selectionChanged', this);

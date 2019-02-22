@@ -16,6 +16,49 @@ a {
     }
 }
 
+.less {
+    display: none;
+ }
+
+.list_child {    
+    list-style: none;
+    padding-left: -0.2em; 
+    margin-left: -0.2em;
+}
+.child {
+    padding:0;
+    margin:0;
+    background: url(../images/treeview-default-line.gif) 0 0 no-repeat ;
+    list-style-position:inside;
+    white-space: nowrap;
+    padding: 3px 0pt 3px 16px;
+    width: auto;
+    line-height: normal;
+    font-weight: normal;
+    list-style: none;
+    position: relative;  
+    flex-direction:row;
+    cursor:pointer;
+}
+
+.child .treechild {
+    position:relative;
+    left:3px;
+   
+}
+
+.child:last-child {
+    background-position:0 -1766px;
+}   
+
+.list_child .child li p {
+    margin: 0 0 0;
+    padding-left: 3px;
+    line-height: normal;
+    font-weight: normal;
+    cursor: default;
+}
+
 input:focus:invalid,
 textarea:focus:invalid,
 select:focus:invalid {
@@ -92,6 +135,7 @@ a.is-connected-user {
     .before-fetch-loader {
         display: block;
     }
+    
     .after-fetch-display {
         display: none;
     }
