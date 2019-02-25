@@ -1,9 +1,11 @@
 /*global define,App*/
+'text!common-objects/templates/buttons/more_button.html'
 define(['common-objects/utils/date'], function (date) {
 
     'use strict';
 
     var columnNameMapping = {
+        'pr.hierarchy': App.config.i18n.HIERARCHY,
         'pr.number': App.config.i18n.PART_NUMBER,
         'pr.version': App.config.i18n.VERSION,
         'pr.iteration': App.config.i18n.ITERATION,
@@ -87,6 +89,9 @@ define(['common-objects/utils/date'], function (date) {
         },
         'pr.iteration': function (model) {
             return '<td><span>' + ( model.getLastIteration() ? model.getLastIteration().id : '-') + '</span></td>';
+        },
+        'pr.hierarchy': function (model) {
+            return model.isLastIterationAssembly() ? moreButton: '<td> - </td>';
         },
         'pr.type': function (model) {
             return '<td><span>' + (model.getType() || '-') + '</span></td>';
