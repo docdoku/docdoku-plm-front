@@ -1,6 +1,6 @@
 /*global define,App*/
-'text!common-objects/templates/buttons/more_button.html'
-define(['common-objects/utils/date'], function (date) {
+
+define(['common-objects/utils/date','text!common-objects/templates/buttons/more_button.html'], function (date) {
 
     'use strict';
 
