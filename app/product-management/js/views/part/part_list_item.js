@@ -16,6 +16,7 @@ define([
             'click input[type=checkbox]': 'selectionChanged',
             'click td.modification_notification i': 'toPartModalOnNotificationsTab',
             'click td.part_number': 'toPartModal',
+            'click span.part': 'hierarchy',
             'click td.part-revision-share i': 'sharePart',
             'click td.part-attached-files i': 'toPartModalOnFilesTab',
             'dragstart a.parthandle': 'dragStart',
