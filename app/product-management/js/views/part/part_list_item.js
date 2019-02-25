@@ -20,7 +20,8 @@ define([
             'click td.part-revision-share i': 'sharePart',
             'click td.part-attached-files i': 'toPartModalOnFilesTab',
             'dragstart a.parthandle': 'dragStart',
-            'dragend a.parthandle': 'dragEnd'
+            'dragend a.parthandle': 'dragEnd',
+            'click span.less': 'hideLine'
         },
 
         tagName: 'tr',
