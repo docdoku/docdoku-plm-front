@@ -92,11 +92,11 @@ define(['common-objects/utils/date',
         'pr.iteration': function (model) {
             return '<td><span>' + ( model.getLastIteration() ? model.getLastIteration().id : '-') + '</span></td>';
         },
-        'pr.hierarchy': function (model) {
-            return model.isLastIterationAssembly() ? moreButton: '<td> - </td>';
-        },
         'pr.type': function (model) {
             return '<td><span>' + (model.getType() || '-') + '</span></td>';
+        },
+        'pr.hierarchy': function (model) {
+            return model.isLastIterationAssembly() ? moreButton: '<td> - </td>';
         },
         'pr.name': function (model) {
             return '<td><span>' + ( model.getName() || '-') + '</span></td>';
@@ -134,7 +134,7 @@ define(['common-objects/utils/date',
         }
     };
 
-    var defaultColumns = ['pr.number', 'pr.version',
+    var defaultColumns = ['pr.hierarchy','pr.number', 'pr.version',
         'pr.iteration', 'pr.type', 'pr.name', 'pr.author',
         'pr.modificationDate', 'pr.lifecycleSate', 'pr.checkoutUser', 'pr.acl'
     ];
