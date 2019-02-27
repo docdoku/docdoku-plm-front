@@ -52,17 +52,11 @@ define(['backbone'
         },
         getBasedOnName: function () {
             var basedOn = this.get('basedOn');
-            if (basedOn)
-                return basedOn.name;
-            else
-                return undefined;
+            return basedOn ? basedOn.name : undefined;
         },
         getBasedOnId: function () {
             var basedOn = this.get('basedOn');
-            if (basedOn)
-                return basedOn.id;
-            else
-                return undefined;
+            return basedOn ? basedOn.id : undefined;
         },
         getUpdateAuthor: function () {
             return this.get('updateAuthor');
