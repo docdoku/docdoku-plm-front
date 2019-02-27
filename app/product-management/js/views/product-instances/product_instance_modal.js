@@ -71,13 +71,12 @@ define([
             this.initPathDataView();
             this.openModal();
             this.renderChoices();
-
             var self = this;
             this.collection = new ProductBaselines({}, {productId: this.productId});
             this.collection.fetch({reset: true}).success(function () {
                 self.$('.rebase-baseline-select').html('');
                 _.each(self.collection.models, function (baseline) {
-                    if (self.iteration.getBasedOnId() === baseline.getId()) {
+                    if (self.iteration.getBasedOnId() && self.iteration.getBasedOnId() === baseline.getId()) {
                         self.$('.rebase-baseline-select').append('<option value="' + baseline.getId() + '" selected="selected">' + baseline.getName() + '</option>');
                     } else {
                         self.$('.rebase-baseline-select').append('<option value="' + baseline.getId() + '">' + baseline.getName() + '</option>');
@@ -91,6 +90,13 @@ define([
 
             date.dateHelper(this.$('.date-popover'));
 
+            if (!this.iteration.getBasedOnName()) {
+                this.$('[show-mode]').hide();
+                this.$('[show-mode=EFFECTIVITY]').show();
+            } else {
+                this.$('[show-mode]').hide();
+                this.$('[show-mode=BASED_ON]').show();
+            }
             return this;
         },
 

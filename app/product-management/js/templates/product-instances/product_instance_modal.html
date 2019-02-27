@@ -26,20 +26,24 @@
                             <input type="text" id="inputSerialNUmber" value=" {{model.getSerialNumber}}"
                                    disabled="disabled"/>
                         </div>
-                      </div>
-                    <div class="control-group">
-                            <label class="control-label" for="inputConfigurationItemId">{{i18n.PRODUCT}}</label>
-                            <div class="controls">
-                                <input type="text" id="inputConfigurationItemId" value="{{model.getConfigurationItemId}}"
-                                       disabled="disabled"/>
-                            </div>
                     </div>
                     <div class="control-group">
-                            <label class="control-label" for="inputBaselineId">{{i18n.BASED_ON}}</label>
-                            <div class="controls">
-                                <input type="text" id="inputBaselineId" value="{{model.getBasedOnName}}"
-                                       disabled="disabled"/>
-                            </div>
+                        <label class="control-label" for="inputConfigurationItemId">{{i18n.PRODUCT}}</label>
+                        <div class="controls">
+                            <input type="text" id="inputConfigurationItemId" value="{{model.getConfigurationItemId}}"
+                                   disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputBaselineId">{{i18n.BASED_ON}}</label>
+                        <div class="controls" show-mode="BASED_ON">
+                            <input type="text" id="inputBaselineId" value="{{model.getBasedOnName}}"
+                                   disabled="disabled"/>
+                        </div>
+                        <div class="controls" show-mode="EFFECTIVITY">
+                            <input type="text" value="{{i18n.EFFECTIVITY_BASED}}"
+                                   disabled="disabled"/>
+                        </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">{{i18n.CREATION_DATE}}</label>
@@ -51,19 +55,22 @@
 
                 <div class="tab-pane" id="tab-products-instances-choices">
                     <div class="choices-list">
-                        <p><i class="fa fa-check"></i> {{i18n.CHOSEN_SUBSTITUTES}} : <span class="substitutes-count"></span></p>
+                        <p><i class="fa fa-check"></i> {{i18n.CHOSEN_SUBSTITUTES}} : <span
+                            class="substitutes-count"></span></p>
                         <div class="substitutes-list choices"></div>
-                        <p><i class="fa fa-check"></i> {{i18n.CHOSEN_OPTIONALS}} : <span class="optionals-count"></span></p>
+                        <p><i class="fa fa-check"></i> {{i18n.CHOSEN_OPTIONALS}} : <span class="optionals-count"></span>
+                        </p>
                         <div class="optionals-list choices"></div>
                     </div>
                 </div>
 
-                <div id="tab-products-instances-iteration" class="tab-pane iteration iteration-edit" >
+                <div id="tab-products-instances-iteration" class="tab-pane iteration iteration-edit">
                     <div class="control-group">
                         <label class="control-label" for="inputIterationNote">{{i18n.REVISION_NOTE}}</label>
 
                         <div class="controls">
-                            <input type="text" id="inputIterationNote" value="{{model.getIterationNote}}" {{^editMode}}disabled="disabled"{{/editMode}} />
+                            <input type="text" id="inputIterationNote" value="{{model.getIterationNote}}"
+                                   {{^editMode}}disabled="disabled" {{/editMode}} />
                         </div>
                     </div>
 
@@ -79,7 +86,7 @@
                     <div class="control-group">
                         <label class="control-label">{{i18n.AUTHOR}}</label>
                         <div class="controls">
-                           <a class="author-popover">{{iteration.author.name}}</a>
+                            <a class="author-popover">{{iteration.author.name}}</a>
                         </div>
                     </div>
 
@@ -98,7 +105,7 @@
                     </div>
 
                 </div>
-                <div id="tab-products-instances-attributes" class="tab-pane attributes attributes-edit" >
+                <div id="tab-products-instances-attributes" class="tab-pane attributes attributes-edit">
                     <div id="attributes-list" class="attributes attributes-edit"></div>
 
                 </div>
