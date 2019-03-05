@@ -14,10 +14,17 @@ define([
             return this;
         },
 
+        baseUrl: function(){
+          return App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/documents/search';
+        },
+
         url: function () {
-            return App.config.apiEndPoint + '/workspaces/' + encodeURIComponent(App.config.workspaceId) + '/documents/search?' + this.query;
+            return this.query.startsWith('?') ? this.baseUrl() + this.query : this.baseUrl() + '?' + this.query;
         }
     });
 
     return SearchDocumentList;
 });
+
+
+
