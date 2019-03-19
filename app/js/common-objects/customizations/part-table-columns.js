@@ -79,8 +79,8 @@ define(['common-objects/utils/date'], function (date) {
             }
 
             var assemblyIcon = model.isLastIterationAssembly() ? 'fa-cubes' : 'fa-cube';
-
-            return '<td class="part_number"><i class="fa ' + statusIcon + '"></i> <i class="fa ' + assemblyIcon + '"></i> <span class="part_number_value"> ' + model.getNumber() + '</span></td>';
+            var withoutAsemblyParts = '<td class="part_number"><i class="fa ' + statusIcon + '"></i> <i class="fa ' + assemblyIcon + '"></i> <span class="part_number_value"> ' + model.getNumber() + '</span></td>';
+            return withoutAsemblyParts;
         },
         'pr.version': function (model) {
             return '<td><span>' + model.getVersion() + '</span></td>';
