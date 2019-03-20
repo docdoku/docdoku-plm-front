@@ -9,3 +9,4 @@ app/**/main.css
 .idea/
 .iml
 docdoku-web-front.iml
+package-lock.json

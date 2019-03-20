@@ -79,8 +79,21 @@ define(['common-objects/utils/date'], function (date) {
             }
 
             var assemblyIcon = model.isLastIterationAssembly() ? 'fa-cubes' : 'fa-cube';
+
+            //build cell to return according to if the part is assembled with others part or not
             var withoutAsemblyParts = '<td class="part_number"><i class="fa ' + statusIcon + '"></i> <i class="fa ' + assemblyIcon + '"></i> <span class="part_number_value"> ' + model.getNumber() + '</span></td>';
-            return withoutAsemblyParts;
+
+            var label = '<span  class="product_title expandable">' + model.getPartKey() + '</span>';
+
+            var text = '<div><i class="fa ' + statusIcon + '"></i><i class="fa ' + assemblyIcon + '"></i><span class="part_number_value">' + model.getNumber() + '</span></div>';
+
+            var list = '<ul><li class="path_-1 expandable lastExpandable"><div  class="blockClickArea hitarea expandable-hitarea lastExpandable-hitarea expandable"></div>' + label + '<ul class="list_child"></ul></li></ul>';
+
+            var navBalise = '<nav id="product_nav_list" class="treeview">' + text + list + '</nav>';
+
+            var assemblyPartBuild = '<td class="part_number">' + navBalise + '</td>';
+
+            return assemblyIcon === 'fa-cubes' ? assemblyPartBuild : withoutAsemblyParts;
         },
         'pr.version': function (model) {
             return '<td><span>' + model.getVersion() + '</span></td>';
