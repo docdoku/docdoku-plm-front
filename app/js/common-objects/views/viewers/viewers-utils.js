@@ -3,6 +3,20 @@ define([], function () {
 
     'use strict';
 
+    function findAndReplaceUrl(string, target, replacement) {
+ 
+        var i = 0, length = string.length;
+        
+        for (i; i < length; i++) {
+        
+          string = string.replace(target, replacement);
+        
+        }
+        
+        return string;
+
+       }
+
     function getBinaryDownloadUrl(binaryResource, uuid, token) {
 
         var url = App.config.apiEndPoint + '/files/' + binaryResource.fullName;
@@ -20,7 +34,7 @@ define([], function () {
             url += '?' + options.join('&');
         }
 
-        return url;
+        return findAndReplaceUrl(url,'+','%20');
 
     }
 
