@@ -214,9 +214,9 @@ define([
             // cannot pass a collection of cad file to server.
             var cadFile = this.cadFileView.collection.first();
             if (cadFile) {
-                this.iteration.set('nativeCADFile', cadFile.get('fullName'));
+                this.iteration.set('nativeCADFile', {fullName: cadFile.get('fullName')});
             } else {
-                this.iteration.set('nativeCADFile', '');
+                this.iteration.set('nativeCADFile', null);
             }
 
             var that = this;
@@ -472,9 +472,9 @@ define([
             // cannot pass a collection of cad file to server.
             var cadFile = this.cadFileView.collection.first();
             if (cadFile) {
-                this.iteration.set('nativeCADFile', cadFile.get('fullName'));
+                this.iteration.set('nativeCADFile', { fullName: cadFile.get('fullName') });
             } else {
-                this.iteration.set('nativeCADFile', '');
+                this.iteration.set('nativeCADFile', null);
             }
 
             var that = this;
