@@ -2,7 +2,7 @@
   "name": "docdokuplm",
   "private": true,
   "description": "Web based application for DocDokuPLM server",
-  "version": "1.1.0",
+  "version": "2.6.0-SNAPSHOT",
   "devDependencies": {
     "bower": "~1.8.0",
     "casperjs": "~1.1.3",
