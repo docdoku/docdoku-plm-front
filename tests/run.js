@@ -22,7 +22,9 @@ var conf = _.extend(config, argv);
 var uuidV4 = require('uuid/v4');
 var workspace = 'wks-' + uuidV4().substr(0, 8);
 
-var casperJsBinary = conf.casperjs || __dirname + '/../node_modules/.bin/casperjs';
+var casperJsBinary = __dirname + '/../node_modules/.bin/casperjs';
+process.env.PATH+= ':'+__dirname + '/../node_modules/.bin';
+process.env.OPENSSL_CONF='/etc/ssl/';
 
 var casperCommand = casperJsBinary + ' test' +
     ' --ssl-protocol=any --ignore-ssl-errors=true ' +
@@ -73,6 +75,7 @@ var child = exec(casperCommand, {maxBuffer: 5 * 1024 * 1024}, function (error) {
     }
 
     if (error) {
+        console.error(error);
         process.exit(1);
     }
 });
