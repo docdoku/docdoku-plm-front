@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 echo -e "{
     \"server\": {
         \"ssl\": $SERVER_SSL,
@@ -10,6 +12,7 @@ echo -e "{
     \"preferLoginWith\": $PREFER_LOGIN_WITH
 }" > /usr/share/nginx/html/webapp.properties.json
 
+cat  /usr/share/nginx/html/webapp.properties.json
 
-`/usr/sbin/nginx -g "daemon off;"`
+/usr/sbin/nginx -g "daemon off;"
 
