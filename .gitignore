@@ -8,5 +8,5 @@ test/temp
 app/**/main.css
 .idea/
 .iml
-docdoku-web-front.iml
+docdoku-plm-front.iml
 app/webapp.properties.json

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-IMAGE_NAME=docdoku/docdoku-web-front
+IMAGE_NAME=docdoku/docdoku-plm-front
 VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
 
 
