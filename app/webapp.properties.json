@@ -3,7 +3,7 @@
         "ssl": false,
         "domain": "localhost",
         "port": 8080,
-        "contextPath": "/eplmp-server-rest",
+        "contextPath": "/docdoku-plm-server-rest",
         "wsDomain": "localhost"
     },
     "contextPath": "/",
