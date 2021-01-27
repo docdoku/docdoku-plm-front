@@ -1,109 +1,131 @@
+// Palette
+@palette-1: #2E3440;
+@palette-2: #3B4252;
+@palette-3: #434C5E;
+@palette-4: #4C566A;
+
+@palette-5: #D8DEE9;
+@palette-6: #E5E9F0;
+@palette-7: #ECEFF4;
+
+@palette-9: #8FBCBB;
+@palette-10: #88C0D0;
+@palette-11: #81A1C1;
+
+@palette-12: #5E81AC;
+@palette-13: #BF616A;
+@palette-14: #D08770;
+@palette-15: #EBCB8B;
+@palette-16: #A3BE8C;
+@palette-17: #B48EAD;
+
+
 // Texts
 @base-font-size: 13px;
 @base-line-height: 18px;
 
-@text-strong-color: #121821;
+@text-strong-color: @palette-1;
 @text-strong-color-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 
-@text-color: #323A45;
+@text-color: @palette-1;
 @text-color-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 
-@text-light-color: #62697B;
+@text-light-color: @palette-4;
 @text-light-color-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 
-@text-very-light-color: #b3bcc4;
+@text-very-light-color: @palette-4;
 @text-very-light-color-shadow: 0 -1px 0 rgba(0, 0, 0, 0.10);
 
-@text-invert-color: #ffffff;
+@text-invert-color: @palette-7;
 @text-invert-color-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
-@text-highlight-color: #fff148;
+@text-highlight-color:@palette-15;
 
 // Main colors
-@plm-primary-color: #4C545F;
-@plm-primary-hover-color: #323A45;
-@plm-secondary-color: #F97967;
-@plm-secondary-hover-color: #E0604E;
-@background-color-strong: #c0c5c7;
-@background-color: #ECECEC;
-@background-color-light: #ffffff;
+@plm-primary-color: @palette-4;
+@plm-primary-hover-color: @palette-3;
+@plm-secondary-color:@palette-14;
+@plm-secondary-hover-color: darken(@palette-14, 10%);
+@background-color-strong:@palette-5;
+@background-color:@palette-6;
+@background-color-light: @palette-7;
 
 // Borders
-@border-light: 1px solid #cccccc;
-@border-light-double: 2px solid #cccccc;
-@border-dashed-light: 1px dashed #a1a0a0;
-@border-dashed-light-double: 2px dashed #a1a0a0;
-@border-strong: 1px solid #717070;
-@border-strong-double: 2px solid #717070;
+@border-light: 1px solid @palette-5;
+@border-light-double: 2px solid@palette-5;
+@border-dashed-light: 1px dashed @palette-5;
+@border-dashed-light-double: 2px dashed @palette-5;
+@border-strong: 1px solid @palette-4;
+@border-strong-double: 2px solid @palette-4;
 
 // Links color
-@link-color: #2894ca;
+@link-color:@palette-12;
 @link-color-hover: darken(@link-color, 15%);
 
 // Navbar
-@navbar-background-color: #213251;
+@navbar-background-color: @palette-1;
 @navbar-background-color-highlight: lighten(@navbar-background-color, 20%);
 @navbar-link-color-active: rgba(255, 255, 255, 0.8);
 @navbar-link-background-active: transparent;
-@nav-background: #F3F5FB;
-@navbar-brand-color: #ffffff;
-@nav-header-color: #999999;
+@nav-background: @palette-7;
+@navbar-brand-color: @palette-7;
+@nav-header-color:@palette-3;
 
 // Tables
 @table-header-background: @plm-primary-color;
 @table-border: 1px solid rgba(63, 95, 153, 0.24);
-@table-row-border: 1px solid #dddddd;
-@table-row-odd: #f5f5f5;
-@table-row-odd-hover: #eeeeee;
-@table-row-even: #fffff;
-@table-row-even-hover: #eeeeee;
+@table-row-border: 1px solid @palette-5;
+@table-row-odd: @palette-6;
+@table-row-odd-hover:@palette-5;
+@table-row-even: @palette-7;
+@table-row-even-hover:@palette-5;
 
 // Actionbar
-@action-bar-background: #F4F4F4;
+@action-bar-background:@palette-7;
 
 // Menu
-@menu-color: #f5f5f5;
-@menu-color-hover: #cccccc;
-@menu-drop-item: #62c462;
+@menu-color:@palette-7;
+@menu-color-hover: @palette-5;
+@menu-drop-item: @palette-16;
 @menu-alpha: rgba(245, 245, 245, 0.7);
 
 // Inputs states
-@input-state-default: #f5f5f5;
-@input-state-default-hover: #ededed;
-@input-state-disabled: #708090;
-@input-state-disabled-hover: #5f6e7e;
-@input-state-danger: #ee5f5b;
-@input-state-danger-hover: #bd362f;
-@input-state-success: #323A45;
-@input-state-success-hover: #323A45;
-@input-state-warning: #F97967;
-@input-state-warning-hover: #E0604E;
-@input-state-info: #49afcd;
-@input-state-info-hover: #48a8c5;
-@input-state-primary: #4C545F;
-@input-state-primary-hover: #323A45;
-@input-state-custom: #F97967;
-@input-state-custom-hover: #E0604E;
+@input-state-default: @palette-7;
+@input-state-default-hover: @palette-6;
+@input-state-disabled: @palette-11;
+@input-state-disabled-hover:darken(@palette-11, 10%);
+@input-state-danger: @palette-13;
+@input-state-danger-hover: darken(@palette-13, 10%);
+@input-state-success:@palette-16;
+@input-state-success-hover: darken(@palette-16, 10%);
+@input-state-warning: @palette-14;
+@input-state-warning-hover: darken(@palette-14, 10%);
+@input-state-info: @palette-12;
+@input-state-info-hover: darken(@palette-12, 10%);
+@input-state-primary: @palette-4;
+@input-state-primary-hover: darken(@palette-4, 10%);
+@input-state-custom: palette-17;
+@input-state-custom-hover: darken(@palette-17, 10%);
 
 // Acl states
-@acl-forbidden: #ee5f5b;
-@acl-read-only: #f89406;
-@acl-full-access: #62c462;
+@acl-forbidden: @palette-13;
+@acl-read-only: @palette-14;
+@acl-full-access: @palette-16;
 
 // Status states
-@online-state: #62c462;
-@offline-state: #708090;
+@online-state: @palette-16;
+@offline-state: @palette-13;
 
 // Priorities states
-@priority-low: #62c462;
-@priority-medium: #49afcd;
-@priority-high: #f89406;
-@priority-emergency: #ee5f5b;
+@priority-low: @palette-16;
+@priority-medium: @palette-12;
+@priority-high: @palette-14;
+@priority-emergency: @palette-13;
 
 // Scrollbars
-@scroll-bar-increment-decrement: #e2e7ef;
-@scroll-bar-track-piece: #e2e7ef;
-@scroll-bar-thumb-background: rgba(100, 100, 100, 0.4);
-@scroll-bar-thumb-hover-background: rgba(150, 150, 150, 0.6);
-@scroll-bar-thumb-hover: rgba(100, 100, 100, 0.7);
-@scroll-bar-thumb-active: rgba(70, 70, 70, 0.8);
+@scroll-bar-increment-decrement: @palette-7;
+@scroll-bar-track-piece: @palette-7;
+@scroll-bar-thumb-background: @palette-1;
+@scroll-bar-thumb-hover-background: @palette-4;
+@scroll-bar-thumb-hover: @palette-2;
+@scroll-bar-thumb-active: @palette-3;
