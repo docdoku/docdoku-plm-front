@@ -52,6 +52,7 @@ module.exports = {
             'copy:dmu',
             'copy:i18n',
             'replace:bustCache',
+            'replace:buildNumber',
             'compress:dist'
         ]);
     }

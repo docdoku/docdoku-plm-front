@@ -27,6 +27,14 @@ module.exports = function (grunt) {
                     from: '__BUST_CACHE__',
                     to: 'rev=' + Date.now()
                 }]
+            },
+            buildNumber: {
+                src: ['dist/main/main.js'],
+                overwrite: true,
+                replacements: [{
+                    from: '_DOCDOKUPLM_BUILD_NUMBER_',
+                    to: require('./package.json').version
+                }]
             }
         }
     };
