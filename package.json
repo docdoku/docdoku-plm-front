@@ -34,7 +34,7 @@
     "phantomjs": "^2.1.7",
     "serve-static": "^1.13.2",
     "time-grunt": "~0.2.10",
-    "underscore": "~1.7.0",
+    "underscore": "~1.12.1",
     "uuid": "~3.0.1",
     "xml2js": "~0.4.9",
     "yargs": "~4.7.1"
