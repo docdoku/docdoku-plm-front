@@ -8,7 +8,7 @@
     "casperjs": "1.1.4",
     "connect-livereload": "~0.3.2",
     "del": "~1.2.0",
-    "grunt": "~1.0.3",
+    "grunt": "~1.5.2",
     "grunt-cli": "^1.2.0",
     "grunt-connect-proxy": "~0.2.0",
     "grunt-contrib-clean": "~1.0.0",
